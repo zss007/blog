@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之函数扩展 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ES6 扩展了函数。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之函数扩展">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/function-expand/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="ES6 扩展了函数。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T14:03:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之函数扩展">
+<meta name="twitter:description" content="ES6 扩展了函数。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之函数扩展</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之函数扩展</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-29T11:56:03.000Z" itemprop="datePublished" class="page-time">
+  2018-01-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、函数参数的默认值"><span class="post-toc-text">一、函数参数的默认值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、rest-参数"><span class="post-toc-text">二、rest 参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、严格模式"><span class="post-toc-text">三、严格模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、name-属性"><span class="post-toc-text">四、name 属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、函数参数的尾逗号"><span class="post-toc-text">五、函数参数的尾逗号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、箭头函数"><span class="post-toc-text">六、箭头函数</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/function-expand" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之函数扩展</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-29 19:56:03" datetime="2018-01-29T11:56:03.000Z" itemprop="datePublished">2018-01-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>ES6 扩展了函数。<br><a id="more"></a></p>
+<h3 id="一、函数参数的默认值"><a href="#一、函数参数的默认值" class="headerlink" title="一、函数参数的默认值"></a>一、函数参数的默认值</h3><p>ES6 之前，不能直接为函数的参数指定默认值，只能采用变通的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">function log(x, y) &#123;</span><br><span class="line">  y = y || &apos;World&apos;;</span><br><span class="line">  console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line">log(&apos;Hello&apos;) // Hello World</span><br><span class="line">log(&apos;Hello&apos;, &apos;China&apos;) // Hello China</span><br><span class="line">// 如果参数 y 赋值了，但是对应的布尔值为 false，则该赋值不起作用。就像参数 y 等于空字符，结果被改为默认值</span><br><span class="line">log(&apos;Hello&apos;, &apos;&apos;) // Hello World</span><br><span class="line">    </span><br><span class="line">// 为了避免这个问题，通常需要先判断一下参数 y 是否被赋值</span><br><span class="line">if (typeof y === &apos;undefined&apos;) &#123;</span><br><span class="line">  y = &apos;World&apos;;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面</span><br><span class="line">function log(x, y = &apos;World&apos;) &#123;</span><br><span class="line">  console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line">log(&apos;Hello&apos;) // Hello World</span><br><span class="line">log(&apos;Hello&apos;, &apos;China&apos;) // Hello China</span><br><span class="line">log(&apos;Hello&apos;, &apos;&apos;) // Hello</span><br><span class="line">    </span><br><span class="line">// 参数变量是默认声明的，所以不能用 let 或 const 再次声明</span><br><span class="line">function foo(x = 5) &#123;</span><br><span class="line">  let x = 1; // error</span><br><span class="line">  const x = 2; // error</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// 使用参数默认值时，函数不能有同名参数</span><br><span class="line">function foo(x, x, y) &#123;</span><br><span class="line">  // 不报错</span><br><span class="line">&#125;</span><br><span class="line">function foo(x, x, y = 1) &#123;</span><br><span class="line">  // 报错。SyntaxError: Duplicate parameter name not allowed in this context</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// 参数默认值不是传值的，而是每次都重新计算默认值表达式的值。也就是说，参数默认值是惰性求值的</span><br><span class="line">let x = 99;</span><br><span class="line">function foo(p = x + 1) &#123;</span><br><span class="line">  console.log(p);</span><br><span class="line">&#125;</span><br><span class="line">foo() // 100</span><br><span class="line">x = 100;</span><br><span class="line">foo() // 101</span><br><span class="line">    </span><br><span class="line">// 参数默认值可以与解构赋值的默认值，结合起来使用</span><br><span class="line">function foo(&#123;x, y = 5&#125;) &#123;</span><br><span class="line">  console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line">foo(&#123;&#125;) // undefined 5</span><br><span class="line">foo(&#123;x: 1&#125;) // 1 5</span><br><span class="line">foo(&#123;x: 1, y: 2&#125;) // 1 2</span><br><span class="line">foo() // TypeError: Cannot read property &apos;x&apos; of undefined</span><br><span class="line">    </span><br><span class="line">// 提供函数参数的默认值，避免报错</span><br><span class="line">function foo(&#123;x, y = 5&#125; = &#123;&#125;) &#123;</span><br><span class="line">  console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line">foo() // undefined 5</span><br><span class="line">    </span><br><span class="line">// 练习</span><br><span class="line">// 写法一</span><br><span class="line">function m1(&#123;x = 0, y = 0&#125; = &#123;&#125;) &#123;</span><br><span class="line">  return [x, y];</span><br><span class="line">&#125;</span><br><span class="line">// 写法二</span><br><span class="line">function m2(&#123;x, y&#125; = &#123; x: 0, y: 0 &#125;) &#123;</span><br><span class="line">  return [x, y];</span><br><span class="line">&#125;</span><br><span class="line">// 函数没有参数的情况</span><br><span class="line">m1() // [0, 0]</span><br><span class="line">m2() // [0, 0]</span><br><span class="line">// x 和 y 都有值的情况</span><br><span class="line">m1(&#123;x: 3, y: 8&#125;) // [3, 8]</span><br><span class="line">m2(&#123;x: 3, y: 8&#125;) // [3, 8]</span><br><span class="line">// x 有值，y 无值的情况</span><br><span class="line">m1(&#123;x: 3&#125;) // [3, 0]</span><br><span class="line">m2(&#123;x: 3&#125;) // [3, undefined]</span><br><span class="line">// x 和 y 都无值的情况</span><br><span class="line">m1(&#123;&#125;) // [0, 0];</span><br><span class="line">m2(&#123;&#125;) // [undefined, undefined]</span><br><span class="line">m1(&#123;z: 3&#125;) // [0, 0]</span><br><span class="line">m2(&#123;z: 3&#125;) // [undefined, undefined]</span><br><span class="line">    </span><br><span class="line">// 参数默认值的位置（如果非尾部的参数设置默认值，实际上这个参数是没法省略的）</span><br><span class="line">// 例一</span><br><span class="line">function f(x = 1, y) &#123;</span><br><span class="line">  return [x, y];</span><br><span class="line">&#125;</span><br><span class="line">f() // [1, undefined]</span><br><span class="line">f(2) // [2, undefined])</span><br><span class="line">f(, 1) // 报错</span><br><span class="line">// 例二</span><br><span class="line">f(undefined, 1) // [1, 1]</span><br><span class="line">function f(x, y = 5, z) &#123;</span><br><span class="line">  return [x, y, z];</span><br><span class="line">&#125;</span><br><span class="line">f() // [undefined, 5, undefined]</span><br><span class="line">f(1) // [1, 5, undefined]</span><br><span class="line">f(1, ,2) // 报错</span><br><span class="line">f(1, undefined, 2) // [1, 5, 2]</span><br><span class="line">    </span><br><span class="line">// 如果传入 undefined，将触发该参数等于默认值，null 则没有这个效果</span><br><span class="line">function foo(x = 5, y = 6) &#123;</span><br><span class="line">  console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line">foo(undefined, null)</span><br><span class="line">// 5 null</span><br><span class="line">    </span><br><span class="line">// 函数的 length 属性（返回没有指定默认值的参数个数。指定了默认值后，length 属性将失真）</span><br><span class="line">(function (a) &#123;&#125;).length // 1</span><br><span class="line">(function (a = 5) &#123;&#125;).length // 0</span><br><span class="line">(function (a, b, c = 5) &#123;&#125;).length // 2</span><br><span class="line">// rest 参数也不会计入 length 属性</span><br><span class="line">(function(...args) &#123;&#125;).length // 0</span><br><span class="line">// 如果设置了默认值的参数不是尾参数，那么 length 属性也不再计入后面的参数了</span><br><span class="line">(function (a = 0, b, c) &#123;&#125;).length // 0</span><br><span class="line">(function (a, b = 1, c) &#123;&#125;).length // 1</span><br><span class="line"></span><br><span class="line">// 作用域（一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域。等到初始化结束，这个作用域就会消失。这种语法行为，在不设置参数默认值时，是不会出现的）</span><br><span class="line">var x = 1;</span><br><span class="line">function f(x, y = x) &#123;</span><br><span class="line">  console.log(y);</span><br><span class="line">&#125;</span><br><span class="line">// 参数 y 的默认值等于变量 x。调用函数 f 时，默认值变量 x 指向第一个参数x，而不是全局变量 x，所以输出是2</span><br><span class="line">f(2) // 2</span><br><span class="line">    </span><br><span class="line">let x = 1;  // 全局变量 x 如果不存在会报错（ReferenceError: x is not defined）</span><br><span class="line">function f(y = x) &#123;</span><br><span class="line">  let x = 2;</span><br><span class="line">  console.log(y);</span><br><span class="line">&#125;</span><br><span class="line">// 函数 f 调用时，变量 x 本身没有定义，所以指向外层的全局变量 x 。函数调用时，函数体内部的局部变量 x 影响不到默认值变量 x。</span><br><span class="line">f() // 1</span><br><span class="line">    </span><br><span class="line">var x = 1;</span><br><span class="line">function foo(x = x) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line">// 数 x = x 形成一个单独作用域。实际执行的是 let x = x，由于暂时性死区的原因，这行代码会报错 ”x 未定义“</span><br><span class="line">foo() // ReferenceError: x is not defined</span><br><span class="line">    </span><br><span class="line">// y 的默认值是一个匿名函数。这个匿名函数内部的变量 x，指向同一个作用域的第一个参数 x。函数 foo 内部又声明了一个内部变量 x，</span><br><span class="line">// 该变量与第一个参数 x 由于不是同一个作用域，所以不是同一个变量，因此执行 y 后，内部变量 x 和外部全局变量 x 的值都没变</span><br><span class="line">var x = 1;</span><br><span class="line">function foo(x, y = function() &#123; x = 2; &#125;) &#123;</span><br><span class="line">  var x = 3;</span><br><span class="line">  y();</span><br><span class="line">  console.log(x);</span><br><span class="line">&#125;</span><br><span class="line">foo() // 3</span><br><span class="line">x // 1</span><br><span class="line">    </span><br><span class="line">// 如果将 var x = 3 的 var 去除，函数 foo 的内部变量 x 就指向第一个参数 x，与匿名函数内部的 x 是一致的，所以最后输出的就是 2，</span><br><span class="line">// 而外层的全局变量 x 依然不受影响</span><br><span class="line">var x = 1;</span><br><span class="line">function foo(x, y = function() &#123; x = 2; &#125;) &#123;</span><br><span class="line">  x = 3;</span><br><span class="line">  y();</span><br><span class="line">  console.log(x);</span><br><span class="line">&#125;</span><br><span class="line">foo() // 2</span><br><span class="line">x // 1</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、rest-参数"><a href="#二、rest-参数" class="headerlink" title="二、rest 参数"></a>二、rest 参数</h3><p>ES6 引入 rest 参数（形式为…变量名），用于获取函数的多余参数，这样就不需要使用 arguments 对象了。rest 参数搭配的变量是一个数组，该变量将多余的参数放入数组中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// arguments 变量的写法</span><br><span class="line">function sortNumbers() &#123;</span><br><span class="line">  return Array.prototype.slice.call(arguments).sort();</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// rest 参数的写法</span><br><span class="line">const sortNumbers = (...numbers) =&gt; numbers.sort();</span><br><span class="line">    </span><br><span class="line">// rest 参数改写数组 push 方法</span><br><span class="line">function push(array, ...items) &#123;</span><br><span class="line">  items.forEach(function(item) &#123;</span><br><span class="line">    array.push(item);</span><br><span class="line">    console.log(item);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">var a = [];</span><br><span class="line">push(a, 1, 2, 3)</span><br><span class="line">  </span><br><span class="line">// rest 参数之后不能再有其他参数（即只能是最后一个参数），否则会报错</span><br><span class="line">function f(a, ...b, c) &#123;  // 报错</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 函数的 length 属性，不包括 rest 参数</span><br><span class="line">(function(a) &#123;&#125;).length  // 1</span><br><span class="line">(function(...a) &#123;&#125;).length  // 0</span><br><span class="line">(function(a, ...b) &#123;&#125;).length  // 1</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、严格模式"><a href="#三、严格模式" class="headerlink" title="三、严格模式"></a>三、严格模式</h3><p>从 ES5 开始，函数内部可以设定为严格模式。ES2016 做了一点修改，规定只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。<br>这样规定的原因是，函数内部的严格模式，同时适用于函数体和函数参数。但是，函数执行的时候，先执行函数参数，然后再执行函数体。这样就有一个不合理的地方，只有从函数体之中，才能知道参数是否应该以严格模式执行，但是参数却应该先于函数体执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 报错</span><br><span class="line">function doSomething(a, b = a) &#123;</span><br><span class="line">  &apos;use strict&apos;;</span><br><span class="line">  // code</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// 设定全局性的严格模式规避限制</span><br><span class="line">&apos;use strict&apos;;</span><br><span class="line">function doSomething(a, b = a) &#123;</span><br><span class="line">  // code</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// 函数包在一个无参数的立即执行函数里面规避限制</span><br><span class="line">const doSomething = (function () &#123;</span><br><span class="line">  &apos;use strict&apos;;</span><br><span class="line">  return function(value = 42) &#123;</span><br><span class="line">    return value;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、name-属性"><a href="#四、name-属性" class="headerlink" title="四、name 属性"></a>四、name 属性</h3><p>函数的 name 属性，返回该函数的函数名。ES6 对这个属性的行为做出了一些修改。如果将一个匿名函数赋值给一个变量，ES5 的name属性，会返回空字符串，而 ES6 的 name 属性会返回实际的函数名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var f = function () &#123;&#125;;</span><br><span class="line">// ES5</span><br><span class="line">f.name // &quot;&quot;</span><br><span class="line">// ES6</span><br><span class="line">f.name // &quot;f&quot;</span><br><span class="line">    </span><br><span class="line">// Function 构造函数返回的函数实例，name 属性的值为 anonymous</span><br><span class="line">(new Function).name // &quot;anonymous&quot;</span><br><span class="line">    </span><br><span class="line">// bind 返回的函数，name 属性值会加上 bound 前缀</span><br><span class="line">function foo() &#123;&#125;;</span><br><span class="line">foo.bind(&#123;&#125;).name // &quot;bound foo&quot;</span><br><span class="line">(function()&#123;&#125;).bind(&#123;&#125;).name // &quot;bound &quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、函数参数的尾逗号"><a href="#五、函数参数的尾逗号" class="headerlink" title="五、函数参数的尾逗号"></a>五、函数参数的尾逗号</h3><p>ES2017 允许函数的最后一个参数有尾逗号（trailing comma）。此前，函数定义和调用时，都不允许最后一个参数后面出现逗号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function clownsEverywhere(</span><br><span class="line">  param1,</span><br><span class="line">  param2,</span><br><span class="line">) &#123; /* ... */ &#125;</span><br><span class="line"></span><br><span class="line">clownsEverywhere(</span><br><span class="line">  &apos;foo&apos;,</span><br><span class="line">  &apos;bar&apos;,</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h3 id="六、箭头函数"><a href="#六、箭头函数" class="headerlink" title="六、箭头函数"></a>六、箭头函数</h3><p>ES6 允许使用“箭头”（=&gt;）定义函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">var f = v =&gt; v;</span><br><span class="line">    </span><br><span class="line">// 如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分</span><br><span class="line">var f = () =&gt; 5;</span><br><span class="line">var sum = (num1, num2) =&gt; num1 + num2;</span><br><span class="line">    </span><br><span class="line">// 如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用 return 语句返回</span><br><span class="line">var sum = (num1, num2) =&gt; &#123; return num1 + num2; &#125;</span><br><span class="line">    </span><br><span class="line">// 如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错</span><br><span class="line">let getTempItem = id =&gt; &#123; id: id, name: &quot;Temp&quot; &#125;;  // 报错</span><br><span class="line">let getTempItem = id =&gt; (&#123; id: id, name: &quot;Temp&quot; &#125;);  // // 不报错</span><br><span class="line">    </span><br><span class="line">// 箭头函数可以与变量解构结合使用</span><br><span class="line">const full = (&#123; first, last &#125;) =&gt; first + &apos; &apos; + last;</span><br><span class="line">    </span><br><span class="line">// rest 参数与箭头函数结合</span><br><span class="line">const headAndTail = (head, ...tail) =&gt; [head, tail];</span><br><span class="line">headAndTail(1, 2, 3, 4, 5)</span><br><span class="line">// [1,[2,3,4,5]]</span><br><span class="line">    </span><br><span class="line">function Timer() &#123;</span><br><span class="line">  this.s1 = 0;</span><br><span class="line">  this.s2 = 0;</span><br><span class="line">  // 箭头函数，this 总是指向函数定义生效时所在的对象</span><br><span class="line">  setInterval(() =&gt; this.s1++, 1000);</span><br><span class="line">  // 普通函数，执行时 this 应该指向全局对象 window</span><br><span class="line">  setInterval(function () &#123;</span><br><span class="line">    this.s2++;</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">var timer = new Timer();</span><br><span class="line">setTimeout(() =&gt; console.log(&apos;s1: &apos;, timer.s1), 3100);</span><br><span class="line">setTimeout(() =&gt; console.log(&apos;s2: &apos;, timer.s2), 3100);</span><br><span class="line">// s1: 3</span><br><span class="line">// s2: 0</span><br><span class="line">    </span><br><span class="line">// 所有的内层函数都是箭头函数，都没有自己的 this，它们的 this 其实都是最外层 foo 函数的 this</span><br><span class="line">function foo() &#123;</span><br><span class="line">  return () =&gt; &#123;</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">      return () =&gt; &#123;</span><br><span class="line">        console.log(&apos;id:&apos;, this.id);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">var f = foo.call(&#123;id: 1&#125;);</span><br><span class="line">var t1 = f.call(&#123;id: 2&#125;)()(); // id: 1</span><br><span class="line">var t2 = f().call(&#123;id: 3&#125;)(); // id: 1</span><br><span class="line">var t3 = f()().call(&#123;id: 4&#125;); // id: 1</span><br></pre></td></tr></table></figure></p>
+<p>箭头函数有几个使用注意点：<br>（1）函数体内的 this 对象，就是定义时所在的对象，而不是使用时所在的对象。<br>（2）不可以当作构造函数，也就是说，不可以使用 new 命令，否则会抛出一个错误。<br>（3）不可以使用 arguments 对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。<br>（4）不可以使用 yield 命令，因此箭头函数不能用作 Generator 函数。    </p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T14:03:43.000Z" itemprop="dateUpdated">2018-04-22 22:03:43</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/function-expand/" target="_blank" rel="external">http://blog.master-ss.cn/es6/function-expand/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/function-expand/&title=《es6 之函数扩展》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/function-expand/&title=《es6 之函数扩展》 — 青松的博客&source=ES6 扩展了函数。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/function-expand/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之函数扩展》 — 青松的博客&url=http://blog.master-ss.cn/es6/function-expand/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/function-expand/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/array-expand/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之数组扩展</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/number-expand/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之数值扩展</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/function-expand/&title=《es6 之函数扩展》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/function-expand/&title=《es6 之函数扩展》 — 青松的博客&source=ES6 扩展了函数。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/function-expand/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之函数扩展》 — 青松的博客&url=http://blog.master-ss.cn/es6/function-expand/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/function-expand/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACN0lEQVR42u3aSY7jMBAEQP//0+7rDBrmZJLyACqFTg21FoYNlGvh6xUf7+Xx6Zo/z6+f9vv86xsHBgbGbRlXLfHTItbX57BP12BgYDyH8SmCJctteW0IXq8NAwMDo2XkgXtNwsDAwPh2wF3XmOu3Y2BgYJwUsUkylyeLbVp5WS2OgYFxQ0bedf//f39lvoGBgXErxrs8kiQvb5mdrOSvt2BgYIxmnLwmJ7XFarseDAyMJzCSxlZSskavKe+qS1YMDIxxjHa4eNK+zxtwdcjGwMAYzUiCWtuOb8eZ+cDgdfJiDAyMEYy2lZaPFfdGj/XTMDAwhjLasLiXzF2bIBZiDAyMEYy9TRUnrbH1lq8kuEdfAwYGxiBGMlbMF9omlEkBHF2JgYExmpEH2SRyX7XE/EOpfyswMDBuyEgWnZxvN2e0jbZoeImBgTGU0W6eSP7bPjlv6kUYDAyMoYz3wbH3hL1RRPQ9YGBgjGOcjwFOdmfl12z+VmBgYIxgtC22JCksWvlb9252DTEwMMYx2u1c7Udw1favfySIGBgY4xj5GKBNHPPCNR8/YGBgPJORh7912dm21dqkMypiMTAwBjFOGvrngfIk0B8NLzEwMG7FaMvF84Z+O56s94xgYGAMZeTbKc5L1iQ0t8UzBgbGcxh54GtL383dakGLDQMDA6PdBLbXyGsDd7TZAgMDA2Nr/rA3MMi3g2BgYDyBcdKsb1tsSfpYgzEwMEYz9krHNnFs72rTSgwMjKGMH9DR2xlei/2kAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

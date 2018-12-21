@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之 Generator 异步应用 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="异步编程对 JavaScript 语言太重要。Javascript 语言的执行环境是 “单线程” 的，如果没有异步编程，根本没法用，非卡死不可。现在主要介绍 Generator 函数如何完成异步操作。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之 Generator 异步应用">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/generator-async/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="异步编程对 JavaScript 语言太重要。Javascript 语言的执行环境是 “单线程” 的，如果没有异步编程，根本没法用，非卡死不可。现在主要介绍 Generator 函数如何完成异步操作。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T13:21:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之 Generator 异步应用">
+<meta name="twitter:description" content="异步编程对 JavaScript 语言太重要。Javascript 语言的执行环境是 “单线程” 的，如果没有异步编程，根本没法用，非卡死不可。现在主要介绍 Generator 函数如何完成异步操作。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之 Generator 异步应用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之 Generator 异步应用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-09T01:43:04.000Z" itemprop="datePublished" class="page-time">
+  2018-03-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、简介"><span class="post-toc-text">一、简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、JavaScript-语言的-Thunk-函数"><span class="post-toc-text">二、JavaScript 语言的 Thunk 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、co-模块"><span class="post-toc-text">三、co 模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、Generator-应用"><span class="post-toc-text">四、Generator 应用</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/generator-async" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之 Generator 异步应用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-09 09:43:04" datetime="2018-03-09T01:43:04.000Z" itemprop="datePublished">2018-03-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>异步编程对 JavaScript 语言太重要。Javascript 语言的执行环境是 “单线程” 的，如果没有异步编程，根本没法用，非卡死不可。现在主要介绍 Generator 函数如何完成异步操作。<br><a id="more"></a></p>
+<h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 异步编程：回调函数</span><br><span class="line">fs.readFile(&apos;/etc/passwd&apos;, &apos;utf-8&apos;, function (err, data) &#123;</span><br><span class="line">  if (err) throw err;</span><br><span class="line">  console.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">// 异步编程：Promise</span><br><span class="line">var readFile = require(&apos;fs-readfile-promise&apos;);</span><br><span class="line">readFile(fileA)</span><br><span class="line">.then(function (data) &#123;</span><br><span class="line">  console.log(data.toString());</span><br><span class="line">&#125;)</span><br><span class="line">.then(function () &#123;</span><br><span class="line">  return readFile(fileB);</span><br><span class="line">&#125;)</span><br><span class="line">.then(function (data) &#123;</span><br><span class="line">  console.log(data.toString());</span><br><span class="line">&#125;)</span><br><span class="line">.catch(function (err) &#123;</span><br><span class="line">  console.log(err);</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">// 异步编程：Generator</span><br><span class="line">function* gen(x) &#123;</span><br><span class="line">  var y = yield x + 2;</span><br><span class="line">  return y;</span><br><span class="line">&#125;</span><br><span class="line">var g = gen(1);</span><br><span class="line">g.next() // &#123; value: 3, done: false &#125;</span><br><span class="line">g.next() // &#123; value: undefined, done: true &#125;</span><br><span class="line">  </span><br><span class="line">// 异步任务的封装：异步操作表示得很简洁，但是流程管理却不方便（即何时执行第一阶段、何时执行第二阶段）</span><br><span class="line">var fetch = require(&apos;node-fetch&apos;);</span><br><span class="line">function* gen()&#123;</span><br><span class="line">  var url = &apos;https://api.github.com/users/github&apos;;</span><br><span class="line">  var result = yield fetch(url);</span><br><span class="line">  console.log(result.bio);</span><br><span class="line">&#125;</span><br><span class="line">var g = gen();</span><br><span class="line">var result = g.next();</span><br><span class="line">result.value.then(function(data)&#123; // 由于 Fetch 模块返回的是一个 Promise 对象，因此要用 then 方法调用下一个 next 方法</span><br><span class="line">  return data.json();</span><br><span class="line">&#125;).then(function(data)&#123;</span><br><span class="line">  g.next(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="二、JavaScript-语言的-Thunk-函数"><a href="#二、JavaScript-语言的-Thunk-函数" class="headerlink" title="二、JavaScript 语言的 Thunk 函数"></a>二、JavaScript 语言的 Thunk 函数</h3><p>在 JavaScript 语言中，Thunk 函数替换的是多参数函数，将其替换成一个只接受回调函数作为参数的单参数函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">// 正常版本的readFile（多参数版本）</span><br><span class="line">fs.readFile(fileName, callback);</span><br><span class="line">// Thunk版本的readFile（单参数版本）</span><br><span class="line">var Thunk = function (fileName) &#123;</span><br><span class="line">  return function (callback) &#123;</span><br><span class="line">    return fs.readFile(fileName, callback);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">var readFileThunk = Thunk(fileName);</span><br><span class="line">readFileThunk(callback);</span><br><span class="line">  </span><br><span class="line">// Generator 函数自动执行，不过不适合异步操作。如果必须保证前一步执行完，才能执行后一步，则下面的自动执行就不可行。</span><br><span class="line">function* gen() &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line">var g = gen();</span><br><span class="line">var res = g.next();</span><br><span class="line">while(!res.done)&#123;</span><br><span class="line">  console.log(res.value);</span><br><span class="line">  res = g.next();</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// Thunk 函数的自动流程管理</span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">function run(generator) &#123;</span><br><span class="line">    var it = generator(go);</span><br><span class="line">    function go(err, result) &#123;</span><br><span class="line">        if (err) return it.throw(err);</span><br><span class="line">        it.next(result);</span><br><span class="line">    &#125;</span><br><span class="line">    go();</span><br><span class="line">&#125;</span><br><span class="line">run(function* (done) &#123;</span><br><span class="line">    var firstFile;</span><br><span class="line">    try &#123;</span><br><span class="line">        var dirFiles = yield fs.readdir(&apos;NoNoNoNo&apos;, done); // No such dir</span><br><span class="line">        firstFile = dirFiles[0];</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">        firstFile = null;</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(firstFile);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、co-模块"><a href="#三、co-模块" class="headerlink" title="三、co 模块"></a>三、co 模块</h3><p>co 模块是著名程序员 TJ Holowaychuk 于 2013 年 6 月发布的一个小工具，用于 Generator 函数的自动执行。co 模块其实就是将两种自动执行器（Thunk 函数和 Promise 对象），包装成一个模块。使用 co 的前提条件是，Generator 函数的 yield 命令后面，只能是 Thunk 函数或 Promise 对象。如果数组或对象的成员，全部都是 Promise 对象，也可以使用 co。这样当异步操作有了结果就能够用 then 方法交回执行权。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">// co 模块可以让你不用编写 Generator 函数的执行器，Generator 函数只要传入 co 函数，就会自动执行，并返回一个 Promise 对象</span><br><span class="line">var readFile = function (fileName)&#123;</span><br><span class="line">  return new Promise(function (resolve, reject)&#123;</span><br><span class="line">    fs.readFile(fileName, function(error, data)&#123;</span><br><span class="line">      if (error) return reject(error);</span><br><span class="line">      resolve(data);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">var gen = function* () &#123;</span><br><span class="line">  var f1 = yield readFile(&apos;/etc/fstab&apos;);</span><br><span class="line">  var f2 = yield readFile(&apos;/etc/shells&apos;);</span><br><span class="line">  console.log(f1.toString());</span><br><span class="line">  console.log(f2.toString());</span><br><span class="line">&#125;;</span><br><span class="line">var co = require(&apos;co&apos;);</span><br><span class="line">co(gen);</span><br><span class="line">  </span><br><span class="line">// 基于 Promise 对象的自动执行</span><br><span class="line">function getFoo() &#123;</span><br><span class="line">    return new Promise(function (resolve, reject) &#123;</span><br><span class="line">        resolve(&apos;foo&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">function run(generator) &#123;</span><br><span class="line">    var it = generator();</span><br><span class="line">    function go(result) &#123;</span><br><span class="line">        if (result.done) return result.value;</span><br><span class="line">        return result.value.then(function (value) &#123;</span><br><span class="line">            return go(it.next(value));</span><br><span class="line">        &#125;, function (error) &#123;</span><br><span class="line">            return go(it.throw(error));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    go(it.next());</span><br><span class="line">&#125;</span><br><span class="line">run(function* () &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        var foo = yield getFoo();</span><br><span class="line">        console.log(foo);</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">        console.log(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">// co 源码---------------------------------------------》</span><br><span class="line">var slice = Array.prototype.slice;</span><br><span class="line">module.exports = co[&apos;default&apos;] = co.co = co;</span><br><span class="line">// 将生成器函数 fn 封装到函数中，这个函数执行返回 Promise</span><br><span class="line">co.wrap = function (fn) &#123;</span><br><span class="line">  createPromise.__generatorFunction__ = fn;</span><br><span class="line">  return createPromise;</span><br><span class="line">  function createPromise() &#123;</span><br><span class="line">    return co.call(this, fn.apply(this, arguments));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">// 执行生成器函数或者迭代器，返回 Promise</span><br><span class="line">function co(gen) &#123;</span><br><span class="line">  var ctx = this;</span><br><span class="line">  var args = slice.call(arguments, 1);</span><br><span class="line">  return new Promise(function (resolve, reject) &#123;</span><br><span class="line">    if (typeof gen === &apos;function&apos;) gen = gen.apply(ctx, args);  // 调用生成器函数来获得遍历器</span><br><span class="line">    if (!gen || typeof gen.next !== &apos;function&apos;) return resolve(gen);  // 如果不是遍历器，那么直接将 Promise 状态设置为 resolved</span><br><span class="line">    // 手动执行一次</span><br><span class="line">    onFulfilled();</span><br><span class="line">    // 成功回调函数</span><br><span class="line">    function onFulfilled(res) &#123;</span><br><span class="line">      var ret;</span><br><span class="line">      try &#123;</span><br><span class="line">        ret = gen.next(res);  // 首次启动遍历器遍历，将返回值给 ret 变量</span><br><span class="line">      &#125; catch (e) &#123;</span><br><span class="line">        return reject(e); // 如果执行失败将 Promise 状态设置为 rejected</span><br><span class="line">      &#125;</span><br><span class="line">      next(ret);</span><br><span class="line">      return null;</span><br><span class="line">    &#125;</span><br><span class="line">    // 失败回调函数</span><br><span class="line">    function onRejected(err) &#123;</span><br><span class="line">      var ret;</span><br><span class="line">      try &#123;</span><br><span class="line">        ret = gen.throw(err); // 抛出错误</span><br><span class="line">      &#125; catch (e) &#123;</span><br><span class="line">        return reject(e); // 将 Promise 状态设置为 rejected</span><br><span class="line">      &#125;</span><br><span class="line">      next(ret);</span><br><span class="line">    &#125;</span><br><span class="line">    // 主要是将 onFulfilled、onRejected 函数添加到 ret.value 或者其转化的 Promise 中的回调函数中</span><br><span class="line">    function next(ret) &#123;</span><br><span class="line">      if (ret.done) return resolve(ret.value); // 如果已经遍历完成，那么返回 ret.value</span><br><span class="line">      var value = toPromise.call(ctx, ret.value); // 将 ret.value 转化为 Promise</span><br><span class="line">      if (value &amp;&amp; isPromise(value)) return value.then(onFulfilled, onRejected);  // 将 onFulfilled 和 onRejected 添加到 Promise 的回调函数中</span><br><span class="line">      return onRejected(new TypeError(&apos;You may only yield a function, promise, generator, array, or object, &apos;</span><br><span class="line">        + &apos;but the following object was passed: &quot;&apos; + String(ret.value) + &apos;&quot;&apos;)); // 如果返回的数据转化失败，那么抛出错误，将 Promise 状态设置为 rejected</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">// 将参数 obj 转为 Promise</span><br><span class="line">function toPromise(obj) &#123;</span><br><span class="line">  if (!obj) return obj;</span><br><span class="line">  if (isPromise(obj)) return obj;</span><br><span class="line">  if (isGeneratorFunction(obj) || isGenerator(obj)) return co.call(this, obj);  // 如果是生成器函数，那么执行 co 返回 Promise</span><br><span class="line">  if (&apos;function&apos; == typeof obj) return thunkToPromise.call(this, obj);</span><br><span class="line">  if (Array.isArray(obj)) return arrayToPromise.call(this, obj);</span><br><span class="line">  if (isObject(obj)) return objectToPromise.call(this, obj);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line">// 将 thunk 函数转换为 Promise</span><br><span class="line">function thunkToPromise(fn) &#123;</span><br><span class="line">  var ctx = this;</span><br><span class="line">  return new Promise(function (resolve, reject) &#123;</span><br><span class="line">    fn.call(ctx, function (err, res) &#123;</span><br><span class="line">      if (err) return reject(err);</span><br><span class="line">      if (arguments.length &gt; 2) res = slice.call(arguments, 1);</span><br><span class="line">      resolve(res);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">// 将数组转换为 Promise</span><br><span class="line">function arrayToPromise(obj) &#123;</span><br><span class="line">  return Promise.all(obj.map(toPromise, this));</span><br><span class="line">&#125;</span><br><span class="line">// 将 obj 转换为 Promise</span><br><span class="line">function objectToPromise(obj) &#123;</span><br><span class="line">  var results = new obj.constructor(); // 获取一个新的 obj 对象 results</span><br><span class="line">  var keys = Object.keys(obj);  // 获取对象的 keys</span><br><span class="line">  var promises = [];</span><br><span class="line">  for (var i = 0; i &lt; keys.length; i++) &#123;</span><br><span class="line">    var key = keys[i];</span><br><span class="line">    var promise = toPromise.call(this, obj[key]); // 将对象的 values 转为 promise 对象</span><br><span class="line">    if (promise &amp;&amp; isPromise(promise)) defer(promise, key); // 如果转换成功执行 defer</span><br><span class="line">    else results[key] = obj[key]; // 如果转换失败则传值给新对象</span><br><span class="line">  &#125;</span><br><span class="line">  return Promise.all(promises).then(function () &#123; // 将所有的 promise 合并为一个新的 promise 并添加回调函数</span><br><span class="line">    return results; // 返回新对象 results</span><br><span class="line">  &#125;);</span><br><span class="line">  function defer(promise, key) &#123;</span><br><span class="line">    // predefine the key in the result</span><br><span class="line">    results[key] = undefined;   // 将新对象 results 的对应 value 设置为 undefined</span><br><span class="line">    promises.push(promise.then(function (res) &#123; // 为新 promise 添加回调函数，并将值传入 promises 数组</span><br><span class="line">      results[key] = res; // 回调函数中将新对象 results 的对应 value 设置为原值</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 判断参数 obj 是否是 promise 对象</span><br><span class="line">function isPromise(obj) &#123;</span><br><span class="line">  return &apos;function&apos; == typeof obj.then;</span><br><span class="line">&#125;</span><br><span class="line">// 判断参数 obj 是否是迭代器</span><br><span class="line">function isGenerator(obj) &#123;</span><br><span class="line">  return &apos;function&apos; == typeof obj.next &amp;&amp; &apos;function&apos; == typeof obj.throw;</span><br><span class="line">&#125;</span><br><span class="line">// 判断参数 obj 是否是生成器函数或者 generator 生成的迭代器</span><br><span class="line">function isGeneratorFunction(obj) &#123;</span><br><span class="line">  var constructor = obj.constructor;  // ƒ GeneratorFunction() &#123; [native code] &#125;</span><br><span class="line">  if (!constructor) return false;</span><br><span class="line">  // displayName 属性将返回函数的显示名称；name(ES6) 属性返回一个函数声明的名称</span><br><span class="line">  if (&apos;GeneratorFunction&apos; === constructor.name || &apos;GeneratorFunction&apos; === constructor.displayName) return true;</span><br><span class="line">  return isGenerator(constructor.prototype); // 判断是否是 generator 生成的迭代器，constructor.prototype 返回 Generator 对象</span><br><span class="line">&#125;</span><br><span class="line">// 判断是否为简单对象</span><br><span class="line">function isObject(val) &#123;</span><br><span class="line">  return Object == val.constructor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、Generator-应用"><a href="#四、Generator-应用" class="headerlink" title="四、Generator 应用"></a>四、Generator 应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">// 异步操作的同步化表达</span><br><span class="line">function* main() &#123;</span><br><span class="line">  var result = yield request(&quot;http://some.url&quot;);</span><br><span class="line">  var resp = JSON.parse(result);</span><br><span class="line">    console.log(resp.value);</span><br><span class="line">&#125;</span><br><span class="line">function request(url) &#123;</span><br><span class="line">  makeAjaxCall(url, function(response)&#123;</span><br><span class="line">    it.next(response);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">var it = main();</span><br><span class="line">it.next();</span><br><span class="line">  </span><br><span class="line">// 控制流管理（这里只适合同步操作，异步操作使用 Thunk 或者 co）</span><br><span class="line">scheduler(longRunningTask(initialValue));</span><br><span class="line">function scheduler(task) &#123;</span><br><span class="line">  var taskObj = task.next(task.value);</span><br><span class="line">  // 如果Generator函数未结束，就继续调用</span><br><span class="line">  if (!taskObj.done) &#123;</span><br><span class="line">    task.value = taskObj.value</span><br><span class="line">    scheduler(task);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 部署 Iterator 接口</span><br><span class="line">function* iterEntries(obj) &#123;</span><br><span class="line">  let keys = Object.keys(obj);</span><br><span class="line">  for (let i=0; i &lt; keys.length; i++) &#123;</span><br><span class="line">    let key = keys[i];</span><br><span class="line">    yield [key, obj[key]];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let myObj = &#123; foo: 3, bar: 7 &#125;;</span><br><span class="line">for (let [key, value] of iterEntries(myObj)) &#123;</span><br><span class="line">  console.log(key, value);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 作为数据结构（Generator 使得数据或者操作，具备了类似数组的接口）</span><br><span class="line">function* doStuff() &#123;</span><br><span class="line">  yield fs.readFile.bind(null, &apos;hello.txt&apos;);</span><br><span class="line">  yield fs.readFile.bind(null, &apos;world.txt&apos;);</span><br><span class="line">  yield fs.readFile.bind(null, &apos;and-such.txt&apos;);</span><br><span class="line">&#125;</span><br><span class="line">for (task of doStuff()) &#123;</span><br><span class="line">  // task是一个函数，可以像回调函数那样使用它</span><br><span class="line">&#125;</span><br><span class="line">function doStuff() &#123;  // 可以用数组模拟 Generator 的这种用法</span><br><span class="line">  return [</span><br><span class="line">    fs.readFile.bind(null, &apos;hello.txt&apos;),</span><br><span class="line">    fs.readFile.bind(null, &apos;world.txt&apos;),</span><br><span class="line">    fs.readFile.bind(null, &apos;and-such.txt&apos;)</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Generator 可以暂停函数执行，返回任意表达式的值。这种特点使得 Generator 有多种应用场景。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T13:21:29.000Z" itemprop="dateUpdated">2018-04-22 21:21:29</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/generator-async/" target="_blank" rel="external">http://blog.master-ss.cn/es6/generator-async/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/generator-async/&title=《es6 之 Generator 异步应用》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/generator-async/&title=《es6 之 Generator 异步应用》 — 青松的博客&source=异步编程对 JavaScript 语言太重要。Javascript 语言的执行环境是 “单线程” 的，如果没有异步编程，根本没法用，非卡死不可。现在主要介..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/generator-async/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 Generator 异步应用》 — 青松的博客&url=http://blog.master-ss.cn/es6/generator-async/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/generator-async/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/class/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 class</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/async/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之 async</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/generator-async/&title=《es6 之 Generator 异步应用》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/generator-async/&title=《es6 之 Generator 异步应用》 — 青松的博客&source=异步编程对 JavaScript 语言太重要。Javascript 语言的执行环境是 “单线程” 的，如果没有异步编程，根本没法用，非卡死不可。现在主要介..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/generator-async/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 Generator 异步应用》 — 青松的博客&url=http://blog.master-ss.cn/es6/generator-async/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/generator-async/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQW4CMQwFUO5/6anUFVU18G0PCJKXVVXKTF4WbpLv2y0ex++4//l+nP39/0//Pyd/5gUDAwPjaxnHw/H49Tn77NPHjGRuGBgY+zDyqZy9Jl+aZKL53DAwMDAeT/eq5ciLNQYGBsb89XnxPfsWBgYGxuQQ27sIy5/2prM4BgbGFzJ6wcB7fn55voGBgfHxjKM18pByHn9G88HAwFiaMd/2VWPLnJSHBBgYGGszJldjE/ZVzWF//m9gYGAszei1RPSmlU+0sFgYGBhLM6oh4uTImu/lms/BwMBYmlE9FVYZeVHunUkxMDDWZlQbuSZNEr29XBRLYGBgLM2YbOmSSSfH1F7wiYGBsQ+jGjpWi2mCzIvsk1M4BgbGZox8q5eU1zx4qN7/Pym4GBgYSzB6r292n8UT6kUUGBgYuzHyDGFSgq8NJDAwMHZjVC/dqs1kecBQiFoxMDAWZfQOltUi24scCkuAgYGxNGPytfx6rnfpVl4ODAyMjRnVYLL6zOrSFG7vMDAwlmP0tnFXtYUlW88nM8HAwFiakV/QV9vCks1fL4SIvoWBgbEE4yiOQtpQXKBqC1oUDGBgYCzBqLZwVeOEXqmtPgEDA2MHxuTKfl6me9vKws4RAwNjIUb1pr1av6/lYWBgYFRbH5JDaVJMextQDAwMjHnzxATWPGdjYGAsykgKXH5BlrB7v8HAwNiTcVUwUG0Cm7SdvTDfwMDA+CzGD8xNQc98p7ehAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

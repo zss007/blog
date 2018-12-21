@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>node 之 on-finished | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="当 http 请求关闭、完成或报错执行回调。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node 之 on-finished">
+<meta property="og:url" content="http://blog.master-ss.cn/node/on-finished/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="当 http 请求关闭、完成或报错执行回调。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-21T05:36:51.407Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node 之 on-finished">
+<meta name="twitter:description" content="当 http 请求关闭、完成或报错执行回调。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node 之 on-finished</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node 之 on-finished</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-24T12:06:30.000Z" itemprop="datePublished" class="page-time">
+  2018-04-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、分析"><span class="post-toc-text">二、分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1、传入-msg，如果-msg-已经完成，则使用-setImmediate-或-process-nextTick-执行回调函数，否则执行-attachListener。"><span class="post-toc-text">1、传入 msg，如果 msg 已经完成，则使用 setImmediate 或 process.nextTick 执行回调函数，否则执行 attachListener。</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2、如果-msg-内部没有-onFinished-属性及其-queue-属性，则重新初始化，并将回调函数添加到-queue-数组中。"><span class="post-toc-text">2、如果 msg 内部没有 __onFinished 属性及其 queue 属性，则重新初始化，并将回调函数添加到 queue 数组中。</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3、createListener-返回一个回调函数，并在回调函数上挂载-queue-数组，回调函数执行时清空属性值并调用所有-queue-数组中的回调。"><span class="post-toc-text">3、createListener 返回一个回调函数，并在回调函数上挂载 queue 数组，回调函数执行时清空属性值并调用所有 queue 数组中的回调。</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4、attachFinishedListener-在-msg-触发-end、finish-事件时执行-onFinish，清空挂载在-msg-上的监听函数，并执行-createListener-返回的回调函数。"><span class="post-toc-text">4、attachFinishedListener 在 msg 触发 end、finish 事件时执行 onFinish，清空挂载在 msg 上的监听函数，并执行 createListener 返回的回调函数。</span></a></li></ol></li></ol><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、案例"><span class="post-toc-text">三、案例</span></a></li>
+        </nav>
+    </aside>
+
+
+<article id="post-node/on-finished" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node 之 on-finished</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-24 20:06:30" datetime="2018-04-24T12:06:30.000Z" itemprop="datePublished">2018-04-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>当 http 请求关闭、完成或报错执行回调。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Module exports.</span></span><br><span class="line"><span class="comment"> * @public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">module</span>.exports = onFinished</span><br><span class="line"><span class="built_in">module</span>.exports.isFinished = isFinished</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Module dependencies.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> first = <span class="built_in">require</span>(<span class="string">'ee-first'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Variables.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/* istanbul ignore next */</span></span><br><span class="line"><span class="keyword">var</span> defer = <span class="keyword">typeof</span> setImmediate === <span class="string">'function'</span></span><br><span class="line">  ? setImmediate</span><br><span class="line">  : <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123; process.nextTick(fn.bind.apply(fn, <span class="built_in">arguments</span>)) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Invoke callback when the response has finished, useful for</span></span><br><span class="line"><span class="comment"> * cleaning up resources afterwards.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;object&#125; msg</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125; listener</span></span><br><span class="line"><span class="comment"> * @return &#123;object&#125;</span></span><br><span class="line"><span class="comment"> * @public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onFinished</span>(<span class="params">msg, listener</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (isFinished(msg) !== <span class="literal">false</span>) &#123;</span><br><span class="line">    defer(listener, <span class="literal">null</span>, msg)</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// attach the listener to the message</span></span><br><span class="line">  attachListener(msg, listener)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> msg</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Determine if message is already finished.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;object&#125; msg</span></span><br><span class="line"><span class="comment"> * @return &#123;boolean&#125;</span></span><br><span class="line"><span class="comment"> * @public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isFinished</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> socket = msg.socket</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> msg.finished === <span class="string">'boolean'</span>) &#123;</span><br><span class="line">    <span class="comment">// OutgoingMessage</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Boolean</span>(msg.finished || (socket &amp;&amp; !socket.writable))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> msg.complete === <span class="string">'boolean'</span>) &#123;</span><br><span class="line">    <span class="comment">// IncomingMessage</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Boolean</span>(msg.upgrade || !socket || !socket.readable || (msg.complete &amp;&amp; !msg.readable))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// don't know</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Attach a finished listener to the message.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;object&#125; msg</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125; callback</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">attachFinishedListener</span>(<span class="params">msg, callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> eeMsg</span><br><span class="line">  <span class="keyword">var</span> eeSocket</span><br><span class="line">  <span class="keyword">var</span> finished = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">onFinish</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">    eeMsg.cancel()</span><br><span class="line">    eeSocket.cancel()</span><br><span class="line"></span><br><span class="line">    finished = <span class="literal">true</span></span><br><span class="line">    callback(error)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// finished on first message event</span></span><br><span class="line">  eeMsg = eeSocket = first([[msg, <span class="string">'end'</span>, <span class="string">'finish'</span>]], onFinish)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">onSocket</span>(<span class="params">socket</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// remove listener</span></span><br><span class="line">    msg.removeListener(<span class="string">'socket'</span>, onSocket)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (finished) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> (eeMsg !== eeSocket) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// finished on first socket event</span></span><br><span class="line">    eeSocket = first([[socket, <span class="string">'error'</span>, <span class="string">'close'</span>]], onFinish)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (msg.socket) &#123;</span><br><span class="line">    <span class="comment">// socket already assigned</span></span><br><span class="line">    onSocket(msg.socket)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// wait for socket to be assigned</span></span><br><span class="line">  msg.on(<span class="string">'socket'</span>, onSocket)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (msg.socket === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// node.js 0.8 patch</span></span><br><span class="line">    patchAssignSocket(msg, onSocket)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Attach the listener to the message.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;object&#125; msg</span></span><br><span class="line"><span class="comment"> * @return &#123;function&#125;</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">attachListener</span>(<span class="params">msg, listener</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> attached = msg.__onFinished</span><br><span class="line"></span><br><span class="line">  <span class="comment">// create a private single listener with queue</span></span><br><span class="line">  <span class="keyword">if</span> (!attached || !attached.queue) &#123;</span><br><span class="line">    attached = msg.__onFinished = createListener(msg)</span><br><span class="line">    attachFinishedListener(msg, attached)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  attached.queue.push(listener)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create listener on message.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;object&#125; msg</span></span><br><span class="line"><span class="comment"> * @return &#123;function&#125;</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createListener</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">listener</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (msg.__onFinished === listener) msg.__onFinished = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">if</span> (!listener.queue) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> queue = listener.queue</span><br><span class="line">    listener.queue = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; queue.length; i++) &#123;</span><br><span class="line">      queue[i](err, msg)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  listener.queue = []</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> listener</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Patch ServerResponse.prototype.assignSocket for node.js 0.8.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;ServerResponse&#125; res</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125; callback</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">patchAssignSocket</span>(<span class="params">res, callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> assignSocket = res.assignSocket</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> assignSocket !== <span class="string">'function'</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// res.on('socket', callback) is broken in 0.8</span></span><br><span class="line">  res.assignSocket = <span class="function"><span class="keyword">function</span> <span class="title">_assignSocket</span>(<span class="params">socket</span>) </span>&#123;</span><br><span class="line">    assignSocket.call(<span class="keyword">this</span>, socket)</span><br><span class="line">    callback(socket)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二、分析"><a href="#二、分析" class="headerlink" title="二、分析"></a>二、分析</h3><h5 id="1、传入-msg，如果-msg-已经完成，则使用-setImmediate-或-process-nextTick-执行回调函数，否则执行-attachListener。"><a href="#1、传入-msg，如果-msg-已经完成，则使用-setImmediate-或-process-nextTick-执行回调函数，否则执行-attachListener。" class="headerlink" title="1、传入 msg，如果 msg 已经完成，则使用 setImmediate 或 process.nextTick 执行回调函数，否则执行 attachListener。"></a>1、传入 msg，如果 msg 已经完成，则使用 setImmediate 或 process.nextTick 执行回调函数，否则执行 attachListener。</h5><h5 id="2、如果-msg-内部没有-onFinished-属性及其-queue-属性，则重新初始化，并将回调函数添加到-queue-数组中。"><a href="#2、如果-msg-内部没有-onFinished-属性及其-queue-属性，则重新初始化，并将回调函数添加到-queue-数组中。" class="headerlink" title="2、如果 msg 内部没有 __onFinished 属性及其 queue 属性，则重新初始化，并将回调函数添加到 queue 数组中。"></a>2、如果 msg 内部没有 __onFinished 属性及其 queue 属性，则重新初始化，并将回调函数添加到 queue 数组中。</h5><h5 id="3、createListener-返回一个回调函数，并在回调函数上挂载-queue-数组，回调函数执行时清空属性值并调用所有-queue-数组中的回调。"><a href="#3、createListener-返回一个回调函数，并在回调函数上挂载-queue-数组，回调函数执行时清空属性值并调用所有-queue-数组中的回调。" class="headerlink" title="3、createListener 返回一个回调函数，并在回调函数上挂载 queue 数组，回调函数执行时清空属性值并调用所有 queue 数组中的回调。"></a>3、createListener 返回一个回调函数，并在回调函数上挂载 queue 数组，回调函数执行时清空属性值并调用所有 queue 数组中的回调。</h5><h5 id="4、attachFinishedListener-在-msg-触发-end、finish-事件时执行-onFinish，清空挂载在-msg-上的监听函数，并执行-createListener-返回的回调函数。"><a href="#4、attachFinishedListener-在-msg-触发-end、finish-事件时执行-onFinish，清空挂载在-msg-上的监听函数，并执行-createListener-返回的回调函数。" class="headerlink" title="4、attachFinishedListener 在 msg 触发 end、finish 事件时执行 onFinish，清空挂载在 msg 上的监听函数，并执行 createListener 返回的回调函数。"></a>4、attachFinishedListener 在 msg 触发 end、finish 事件时执行 onFinish，清空挂载在 msg 上的监听函数，并执行 createListener 返回的回调函数。</h5><h3 id="三、案例"><a href="#三、案例" class="headerlink" title="三、案例"></a>三、案例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听 request</span></span><br><span class="line"><span class="keyword">var</span> data = <span class="string">''</span></span><br><span class="line">req.setEncoding(<span class="string">'utf8'</span>)</span><br><span class="line">req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">  data += str</span><br><span class="line">&#125;)</span><br><span class="line">onFinished(req, <span class="function"><span class="keyword">function</span> (<span class="params">err, req</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// data is read unless there is err</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听 response</span></span><br><span class="line"><span class="keyword">var</span> destroy = <span class="built_in">require</span>(<span class="string">'destroy'</span>)</span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">var</span> onFinished = <span class="built_in">require</span>(<span class="string">'on-finished'</span>)</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> <span class="title">onRequest</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> stream = fs.createReadStream(<span class="string">'package.json'</span>)</span><br><span class="line">  stream.pipe(res)</span><br><span class="line">  onFinished(res, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    destroy(stream)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-21T05:36:51.407Z" itemprop="dateUpdated">2018-12-21 13:36:51</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/on-finished/" target="_blank" rel="external">http://blog.master-ss.cn/node/on-finished/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/on-finished/&title=《node 之 on-finished》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/on-finished/&title=《node 之 on-finished》 — 青松的博客&source=当 http 请求关闭、完成或报错执行回调。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/on-finished/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之 on-finished》 — 青松的博客&url=http://blog.master-ss.cn/node/on-finished/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/on-finished/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/node/koa-convert/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">koa 之 koa-convert</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/node/ee-first/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">node 之 ee-first</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/on-finished/&title=《node 之 on-finished》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/on-finished/&title=《node 之 on-finished》 — 青松的博客&source=当 http 请求关闭、完成或报错执行回调。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/on-finished/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之 on-finished》 — 青松的博客&url=http://blog.master-ss.cn/node/on-finished/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/on-finished/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzklEQVR42u3aMW7DMAwF0Nz/0u7SoUvkT9ISXOBpymBbTxkIkuLnE6/rz6o++e2t5GvNhYuLO+Zey7VGJG+t98q/houLe567DjRr+rPP39hwcXFfyU0SlHVQG6VBuLi4r+QmCc3kMLi4uO/h5mVMteCphrbHajVcXNwBN+9S7vu9pb+Li4vb4l7FtU4+1u3Ryb6/X8DFxT3CzQPKOuGoQkf74uLibuYmZUa1eTEqWpZtF1xc3DPcyfhFPlQxb4vc/Me4uLiPcnvDVdUAlIxhRcfGxcU9wq2WOtVUporOiyhcXNx93N7lR2/j+VUNLi7uSW7eBs0P8FRw/Fr84OLibuMmg1PVYqYapJIsDBcX9zw3OU0yQpFvmXdzb/q7uLi4m7nV9ke+fXWY4ybNwsXFPcjtBbLesaMmyI64i4uLO+bmn66mKUliVC5+cHFxN3B7oOqWzbSmeuuCi4s74F7FNQlb+SBXYfILFxd3A7c6HjEZrUhKo0kDBRcX91luHrzyY8wDWTPRwcXFfZSbF0X5tev2Wg0XF/dl3EkQrJZbuLi4/4XbuyBJgtpN0MTFxT3I3dEGzS9XCk0TXFzcI9y86dm7jKle6/ZKJlxc3Ie4P0RQkJ9OBMuNAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

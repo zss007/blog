@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>vuex 之初始化 store._vm | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="模块初始化看完后，我们继续来看初始化 store._vm">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vuex 之初始化 store._vm">
+<meta property="og:url" content="http://blog.master-ss.cn/vuex/vuex-vm/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="模块初始化看完后，我们继续来看初始化 store._vm">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-04T09:23:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vuex 之初始化 store._vm">
+<meta name="twitter:description" content="模块初始化看完后，我们继续来看初始化 store._vm">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vuex 之初始化 store._vm</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">vuex 之初始化 store._vm</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-04T08:13:36.000Z" itemprop="datePublished" class="page-time">
+  2018-10-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/vuex/">vuex</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、resetStoreVM"><span class="post-toc-text">一、resetStoreVM</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、enableStrictMode"><span class="post-toc-text">二、enableStrictMode()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、plugins"><span class="post-toc-text">三、plugins</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-vuex/vuex-vm" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vuex 之初始化 store._vm</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-10-04 16:13:36" datetime="2018-10-04T08:13:36.000Z" itemprop="datePublished">2018-10-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/vuex/">vuex</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>模块初始化看完后，我们继续来看初始化 store._vm<br><a id="more"></a></p>
+<h3 id="一、resetStoreVM"><a href="#一、resetStoreVM" class="headerlink" title="一、resetStoreVM"></a>一、resetStoreVM</h3><p>我们回到 Store 的构造器函数，看到在执行 installModule 后，我们紧接着执行了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// initialize the store vm, which is responsible for the reactivity</span><br><span class="line">// (also registers _wrappedGetters as computed properties)</span><br><span class="line">resetStoreVM(this, state)</span><br></pre></td></tr></table></figure></p>
+<p>resetStoreVM 定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// 建立 getters 和 state 的联系</span><br><span class="line">function resetStoreVM (store, state, hot) &#123;</span><br><span class="line">  const oldVm = store._vm</span><br><span class="line"></span><br><span class="line">  // bind store public getters</span><br><span class="line">  store.getters = &#123;&#125;</span><br><span class="line">  const wrappedGetters = store._wrappedGetters</span><br><span class="line">  const computed = &#123;&#125;</span><br><span class="line">  forEachValue(wrappedGetters, (fn, key) =&gt; &#123;</span><br><span class="line">    // use computed to leverage its lazy-caching mechanism（使用 computed 的懒加载机制）</span><br><span class="line">    // 根据 key 访问 store.getters 的某一个 getter 的时候，实际上就是访问了 store._vm[key]，也就是 computed[key]</span><br><span class="line">    // 在执行 computed[key] 对应的函数的时候，会执行 rawGetter(local.state,...) 方法，那么就会访问到 store.state</span><br><span class="line">    // 进而访问到 store._vm_data.$$state，这样就建立了一个依赖关系。当 store.state 发生变化的时候，下一次再访问 store.getters 的时候会重新计算。</span><br><span class="line">    computed[key] = () =&gt; fn(store)</span><br><span class="line">    Object.defineProperty(store.getters, key, &#123;</span><br><span class="line">      get: () =&gt; store._vm[key],</span><br><span class="line">      enumerable: true // for local getters</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // use a Vue instance to store the state tree</span><br><span class="line">  // suppress warnings just in case the user has added</span><br><span class="line">  // some funky global mixins</span><br><span class="line">  const silent = Vue.config.silent</span><br><span class="line">  Vue.config.silent = true</span><br><span class="line">  store._vm = new Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      $$state: state</span><br><span class="line">    &#125;,</span><br><span class="line">    computed</span><br><span class="line">  &#125;)</span><br><span class="line">  Vue.config.silent = silent</span><br><span class="line"></span><br><span class="line">  // enable strict mode for new vm</span><br><span class="line">  if (store.strict) &#123;</span><br><span class="line">    enableStrictMode(store)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (oldVm) &#123;</span><br><span class="line">    if (hot) &#123;</span><br><span class="line">      // dispatch changes in all subscribed watchers</span><br><span class="line">      // to force getter re-evaluation for hot reloading.</span><br><span class="line">      store._withCommit(() =&gt; &#123;</span><br><span class="line">        oldVm._data.$$state = null</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    // 销毁旧的 vue 实例</span><br><span class="line">    Vue.nextTick(() =&gt; oldVm.$destroy())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先我们获取 root store 上的 _vm 和 _wrappedGetters 属性，上节我们讲到 _wrappedGetters 存储用户定义的所有 getters。接着我们遍历 _wrappedGetters，为 computed 的 key 属性赋值，并为 store.getters 的 key 属性设置拦截器。</p>
+<p>继续往下看，我们修改 Vue.config.silent，然后为 store._vm 赋值，并将 Vue.config.silent 改回原先值。这里 Vue.config.silent 的修改主要是为了防止用户配置了全局的 mixins 而打印出警告信息。</p>
+<p>我们注意到如果访问 <code>store.getters[key]</code>，实际上访问的是 <code>store._vm[key]</code>，也就是 computed[key]，在执行 computed[key] 对应的函数的时候，会执行 rawGetter(local.state,…) 方法，那么就会访问到 store.state，进而访问到 store._vm._data.$$state，这样就建立了一个依赖关系。当 store.state 发生变化的时候，下一次再访问 store.getters 的时候会重新计算。这样做的主要目的是为了使用计算属性的懒加载机制。</p>
+<p>注意，我们访问 store.state 时其实访问的是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 访问 store.state 的时候，实际上会访问 Store 类上定义的 state 的 get 方法</span><br><span class="line">get state () &#123;</span><br><span class="line">  return this._vm._data.$$state</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 给出提示信息，不能设置 state 值</span><br><span class="line">set state (v) &#123;</span><br><span class="line">  if (process.env.NODE_ENV !== &apos;production&apos;) &#123;</span><br><span class="line">    assert(false, `use store.replaceState() to explicit replace store state.`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>回到 resetStoreVM 方法，如果存在 oldVm，那么需要调用 $destroy 销毁这个实例。如果是热更新的话，同时设置 oldVm._data.$$state 为 null，来促使所有的监听函数重新计算。</p>
+<h3 id="二、enableStrictMode"><a href="#二、enableStrictMode" class="headerlink" title="二、enableStrictMode()"></a>二、enableStrictMode()</h3><p>我们注意到 resetStoreVM 有这样一段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// enable strict mode for new vm</span><br><span class="line">if (store.strict) &#123;</span><br><span class="line">  enableStrictMode(store)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果传入的 options.strict 为 true，那么执行 enableStrictMode 方法。enableStrictMode 的实现如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 开启严格模式（在严格模式下，无论何时发生了状态变更且不是由 mutation 函数引起的，将会抛出错误，这能保证所有的状态变更都能被调试工具跟踪到）</span><br><span class="line">function enableStrictMode (store) &#123;</span><br><span class="line">  // store._vm 添加一个 wathcer 来观测 this._data.$$state 的变化</span><br><span class="line">  store._vm.$watch(function () &#123; return this._data.$$state &#125;, () =&gt; &#123;</span><br><span class="line">    // 非生产环境下，当 store.state 被修改的时候, store._committing 必须为 true，否则给出提示信息</span><br><span class="line">    if (process.env.NODE_ENV !== &apos;production&apos;) &#123;</span><br><span class="line">      assert(store._committing, `do not mutate vuex store state outside mutation handlers.`)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, &#123; deep: true, sync: true &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到我们在 store._vm 添加了一个监听器，在 this._data.$$state 发生改变时触发回调函数。回调函数中判断 state 改变时，_committing 是否为 true，如果不是，则给出提示信息。</p>
+<h3 id="三、plugins"><a href="#三、plugins" class="headerlink" title="三、plugins"></a>三、plugins</h3><p>我们回到构造器函数中继续往下看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// apply plugins</span><br><span class="line">plugins.forEach(plugin =&gt; plugin(this))</span><br><span class="line"></span><br><span class="line">if (Vue.config.devtools) &#123;</span><br><span class="line">    devtoolPlugin(this)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们首先遍历配置中的 plugins，并传入 store 实例执行 plugin 方法，所以我们传入的 plugins 选项能够在 new Vuex.Store() 执行时得到 store 实例并执行。然后判断 Vue.config.devtools（是否允许 vue-devtools 检查代码）是否为 true，如果是执行 devtoolPlugin 方法，devtoolPlugin 代码见 ‘src/plugins/devtool.js’ 中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const devtoolHook =</span><br><span class="line">  typeof window !== &apos;undefined&apos; &amp;&amp;</span><br><span class="line">  window.__VUE_DEVTOOLS_GLOBAL_HOOK__</span><br><span class="line"></span><br><span class="line">export default function devtoolPlugin (store) &#123;</span><br><span class="line">  if (!devtoolHook) return</span><br><span class="line"></span><br><span class="line">  store._devtoolHook = devtoolHook</span><br><span class="line"></span><br><span class="line">  devtoolHook.emit(&apos;vuex:init&apos;, store)</span><br><span class="line"></span><br><span class="line">  devtoolHook.on(&apos;vuex:travel-to-state&apos;, targetState =&gt; &#123;</span><br><span class="line">    store.replaceState(targetState)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  store.subscribe((mutation, state) =&gt; &#123;</span><br><span class="line">    devtoolHook.emit(&apos;vuex:mutation&apos;, mutation, state)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到我们在 store 上添加了 _devtoolHook 属性，这就是上节我们说到的 store._devtoolHook 来源。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-04T09:23:29.000Z" itemprop="dateUpdated">2018-10-04 17:23:29</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/vuex/vuex-vm/" target="_blank" rel="external">http://blog.master-ss.cn/vuex/vuex-vm/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/vuex/vuex-vm/&title=《vuex 之初始化 store._vm》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/vuex/vuex-vm/&title=《vuex 之初始化 store._vm》 — 青松的博客&source=模块初始化看完后，我们继续来看初始化 store._vm" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/vuex/vuex-vm/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vuex 之初始化 store._vm》 — 青松的博客&url=http://blog.master-ss.cn/vuex/vuex-vm/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/vuex/vuex-vm/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/vuex/vuex-api/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">vuex 之 api</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/vuex/vuex-module-install/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">vuex 之模块初始化</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/vuex/vuex-vm/&title=《vuex 之初始化 store._vm》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/vuex/vuex-vm/&title=《vuex 之初始化 store._vm》 — 青松的博客&source=模块初始化看完后，我们继续来看初始化 store._vm" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/vuex/vuex-vm/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vuex 之初始化 store._vm》 — 青松的博客&url=http://blog.master-ss.cn/vuex/vuex-vm/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/vuex/vuex-vm/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwklEQVR42u3aS27DMAwFwNz/0u62QGD1UZSJBB2tAsWwx14Q4uf1itf1tn7v3115d816/8DCxcVtc6/lSrjv+8nLrO9zd09cXNxJ7jrQrK9ZB6/kZQrBDhcX94O5+aEneQFcXNz/wF0nNri4uN/CTZKfTmkjPwYdy9VwcXEb3Pxhz/1+pL6Li4u7xb2K69Qx5dpauLi4M9w8oFQbLZ0i6fqj4OLiPs3NU5F+O7Y/6oGLizvJzRui1eJI3j4pn8hwcXFHuJ0hjITY38fFxZ3hJmWLzjBWUkapFl9wcXFnuHtHk739TqsGFxd3hpvftB908hLq7Q4uLu44t5/AVNOncvsWFxd3kJs3P/bSm83y6F0gw8XFfZibD1HtjV5Ve6N5kwYXF/dpbn5M+aPJ0RjqKpRucXFxx7mdguleE6X8UXBxcQe5e8EoD2oPnsJwcXGPcq/iOhCGilkMLi7uPDdfe03W/DBUbc3i4uI+zd07vuSPrwa+1kEHFxf3KLc6NlGNkXvJz20gw8XF/TBu9d+98YtjgQwXF/djuNXmSv6quLi4k9y8SFodpMgHN6PPgYuLO8LNC6ZJSpOPeVVHPXBxcUe4P1NuAS8EOp30AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

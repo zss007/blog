@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之 Symbol | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ES5 的对象属性名都是字符串，这容易造成属性名的冲突。比如，你使用了一个他人提供的对象，但又想为这个对象添加新的方法（mixin 模式），新方法的名字就有可能与现有方法产生冲突。如果有一种机制，保证每个属性的名字都是独一无二的就好了，这样就从根本上防止属性名的冲突。这就是 ES6 引入 Symbol 的原因。ES6 引入了一种新的原始数据类型 Symbol，表示独一无二的值。它是 JavaScr">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之 Symbol">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/symbol/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="ES5 的对象属性名都是字符串，这容易造成属性名的冲突。比如，你使用了一个他人提供的对象，但又想为这个对象添加新的方法（mixin 模式），新方法的名字就有可能与现有方法产生冲突。如果有一种机制，保证每个属性的名字都是独一无二的就好了，这样就从根本上防止属性名的冲突。这就是 ES6 引入 Symbol 的原因。ES6 引入了一种新的原始数据类型 Symbol，表示独一无二的值。它是 JavaScr">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T14:07:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之 Symbol">
+<meta name="twitter:description" content="ES5 的对象属性名都是字符串，这容易造成属性名的冲突。比如，你使用了一个他人提供的对象，但又想为这个对象添加新的方法（mixin 模式），新方法的名字就有可能与现有方法产生冲突。如果有一种机制，保证每个属性的名字都是独一无二的就好了，这样就从根本上防止属性名的冲突。这就是 ES6 引入 Symbol 的原因。ES6 引入了一种新的原始数据类型 Symbol，表示独一无二的值。它是 JavaScr">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之 Symbol</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之 Symbol</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-22T08:27:10.000Z" itemprop="datePublished" class="page-time">
+  2018-03-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、简介"><span class="post-toc-text">一、简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、作为属性名的-Symbol"><span class="post-toc-text">二、作为属性名的 Symbol</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、实例：消除魔术字符串"><span class="post-toc-text">三、实例：消除魔术字符串</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、属性名的遍历"><span class="post-toc-text">四、属性名的遍历</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、Symbol-for-amp-Symbol-keyFor"><span class="post-toc-text">五、Symbol.for() &amp; Symbol.keyFor()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、实例：模块的-Singleton-模式"><span class="post-toc-text">六、实例：模块的 Singleton 模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、内置的-Symbol-值"><span class="post-toc-text">七、内置的 Symbol 值</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/symbol" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之 Symbol</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-22 16:27:10" datetime="2018-03-22T08:27:10.000Z" itemprop="datePublished">2018-03-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>ES5 的对象属性名都是字符串，这容易造成属性名的冲突。比如，你使用了一个他人提供的对象，但又想为这个对象添加新的方法（mixin 模式），新方法的名字就有可能与现有方法产生冲突。如果有一种机制，保证每个属性的名字都是独一无二的就好了，这样就从根本上防止属性名的冲突。这就是 ES6 引入 Symbol 的原因。ES6 引入了一种新的原始数据类型 Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。Symbol 值通过 Symbol 函数生成。这就是说，对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的 Symbol 类型。凡是属性名属于 Symbol 类型，就都是独一无二的，可以保证不会与其他属性名产生冲突。<br><a id="more"></a></p>
+<h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">let s = Symbol();</span><br><span class="line">typeof s  // &quot;symbol&quot;</span><br><span class="line">  </span><br><span class="line">new Symbol()  // Symbol is not a constructor（生成的 Symbol 是一个原始类型的值，不是对象）</span><br><span class="line">  </span><br><span class="line">// 接受一个字符串作为参数，表示对 Symbol 实例的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分</span><br><span class="line">let s1 = Symbol(&apos;foo&apos;);</span><br><span class="line">s1 // Symbol(foo)</span><br><span class="line">s1.toString() // &quot;Symbol(foo)&quot;</span><br><span class="line">  </span><br><span class="line">// 如果 Symbol 的参数是一个对象，调用该对象的 toString 方法，将其转为字符串，然后才生成一个 Symbol 值</span><br><span class="line">const obj = &#123;</span><br><span class="line">  toString() &#123;</span><br><span class="line">    return &apos;abc&apos;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">const sym = Symbol(obj);</span><br><span class="line">sym // Symbol(abc)</span><br><span class="line">  </span><br><span class="line">// Symbol 函数的参数只是表示对当前 Symbol 值的描述，因此相同参数的 Symbol 函数的返回值是不相等的</span><br><span class="line">let s1 = Symbol();  // 没有参数的情况</span><br><span class="line">let s2 = Symbol();</span><br><span class="line">s1 === s2 // false</span><br><span class="line">let s1 = Symbol(&apos;foo&apos;); // 有参数的情况</span><br><span class="line">let s2 = Symbol(&apos;foo&apos;);</span><br><span class="line">s1 === s2 // false</span><br><span class="line">  </span><br><span class="line">// Symbol 值不能与其他类型的值进行运算，会报错</span><br><span class="line">let sym = Symbol(&apos;My symbol&apos;);</span><br><span class="line">&quot;your symbol is &quot; + sym // TypeError: can&apos;t convert symbol to string</span><br><span class="line">`your symbol is $&#123;sym&#125;` // TypeError: can&apos;t convert symbol to string</span><br><span class="line">  </span><br><span class="line">// Symbol 值可以显式转为字符串</span><br><span class="line">let sym = Symbol(&apos;My symbol&apos;);</span><br><span class="line">String(sym) // &apos;Symbol(My symbol)&apos;</span><br><span class="line">sym.toString() // &apos;Symbol(My symbol)&apos;</span><br><span class="line">  </span><br><span class="line">// Symbol 值也可以转为布尔值，但是不能转为数值</span><br><span class="line">let sym = Symbol();</span><br><span class="line">Boolean(sym) // true</span><br><span class="line">!sym  // false</span><br><span class="line">if (sym) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line">Number(sym) // TypeError</span><br><span class="line">sym + 2 // TypeError</span><br></pre></td></tr></table></figure>
+<h3 id="二、作为属性名的-Symbol"><a href="#二、作为属性名的-Symbol" class="headerlink" title="二、作为属性名的 Symbol"></a>二、作为属性名的 Symbol</h3><p>由于每一个 Symbol 值都是不相等的，这意味着 Symbol 值可以作为标识符，用于对象的属性名，就能保证不会出现同名的属性。这对于一个对象由多个模块构成的情况非常有用，能防止某一个键被不小心改写或覆盖。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">let mySymbol = Symbol();</span><br><span class="line">  </span><br><span class="line">// 第一种写法</span><br><span class="line">let a = &#123;&#125;;</span><br><span class="line">a[mySymbol] = &apos;Hello!&apos;;</span><br><span class="line">  </span><br><span class="line">// 第二种写法</span><br><span class="line">let a = &#123;</span><br><span class="line">  [mySymbol]: &apos;Hello!&apos;</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// 第三种写法</span><br><span class="line">let a = &#123;&#125;;</span><br><span class="line">Object.defineProperty(a, mySymbol, &#123; value: &apos;Hello!&apos; &#125;);</span><br><span class="line">  </span><br><span class="line">// 以上写法都得到同样结果</span><br><span class="line">a[mySymbol] // &quot;Hello!&quot;</span><br><span class="line">  </span><br><span class="line">// Symbol 值作为对象属性名时，不能用点运算符，因为点运算符后面总是字符串</span><br><span class="line">const mySymbol = Symbol();</span><br><span class="line">const a = &#123;&#125;;</span><br><span class="line">a.mySymbol = &apos;Hello!&apos;;</span><br><span class="line">a[mySymbol] // undefined</span><br><span class="line">a[&apos;mySymbol&apos;] // &quot;Hello!&quot;</span><br><span class="line">  </span><br><span class="line">// 同理，在对象的内部，使用 Symbol 值定义属性时，Symbol 值必须放在方括号之中</span><br><span class="line">let s = Symbol();</span><br><span class="line">let obj = &#123;</span><br><span class="line">  [s]: function (arg) &#123; ... &#125; // 如果 s 不放在方括号中，该属性的键名就是字符串 s</span><br><span class="line">&#125;;</span><br><span class="line">obj[s](123);</span><br><span class="line">  </span><br><span class="line">// 采用增强的对象写法，上面代码的 obj 对象可以写得更简洁一些</span><br><span class="line">let obj = &#123;</span><br><span class="line">  [s](arg) &#123; ... &#125;</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// Symbol 类型还可以用于定义一组常量，保证这组常量的值都是不相等的</span><br><span class="line">log.levels = &#123;</span><br><span class="line">  DEBUG: Symbol(&apos;debug&apos;),</span><br><span class="line">  INFO: Symbol(&apos;info&apos;),</span><br><span class="line">  WARN: Symbol(&apos;warn&apos;)</span><br><span class="line">&#125;;</span><br><span class="line">log(log.levels.DEBUG, &apos;debug message&apos;);</span><br><span class="line">log(log.levels.INFO, &apos;info message&apos;);</span><br><span class="line">  </span><br><span class="line">// 还有一点需要注意，Symbol 值作为属性名时，该属性还是公开属性，不是私有属性</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、实例：消除魔术字符串"><a href="#三、实例：消除魔术字符串" class="headerlink" title="三、实例：消除魔术字符串"></a>三、实例：消除魔术字符串</h3><p>魔术字符串指的是，在代码之中多次出现、与代码形成强耦合的某一个具体的字符串或者数值。风格良好的代码，应该尽量消除魔术字符串，改由含义清晰的变量代替。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function getArea(shape, options) &#123;</span><br><span class="line">  let area = 0;</span><br><span class="line">  switch (shape) &#123;</span><br><span class="line">    case &apos;Triangle&apos;: // 魔术字符串</span><br><span class="line">      area = .5 * options.width * options.height;</span><br><span class="line">      break;</span><br><span class="line">    /* ... more code ... */</span><br><span class="line">  &#125;</span><br><span class="line">  return area;</span><br><span class="line">&#125;</span><br><span class="line">getArea(&apos;Triangle&apos;, &#123; width: 100, height: 100 &#125;); // 魔术字符串</span><br><span class="line">  </span><br><span class="line">// 常用的消除魔术字符串的方法，就是把它写成一个变量，这样就消除了强耦合</span><br><span class="line">const shapeType = &#123;</span><br><span class="line">  triangle: &apos;Triangle&apos;</span><br><span class="line">&#125;;</span><br><span class="line">function getArea(shape, options) &#123;</span><br><span class="line">  let area = 0;</span><br><span class="line">  switch (shape) &#123;</span><br><span class="line">    case shapeType.triangle:</span><br><span class="line">      area = .5 * options.width * options.height;</span><br><span class="line">      break;</span><br><span class="line">  &#125;</span><br><span class="line">  return area;</span><br><span class="line">&#125;</span><br><span class="line">getArea(shapeType.triangle, &#123; width: 100, height: 100 &#125;);</span><br><span class="line">  </span><br><span class="line">// shapeType.triangle 等于哪个值并不重要，只要确保不会跟其他 shapeType 属性的值冲突即可。因此，这里就很适合改用 Symbol 值</span><br><span class="line">const shapeType = &#123;</span><br><span class="line">  triangle: Symbol()</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、属性名的遍历"><a href="#四、属性名的遍历" class="headerlink" title="四、属性名的遍历"></a>四、属性名的遍历</h3><p>Symbol 作为属性名，该属性不会出现在 for…in、for…of 循环中，也不会被 Object.keys()、Object.getOwnPropertyNames()、JSON.stringify() 返回。但是，它也不是私有属性，有一个 Object.getOwnPropertySymbols 方法，可以获取指定对象的所有 Symbol 属性名。Object.getOwnPropertySymbols 方法返回一个数组，成员是当前对象的所有用作属性名的 Symbol 值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;&#125;;</span><br><span class="line">let a = Symbol(&apos;a&apos;);</span><br><span class="line">let b = Symbol(&apos;b&apos;);</span><br><span class="line">obj[a] = &apos;Hello&apos;;</span><br><span class="line">obj[b] = &apos;World&apos;;</span><br><span class="line">const objectSymbols = Object.getOwnPropertySymbols(obj);</span><br><span class="line">objectSymbols // [Symbol(a), Symbol(b)]</span><br><span class="line">  </span><br><span class="line">// Object.getOwnPropertySymbols 方法与 for...in 循环、Object.getOwnPropertyNames 方法进行对比的例子</span><br><span class="line">const obj = &#123;&#125;;</span><br><span class="line">let foo = Symbol(&quot;foo&quot;);</span><br><span class="line">Object.defineProperty(obj, foo, &#123;</span><br><span class="line">  value: &quot;foobar&quot;,</span><br><span class="line">&#125;);</span><br><span class="line">for (let i in obj) &#123;</span><br><span class="line">  console.log(i); // 无输出</span><br><span class="line">&#125;</span><br><span class="line">Object.getOwnPropertyNames(obj) // []</span><br><span class="line">Object.getOwnPropertySymbols(obj) // [Symbol(foo)]</span><br><span class="line">  </span><br><span class="line">// Reflect.ownKeys 方法可以返回所有类型的键名，包括常规键名和 Symbol 键名</span><br><span class="line">let obj = &#123;</span><br><span class="line">  [Symbol(&apos;my_key&apos;)]: 1,</span><br><span class="line">  enum: 2,</span><br><span class="line">  nonEnum: 3</span><br><span class="line">&#125;;</span><br><span class="line">Reflect.ownKeys(obj)  //  [&quot;enum&quot;, &quot;nonEnum&quot;, Symbol(my_key)]</span><br><span class="line">  </span><br><span class="line">// 可以利用 Symbol 为对象定义一些非私有的、但又希望只用于内部的方法</span><br><span class="line">let size = Symbol(&apos;size&apos;);</span><br><span class="line">class Collection &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this[size] = 0;</span><br><span class="line">  &#125;</span><br><span class="line">  add(item) &#123;</span><br><span class="line">    this[this[size]] = item;</span><br><span class="line">    this[size]++;</span><br><span class="line">  &#125;</span><br><span class="line">  static sizeOf(instance) &#123;</span><br><span class="line">    return instance[size];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let x = new Collection();</span><br><span class="line">Collection.sizeOf(x) // 0</span><br><span class="line">x.add(&apos;foo&apos;);</span><br><span class="line">Collection.sizeOf(x) // 1</span><br><span class="line">Object.keys(x) // [&apos;0&apos;]</span><br><span class="line">Object.getOwnPropertyNames(x) // [&apos;0&apos;]</span><br><span class="line">Object.getOwnPropertySymbols(x) // [Symbol(size)]</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、Symbol-for-amp-Symbol-keyFor"><a href="#五、Symbol-for-amp-Symbol-keyFor" class="headerlink" title="五、Symbol.for() &amp; Symbol.keyFor()"></a>五、Symbol.for() &amp; Symbol.keyFor()</h3><p>有时，我们希望重新使用同一个 Symbol 值，Symbol.for 方法可以做到这一点。它接受一个字符串作为参数，然后搜索有没有以该参数作为名称的 Symbol 值。如果有，就返回这个 Symbol 值，否则就新建并返回一个以该字符串为名称的 Symbol 值。Symbol.keyFor 方法返回一个已登记的 Symbol 类型值的 key。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">let s1 = Symbol.for(&apos;foo&apos;);</span><br><span class="line">let s2 = Symbol.for(&apos;foo&apos;);</span><br><span class="line">s1 === s2 // true，都是同样参数的 Symbol.for 方法生成的，所以实际上是同一个值</span><br><span class="line">  </span><br><span class="line">// Symbol.for 会被登记在全局环境中供搜索，Symbol 不会</span><br><span class="line">Symbol.for(&quot;bar&quot;) === Symbol.for(&quot;bar&quot;) // true，多次调用返回相同的 Symbol 值</span><br><span class="line">Symbol(&quot;bar&quot;) === Symbol(&quot;bar&quot;) // false，每次调用返回不同的 Symbol 值</span><br><span class="line">  </span><br><span class="line">// Symbol.keyFor 方法返回一个已登记的 Symbol 类型值的key</span><br><span class="line">let s1 = Symbol.for(&quot;foo&quot;);</span><br><span class="line">Symbol.keyFor(s1) // &quot;foo&quot;</span><br><span class="line">let s2 = Symbol(&quot;foo&quot;);</span><br><span class="line">Symbol.keyFor(s2) // undefined</span><br><span class="line">  </span><br><span class="line">// Symbol.for 为 Symbol 值登记的名字，是全局环境的，可以在不同的 iframe 或 service worker 中取到同一个值</span><br><span class="line">iframe = document.createElement(&apos;iframe&apos;);</span><br><span class="line">iframe.src = String(window.location);</span><br><span class="line">document.body.appendChild(iframe);</span><br><span class="line">iframe.contentWindow.Symbol.for(&apos;foo&apos;) === Symbol.for(&apos;foo&apos;)  // true</span><br></pre></td></tr></table></figure></p>
+<h3 id="六、实例：模块的-Singleton-模式"><a href="#六、实例：模块的-Singleton-模式" class="headerlink" title="六、实例：模块的 Singleton 模式"></a>六、实例：模块的 Singleton 模式</h3><p>Singleton 模式指的是调用一个类，任何时候返回的都是同一个实例。对于 Node 来说，模块文件可以看成是一个类。怎么保证每次执行这个模块文件，返回的都是同一个实例呢？很容易想到，可以把实例放到顶层对象 global。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">// mod.js</span><br><span class="line">function A() &#123;</span><br><span class="line">  this.foo = &apos;hello&apos;;</span><br><span class="line">&#125;</span><br><span class="line">if (!global._foo) &#123;</span><br><span class="line">  global._foo = new A();</span><br><span class="line">&#125;</span><br><span class="line">module.exports = global._foo;</span><br><span class="line">  </span><br><span class="line">// 加载上面的 mod.js</span><br><span class="line">const a = require(&apos;./mod.js&apos;);</span><br><span class="line">console.log(a.foo);</span><br><span class="line">  </span><br><span class="line">// 这里有一个问题，全局变量 global._foo 是可写的，任何文件都可以修改</span><br><span class="line">global._foo = &#123; foo: &apos;world&apos; &#125;; // 会使得加载 mod.js 的脚本都失真</span><br><span class="line">const a = require(&apos;./mod.js&apos;);</span><br><span class="line">console.log(a.foo);</span><br><span class="line">  </span><br><span class="line">// 可以使用 Symbol 防止这种情况出现，可以保证 global[FOO_KEY] 不会被无意间覆盖</span><br><span class="line">const FOO_KEY = Symbol.for(&apos;foo&apos;);  // mod.js</span><br><span class="line">function A() &#123;</span><br><span class="line">  this.foo = &apos;hello&apos;;</span><br><span class="line">&#125;</span><br><span class="line">if (!global[FOO_KEY]) &#123;</span><br><span class="line">  global[FOO_KEY] = new A();</span><br><span class="line">&#125;</span><br><span class="line">module.exports = global[FOO_KEY];</span><br><span class="line">  </span><br><span class="line">// 但还是可以被改写</span><br><span class="line">global[Symbol.for(&apos;foo&apos;)] = &#123; foo: &apos;world&apos; &#125;;</span><br><span class="line">const a = require(&apos;./mod.js&apos;);</span><br><span class="line">  </span><br><span class="line">// 如果键名使用 Symbol方法 生成，那么外部将无法引用这个值，当然也就无法改写</span><br><span class="line">const FOO_KEY = Symbol(&apos;foo&apos;);  // mod.js</span><br><span class="line">// 后面代码相同 ……</span><br><span class="line">// 但这样也有一个问题，如果多次执行这个脚本，每次得到的 FOO_KEY 都是不一样的。虽然 Node 会将脚本的执行结果缓存，一般情况下，不会多次执行同</span><br><span class="line">// 一个脚本，但是用户可以手动清除缓存，所以也不是绝对可靠</span><br></pre></td></tr></table></figure></p>
+<h3 id="七、内置的-Symbol-值"><a href="#七、内置的-Symbol-值" class="headerlink" title="七、内置的 Symbol 值"></a>七、内置的 Symbol 值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br></pre></td><td class="code"><pre><span class="line">// 对象的 Symbol.hasInstance 属性，指向一个内部方法。当其他对象使用 instanceof 运算符，判断是否为该对象的实例时，会调用这个方法。比如，</span><br><span class="line">// foo instanceof Foo 在语言内部，实际调用的是 Foo[Symbol.hasInstance](foo)</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  [Symbol.hasInstance](foo) &#123;</span><br><span class="line">    return foo instanceof Array;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">[1, 2, 3] instanceof new MyClass() // true，Symbol.hasInstance 在进行 instanceof 运算时自动调用，判断左侧的运算子是否为 Array 的实例</span><br><span class="line">  </span><br><span class="line">// Symbol 另一个例子</span><br><span class="line">class Even &#123;</span><br><span class="line">  static [Symbol.hasInstance](obj) &#123;</span><br><span class="line">    return Number(obj) % 2 === 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const Even = &#123;  // 等同于</span><br><span class="line">  [Symbol.hasInstance](obj) &#123;</span><br><span class="line">    return Number(obj) % 2 === 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">1 instanceof Even // false</span><br><span class="line">2 instanceof Even // true</span><br><span class="line">12345 instanceof Even // false</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.isConcatSpreadable 属性等于一个布尔值，表示该对象用于 Array.prototype.concat() 时，是否可以展开</span><br><span class="line">let arr1 = [&apos;c&apos;, &apos;d&apos;];</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(arr1, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br><span class="line">arr1[Symbol.isConcatSpreadable] // undefined，数组的默认行为是可以展开，Symbol.isConcatSpreadable 默认等于 undefined。该属性等于 true 时，也有展开的效果</span><br><span class="line">let arr2 = [&apos;c&apos;, &apos;d&apos;];</span><br><span class="line">arr2[Symbol.isConcatSpreadable] = false;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(arr2, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, [&apos;c&apos;,&apos;d&apos;], &apos;e&apos;]</span><br><span class="line">  </span><br><span class="line">// 类似数组的对象正好相反，默认不展开。它的 Symbol.isConcatSpreadable 属性设为true，才可以展开</span><br><span class="line">let obj = &#123;length: 2, 0: &apos;c&apos;, 1: &apos;d&apos;&#125;;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(obj, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, obj, &apos;e&apos;]</span><br><span class="line">obj[Symbol.isConcatSpreadable] = true;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(obj, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br><span class="line">  </span><br><span class="line">// Symbol.isConcatSpreadable 属性也可以定义在类里面</span><br><span class="line">class A1 extends Array &#123;</span><br><span class="line">  constructor(args) &#123;</span><br><span class="line">    super(args);</span><br><span class="line">    this[Symbol.isConcatSpreadable] = true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class A2 extends Array &#123;</span><br><span class="line">  constructor(args) &#123;</span><br><span class="line">    super(args);</span><br><span class="line">  &#125;</span><br><span class="line">  get [Symbol.isConcatSpreadable] () &#123;  // 注意 Symbol.isConcatSpreadable 的位置差异，A1 是定义在实例上，A2 是定义在类本身，效果相同</span><br><span class="line">    return false;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let a1 = new A1();</span><br><span class="line">a1[0] = 3;</span><br><span class="line">a1[1] = 4;</span><br><span class="line">let a2 = new A2();</span><br><span class="line">a2[0] = 5;</span><br><span class="line">a2[1] = 6;</span><br><span class="line">[1, 2].concat(a1).concat(a2)  // [1, 2, 3, 4, [5, 6]]</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.species 属性，指向一个构造函数。创建衍生对象时，会使用该属性</span><br><span class="line">class MyArray extends Array &#123;</span><br><span class="line">&#125;</span><br><span class="line">const a = new MyArray(1, 2, 3);</span><br><span class="line">const b = a.map(x =&gt; x); // b 和 c 是 a 的衍生对象，虽然是调用数组方法生成的，但实际上它们也是 MyArray 的实例</span><br><span class="line">const c = a.filter(x =&gt; x &gt; 1);</span><br><span class="line">b instanceof MyArray // true</span><br><span class="line">c instanceof MyArray // true</span><br><span class="line">  </span><br><span class="line">// Symbol.species 属性就是为了解决这个问题而提供的</span><br><span class="line">class MyArray extends Array &#123;</span><br><span class="line">  static get [Symbol.species]() &#123; return Array; &#125; // 定义了 Symbol.species 属性，创建衍生对象时就会使用这个属性返回的函数，作为构造函数</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 默认的 Symbol.species 属性等同于下面的写法</span><br><span class="line">static get [Symbol.species]() &#123;</span><br><span class="line">  return this;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 现在衍生对象就不是 MyArray 的实例，而直接就是 Array 的实例</span><br><span class="line">class MyArray extends Array &#123;</span><br><span class="line">  static get [Symbol.species]() &#123; return Array; &#125;</span><br><span class="line">&#125;</span><br><span class="line">const a = new MyArray();</span><br><span class="line">const b = a.map(x =&gt; x);</span><br><span class="line">b instanceof MyArray // false</span><br><span class="line">b instanceof Array // true</span><br><span class="line">  </span><br><span class="line">// Symbol.species 的另一个例子</span><br><span class="line">class T1 extends Promise &#123;</span><br><span class="line">&#125;</span><br><span class="line">class T2 extends Promise &#123;</span><br><span class="line">  static get [Symbol.species]() &#123;</span><br><span class="line">    return Promise;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">new T1(r =&gt; r()).then(v =&gt; v) instanceof T1 // true，T1 调用的是自身的构造方法</span><br><span class="line">new T2(r =&gt; r()).then(v =&gt; v) instanceof T2 // false，T2 调用的是 Promise 的构造方法</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.match 属性，指向一个函数。当执行 str.match(myObject) 时，如果该属性存在，会调用它，返回该方法的返回值</span><br><span class="line">String.prototype.match(regexp)</span><br><span class="line">regexp[Symbol.match](this)  // 等同于</span><br><span class="line">class MyMatcher &#123;</span><br><span class="line">  [Symbol.match](string) &#123;</span><br><span class="line">    return &apos;hello world&apos;.indexOf(string);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&apos;e&apos;.match(new MyMatcher()) // 1</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.replace 属性，指向一个方法，当该对象被 String.prototype.replace 方法调用时，会返回该方法的返回值</span><br><span class="line">String.prototype.replace(searchValue, replaceValue) // 第一个参数是 replace 方法正在作用的对象，第二个参数是替换后的值</span><br><span class="line">searchValue[Symbol.replace](this, replaceValue) // 等同于</span><br><span class="line">const x = &#123;&#125;;</span><br><span class="line">x[Symbol.replace] = (...s) =&gt; console.log(s);</span><br><span class="line">&apos;Hello&apos;.replace(x, &apos;World&apos;) // [&quot;Hello&quot;, &quot;World&quot;]</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.search 属性，指向一个方法，当该对象被 String.prototype.search 方法调用时，会返回该方法的返回值</span><br><span class="line">String.prototype.search(regexp)</span><br><span class="line">regexp[Symbol.search](this) // 等同于</span><br><span class="line">class MySearch &#123;</span><br><span class="line">  constructor(value) &#123;</span><br><span class="line">    this.value = value;</span><br><span class="line">  &#125;</span><br><span class="line">  [Symbol.search](string) &#123;</span><br><span class="line">    return string.indexOf(this.value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&apos;foobar&apos;.search(new MySearch(&apos;foo&apos;)) // 0</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.split 属性，指向一个方法，当该对象被 String.prototype.split 方法调用时，会返回该方法的返回值</span><br><span class="line">String.prototype.split(separator, limit)</span><br><span class="line">separator[Symbol.split](this, limit)  // 等同于</span><br><span class="line">class MySplitter &#123;</span><br><span class="line">  constructor(value) &#123;</span><br><span class="line">    this.value = value;</span><br><span class="line">  &#125;</span><br><span class="line">  [Symbol.split](string) &#123;  // 重新定义了字符串对象的 split 方法的行为</span><br><span class="line">    let index = string.indexOf(this.value);</span><br><span class="line">    if (index === -1) &#123;</span><br><span class="line">      return string;</span><br><span class="line">    &#125;</span><br><span class="line">    return [</span><br><span class="line">      string.substr(0, index),</span><br><span class="line">      string.substr(index + this.value.length)</span><br><span class="line">    ];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&apos;foobar&apos;.split(new MySplitter(&apos;foo&apos;)) // [&apos;&apos;, &apos;bar&apos;]</span><br><span class="line">&apos;foobar&apos;.split(new MySplitter(&apos;bar&apos;)) // [&apos;foo&apos;, &apos;&apos;]</span><br><span class="line">&apos;foobar&apos;.split(new MySplitter(&apos;baz&apos;)) // &apos;foobar&apos;</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.iterator 属性，指向该对象的默认遍历器方法</span><br><span class="line">const myIterable = &#123;&#125;;</span><br><span class="line">myIterable[Symbol.iterator] = function* () &#123;</span><br><span class="line">  yield 1;</span><br><span class="line">  yield 2;</span><br><span class="line">  yield 3;</span><br><span class="line">&#125;;</span><br><span class="line">[...myIterable] // [1, 2, 3]</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.toPrimitive 属性，指向一个方法。该对象被转为原始类型的值时，会调用这个方法，返回该对象对应的原始类型值。</span><br><span class="line">// Symbol.toPrimitive 被调用时，会接受一个字符串参数，表示当前运算的模式，一共有三种模式。</span><br><span class="line">// Number：该场合需要转成数值；String：该场合需要转成字符串；Default：该场合可以转成数值，也可以转成字符串</span><br><span class="line">let obj = &#123;</span><br><span class="line">  [Symbol.toPrimitive](hint) &#123;</span><br><span class="line">    switch (hint) &#123;</span><br><span class="line">      case &apos;number&apos;:</span><br><span class="line">        return 123;</span><br><span class="line">      case &apos;string&apos;:</span><br><span class="line">        return &apos;str&apos;;</span><br><span class="line">      case &apos;default&apos;:</span><br><span class="line">        return &apos;default&apos;;</span><br><span class="line">      default:</span><br><span class="line">        throw new Error();</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br><span class="line">2 * obj // 246</span><br><span class="line">3 + obj // &apos;3default&apos;</span><br><span class="line">obj == &apos;default&apos; // true</span><br><span class="line">String(obj) // &apos;str&apos;</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.toStringTag 属性，指向一个方法。在该对象上面调用 Object.prototype.toString 方法时，如果这个属性存在，它的返回值会出</span><br><span class="line">// 现在 toString 方法返回的字符串之中，表示对象的类型。也就是说，这个属性可以用来定制 [object Object] 或 [object Array] 中 object 后面的那个字符串</span><br><span class="line">(&#123;[Symbol.toStringTag]: &apos;Foo&apos;&#125;.toString())  // &quot;[object Foo]&quot;</span><br><span class="line">class Collection &#123;</span><br><span class="line">  get [Symbol.toStringTag]() &#123;</span><br><span class="line">    return &apos;xxx&apos;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let x = new Collection();</span><br><span class="line">Object.prototype.toString.call(x) // &quot;[object xxx]&quot;</span><br><span class="line">  </span><br><span class="line">// ES6 新增内置对象的 Symbol.toStringTag 属性值如下</span><br><span class="line">// JSON[Symbol.toStringTag]：&apos;JSON&apos;</span><br><span class="line">// Math[Symbol.toStringTag]：&apos;Math&apos;</span><br><span class="line">// Module 对象M[Symbol.toStringTag]：&apos;Module&apos;</span><br><span class="line">// ArrayBuffer.prototype[Symbol.toStringTag]：&apos;ArrayBuffer&apos;</span><br><span class="line">// DataView.prototype[Symbol.toStringTag]：&apos;DataView&apos;</span><br><span class="line">// Map.prototype[Symbol.toStringTag]：&apos;Map&apos;</span><br><span class="line">// Promise.prototype[Symbol.toStringTag]：&apos;Promise&apos;</span><br><span class="line">// Set.prototype[Symbol.toStringTag]：&apos;Set&apos;</span><br><span class="line">// %TypedArray%.prototype[Symbol.toStringTag]：&apos;Uint8Array&apos;等</span><br><span class="line">// WeakMap.prototype[Symbol.toStringTag]：&apos;WeakMap&apos;</span><br><span class="line">// WeakSet.prototype[Symbol.toStringTag]：&apos;WeakSet&apos;</span><br><span class="line">// %MapIteratorPrototype%[Symbol.toStringTag]：&apos;Map Iterator&apos;</span><br><span class="line">// %SetIteratorPrototype%[Symbol.toStringTag]：&apos;Set Iterator&apos;</span><br><span class="line">// %StringIteratorPrototype%[Symbol.toStringTag]：&apos;String Iterator&apos;</span><br><span class="line">// Symbol.prototype[Symbol.toStringTag]：&apos;Symbol&apos;</span><br><span class="line">// Generator.prototype[Symbol.toStringTag]：&apos;Generator&apos;</span><br><span class="line">// GeneratorFunction.prototype[Symbol.toStringTag]：&apos;GeneratorFunction&apos;</span><br><span class="line">  </span><br><span class="line">// 对象的 Symbol.unscopables 属性，指向一个对象。该对象指定了使用 with 关键字时，哪些属性会被 with 环境排除</span><br><span class="line">Array.prototype[Symbol.unscopables]</span><br><span class="line">// &#123;</span><br><span class="line">//   copyWithin: true,</span><br><span class="line">//   entries: true,</span><br><span class="line">//   fill: true,</span><br><span class="line">//   find: true,</span><br><span class="line">//   findIndex: true,</span><br><span class="line">//   includes: true,</span><br><span class="line">//   keys: true</span><br><span class="line">// &#125;</span><br><span class="line">Object.keys(Array.prototype[Symbol.unscopables])  // [&apos;copyWithin&apos;, &apos;entries&apos;, &apos;fill&apos;, &apos;find&apos;, &apos;findIndex&apos;, &apos;includes&apos;, &apos;keys&apos;]</span><br><span class="line">  </span><br><span class="line">// 没有 unscopables 时</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  foo() &#123; return 1; &#125;</span><br><span class="line">&#125;</span><br><span class="line">var foo = function () &#123; return 2; &#125;;</span><br><span class="line">with (MyClass.prototype) &#123;</span><br><span class="line">  foo(); // 1</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 有 unscopables 时，指定 Symbol.unscopables 属性，使得 with 语法块不会在当前作用域寻找 foo 属性，即 foo 将指向外层作用域的变量</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  foo() &#123; return 1; &#125;</span><br><span class="line">  get [Symbol.unscopables]() &#123;</span><br><span class="line">    return &#123; foo: true &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var foo = function () &#123; return 2; &#125;;</span><br><span class="line">with (MyClass.prototype) &#123;</span><br><span class="line">  foo(); // 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了定义自己使用的 Symbol 值以外，ES6 还提供了 11 个内置的 Symbol 值，指向语言内部使用的方法，如上。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T14:07:32.000Z" itemprop="dateUpdated">2018-04-22 22:07:32</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/symbol/" target="_blank" rel="external">http://blog.master-ss.cn/es6/symbol/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/symbol/&title=《es6 之 Symbol》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/symbol/&title=《es6 之 Symbol》 — 青松的博客&source=ES5 的对象属性名都是字符串，这容易造成属性名的冲突。比如，你使用了一个他人提供的对象，但又想为这个对象添加新的方法（mixin 模式），新方法的名字就..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/symbol/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 Symbol》 — 青松的博客&url=http://blog.master-ss.cn/es6/symbol/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/symbol/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/set&map/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 Set &amp; Map</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/class-inherit/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之 class 继承</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/symbol/&title=《es6 之 Symbol》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/symbol/&title=《es6 之 Symbol》 — 青松的博客&source=ES5 的对象属性名都是字符串，这容易造成属性名的冲突。比如，你使用了一个他人提供的对象，但又想为这个对象添加新的方法（mixin 模式），新方法的名字就..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/symbol/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 Symbol》 — 青松的博客&url=http://blog.master-ss.cn/es6/symbol/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/symbol/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3aW46DMAwF0O5/08wCEOm1TaKOdPKFSloO/bD8yOcTr+u27nefru/77ztfXri4uGPutVxPD16/QPW1EwMuLu557jrQrIPXE2gdzta///g5Li7uT3IngS+5i4uL+x+5CTope3BxcX+fmwSmahOkd/e1Wg0XF3fAzdsZ+6639HdxcXFb3Ku4ku8macrVWri4uGe4eUCptkImTdJ1mYSLi3uSmyci+WN2HPXAxcXdzZ20OCeIalvkS0aGi4u7gbsOH9WgNjnU9cWAi4t7hJsMPPKxaE6sFku4uLjnub1jWL0B7WRUg4uLe57bG7XuaKEmgRUXF3c3dz5qnb9MIZ3CxcU9zk0Si2oC1GyP9oasuLi4G7jzRsa7edaXmTAuLu5mbo++Y9Ta7O/i4uJu4+apSbK/GsjKQ1ZcXNwj3Co0T2teO+6Ji4u7mTtplU7So/X+KD/CxcXdxu0VLfNGSX7MovkyuLi4Y24+0kh+Ov9veuNbXFzck9y8KKqOWifFT9QwxcXF/RnuZP+k3MLFxf1l7lvHuaplEi4u7klu+ehk3M7IWyov12q4uLgDbt4w7R2qmIxyR/1dXFzcDvcPgOSQn29N934AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

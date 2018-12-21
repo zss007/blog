@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>koa 之 application | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="打开 koa 的源码，核心文件共四个在 lib 目录下：application.js、context.js、request.js、response.js，我们先来看看 application.js。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="koa 之 application">
+<meta property="og:url" content="http://blog.master-ss.cn/node/koa-application/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="打开 koa 的源码，核心文件共四个在 lib 目录下：application.js、context.js、request.js、response.js，我们先来看看 application.js。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-21T05:36:28.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="koa 之 application">
+<meta name="twitter:description" content="打开 koa 的源码，核心文件共四个在 lib 目录下：application.js、context.js、request.js、response.js，我们先来看看 application.js。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">koa 之 application</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">koa 之 application</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-24T02:17:49.000Z" itemprop="datePublished" class="page-time">
+  2018-04-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、模块依赖"><span class="post-toc-text">一、模块依赖</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码"><span class="post-toc-text">二、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、分析"><span class="post-toc-text">三、分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、constructor"><span class="post-toc-text">1、constructor</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、use"><span class="post-toc-text">2、use</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、listen"><span class="post-toc-text">3、listen</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、callback"><span class="post-toc-text">4、callback</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、createContext"><span class="post-toc-text">5、createContext</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、handleRequest"><span class="post-toc-text">6、handleRequest</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-node/koa-application" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">koa 之 application</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-24 10:17:49" datetime="2018-04-24T02:17:49.000Z" itemprop="datePublished">2018-04-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>打开 koa 的源码，核心文件共四个在 lib 目录下：application.js、context.js、request.js、response.js，我们先来看看 application.js。<br><a id="more"></a></p>
+<h3 id="一、模块依赖"><a href="#一、模块依赖" class="headerlink" title="一、模块依赖"></a>一、模块依赖</h3><p>首先看看依赖的模块和文件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isGeneratorFunction = <span class="built_in">require</span>(<span class="string">'is-generator-function'</span>); <span class="comment">// 判断当前传入函数是否为 generator 函数</span></span><br><span class="line"><span class="keyword">const</span> debug = <span class="built_in">require</span>(<span class="string">'debug'</span>)(<span class="string">'koa:application'</span>);  <span class="comment">// 轻量级 js debug 调试工具</span></span><br><span class="line"><span class="keyword">const</span> onFinished = <span class="built_in">require</span>(<span class="string">'on-finished'</span>);  <span class="comment">// 事件监听，监听 http 完成或者关闭</span></span><br><span class="line"><span class="keyword">const</span> response = <span class="built_in">require</span>(<span class="string">'./response'</span>); <span class="comment">// response 模块</span></span><br><span class="line"><span class="keyword">const</span> compose = <span class="built_in">require</span>(<span class="string">'koa-compose'</span>); <span class="comment">// 使用 koa-compose 将多个中间件 "组合" 成一个单一的中间件，便于重用或导出</span></span><br><span class="line"><span class="keyword">const</span> isJSON = <span class="built_in">require</span>(<span class="string">'koa-is-json'</span>);  <span class="comment">// 判断数据为否为 json 格式</span></span><br><span class="line"><span class="keyword">const</span> context = <span class="built_in">require</span>(<span class="string">'./context'</span>); <span class="comment">// context 模块</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'./request'</span>); <span class="comment">// request 模块</span></span><br><span class="line"><span class="keyword">const</span> statuses = <span class="built_in">require</span>(<span class="string">'statuses'</span>); <span class="comment">// http 状态码</span></span><br><span class="line"><span class="keyword">const</span> Cookies = <span class="built_in">require</span>(<span class="string">'cookies'</span>); <span class="comment">// 记录用户信息</span></span><br><span class="line"><span class="keyword">const</span> accepts = <span class="built_in">require</span>(<span class="string">'accepts'</span>); <span class="comment">// 内容协商</span></span><br><span class="line"><span class="keyword">const</span> Emitter = <span class="built_in">require</span>(<span class="string">'events'</span>);  <span class="comment">// 事件模块</span></span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>); <span class="comment">// 断言，判断是否符合预期</span></span><br><span class="line"><span class="keyword">const</span> Stream = <span class="built_in">require</span>(<span class="string">'stream'</span>); <span class="comment">// 流</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>); <span class="comment">// http 模块，nodejs 核心模块</span></span><br><span class="line"><span class="keyword">const</span> only = <span class="built_in">require</span>(<span class="string">'only'</span>); <span class="comment">// 返回指定属性的对象</span></span><br><span class="line"><span class="keyword">const</span> convert = <span class="built_in">require</span>(<span class="string">'koa-convert'</span>); <span class="comment">// 兼容旧的 koa，转换 generator 中间件</span></span><br><span class="line"><span class="keyword">const</span> deprecate = <span class="built_in">require</span>(<span class="string">'depd'</span>)(<span class="string">'koa'</span>); <span class="comment">// 判断 api 是否过期</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="二、源码"><a href="#二、源码" class="headerlink" title="二、源码"></a>二、源码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 暴露 Application 类，继承 Emitter</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.proxy = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.middleware = []; <span class="comment">// 中间件数组</span></span><br><span class="line">    <span class="keyword">this</span>.subdomainOffset = <span class="number">2</span>; <span class="comment">// 子域返回偏移量，用于 request 中的 get subdomains()</span></span><br><span class="line">    <span class="keyword">this</span>.env = process.env.NODE_ENV || <span class="string">'development'</span>;</span><br><span class="line">    <span class="keyword">this</span>.context = <span class="built_in">Object</span>.create(context);</span><br><span class="line">    <span class="keyword">this</span>.request = <span class="built_in">Object</span>.create(request);</span><br><span class="line">    <span class="keyword">this</span>.response = <span class="built_in">Object</span>.create(response);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 监听函数，全写：http.createServer(app.callback()).listen(...)</span></span><br><span class="line">  listen(...args) &#123;</span><br><span class="line">    debug(<span class="string">'listen'</span>);</span><br><span class="line">    <span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</span><br><span class="line">    <span class="keyword">return</span> server.listen(...args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只输出可能含 subdomainOffset、proxy、env 属性的对象，属性值对应 this 相应属性值</span></span><br><span class="line">  toJSON() &#123;</span><br><span class="line">    <span class="keyword">return</span> only(<span class="keyword">this</span>, [</span><br><span class="line">      <span class="string">'subdomainOffset'</span>,</span><br><span class="line">      <span class="string">'proxy'</span>,</span><br><span class="line">      <span class="string">'env'</span></span><br><span class="line">    ]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用 toJSON 方法</span></span><br><span class="line">  inspect() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.toJSON();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理给出的中间件 fn，旧格式的中间件将会被转换，返回实例对象</span></span><br><span class="line">  use(fn) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'middleware must be a function!'</span>);</span><br><span class="line">    <span class="keyword">if</span> (isGeneratorFunction(fn)) &#123;  <span class="comment">// 判断中间件是否是 generator 函数</span></span><br><span class="line">      deprecate(<span class="string">'Support for generators will be removed in v3. '</span> +</span><br><span class="line">                <span class="string">'See the documentation for examples of how to convert old middleware '</span> +</span><br><span class="line">                <span class="string">'https://github.com/koajs/koa/blob/master/docs/migration.md'</span>);</span><br><span class="line">      fn = convert(fn);</span><br><span class="line">    &#125;</span><br><span class="line">    debug(<span class="string">'use %s'</span>, fn._name || fn.name || <span class="string">'-'</span>);</span><br><span class="line">    <span class="keyword">this</span>.middleware.push(fn);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回请求处理回调</span></span><br><span class="line">  callback() &#123;</span><br><span class="line">    <span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.middleware);  <span class="comment">// this.middleware 必须是函数数组</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.listeners(<span class="string">'error'</span>).length) <span class="keyword">this</span>.on(<span class="string">'error'</span>, <span class="keyword">this</span>.onerror);  <span class="comment">// 添加错误默认处理函数（this.listeners('error'): 返回名为 error 的事件的监听器数组的副本）</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> handleRequest = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123; <span class="comment">// 返回 requestListener 函数</span></span><br><span class="line">      <span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.handleRequest(ctx, fn);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> handleRequest;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理请求（私有方法）</span></span><br><span class="line">  handleRequest(ctx, fnMiddleware) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = ctx.res;</span><br><span class="line">    res.statusCode = <span class="number">404</span>;</span><br><span class="line">    <span class="keyword">const</span> onerror = <span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err);</span><br><span class="line">    <span class="keyword">const</span> handleResponse = <span class="function"><span class="params">()</span> =&gt;</span> respond(ctx);</span><br><span class="line">    onFinished(res, onerror);</span><br><span class="line">    <span class="keyword">return</span> fnMiddleware(ctx).then(handleResponse).catch(onerror);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化一个新的 context 对象（私有方法）</span></span><br><span class="line">  createContext(req, res) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.context);</span><br><span class="line">    <span class="keyword">const</span> request = context.request = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.request);</span><br><span class="line">    <span class="keyword">const</span> response = context.response = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.response);</span><br><span class="line">    context.app = request.app = response.app = <span class="keyword">this</span>;</span><br><span class="line">    context.req = request.req = response.req = req;</span><br><span class="line">    context.res = request.res = response.res = res;</span><br><span class="line">    request.ctx = response.ctx = context;</span><br><span class="line">    request.response = response;</span><br><span class="line">    response.request = request;</span><br><span class="line">    context.originalUrl = request.originalUrl = req.url;</span><br><span class="line">    context.cookies = <span class="keyword">new</span> Cookies(req, res, &#123;</span><br><span class="line">      keys: <span class="keyword">this</span>.keys,</span><br><span class="line">      secure: request.secure</span><br><span class="line">    &#125;);</span><br><span class="line">    request.ip = request.ips[<span class="number">0</span>] || req.socket.remoteAddress || <span class="string">''</span>;</span><br><span class="line">    context.accept = request.accept = accepts(req);</span><br><span class="line">    context.state = &#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span> context;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 默认的错误处理函数</span></span><br><span class="line">  onerror(err) &#123;</span><br><span class="line">    assert(err <span class="keyword">instanceof</span> <span class="built_in">Error</span>, <span class="string">`non-error thrown: <span class="subst">$&#123;err&#125;</span>`</span>); <span class="comment">// 类型检查，确认 err 是 Error 对象</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">404</span> == err.status || err.expose) <span class="keyword">return</span>;  <span class="comment">// 如果 err.status 是 404 或者 err.expose 是 true，则不输出错误信息</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.silent) <span class="keyword">return</span>;  <span class="comment">// 如果 silent 是 true，则不输出错误信息</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> msg = err.stack || err.toString();</span><br><span class="line">    <span class="built_in">console</span>.error();</span><br><span class="line">    <span class="built_in">console</span>.error(msg.replace(<span class="regexp">/^/gm</span>, <span class="string">'  '</span>));</span><br><span class="line">    <span class="built_in">console</span>.error();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 响应方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 显式设置 ctx.respond = false 来绕过 koa response 封装，使用原生 res api</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">false</span> === ctx.respond) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> res = ctx.res;</span><br><span class="line">  <span class="keyword">if</span> (!ctx.writable) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> body = ctx.body;</span><br><span class="line">  <span class="keyword">const</span> code = ctx.status;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理空状态码</span></span><br><span class="line">  <span class="keyword">if</span> (statuses.empty[code]) &#123;</span><br><span class="line">    <span class="comment">// strip headers</span></span><br><span class="line">    ctx.body = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> res.end();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// HEAD 方法与 GET 类似，但是 HEAD 并不返回消息体</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'HEAD'</span> == ctx.method) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!res.headersSent &amp;&amp; isJSON(body)) &#123;</span><br><span class="line">      ctx.length = Buffer.byteLength(<span class="built_in">JSON</span>.stringify(body));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.end();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理空回复</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">null</span> == body) &#123;</span><br><span class="line">    body = ctx.message || <span class="built_in">String</span>(code);</span><br><span class="line">    <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">      ctx.type = <span class="string">'text'</span>;</span><br><span class="line">      ctx.length = Buffer.byteLength(body);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.end(body);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 三种处理  buffer 字符串 流</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (body <span class="keyword">instanceof</span> Stream) <span class="keyword">return</span> body.pipe(res);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// body: json（字符串序列化）</span></span><br><span class="line">  body = <span class="built_in">JSON</span>.stringify(body);</span><br><span class="line">  <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">    ctx.length = Buffer.byteLength(body);</span><br><span class="line">  &#125;</span><br><span class="line">  res.end(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三、分析"><a href="#三、分析" class="headerlink" title="三、分析"></a>三、分析</h3><h4 id="1、constructor"><a href="#1、constructor" class="headerlink" title="1、constructor"></a>1、constructor</h4><p>koa 核心代码在 lib 目录下的四个文件中，其中 application.js 为入口文件。其暴露 Application 类，这个类继承 Emitter。当引入 koa 且执行 new 操作时初始化 Application 实例并在实例上初始化一些配置，并挂载 context、request、response 实例。</p>
+<h4 id="2、use"><a href="#2、use" class="headerlink" title="2、use"></a>2、use</h4><p>往 Application 实例上的 middleware 数组上添加中间件，generator 函数会被转换并警告。</p>
+<h4 id="3、listen"><a href="#3、listen" class="headerlink" title="3、listen"></a>3、listen</h4><p>调用 callback 方法获取返回函数作为 createServer 的参数，并监听相应端口。</p>
+<h4 id="4、callback"><a href="#4、callback" class="headerlink" title="4、callback"></a>4、callback</h4><p>调用 compose 将 middleware 数组组合在一起，添加错误默认处理函数，调用 createContext、handleRequest，返回 handleRequest。</p>
+<h4 id="5、createContext"><a href="#5、createContext" class="headerlink" title="5、createContext"></a>5、createContext</h4><p>初始化一个新的 context 对象，并在对象上挂载 Application 实例、req &amp; res 原生请求对象、request &amp; response 类实例及一些属性。</p>
+<h4 id="6、handleRequest"><a href="#6、handleRequest" class="headerlink" title="6、handleRequest"></a>6、handleRequest</h4><p>为请求添加失败回调函数，并使用中间件处理请求，后执行成功回调。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-21T05:36:28.386Z" itemprop="dateUpdated">2018-12-21 13:36:28</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/koa-application/" target="_blank" rel="external">http://blog.master-ss.cn/node/koa-application/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/koa-application/&title=《koa 之 application》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/koa-application/&title=《koa 之 application》 — 青松的博客&source=打开 koa 的源码，核心文件共四个在 lib 目录下：application.js、context.js、request.js、response.js，..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/koa-application/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《koa 之 application》 — 青松的博客&url=http://blog.master-ss.cn/node/koa-application/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/koa-application/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/node/koa-compose/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">koa 之 koa-compose</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/reflect/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之 Reflect</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/koa-application/&title=《koa 之 application》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/koa-application/&title=《koa 之 application》 — 青松的博客&source=打开 koa 的源码，核心文件共四个在 lib 目录下：application.js、context.js、request.js、response.js，..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/koa-application/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《koa 之 application》 — 青松的博客&url=http://blog.master-ss.cn/node/koa-application/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/koa-application/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQY7jMAwEwPz/01lgrwt7uinvAJZKp2DiOCoPwFAkP594ff+u+3f/vab9y9V9HlsYGBivZXxvV/4FV5+92m7y2WRvGBgY5zDug2x0o+BTefjO94aBgYGRXDNLDVfAGBgYGG0yNzuOJgkoBgYGRnuInSWCeaL5S2dxDAyMFzLaxsBvvv6P/Q0MDIyXML7laluYbel/uCsMDIytGU+V75PmwVO/DEWGi4GBsSljJTjmaWVb4IuKbhgYGAcwVmJXvsX2oeQ7wcDA2JUxG3fIw2LbThi2KzAwMLZmzIYk8o22IXjl0WBgYJzAaMNoEijXE81ipAMDA2NTxnqhbVZiWwnElxkuBgbGkYy2GNeOX7TgaGYEAwNjU0b+9bNt5cfa/A6XVUMMDIztGEmZLD/E5sj2yvqxYmBgbMSY3XRl/GKleXkZjjEwMA5gPJXq5YfPpP2Q/wBgYGDszVi53fpW2uZl1InFwMDYlDEr1q+Pl7WYKxIGBsbejJXBrNnYxP0THbIxMDCOYczC6IzUbjfKbTEwMDZlPNVoXLlDXvgbHmIxMDBezviWKw+ss9ZCO8yBgYFxAiNf64laMmqWNwYwMDBOY8yC7FNBOQ+4P/wHMDAwDmAkX9YG3KcKcEXAxcDAOJ6RBNw8+bt/NG2aiIGBgdE2L9uD6GzkAgMD4zRGfihti2vtlW1wx8DAOIGx0hhoX+djYcnh+dMuDAyM9zH+AIsxZasJk+RMAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

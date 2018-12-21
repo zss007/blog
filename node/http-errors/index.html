@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>node 之 http-errors | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="为 Express、Koa 或 Connect 生成相关 error 对象。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node 之 http-errors">
+<meta property="og:url" content="http://blog.master-ss.cn/node/http-errors/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="为 Express、Koa 或 Connect 生成相关 error 对象。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-21T05:36:24.209Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node 之 http-errors">
+<meta name="twitter:description" content="为 Express、Koa 或 Connect 生成相关 error 对象。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node 之 http-errors</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node 之 http-errors</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-26T14:52:26.000Z" itemprop="datePublished" class="page-time">
+  2018-04-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、分析"><span class="post-toc-text">二、分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1、执行-populateConstructorExports-方法，遍历常用状态码，具体根据状态码执行-createClientErrorConstructor-或-createServerErrorConstructor，返回自定义错误对象，并赋值给-exports，即-createError。"><span class="post-toc-text">1、执行 populateConstructorExports 方法，遍历常用状态码，具体根据状态码执行 createClientErrorConstructor 或 createServerErrorConstructor，返回自定义错误对象，并赋值给 exports，即 createError。</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2、导出-createError，根据传入自定义错误对象，允许不同组合：createError-400-createError-400-‘name-required’-createError-400-‘name-required’-user-user-this-throw-400-new-Error-‘invalid’-等。"><span class="post-toc-text">2、导出 createError，根据传入自定义错误对象，允许不同组合：createError(400) | createError(400, ‘name required’) | createError(400, ‘name required’, { user: user }) | this.throw(400, new Error(‘invalid’)) 等。</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3、错误对象的属性-expose-true-时，application-的-onerror-回调对其不输出错误信息，context-的-onerror-回调让-res-发送错误对象的-message-属性，否则-context-发送状态码。"><span class="post-toc-text">3、错误对象的属性 expose = true 时，application 的 onerror 回调对其不输出错误信息，context 的 onerror 回调让 res 发送错误对象的 message 属性，否则 context 发送状态码。</span></a></li></ol></li></ol><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、拓展"><span class="post-toc-text">三、拓展</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、调用栈的工作机制"><span class="post-toc-text">1、调用栈的工作机制</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、Error-对象及错误处理"><span class="post-toc-text">2、Error 对象及错误处理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、错误堆栈的裁剪"><span class="post-toc-text">3、错误堆栈的裁剪</span></a></li></ol></li>
+        </nav>
+    </aside>
+
+
+<article id="post-node/http-errors" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node 之 http-errors</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-26 22:52:26" datetime="2018-04-26T14:52:26.000Z" itemprop="datePublished">2018-04-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>为 Express、Koa 或 Connect 生成相关 error 对象。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Module dependencies.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> deprecate = <span class="built_in">require</span>(<span class="string">'depd'</span>)(<span class="string">'http-errors'</span>)</span><br><span class="line"><span class="keyword">var</span> setPrototypeOf = <span class="built_in">require</span>(<span class="string">'setprototypeof'</span>)</span><br><span class="line"><span class="keyword">var</span> statuses = <span class="built_in">require</span>(<span class="string">'statuses'</span>)</span><br><span class="line"><span class="keyword">var</span> inherits = <span class="built_in">require</span>(<span class="string">'inherits'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Module exports.</span></span><br><span class="line"><span class="comment"> * @public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">module</span>.exports = createError</span><br><span class="line"><span class="built_in">module</span>.exports.HttpError = createHttpErrorConstructor()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Populate exports for all constructors</span></span><br><span class="line">populateConstructorExports(<span class="built_in">module</span>.exports, statuses.codes, <span class="built_in">module</span>.exports.HttpError)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the code class of a status code.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">codeClass</span> (<span class="params">status</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Number</span>(<span class="built_in">String</span>(status).charAt(<span class="number">0</span>) + <span class="string">'00'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create a new HTTP Error.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @returns &#123;Error&#125;</span></span><br><span class="line"><span class="comment"> * @public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createError</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// so much arity going on ~_~</span></span><br><span class="line">  <span class="keyword">var</span> err</span><br><span class="line">  <span class="keyword">var</span> msg</span><br><span class="line">  <span class="keyword">var</span> status = <span class="number">500</span></span><br><span class="line">  <span class="keyword">var</span> props = &#123;&#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> arg = <span class="built_in">arguments</span>[i]</span><br><span class="line">    <span class="keyword">if</span> (arg <span class="keyword">instanceof</span> <span class="built_in">Error</span>) &#123;</span><br><span class="line">      err = arg</span><br><span class="line">      status = err.status || err.statusCode || status</span><br><span class="line">      <span class="keyword">continue</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> (<span class="keyword">typeof</span> arg) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'string'</span>:</span><br><span class="line">        msg = arg</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'number'</span>:</span><br><span class="line">        status = arg</span><br><span class="line">        <span class="keyword">if</span> (i !== <span class="number">0</span>) &#123;</span><br><span class="line">          deprecate(<span class="string">'non-first-argument status code; replace with createError('</span> + arg + <span class="string">', ...)'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'object'</span>:</span><br><span class="line">        props = arg</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> status === <span class="string">'number'</span> &amp;&amp; (status &lt; <span class="number">400</span> || status &gt;= <span class="number">600</span>)) &#123;</span><br><span class="line">    deprecate(<span class="string">'non-error status code; use only 4xx or 5xx status codes'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> status !== <span class="string">'number'</span> ||</span><br><span class="line">    (!statuses[status] &amp;&amp; (status &lt; <span class="number">400</span> || status &gt;= <span class="number">600</span>))) &#123;</span><br><span class="line">    status = <span class="number">500</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// constructor</span></span><br><span class="line">  <span class="keyword">var</span> HttpError = createError[status] || createError[codeClass(status)]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!err) &#123;</span><br><span class="line">    <span class="comment">// create error</span></span><br><span class="line">    err = HttpError</span><br><span class="line">      ? <span class="keyword">new</span> HttpError(msg)</span><br><span class="line">      : <span class="keyword">new</span> <span class="built_in">Error</span>(msg || statuses[status])</span><br><span class="line">    <span class="built_in">Error</span>.captureStackTrace(err, createError)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!HttpError || !(err <span class="keyword">instanceof</span> HttpError) || err.status !== status) &#123;</span><br><span class="line">    <span class="comment">// add properties to generic error</span></span><br><span class="line">    err.expose = status &lt; <span class="number">500</span></span><br><span class="line">    err.status = err.statusCode = status</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> props) &#123;</span><br><span class="line">    <span class="keyword">if</span> (key !== <span class="string">'status'</span> &amp;&amp; key !== <span class="string">'statusCode'</span>) &#123;</span><br><span class="line">      err[key] = props[key]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create HTTP error abstract base class.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createHttpErrorConstructor</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">HttpError</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'cannot construct abstract class'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  inherits(HttpError, <span class="built_in">Error</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> HttpError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create a constructor for a client error.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createClientErrorConstructor</span> (<span class="params">HttpError, name, code</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> className = name.match(<span class="regexp">/Error$/</span>) ? name : name + <span class="string">'Error'</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">ClientError</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// create the error object</span></span><br><span class="line">    <span class="keyword">var</span> msg = message != <span class="literal">null</span> ? message : statuses[code]</span><br><span class="line">    <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(msg)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// capture a stack trace to the construction point</span></span><br><span class="line">    <span class="built_in">Error</span>.captureStackTrace(err, ClientError)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// adjust the [[Prototype]]</span></span><br><span class="line">    setPrototypeOf(err, ClientError.prototype)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// redefine the error message</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(err, <span class="string">'message'</span>, &#123;</span><br><span class="line">      enumerable: <span class="literal">true</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      value: msg,</span><br><span class="line">      writable: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// redefine the error name</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(err, <span class="string">'name'</span>, &#123;</span><br><span class="line">      enumerable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      value: className,</span><br><span class="line">      writable: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  inherits(ClientError, HttpError)</span><br><span class="line"></span><br><span class="line">  ClientError.prototype.status = code</span><br><span class="line">  ClientError.prototype.statusCode = code</span><br><span class="line">  ClientError.prototype.expose = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ClientError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create a constructor for a server error.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createServerErrorConstructor</span> (<span class="params">HttpError, name, code</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> className = name.match(<span class="regexp">/Error$/</span>) ? name : name + <span class="string">'Error'</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">ServerError</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// create the error object</span></span><br><span class="line">    <span class="keyword">var</span> msg = message != <span class="literal">null</span> ? message : statuses[code]</span><br><span class="line">    <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(msg)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// capture a stack trace to the construction point</span></span><br><span class="line">    <span class="built_in">Error</span>.captureStackTrace(err, ServerError)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// adjust the [[Prototype]]</span></span><br><span class="line">    setPrototypeOf(err, ServerError.prototype)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// redefine the error message</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(err, <span class="string">'message'</span>, &#123;</span><br><span class="line">      enumerable: <span class="literal">true</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      value: msg,</span><br><span class="line">      writable: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// redefine the error name</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(err, <span class="string">'name'</span>, &#123;</span><br><span class="line">      enumerable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      value: className,</span><br><span class="line">      writable: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  inherits(ServerError, HttpError)</span><br><span class="line"></span><br><span class="line">  ServerError.prototype.status = code</span><br><span class="line">  ServerError.prototype.statusCode = code</span><br><span class="line">  ServerError.prototype.expose = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ServerError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Populate the exports object with constructors for every error class.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">populateConstructorExports</span> (<span class="params">exports, codes, HttpError</span>) </span>&#123;</span><br><span class="line">  codes.forEach(<span class="function"><span class="keyword">function</span> <span class="title">forEachCode</span> (<span class="params">code</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> CodeError</span><br><span class="line">    <span class="keyword">var</span> name = toIdentifier(statuses[code])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (codeClass(code)) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">400</span>:</span><br><span class="line">        CodeError = createClientErrorConstructor(HttpError, name, code)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> <span class="number">500</span>:</span><br><span class="line">        CodeError = createServerErrorConstructor(HttpError, name, code)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (CodeError) &#123;</span><br><span class="line">      <span class="comment">// export the constructor</span></span><br><span class="line">      exports[code] = CodeError</span><br><span class="line">      exports[name] = CodeError</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// backwards-compatibility</span></span><br><span class="line">  exports[<span class="string">"I'mateapot"</span>] = deprecate.function(exports.ImATeapot,</span><br><span class="line">    <span class="string">'"I\'mateapot"; use "ImATeapot" instead'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Convert a string of words to a JavaScript identifier.</span></span><br><span class="line"><span class="comment"> * @private</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toIdentifier</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str.split(<span class="string">' '</span>).map(<span class="function"><span class="keyword">function</span> (<span class="params">token</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> token.slice(<span class="number">0</span>, <span class="number">1</span>).toUpperCase() + token.slice(<span class="number">1</span>)</span><br><span class="line">  &#125;).join(<span class="string">''</span>).replace(<span class="regexp">/[^ _0-9a-z]/gi</span>, <span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二、分析"><a href="#二、分析" class="headerlink" title="二、分析"></a>二、分析</h3><h5 id="1、执行-populateConstructorExports-方法，遍历常用状态码，具体根据状态码执行-createClientErrorConstructor-或-createServerErrorConstructor，返回自定义错误对象，并赋值给-exports，即-createError。"><a href="#1、执行-populateConstructorExports-方法，遍历常用状态码，具体根据状态码执行-createClientErrorConstructor-或-createServerErrorConstructor，返回自定义错误对象，并赋值给-exports，即-createError。" class="headerlink" title="1、执行 populateConstructorExports 方法，遍历常用状态码，具体根据状态码执行 createClientErrorConstructor 或 createServerErrorConstructor，返回自定义错误对象，并赋值给 exports，即 createError。"></a>1、执行 populateConstructorExports 方法，遍历常用状态码，具体根据状态码执行 createClientErrorConstructor 或 createServerErrorConstructor，返回自定义错误对象，并赋值给 exports，即 createError。</h5><h5 id="2、导出-createError，根据传入自定义错误对象，允许不同组合：createError-400-createError-400-‘name-required’-createError-400-‘name-required’-user-user-this-throw-400-new-Error-‘invalid’-等。"><a href="#2、导出-createError，根据传入自定义错误对象，允许不同组合：createError-400-createError-400-‘name-required’-createError-400-‘name-required’-user-user-this-throw-400-new-Error-‘invalid’-等。" class="headerlink" title="2、导出 createError，根据传入自定义错误对象，允许不同组合：createError(400) | createError(400, ‘name required’) | createError(400, ‘name required’, { user: user }) | this.throw(400, new Error(‘invalid’)) 等。"></a>2、导出 createError，根据传入自定义错误对象，允许不同组合：createError(400) | createError(400, ‘name required’) | createError(400, ‘name required’, { user: user }) | this.throw(400, new Error(‘invalid’)) 等。</h5><h5 id="3、错误对象的属性-expose-true-时，application-的-onerror-回调对其不输出错误信息，context-的-onerror-回调让-res-发送错误对象的-message-属性，否则-context-发送状态码。"><a href="#3、错误对象的属性-expose-true-时，application-的-onerror-回调对其不输出错误信息，context-的-onerror-回调让-res-发送错误对象的-message-属性，否则-context-发送状态码。" class="headerlink" title="3、错误对象的属性 expose = true 时，application 的 onerror 回调对其不输出错误信息，context 的 onerror 回调让 res 发送错误对象的 message 属性，否则 context 发送状态码。"></a>3、错误对象的属性 expose = true 时，application 的 onerror 回调对其不输出错误信息，context 的 onerror 回调让 res 发送错误对象的 message 属性，否则 context 发送状态码。</h5><h3 id="三、拓展"><a href="#三、拓展" class="headerlink" title="三、拓展"></a>三、拓展</h3><h4 id="1、调用栈的工作机制"><a href="#1、调用栈的工作机制" class="headerlink" title="1、调用栈的工作机制"></a>1、调用栈的工作机制</h4><p>函数被调用时，就会被加入到调用栈顶部，执行结束之后，就会从调用栈顶部移除该函数，这种数据结构的关键在于后进先出，即大家所熟知的 LIFO。比如，当我们在函数 y 内部调用函数 x 的时候，调用栈从下往上的顺序就是 y -&gt; x 。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'c'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'b'</span>);</span><br><span class="line">    c();</span><br><span class="line">    <span class="built_in">console</span>.trace(); <span class="comment">// 使用 console.trace 来把当前的调用栈输出到 console 中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'a'</span>);</span><br><span class="line">    b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 得到如下的结果：调用函数的时候，会被推到调用栈的顶部，而执行完毕之后，就会从调用栈移除。</span></span><br><span class="line">Trace</span><br><span class="line">    at b (repl:<span class="number">4</span>:<span class="number">9</span>)</span><br><span class="line">    at a (repl:<span class="number">3</span>:<span class="number">1</span>)</span><br><span class="line">    at repl:<span class="number">1</span>:<span class="number">1</span>  <span class="comment">// &lt;-- 从这行往下的内容可以忽略，因为这些都是 Node 内部的东西</span></span><br><span class="line">    at realRunInThisContextScript (vm.js:<span class="number">22</span>:<span class="number">35</span>)</span><br><span class="line">    at sigintHandlersWrap (vm.js:<span class="number">98</span>:<span class="number">12</span>)</span><br><span class="line">    at ContextifyScript.Script.runInThisContext (vm.js:<span class="number">24</span>:<span class="number">12</span>)</span><br><span class="line">    at REPLServer.defaultEval (repl.js:<span class="number">313</span>:<span class="number">29</span>)</span><br><span class="line">    at bound (domain.js:<span class="number">280</span>:<span class="number">14</span>)</span><br><span class="line">    at REPLServer.runBound [<span class="keyword">as</span> <span class="built_in">eval</span>] (domain.js:<span class="number">293</span>:<span class="number">12</span>)</span><br><span class="line">    at REPLServer.onLine (repl.js:<span class="number">513</span>:<span class="number">10</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="2、Error-对象及错误处理"><a href="#2、Error-对象及错误处理" class="headerlink" title="2、Error 对象及错误处理"></a>2、Error 对象及错误处理</h4><p>当代码中发生错误时，我们通常会抛出一个 Error 对象。Error 对象可以作为扩展和创建自定义错误类型的原型。Error 对象的 prototype 具有以下属性：constructor 负责该实例的原型构造函数；message 错误信息；name 错误的名字。<br>上面都是标准属性，有些 JS 运行环境还提供了标准属性之外的属性，如 Node.js、Firefox、Chrome、Edge、IE 10、Opera 和 Safari 6+ 中会有 stack 属性，它包含了错误代码的调用栈，接下来我们简称错误堆栈。错误堆栈包含了产生该错误时完整的调用栈信息。<br>抛出错误时，你必须使用 throw 关键字。为了捕获抛出的错误，则必须使用 try catch 语句把可能出错的代码块包起来，catch 的时候可以接收一个参数，该参数就是被抛出的错误。与 Java 中类似，JS 中也可以在 try catch 语句之后有 finally，不论前面代码是否抛出错误 finally 里面的代码都会执行，这种语言的常见用途有：在 finally 中做些清理的工作。此外，你可以使用没有 catch 的 try 语句，但是后面必须跟上 finally，这意味着我们可以使用三种不同形式的 try 语句：try … catch、try … finally、try … catch … finally<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'The try block is running...'</span>);</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 强烈建议抛出 Error 对象，否则在需要处理错误的调用栈信息和其他有意义的元数据，抛出非 Error 对象的错误会让你的处境很尴尬</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error inside finally.'</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Caught an error inside the finally block.'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3、错误堆栈的裁剪"><a href="#3、错误堆栈的裁剪" class="headerlink" title="3、错误堆栈的裁剪"></a>3、错误堆栈的裁剪</h4><p>Node.js 才支持这个特性，通过 Error.captureStackTrace 来实现，Error.captureStackTrace 接收一个 object 作为第 1 个参数，以及可选的 function 作为第 2 个参数。其作用是捕获当前的调用栈并对其进行裁剪，捕获到的调用栈会记录在第 1 个参数的 stack 属性上，裁剪的参照点是第 2 个参数，也就是说，此函数之前的调用会被记录到调用栈上面，而之后的不会。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 让我们用代码来说明，首先，把当前的调用栈捕获并放到 myObj 上：</span></span><br><span class="line"><span class="keyword">const</span> myObj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 把当前调用栈写到 myObj 上</span></span><br><span class="line">    <span class="built_in">Error</span>.captureStackTrace(myObj);</span><br><span class="line">    c();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用函数 a</span></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印 myObj.stack</span></span><br><span class="line"><span class="built_in">console</span>.log(myObj.stack);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出会是这样</span></span><br><span class="line"><span class="comment">//    at b (repl:3:7) &lt;-- Since it was called inside B, the B call is the last entry in the stack</span></span><br><span class="line"><span class="comment">//    at a (repl:2:1)</span></span><br><span class="line"><span class="comment">//    at repl:1:1 &lt;-- Node internals below this line</span></span><br><span class="line"><span class="comment">//    at realRunInThisContextScript (vm.js:22:35)</span></span><br><span class="line"><span class="comment">//    at sigintHandlersWrap (vm.js:98:12)</span></span><br><span class="line"><span class="comment">//    at ContextifyScript.Script.runInThisContext (vm.js:24:12)</span></span><br><span class="line"><span class="comment">//    at REPLServer.defaultEval (repl.js:313:29)</span></span><br><span class="line"><span class="comment">//    at bound (domain.js:280:14)</span></span><br><span class="line"><span class="comment">//    at REPLServer.runBound [as eval] (domain.js:293:12)</span></span><br><span class="line"><span class="comment">//    at REPLServer.onLine (repl.js:513:10)</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的调用栈中只有 a -&gt; b，因为我们在 b 调用 c 之前就捕获了调用栈。现在对上面的代码稍作修改，然后看看会发生什么：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myObj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">d</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 我们把当前调用栈存储到 myObj 上，但是会去掉 b 和 b 之后的部分</span></span><br><span class="line">    <span class="built_in">Error</span>.captureStackTrace(myObj, b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    d();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    c();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行代码</span></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印 myObj.stack</span></span><br><span class="line"><span class="built_in">console</span>.log(myObj.stack);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出如下</span></span><br><span class="line"><span class="comment">//    at a (repl:2:1) &lt;-- As you can see here we only get frames before `b` was called</span></span><br><span class="line"><span class="comment">//    at repl:1:1 &lt;-- Node internals below this line</span></span><br><span class="line"><span class="comment">//    at realRunInThisContextScript (vm.js:22:35)</span></span><br><span class="line"><span class="comment">//    at sigintHandlersWrap (vm.js:98:12)</span></span><br><span class="line"><span class="comment">//    at ContextifyScript.Script.runInThisContext (vm.js:24:12)</span></span><br><span class="line"><span class="comment">//    at REPLServer.defaultEval (repl.js:313:29)</span></span><br><span class="line"><span class="comment">//    at bound (domain.js:280:14)</span></span><br><span class="line"><span class="comment">//    at REPLServer.runBound [as eval] (domain.js:293:12)</span></span><br><span class="line"><span class="comment">//    at REPLServer.onLine (repl.js:513:10)</span></span><br><span class="line"><span class="comment">//    at emitOne (events.js:101:20)</span></span><br></pre></td></tr></table></figure></p>
+<p>在这段代码里面，因为我们在调用 Error.captureStackTrace 的时候传入了 b，这样 b 之后的调用栈都会被隐藏。可以在想对用户隐藏跟他业务无关的错误堆栈（比如某个库的内部实现）试用这个技巧。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-21T05:36:24.209Z" itemprop="dateUpdated">2018-12-21 13:36:24</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/http-errors/" target="_blank" rel="external">http://blog.master-ss.cn/node/http-errors/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/http-errors/&title=《node 之 http-errors》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/http-errors/&title=《node 之 http-errors》 — 青松的博客&source=为 Express、Koa 或 Connect 生成相关 error 对象。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/http-errors/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之 http-errors》 — 青松的博客&url=http://blog.master-ss.cn/node/http-errors/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/http-errors/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/node/koa-context/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">koa 之 context</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/node/delegates/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">node 之 delegates</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/http-errors/&title=《node 之 http-errors》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/http-errors/&title=《node 之 http-errors》 — 青松的博客&source=为 Express、Koa 或 Connect 生成相关 error 对象。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/http-errors/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之 http-errors》 — 青松的博客&url=http://blog.master-ss.cn/node/http-errors/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/http-errors/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzElEQVR42u3aMW7DMBAEwPz/006TIkAgafco0UYwrAzDpkbNgbfHr694vX6tv9/nn4/+e/PCxcVd5r5O1xH3/Jf5s3IDLi7ufu55oTkqYeevNCuCFzZcXNyP5F4UmnIHXFzc/8FNWqO7fo+Li/tebtL85G1MS3ykV8PFxV3g5inlc58fyXdxcXFH3Fe51scts+f+7ICLi7uFmxeUPB5dD0kv9sHFxX2Y2zYk54WpjVPbQSwuLu4ebl6kZper8j3rIw4uLu5j3Bl0dvEiL5GHBlxc3C3cNtBciT4TXHSpCxcXdyO3DS7boez6qAYXF3cnty0rs0h0tmd9ZwQXF/cmbktsQ9LZC1w0P7i4uI9xV4LRWfPTprnFkBUXF/cmbr7R7DHtFa5oVIOLi7uRm49L26NPPiapA1NcXNw3caNMJTgerQ9lcXFx93PbjZIQ5LZjzSy1xcXFHXFn49Xk6JNHLflr4OLi7uG21yPaEGQ2YpmVP1xc3Hu56wFoEWqMXqaovri4uLdyk6aojUTzSGXYq+Hi4n4MN4lB8/+27RYuLu5nctujSVvULvbExcXdyL33SlZe4OrQBBcXdws3D0zzkUl7pWNW8nBxcR/gfgOv6blo91wvAAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

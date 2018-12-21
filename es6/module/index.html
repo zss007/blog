@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之 module | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定了一些模块加载方案，最主要的有 CommonJS 和 AMD 两种。前者用于服务器，后者用于浏览器。ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之 module">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/module/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定了一些模块加载方案，最主要的有 CommonJS 和 AMD 两种。前者用于服务器，后者用于浏览器。ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T13:39:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之 module">
+<meta name="twitter:description" content="历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定了一些模块加载方案，最主要的有 CommonJS 和 AMD 两种。前者用于服务器，后者用于浏览器。ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之 module</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之 module</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-01T13:04:42.000Z" itemprop="datePublished" class="page-time">
+  2018-03-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、简介"><span class="post-toc-text">一、简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、export-命令"><span class="post-toc-text">二、export 命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、import-命令"><span class="post-toc-text">三、import 命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、模块的整体加载"><span class="post-toc-text">四、模块的整体加载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、export-default-命令"><span class="post-toc-text">五、export default 命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、export-与-import-的复合写法"><span class="post-toc-text">六、export 与 import 的复合写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、模块的继承"><span class="post-toc-text">七、模块的继承</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#八、跨模块常量"><span class="post-toc-text">八、跨模块常量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#九、import"><span class="post-toc-text">九、import()</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/module" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之 module</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-01 21:04:42" datetime="2018-03-01T13:04:42.000Z" itemprop="datePublished">2018-03-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定了一些模块加载方案，最主要的有 CommonJS 和 AMD 两种。前者用于服务器，后者用于浏览器。ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决方案。<br><a id="more"></a></p>
+<h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// CommonJS 模块</span><br><span class="line">let &#123; stat, exists, readFile &#125; = require(&apos;fs&apos;);</span><br><span class="line">// 等同于</span><br><span class="line">let _fs = require(&apos;fs&apos;);</span><br><span class="line">let stat = _fs.stat;</span><br><span class="line">let exists = _fs.exists;</span><br><span class="line">let readfile = _fs.readfile;</span><br><span class="line">  </span><br><span class="line">// ES6 模块</span><br><span class="line">import &#123; stat, exists, readFile &#125; from &apos;fs&apos;;</span><br></pre></td></tr></table></figure>
+<p>上面 CommonJS 模块代码的实质是整体加载 fs 模块（即加载 fs 的所有方法），生成一个对象，然后再从这个对象上面读取 3 个方法。这种加载称为“运行时加载”，因为只有运行时才能得到这个对象，导致完全没办法在编译时做“静态优化”。<br>ES6 模块不是对象，而是通过 export 命令显式指定输出的代码，再通过 import 命令输入。上面 ES6 模块代码的实质是从 fs 模块加载 3 个方法，其他方法不加载。这种加载称为 “编译时加载” 或者静态加载，即 ES6 可以在编译时就完成模块加载，效率要比 CommonJS 模块的加载方式高。当然，这也导致了没法引用 ES6 模块本身，因为它不是对象。</p>
+<h3 id="二、export-命令"><a href="#二、export-命令" class="headerlink" title="二、export 命令"></a>二、export 命令</h3><p>export 命令用于规定模块的对外接口，一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用 export 关键字输出该变量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">// profile.js</span><br><span class="line">export var firstName = &apos;Michael&apos;;</span><br><span class="line">export var lastName = &apos;Jackson&apos;;</span><br><span class="line">export var year = 1958;</span><br><span class="line">  </span><br><span class="line">// 等同于（后面方式更为推荐）</span><br><span class="line">var firstName = &apos;Michael&apos;;</span><br><span class="line">var lastName = &apos;Jackson&apos;;</span><br><span class="line">var year = 1958;</span><br><span class="line">export &#123;firstName, lastName, year&#125;;</span><br><span class="line">  </span><br><span class="line">// export 命令除了输出变量，还可以输出函数或类</span><br><span class="line">export function multiply(x, y) &#123;</span><br><span class="line">  return x * y;</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// export 输出的变量就是本来的名字，但是可以使用 as 关键字重命名</span><br><span class="line">function v1() &#123; ... &#125;</span><br><span class="line">function v2() &#123; ... &#125;</span><br><span class="line">export &#123;</span><br><span class="line">  v1 as streamV1,</span><br><span class="line">  v2 as streamV2,</span><br><span class="line">  v2 as streamLatestVersion</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// export 命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系</span><br><span class="line">export 1; // 报错</span><br><span class="line">var m = 1;</span><br><span class="line">export m; // 报错</span><br><span class="line">export var m = 1; // 正确写法一</span><br><span class="line">export &#123;m&#125;; // 正确写法二</span><br><span class="line">var n = 1;</span><br><span class="line">export &#123;n as m&#125;;  // 正确写法三</span><br><span class="line">  </span><br><span class="line">// function 和 class 的输出，也必须遵守这样的写法</span><br><span class="line">function f() &#123;&#125;</span><br><span class="line">export f;  // 报错</span><br><span class="line">export function f() &#123;&#125;; // 正确</span><br><span class="line">export &#123;f&#125;; // 正确</span><br><span class="line">  </span><br><span class="line">// export 语句输出的接口，与其对应的值是动态绑定关系（输出变量 foo，值为 bar，500 毫秒之后变成 baz，与 CommonJS 规范完全不同）</span><br><span class="line">export var foo = &apos;bar&apos;;</span><br><span class="line">setTimeout(() =&gt; foo = &apos;baz&apos;, 500);</span><br><span class="line">  </span><br><span class="line">// export 命令需要处于模块顶层。如果处于块级作用域内，就会报错，因为这样就没法做静态优化了</span><br><span class="line">function foo() &#123;</span><br><span class="line">  export default &apos;bar&apos; // SyntaxError</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、import-命令"><a href="#三、import-命令" class="headerlink" title="三、import 命令"></a>三、import 命令</h3><p>使用 export 命令定义了模块的对外接口以后，其他 JS 文件就可以通过 import 命令加载这个模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">// main.js（大括号里面的变量名，必须与被导入模块 profile.js 对外接口的名称相同）</span><br><span class="line">import &#123;firstName, lastName, year&#125; from &apos;./profile.js&apos;;</span><br><span class="line">function setName(element) &#123;</span><br><span class="line">  element.textContent = firstName + &apos; &apos; + lastName;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// import 命令要使用 as 关键字，将输入的变量重命名</span><br><span class="line">import &#123; lastName as surname &#125; from &apos;./profile.js&apos;;</span><br><span class="line">  </span><br><span class="line">// import 命令输入的变量都是只读的，不允许在加载模块的脚本里面，改写接口</span><br><span class="line">import &#123;a&#125; from &apos;./xxx.js&apos;</span><br><span class="line">a = &#123;&#125;; // Syntax Error : &apos;a&apos; is read-only;</span><br><span class="line">// 但是，如果 a 是一个对象，改写 a 的属性是允许的，其他模块也可以读到改写后的值，不过这种写法很难查错，不建议</span><br><span class="line">a.foo = &apos;hello&apos;; // 合法操作</span><br><span class="line">  </span><br><span class="line">// import 后面的 from 指定模块文件的位置，可以是相对路径，也可以是绝对路径，.js后缀可以省略。模块名不带有路径，必须有配置文件告诉 JavaScript 引擎该模块的位置</span><br><span class="line">import &#123;myMethod&#125; from &apos;util&apos;;</span><br><span class="line">  </span><br><span class="line">// import 命令具有提升效果，会提升到整个模块的头部，首先执行</span><br><span class="line">foo(); // 不会报错，因为 import 的执行早于 foo 的调用。这种行为的本质是，import 命令是编译阶段执行的，在代码运行之前</span><br><span class="line">import &#123; foo &#125; from &apos;my_module&apos;;</span><br><span class="line">  </span><br><span class="line">// import 是静态执行，所以不能使用表达式和变量</span><br><span class="line">import &#123; &apos;f&apos; + &apos;oo&apos; &#125; from &apos;my_module&apos;; // 报错</span><br><span class="line">let module = &apos;my_module&apos;;</span><br><span class="line">import &#123; foo &#125; from module; // 报错</span><br><span class="line">if (x === 1) &#123;  // 报错</span><br><span class="line">  import &#123; foo &#125; from &apos;module1&apos;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  import &#123; foo &#125; from &apos;module2&apos;;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// import 语句会执行所加载的模块</span><br><span class="line">import &apos;lodash&apos;;  // 代码仅仅执行 lodash 模块，但是不输入任何值</span><br><span class="line">  </span><br><span class="line">// 多次重复执行同一句 import 语句，那么只会执行一次，而不会执行多次</span><br><span class="line">import &apos;lodash&apos;;</span><br><span class="line">import &apos;lodash&apos;; // 加载了两次 lodash，但是只会执行一次</span><br><span class="line">  </span><br><span class="line">// import 语句是 Singleton 模式</span><br><span class="line">import &#123; foo &#125; from &apos;my_module&apos;;</span><br><span class="line">import &#123; bar &#125; from &apos;my_module&apos;;</span><br><span class="line">// 等同于</span><br><span class="line">import &#123; foo, bar &#125; from &apos;my_module&apos;;</span><br><span class="line">  </span><br><span class="line">// 通过 Babel 转码，CommonJS 模块的 require 命令和 ES6 模块的 import 命令，可以写在同一个模块里面，但是最好不要这样做，可能不会得到预期结果。因为 import 在静态解析阶段执行，所以它是一个模块之中最早执行的</span><br><span class="line">require(&apos;core-js/modules/es6.symbol&apos;);</span><br><span class="line">require(&apos;core-js/modules/es6.promise&apos;);</span><br><span class="line">import React from &apos;React&apos;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、模块的整体加载"><a href="#四、模块的整体加载" class="headerlink" title="四、模块的整体加载"></a>四、模块的整体加载</h3><p>除了指定加载某个输出值，还可以使用整体加载，即用星号（*）指定一个对象，所有输出值都加载在这个对象上面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// circle.js</span><br><span class="line">export function area(radius) &#123;</span><br><span class="line">  return Math.PI * radius * radius;</span><br><span class="line">&#125;</span><br><span class="line">export function circumference(radius) &#123;</span><br><span class="line">  return 2 * Math.PI * radius;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// main.js（逐一指定要加载的方法）</span><br><span class="line">import &#123; area, circumference &#125; from &apos;./circle&apos;;</span><br><span class="line">console.log(&apos;圆面积：&apos; + area(4));</span><br><span class="line">console.log(&apos;圆周长：&apos; + circumference(14));</span><br><span class="line">  </span><br><span class="line">// main.js（整体加载的写法）</span><br><span class="line">import * as circle from &apos;./circle&apos;;</span><br><span class="line">console.log(&apos;圆面积：&apos; + circle.area(4));</span><br><span class="line">console.log(&apos;圆周长：&apos; + circle.circumference(14));</span><br><span class="line">  </span><br><span class="line">// 模块整体加载所在的对象是可以静态分析的，所以不允许运行时改变。下面的写法都是不允许的</span><br><span class="line">import * as circle from &apos;./circle&apos;;</span><br><span class="line">circle.foo = &apos;hello&apos;;</span><br><span class="line">circle.area = function () &#123;&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、export-default-命令"><a href="#五、export-default-命令" class="headerlink" title="五、export default 命令"></a>五、export default 命令</h3><p>使用 import 命令的时候，用户需要知道所要加载的变量名或函数名，否则无法加载。但是，用户肯定希望快速上手，未必愿意阅读文档，去了解模块有哪些属性和方法。这个时候就要用到 export default 命令，为模块指定默认输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">// export-default.js</span><br><span class="line">export default function () &#123;</span><br><span class="line">  console.log(&apos;foo&apos;);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// import-default.js（import 命令可以为该默认函数指定任意名字，后面不使用大括号。）</span><br><span class="line">import customName from &apos;./export-default&apos;;</span><br><span class="line">customName(); // &apos;foo&apos;</span><br><span class="line">  </span><br><span class="line">// export-default.js（用在非匿名函数前，也是可以的；函数名 foo，在模块外部是无效的，加载的时候，视同匿名函数加载）</span><br><span class="line">export default function foo() &#123;</span><br><span class="line">  console.log(&apos;foo&apos;);</span><br><span class="line">&#125;</span><br><span class="line">// 或者写成</span><br><span class="line">function foo() &#123;</span><br><span class="line">  console.log(&apos;foo&apos;);</span><br><span class="line">&#125;</span><br><span class="line">export default foo;</span><br><span class="line">  </span><br><span class="line">// modules.js（export default 命令用于指定模块的默认输出，只能使用一次）</span><br><span class="line">function add(x, y) &#123;</span><br><span class="line">  return x * y;</span><br><span class="line">&#125;</span><br><span class="line">export &#123;add as default&#125;;</span><br><span class="line">// 等同于</span><br><span class="line">// export default add;</span><br><span class="line">  </span><br><span class="line">// app.js（export default 就是输出一个叫做 default 的变量或方法，然后系统允许你为它取任意名字）</span><br><span class="line">import &#123; default as foo &#125; from &apos;modules&apos;;</span><br><span class="line">// 等同于</span><br><span class="line">// import foo from &apos;modules&apos;;</span><br><span class="line">  </span><br><span class="line">// 因为 export default 命令其实只是输出一个叫做 default 的变量，所以它后面不能跟变量声明语句</span><br><span class="line">export var a = 1; // 正确</span><br><span class="line">var a = 1;</span><br><span class="line">export default a; // 正确</span><br><span class="line">export default var a = 1; // 错误</span><br><span class="line">  </span><br><span class="line">// 也可以直接将一个值写在 export default 之后</span><br><span class="line">export default 42;  // 正确</span><br><span class="line">export 42;  // 报错</span><br><span class="line">  </span><br><span class="line">// 有了 export default 命令，输入模块时就非常直观了</span><br><span class="line">import _ from &apos;lodash&apos;;</span><br><span class="line">  </span><br><span class="line">// 在一条 import 语句中，同时输入默认方法和其他接口</span><br><span class="line">import _, &#123; each, each as forEach &#125; from &apos;lodash&apos;;</span><br><span class="line">  </span><br><span class="line">// 对应上面代码的 export 语句如下</span><br><span class="line">export default function (obj) &#123;</span><br><span class="line">  // ···</span><br><span class="line">&#125;</span><br><span class="line">export function each(obj, iterator, context) &#123;</span><br><span class="line">  // ···</span><br><span class="line">&#125;</span><br><span class="line">export &#123; each as forEach &#125;; // 暴露出 forEach 接口，默认指向 each 接口</span><br><span class="line">  </span><br><span class="line">// export default 也可以用来输出类</span><br><span class="line">// MyClass.js</span><br><span class="line">export default class &#123; ... &#125;</span><br><span class="line">// main.js</span><br><span class="line">import MyClass from &apos;MyClass&apos;;</span><br><span class="line">let o = new MyClass();</span><br></pre></td></tr></table></figure></p>
+<h3 id="六、export-与-import-的复合写法"><a href="#六、export-与-import-的复合写法" class="headerlink" title="六、export 与 import 的复合写法"></a>六、export 与 import 的复合写法</h3><p>如果在一个模块之中，先输入后输出同一个模块，import 语句可以与 export 语句写在一起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 写成一行以后，foo 和 bar 实际上并没有被导入当前模块，只是相当于对外转发了这两个接口，导致当前模块不能直接使用 foo 和 bar</span><br><span class="line">export &#123; foo, bar &#125; from &apos;my_module&apos;;</span><br><span class="line">// 可以简单理解为</span><br><span class="line">import &#123; foo, bar &#125; from &apos;my_module&apos;;</span><br><span class="line">export &#123; foo, bar &#125;;</span><br><span class="line">  </span><br><span class="line">// 模块的接口改名和整体输出，也可以采用这种写法</span><br><span class="line">export &#123; foo as myFoo &#125; from &apos;my_module&apos;; // 接口改名</span><br><span class="line">export * from &apos;my_module&apos;;  // 整体输出</span><br><span class="line">  </span><br><span class="line">// 默认接口的写法</span><br><span class="line">export &#123; default &#125; from &apos;foo&apos;;</span><br><span class="line">  </span><br><span class="line">// 具名接口改为默认接口的写法</span><br><span class="line">export &#123; es6 as default &#125; from &apos;./someModule&apos;;</span><br><span class="line">// 等同于</span><br><span class="line">import &#123; es6 &#125; from &apos;./someModule&apos;;</span><br><span class="line">export default es6;</span><br><span class="line">  </span><br><span class="line">// 默认接口也可以改名为具名接口</span><br><span class="line">export &#123; default as es6 &#125; from &apos;./someModule&apos;;</span><br><span class="line">  </span><br><span class="line">// 下面三种 import 语句，没有对应的复合写法</span><br><span class="line">import * as someIdentifier from &quot;someModule&quot;;</span><br><span class="line">import someIdentifier from &quot;someModule&quot;;</span><br><span class="line">import someIdentifier, &#123; namedIdentifier &#125; from &quot;someModule&quot;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="七、模块的继承"><a href="#七、模块的继承" class="headerlink" title="七、模块的继承"></a>七、模块的继承</h3><p>模块之间也可以继承。假设有一个 circleplus 模块，继承了 circle 模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// circleplus.js</span><br><span class="line">export * from &apos;circle&apos;; // export * 命令会忽略 circle 模块的 default 方法</span><br><span class="line">export var e = 2.71828182846;</span><br><span class="line">export default function(x) &#123;</span><br><span class="line">  return Math.exp(x);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// main.js</span><br><span class="line">import * as math from &apos;circleplus&apos;;</span><br><span class="line">import exp from &apos;circleplus&apos;; // 将 circleplus 模块的默认方法加载为 exp 方法</span><br><span class="line">console.log(exp(math.e));</span><br></pre></td></tr></table></figure></p>
+<h3 id="八、跨模块常量"><a href="#八、跨模块常量" class="headerlink" title="八、跨模块常量"></a>八、跨模块常量</h3><p>const 声明的常量只在当前代码块有效，如果想设置跨模块的常量或者一个值要被多个模块共享，可以采用下面的写法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// constants.js 模块</span><br><span class="line">export const A = 1;</span><br><span class="line">export const B = 3;</span><br><span class="line">export const C = 4;</span><br><span class="line">  </span><br><span class="line">// test1.js 模块</span><br><span class="line">import * as constants from &apos;./constants&apos;;</span><br><span class="line">console.log(constants.A); // 1</span><br><span class="line">console.log(constants.B); // 3</span><br><span class="line">  </span><br><span class="line">// test2.js 模块</span><br><span class="line">import &#123;A, B&#125; from &apos;./constants&apos;;</span><br><span class="line">console.log(A); // 1</span><br><span class="line">console.log(B); // 3</span><br><span class="line">  </span><br><span class="line">// 如果要使用的常量非常多，可以建一个专门的 constants 目录</span><br><span class="line">export const db = &#123; // constants/db.js</span><br><span class="line">  url: &apos;http://my.couchdbserver.local:5984&apos;,</span><br><span class="line">  admin_username: &apos;admin&apos;,</span><br><span class="line">  admin_password: &apos;admin password&apos;</span><br><span class="line">&#125;;</span><br><span class="line">export const users = [&apos;root&apos;, &apos;admin&apos;, &apos;staff&apos;, &apos;ceo&apos;, &apos;chief&apos;, &apos;moderator&apos;]; // constants/user.js</span><br><span class="line">  </span><br><span class="line">// constants/index.js（将这些文件输出的常量，合并在 index.js 里面）</span><br><span class="line">export &#123;db&#125; from &apos;./db&apos;;</span><br><span class="line">export &#123;users&#125; from &apos;./users&apos;;</span><br><span class="line">  </span><br><span class="line">// script.js（使用的时候，直接加载 index.js 就可以了）</span><br><span class="line">import &#123;db, users&#125; from &apos;./index&apos;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="九、import"><a href="#九、import" class="headerlink" title="九、import()"></a>九、import()</h3><p>前面介绍过，import 命令会被 JavaScript 引擎静态分析，先于模块内的其他模块执行。这样的设计，固然有利于编译器提高效率，但也导致无法在运行时加载模块。在语法上，条件加载就不可能实现。如果 import 命令要取代 Node 的 require 方法，这就形成了一个障碍。因为 require 是运行时加载模块，import 命令无法取代 require 的动态加载功能。因此有一个提案，建议引入 import() 函数完成动态加载。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T13:39:26.000Z" itemprop="dateUpdated">2018-04-22 21:39:26</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/module/" target="_blank" rel="external">http://blog.master-ss.cn/es6/module/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/module/&title=《es6 之 module》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/module/&title=《es6 之 module》 — 青松的博客&source=历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/module/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 module》 — 青松的博客&url=http://blog.master-ss.cn/es6/module/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/module/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/module-load/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 module 加载</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/object-expand/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之对象扩展</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/module/&title=《es6 之 module》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/module/&title=《es6 之 module》 — 青松的博客&source=历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/module/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 module》 — 青松的博客&url=http://blog.master-ss.cn/es6/module/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/module/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3aOW7DQBAEQP3/03RqwxDRvRcloDZSQJG1yWCu1ys+V3B+P/n/X+/e+dpxcHFxp7k54t3n8w/n7397VVxc3IPc+0BzD7oPXskli2CHi4v7wdw88OVXwsXF/V5um6bcJzq4uLifzM2bHfkFcuKWWg0XF3eCm7cz9v3e0t/FxcUd4l7luU8+8jTlGjq4uLhnuHlAydOXNjGqv4uLi3uEm5QobUEyk20V38LFxd3MbUcjq4avedKDi4t7htsmJS0xD45RqoSLi/sot21w5GGrTZ6iQIaLi7uUO9bEzBOUtv1RtE5wcXG3cfOX5stbyeCkLZD+xF1cXNzN3ISyasjatlqicIaLi7uNmxQbY2EoeXKsUYuLi3uGm4Shtp1RJC7tsBYXF3czd6w9mi9S5OlLFEBxcXEPcvPB59i4ZaaBgouL+xR3bAFr7epG9AwuLu5m7lWefOVifsSCi4v7FLctY/IljLaUypsyuLi4Z7jza1hJgJsZ4uLi4j7FbQubPGGaKX4G+7u4uLjHuW0gmym66mkwLi7uo9y23bmqTMLFxT3JbVcn8yQmH98urtVwcXEnuHnDNA9YY02TmeVOXFzcRdwf3XaaefQ1MQUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

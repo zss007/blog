@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>zpeto 之核心代码二 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="这篇研究 zepto 核心代码的实例方法。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zpeto 之核心代码二">
+<meta property="og:url" content="http://blog.master-ss.cn/zepto/core2Js/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="这篇研究 zepto 核心代码的实例方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-18T05:58:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zpeto 之核心代码二">
+<meta name="twitter:description" content="这篇研究 zepto 核心代码的实例方法。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">zpeto 之核心代码二</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">zpeto 之核心代码二</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-08-07T03:42:45.000Z" itemprop="datePublished" class="page-time">
+  2017-08-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/zepto/">zepto</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码分析"><span class="post-toc-text">二、源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、prop-amp-attr"><span class="post-toc-text">1、prop &amp; attr</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、css"><span class="post-toc-text">2、css</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo"><span class="post-toc-text">3、after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、cloneNode-true"><span class="post-toc-text">4、cloneNode(true)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、wrap、wrapAll、wrapInner"><span class="post-toc-text">5、wrap、wrapAll、wrapInner</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-zepto/core2Js" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">zpeto 之核心代码二</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-08-07 11:42:45" datetime="2017-08-07T03:42:45.000Z" itemprop="datePublished">2017-08-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/zepto/">zepto</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这篇研究 zepto 核心代码的实例方法。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br></pre></td><td class="code"><pre><span class="line">//定义zepto对象实例能够调用的方法</span><br><span class="line">$.fn = &#123;</span><br><span class="line">  constructor: zepto.Z,</span><br><span class="line">  length: 0,</span><br><span class="line">  //由于zepto对象是类数组对象，所以拷贝一些有用的数组方法可直接使用</span><br><span class="line">  forEach: emptyArray.forEach,</span><br><span class="line">  reduce: emptyArray.reduce,</span><br><span class="line">  push: emptyArray.push,</span><br><span class="line">  sort: emptyArray.sort,</span><br><span class="line">  splice: emptyArray.splice,</span><br><span class="line">  indexOf: emptyArray.indexOf,</span><br><span class="line">  //如果参数是zepto对象则转成数组，再将this转成数组合并</span><br><span class="line">  concat: function () &#123;</span><br><span class="line">    var i, value, args = [];</span><br><span class="line">    for (i = 0; i &lt; arguments.length; i++) &#123;</span><br><span class="line">      value = arguments[i];</span><br><span class="line">      args[i] = zepto.isZ(value) ? value.toArray() : value</span><br><span class="line">    &#125;</span><br><span class="line">    return concat.apply(zepto.isZ(this) ? this.toArray() : this, args)</span><br><span class="line">  &#125;,</span><br><span class="line">  //调用内部工具函数$.map，并将返回结果包装成zepto对象</span><br><span class="line">  map: function (fn) &#123;</span><br><span class="line">    return $($.map(this, function (el, i) &#123;</span><br><span class="line">      return fn.call(el, i, el)</span><br><span class="line">    &#125;))</span><br><span class="line">  &#125;,</span><br><span class="line">  //返回的数组再次包装成zepto对象</span><br><span class="line">  slice: function () &#123;</span><br><span class="line">    return $(slice.apply(this, arguments))</span><br><span class="line">  &#125;,</span><br><span class="line">  //判断上下文是否已经存在，如果存在则立即执行，否则监听DOMContentLoaded事件</span><br><span class="line">  ready: function (callback) &#123;</span><br><span class="line">    //需要检查document.body是否存在，因为IE浏览器会在它还没创建body元素时就触发document的ready事件</span><br><span class="line">    if (readyRE.test(document.readyState) &amp;&amp; document.body) callback($);</span><br><span class="line">    else document.addEventListener(&apos;DOMContentLoaded&apos;, function () &#123;</span><br><span class="line">      callback($)</span><br><span class="line">    &#125;, false);</span><br><span class="line">    return this</span><br><span class="line">  &#125;,</span><br><span class="line">  //不传参返回集合中所有元素并转成数组格式，传参大于0返回相应索引元素，小于0返回倒序返回</span><br><span class="line">  get: function (idx) &#123;</span><br><span class="line">    return idx === undefined ? slice.call(this) : this[idx &gt;= 0 ? idx : idx + this.length]</span><br><span class="line">  &#125;,</span><br><span class="line">  //将zepto类数组对象转成数组</span><br><span class="line">  toArray: function () &#123;</span><br><span class="line">    return this.get()</span><br><span class="line">  &#125;,</span><br><span class="line">  //返回当前zepto对象的length属性，也即集合中元素的个数</span><br><span class="line">  size: function () &#123;</span><br><span class="line">    return this.length</span><br><span class="line">  &#125;,</span><br><span class="line">  //从其父节点中删除当前集合中的元素，有效的从dom中移除(这里的重点是parentNode.removeChild(this); 如果是没有父节点的这里不会执行)</span><br><span class="line">  remove: function () &#123;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      if (this.parentNode != null)</span><br><span class="line">        this.parentNode.removeChild(this)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //返回原先的zepto对象，如果返回false可终止遍历，返回this使得可链式调用</span><br><span class="line">  each: function (callback) &#123;</span><br><span class="line">    emptyArray.every.call(this, function (el, idx) &#123;</span><br><span class="line">      return callback.call(el, idx, el) !== false</span><br><span class="line">    &#125;);</span><br><span class="line">    return this</span><br><span class="line">  &#125;,</span><br><span class="line">  //过滤，如果参数是函数，返回执行为true的子元素；如果是字符串，那么调用zepto.matches来判断当前元素是否匹配相应选择器</span><br><span class="line">  filter: function (selector) &#123;</span><br><span class="line">    if (isFunction(selector)) return this.not(this.not(selector));</span><br><span class="line">    return $(filter.call(this, function (element) &#123;</span><br><span class="line">      return zepto.matches(element, selector)</span><br><span class="line">    &#125;))</span><br><span class="line">  &#125;,</span><br><span class="line">  //调用$(selector, context)来获取符合条件的集合元素，然后合并成数组去重并包装成zepto对象</span><br><span class="line">  add: function (selector, context) &#123;</span><br><span class="line">    return $(uniq(this.concat($(selector, context))))</span><br><span class="line">  &#125;,</span><br><span class="line">  //判断当前元素集合中的第一个元素是否符css选择器</span><br><span class="line">  is: function (selector) &#123;</span><br><span class="line">    return this.length &gt; 0 &amp;&amp; zepto.matches(this[0], selector)</span><br><span class="line">  &#125;,</span><br><span class="line">  //排除集合里满足条件的记录，接收参数为: css选择器, function, dom, nodeList</span><br><span class="line">  not: function (selector) &#123;</span><br><span class="line">    var nodes = [];</span><br><span class="line">    //判断selector是否为函数，遍历执行函数返回false，则push到数组中(safari下的typeof nodeList也是function，所以需要判断selector.call !== undefined)</span><br><span class="line">    if (isFunction(selector) &amp;&amp; selector.call !== undefined)</span><br><span class="line">      this.each(function (idx) &#123;</span><br><span class="line">        if (!selector.call(this, idx)) nodes.push(this)</span><br><span class="line">      &#125;);</span><br><span class="line">    else &#123;</span><br><span class="line">      //当selector为字符串的时候，对集合进行筛选，也就是筛选出集合中满足selector的记录</span><br><span class="line">      var excludes = typeof selector == &apos;string&apos; ? this.filter(selector) :</span><br><span class="line">        //如果为元素集合，那么调用slice.call得到数组，否则调用zepto构造函数</span><br><span class="line">        (likeArray(selector) &amp;&amp; isFunction(selector.item)) ? slice.call(selector) : $(selector);</span><br><span class="line">      this.forEach(function (el) &#123;</span><br><span class="line">        if (excludes.indexOf(el) &lt; 0) nodes.push(el)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    return $(nodes)</span><br><span class="line">  &#125;,</span><br><span class="line">  //判断当前对象集合的子元素是否有符合选择器的元素，或者是否包含指定的DOM节点，如果有，则返回新的对象集合</span><br><span class="line">  has: function (selector) &#123;</span><br><span class="line">    return this.filter(function () &#123;</span><br><span class="line">      return isObject(selector) ?</span><br><span class="line">        $.contains(this, selector) :</span><br><span class="line">        $(this).find(selector).size()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //从当前对象集合中获取给定索引值(以0为基数)，只取一个值(slice(-1)取倒数第一个)</span><br><span class="line">  eq: function (idx) &#123;</span><br><span class="line">    return idx === -1 ? this.slice(idx) : this.slice(idx, +idx + 1)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取当前对象集合中的第一个元素</span><br><span class="line">  first: function () &#123;</span><br><span class="line">    var el = this[0];</span><br><span class="line">    return el &amp;&amp; !isObject(el) ? el : $(el)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中最后一个元素</span><br><span class="line">  last: function () &#123;</span><br><span class="line">    var el = this[this.length - 1];</span><br><span class="line">    return el &amp;&amp; !isObject(el) ? el : $(el)</span><br><span class="line">  &#125;,</span><br><span class="line">  //在当前上下文中查找符合selector的对象</span><br><span class="line">  find: function (selector) &#123;</span><br><span class="line">    var result, $this = this;</span><br><span class="line">    //如果没有选择器，那么返回空zepto对象</span><br><span class="line">    if (!selector) result = $();</span><br><span class="line">    //如果selector为dom元素或者zepto对象时，那么返回在上下文dom元素中selector的dom元素数组</span><br><span class="line">    else if (typeof selector == &apos;object&apos;)</span><br><span class="line">      result = $(selector).filter(function () &#123;</span><br><span class="line">        var node = this;</span><br><span class="line">        return emptyArray.some.call($this, function (parent) &#123;</span><br><span class="line">          return $.contains(parent, node)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;);</span><br><span class="line">    //如果是长度为1的zepto对象，那么直接调用zepto.qsa查询相应dom元素下符合selector条件的dom元素，再转成zepto对象</span><br><span class="line">    else if (this.length == 1) result = $(zepto.qsa(this[0], selector));</span><br><span class="line">    //如果是长度大于1的zepto对象，那么分别查询不同dom元素下符合selector条件的dom元素</span><br><span class="line">    else result = this.map(function () &#123;</span><br><span class="line">        return zepto.qsa(this, selector)</span><br><span class="line">      &#125;);</span><br><span class="line">    return result;</span><br><span class="line">  &#125;,</span><br><span class="line">  //从元素本身开始，逐级向上级元素匹配，并返回最先匹配selector的元素。如果给定context节点参数，那么只匹配该节点的后代元素</span><br><span class="line">  closest: function (selector, context) &#123;</span><br><span class="line">    var nodes = [], collection = typeof selector == &apos;object&apos; &amp;&amp; $(selector);</span><br><span class="line">    this.each(function (_, node) &#123;</span><br><span class="line">      //如果selector是对象，那么封装成zepto对象并判断node及其祖先节点是否存在内部；否则调用zepto.matches判断node及其祖先节点是否匹配选择器</span><br><span class="line">      while (node &amp;&amp; !(collection ? collection.indexOf(node) &gt;= 0 : zepto.matches(node, selector)))</span><br><span class="line">        node = node !== context &amp;&amp; !isDocument(node) &amp;&amp; node.parentNode;</span><br><span class="line">      //如果该节点和其所有祖先节点都不匹配，那么node==false，不会被push进去(nodes.indexOf(node)&lt;0用来移除重复节点)</span><br><span class="line">      if (node &amp;&amp; nodes.indexOf(node) &lt; 0) nodes.push(node)</span><br><span class="line">    &#125;);</span><br><span class="line">    return $(nodes)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合每个元素所有的祖先元素。如果css选择器参数给出，过滤出符合条件的元素</span><br><span class="line">  parents: function (selector) &#123;</span><br><span class="line">    var ancestors = [], nodes = this;</span><br><span class="line">    //现将所有祖先节点放到ancestors数组中</span><br><span class="line">    while (nodes.length &gt; 0)</span><br><span class="line">      nodes = $.map(nodes, function (node) &#123;</span><br><span class="line">        if ((node = node.parentNode) &amp;&amp; !isDocument(node) &amp;&amp; ancestors.indexOf(node) &lt; 0) &#123;</span><br><span class="line">          ancestors.push(node);</span><br><span class="line">          return node</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    //然后再过滤掉不符合选择器的节点</span><br><span class="line">    return filtered(ancestors, selector)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中每个元素的直接父元素。如果css选择器参数给出。过滤出符合条件的元素</span><br><span class="line">  parent: function (selector) &#123;</span><br><span class="line">    //获取对象的所有dom元素父节点，然后去重，再过滤掉不匹配选择器的元素</span><br><span class="line">    return filtered(uniq(this.pluck(&apos;parentNode&apos;)), selector)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获得每个匹配元素集合元素的直接子元素，如果给定selector，那么返回的结果中只包含符合css选择器的元素</span><br><span class="line">  children: function (selector) &#123;</span><br><span class="line">    return filtered(this.map(function () &#123;</span><br><span class="line">      return children(this)</span><br><span class="line">    &#125;), selector)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获得每个匹配元素集合元素的子元素，包括文字和注释节点</span><br><span class="line">  contents: function () &#123;</span><br><span class="line">    return this.map(function () &#123;</span><br><span class="line">      //contentDocument: 取得子窗口的 document 对象</span><br><span class="line">      return this.contentDocument || slice.call(this.childNodes)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中所有元素的兄弟节点。如果给定CSS选择器参数，过滤出符合选择器的元素</span><br><span class="line">  siblings: function (selector) &#123;</span><br><span class="line">    //先获取dom节点父元素，那么获取该父元素所有的子元素，过滤掉当前元素，再进行选择器匹配</span><br><span class="line">    return filtered(this.map(function (i, el) &#123;</span><br><span class="line">      return filter.call(children(el.parentNode), function (child) &#123;</span><br><span class="line">        return child !== el</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;), selector)</span><br><span class="line">  &#125;,</span><br><span class="line">  //清空对象集合中每个元素的DOM内容</span><br><span class="line">  empty: function () &#123;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      this.innerHTML = &apos;&apos;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中每一个元素的属性值</span><br><span class="line">  pluck: function (property) &#123;</span><br><span class="line">    return $.map(this, function (el) &#123;</span><br><span class="line">      return el[property]</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //恢复对象集合中每个元素默认的“display”值。如果你用hide将元素隐藏，用该属性可以将其显示。相当于去掉了display：none</span><br><span class="line">  show: function () &#123;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      //清除内联样式display=&quot;none&quot;</span><br><span class="line">      this.style.display == &quot;none&quot; &amp;&amp; (this.style.display = &apos;&apos;);</span><br><span class="line">      //Window.getComputedStyle()获取最终样式，可查找伪元素样式；如果最终样式display为none，那么设置将display设置为默认</span><br><span class="line">      if (getComputedStyle(this, &apos;&apos;).getPropertyValue(&quot;display&quot;) == &quot;none&quot;)</span><br><span class="line">        this.style.display = defaultDisplay(this.nodeName)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //用给定的内容替换所有匹配的元素</span><br><span class="line">  replaceWith: function (newContent) &#123;</span><br><span class="line">    //现在元素之前插入新的匹配元素，然后移除this下的dom元素</span><br><span class="line">    return this.before(newContent).remove();</span><br><span class="line">  &#125;,</span><br><span class="line">  //在每个匹配的元素外层包上一个html元素(structure参数可以是一个单独的元素或者一些嵌套的元素。也可以是一个html字符串片段或者dom节点。还可以是一个生成用来包元素的回调函数，这个函数返回前两种类型的包裹片段)</span><br><span class="line">  wrap: function (structure) &#123;</span><br><span class="line">    var func = isFunction(structure);</span><br><span class="line">    if (this[0] &amp;&amp; !func)</span><br><span class="line">      var dom = $(structure).get(0),</span><br><span class="line">        clone = dom.parentNode || this.length &gt; 1;</span><br><span class="line"></span><br><span class="line">    return this.each(function (index) &#123;</span><br><span class="line">      $(this).wrapAll(</span><br><span class="line">        func ? structure.call(this, index) :</span><br><span class="line">          clone ? dom.cloneNode(true) : dom</span><br><span class="line">      )</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //在所有匹配元素外面包一个单独的结构，结构可以是单个元素或几个嵌套的元素</span><br><span class="line">  wrapAll: function (structure) &#123;</span><br><span class="line">    if (this[0]) &#123;</span><br><span class="line">      //包裹内容插入到第一个元素前</span><br><span class="line">      $(this[0]).before(structure = $(structure));</span><br><span class="line">      var children;</span><br><span class="line">      //取包裹内容里的第一个子元素的最里层</span><br><span class="line">      while ((children = structure.children()).length) structure = children.first();</span><br><span class="line">      //将当期zepto对象对应的dom元素全部插入到最里层元素</span><br><span class="line">      $(structure).append(this)</span><br><span class="line">    &#125;</span><br><span class="line">    return this</span><br><span class="line">  &#125;,</span><br><span class="line">  //将每个元素中的内容包裹在一个单独的结构中</span><br><span class="line">  wrapInner: function (structure) &#123;</span><br><span class="line">    var func = isFunction(structure);</span><br><span class="line">    return this.each(function (index) &#123;</span><br><span class="line">      var self = $(this), contents = self.contents(),</span><br><span class="line">        dom = func ? structure.call(this, index) : structure;</span><br><span class="line">      //如果没有内容文本，那么直接将dom元素放到zepto对应dom元素中；如果有，则将内容文本节点放到dom中，并将dom插入到文本节点前面(wrapAll实现)</span><br><span class="line">      contents.length ? contents.wrapAll(dom) : self.append(dom)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //移除集合中每个元素的直接父节点，并把他们的子元素保留在原来的位置</span><br><span class="line">  unwrap: function () &#123;</span><br><span class="line">    //获取直接父节点并遍历，用父节点的直接子元素替换掉父节点达到移除每个元素的直接父节点目的</span><br><span class="line">    this.parent().each(function () &#123;</span><br><span class="line">      $(this).replaceWith($(this).children())</span><br><span class="line">    &#125;);</span><br><span class="line">    return this</span><br><span class="line">  &#125;,</span><br><span class="line">  //通过深度克隆来复制集合中的所有元素</span><br><span class="line">  clone: function () &#123;</span><br><span class="line">    return this.map(function () &#123;</span><br><span class="line">      //cloneNode(true):如果为true，那么这个节点的子节点同时被拷贝；否则只能拷贝当前特定节点</span><br><span class="line">      return this.cloneNode(true)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //通过设置css的属性display为none来将对象集合中的元素隐藏</span><br><span class="line">  hide: function () &#123;</span><br><span class="line">    return this.css(&quot;display&quot;, &quot;none&quot;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //显示或隐藏匹配元素</span><br><span class="line">  toggle: function (setting) &#123;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      var el = $(this);</span><br><span class="line">      //如果没有给定setting，那么获取display属性作为setting，根据setting判断显示还是隐藏</span><br><span class="line">      (setting === undefined ? el.css(&quot;display&quot;) == &quot;none&quot; : setting) ? el.show() : el.hide()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中每一个元素的前一个兄弟节点，通过选择器来进行过滤</span><br><span class="line">  prev: function (selector) &#123;</span><br><span class="line">    //根据元素的previousElementSibling属性来获取前一个兄弟节点</span><br><span class="line">    return $(this.pluck(&apos;previousElementSibling&apos;)).filter(selector || &apos;*&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中每一个元素的下一个兄弟节点(可以选择性的带上过滤选择器)</span><br><span class="line">  next: function (selector) &#123;</span><br><span class="line">    //根据元素的nextElementSibling属性来获取下一个兄弟节点；如果为null，会在zepto.matches被排除</span><br><span class="line">    return $(this.pluck(&apos;nextElementSibling&apos;)).filter(selector || &apos;*&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取或设置对象集合中元素的HTML内容(通过innerHTML读内容,append()写内容)</span><br><span class="line">  html: function (html) &#123;</span><br><span class="line">    return 0 in arguments ?</span><br><span class="line">      //当给定content参数时，用其替换对象集合中每个元素的内容</span><br><span class="line">      this.each(function (idx) &#123;</span><br><span class="line">        var originHtml = this.innerHTML;</span><br><span class="line">        $(this).empty().append(funcArg(this, html, idx, originHtml))</span><br><span class="line">      &#125;) :</span><br><span class="line">      //当没有给定content参数时，返回对象集合中第一个元素的innerHtml</span><br><span class="line">      (0 in this ? this[0].innerHTML : null)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取或者设置所有对象集合中元素的文本内容</span><br><span class="line">  text: function (text) &#123;</span><br><span class="line">    return 0 in arguments ?</span><br><span class="line">      this.each(function (idx) &#123;</span><br><span class="line">        var newText = funcArg(this, text, idx, this.textContent);</span><br><span class="line">        this.textContent = newText == null ? &apos;&apos; : &apos;&apos; + newText</span><br><span class="line">      &#125;) :</span><br><span class="line">      (0 in this ? this.pluck(&apos;textContent&apos;).join(&quot;&quot;) : null)</span><br><span class="line">  &#125;,</span><br><span class="line">  //读取第一个dom元素属性或设置所有dom元素属性(attr(name)、attr(name, value)、attr(name, function(index, oldValue)&#123; ... &#125;)、attr(&#123; name: value, name2: value2, ... &#125;))</span><br><span class="line">  attr: function (name, value) &#123;</span><br><span class="line">    var result;</span><br><span class="line">    return (typeof name == &apos;string&apos; &amp;&amp; !(1 in arguments)) ?</span><br><span class="line">      (0 in this &amp;&amp; this[0].nodeType == 1 &amp;&amp; (result = this[0].getAttribute(name)) != null ? result : undefined) :</span><br><span class="line">      this.each(function (idx) &#123;</span><br><span class="line">        if (this.nodeType !== 1) return;</span><br><span class="line">        if (isObject(name)) for (key in name) setAttribute(this, key, name[key])</span><br><span class="line">        else setAttribute(this, name, funcArg(this, value, idx, this.getAttribute(name)))</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //移除当前对象集合中所有元素的指定属性</span><br><span class="line">  removeAttr: function (name) &#123;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      this.nodeType === 1 &amp;&amp; name.split(&apos; &apos;).forEach(function (attribute) &#123;</span><br><span class="line">        //这里的this是dom节点，因为forEach绑定了this值(这里没有指定attribute的值，会将这个属性移除掉)</span><br><span class="line">        setAttribute(this, attribute)</span><br><span class="line">      &#125;, this)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //读取或设置dom元素的属性值(中文api: 它在读取属性值的情况下优先于attr，因为这些属性值会因为用户的交互发生改变，如checked和selected)</span><br><span class="line">  prop: function (name, value) &#123;</span><br><span class="line">    //优先读取修正属性，DOM的两字母属性都是驼峰格式</span><br><span class="line">    name = propMap[name] || name;</span><br><span class="line">    return (1 in arguments) ?</span><br><span class="line">      this.each(function (idx) &#123;</span><br><span class="line">        this[name] = funcArg(this, value, idx, this[name])</span><br><span class="line">      &#125;) :</span><br><span class="line">      //这里是直接获得dom上的属性，而不是调用getAttribute方法</span><br><span class="line">      (this[0] &amp;&amp; this[0][name])</span><br><span class="line">  &#125;,</span><br><span class="line">  //从集合的每个DOM节点中删除一个属性(值得注意的是如果尝试删除DOM的一些内置属性，如className或maxLength，将不会有任何效果，因为浏览器禁止删除这些属性)</span><br><span class="line">  removeProp: function (name) &#123;</span><br><span class="line">    name = propMap[name] || name;</span><br><span class="line">    //这是用JavaScript的delete操作符，删除dom元素的属性</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      delete this[name]</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //读取或写入dom的 data-* 自定义属性</span><br><span class="line">  data: function (name, value) &#123;</span><br><span class="line">    //改成连字符格式(aTcF-&gt;a-tc-f)</span><br><span class="line">    var attrName = &apos;data-&apos; + name.replace(capitalRE, &apos;-$1&apos;).toLowerCase();</span><br><span class="line">    var data = (1 in arguments) ?</span><br><span class="line">      this.attr(attrName, value) :</span><br><span class="line">      this.attr(attrName);</span><br><span class="line">    //如果是设置自定义属性，那么返回this，即当前zepto对象，deserializeValue(data)返回的还是this</span><br><span class="line">    return data !== null ? deserializeValue(data) : undefined</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取或设置匹配元素的值</span><br><span class="line">  val: function (value) &#123;</span><br><span class="line">    //当给定value参数，那么将设置所有元素的value</span><br><span class="line">    if (0 in arguments) &#123;</span><br><span class="line">      if (value == null) value = &quot;&quot;;</span><br><span class="line">      return this.each(function (idx) &#123;</span><br><span class="line">        this.value = funcArg(this, value, idx, this.value)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      //当没有给定value参数，返回第一个元素的值。如果是&lt;select multiple&gt;标签，则返回一个包含被选中的option值的数组(this[0].multiple:多选select)</span><br><span class="line">      return this[0] &amp;&amp; (this[0].multiple ?</span><br><span class="line">          $(this[0]).find(&apos;option&apos;).filter(function () &#123;</span><br><span class="line">            return this.selected</span><br><span class="line">          &#125;).pluck(&apos;value&apos;) :</span><br><span class="line">          this[0].value)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  //读/写坐标  距离文档document的偏移值</span><br><span class="line">  offset: function (coordinates) &#123;</span><br><span class="line">    //写入坐标</span><br><span class="line">    if (coordinates) return this.each(function (index) &#123;</span><br><span class="line">      var $this = $(this),</span><br><span class="line">        //如果coordinates是函数，执行函数</span><br><span class="line">        coords = funcArg(this, coordinates, index, $this.offset()),</span><br><span class="line">        //取父元素坐标</span><br><span class="line">        parentOffset = $this.offsetParent().offset(),</span><br><span class="line">        //计算出合理的坐标(相对于父元素的偏移量-父元素的偏移量=相对于document的偏移量)</span><br><span class="line">        props = &#123;</span><br><span class="line">          top: coords.top - parentOffset.top,</span><br><span class="line">          left: coords.left - parentOffset.left</span><br><span class="line">        &#125;;</span><br><span class="line">      //修正postin  static-&gt;relative</span><br><span class="line">      if ($this.css(&apos;position&apos;) == &apos;static&apos;) props[&apos;position&apos;] = &apos;relative&apos;;</span><br><span class="line">      //写入样式</span><br><span class="line">      $this.css(props)</span><br><span class="line">    &#125;);</span><br><span class="line">    //读取坐标</span><br><span class="line">    if (!this.length) return null;</span><br><span class="line">    /**</span><br><span class="line">     * document.documentElement !== this[0]：解决$(&apos;html&apos;).offset()返回width为undefined的bug；</span><br><span class="line">     * 调用getBoundingClientRect方法之前判断this[0]是否在元素上，存在该方法</span><br><span class="line">     * */</span><br><span class="line">    if (document.documentElement !== this[0] &amp;&amp; !$.contains(document.documentElement, this[0]))</span><br><span class="line">      return &#123;top: 0, left: 0&#125;;</span><br><span class="line">    //读取到元素相对于页面视窗的位置</span><br><span class="line">    var obj = this[0].getBoundingClientRect();</span><br><span class="line">    //window.pageYOffset就是类似Math.max(document.documentElement.scrollTop||document.body.scrollTop)</span><br><span class="line">    return &#123;</span><br><span class="line">      left: obj.left + window.pageXOffset,</span><br><span class="line">      top: obj.top + window.pageYOffset,</span><br><span class="line">      width: Math.round(obj.width),</span><br><span class="line">      height: Math.round(obj.height)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  //读取或设置DOM元素的css属性(当value参数不存在的时候，返回对象集合中第一个元素的css属性。当value参数存在时，设置对象集合中每一个元素的对应css属性)</span><br><span class="line">  css: function (property, value) &#123;</span><br><span class="line">    //只有一个传参，读</span><br><span class="line">    if (arguments.length &lt; 2) &#123;</span><br><span class="line">      var element = this[0];</span><br><span class="line">      if (typeof property == &apos;string&apos;) &#123;</span><br><span class="line">        if (!element) return;</span><br><span class="line">        //如果设置了行内样式，直接读取，否则读取计算样式(没有考虑计算样式!important情况)</span><br><span class="line">        return element.style[camelize(property)] || getComputedStyle(element, &apos;&apos;).getPropertyValue(property)</span><br><span class="line">      &#125; else if (isArray(property)) &#123;</span><br><span class="line">        //如果property是数组，则返回一个属性对象</span><br><span class="line">        if (!element) return;</span><br><span class="line">        var props = &#123;&#125;;</span><br><span class="line">        var computedStyle = getComputedStyle(element, &apos;&apos;);</span><br><span class="line">        $.each(property, function (_, prop) &#123;</span><br><span class="line">          props[prop] = (element.style[camelize(prop)] || computedStyle.getPropertyValue(prop))</span><br><span class="line">        &#125;);</span><br><span class="line">        return props</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //有多个传参，写</span><br><span class="line">    var css = &apos;&apos;;</span><br><span class="line">    if (type(property) == &apos;string&apos;) &#123;</span><br><span class="line">      //null、undefined、false时，删掉样式</span><br><span class="line">      if (!value &amp;&amp; value !== 0)</span><br><span class="line">        this.each(function () &#123;</span><br><span class="line">          this.style.removeProperty(dasherize(property))</span><br><span class="line">        &#125;);</span><br><span class="line">      else</span><br><span class="line">      //dasherize是将字符串转换成css属性(background-color格式)，并根据value类型可能加上&apos;px&apos;</span><br><span class="line">        css = dasherize(property) + &quot;:&quot; + maybeAddPx(property, value)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      //如果property是对象的话，遍历处理</span><br><span class="line">      for (key in property)</span><br><span class="line">        if (!property[key] &amp;&amp; property[key] !== 0)</span><br><span class="line">          this.each(function () &#123;</span><br><span class="line">            this.style.removeProperty(dasherize(key))</span><br><span class="line">          &#125;);</span><br><span class="line">        else</span><br><span class="line">          css += dasherize(key) + &apos;:&apos; + maybeAddPx(key, property[key]) + &apos;;&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      //这里并没有去重，但是并没有影响</span><br><span class="line">      this.style.cssText += &apos;;&apos; + css;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取一个元素的索引值</span><br><span class="line">  index: function (element) &#123;</span><br><span class="line">    //如果没有给出element参数，那么获取this的父元素，然后获取所有子元素，并判断第一个元素出现的位置；如果给出了element，返回它在当前对象集合中的位置</span><br><span class="line">    return element ? this.indexOf($(element)[0]) : this.parent().children().indexOf(this[0])</span><br><span class="line">  &#125;,</span><br><span class="line">  //检查对象集合中是否有元素含有指定的class</span><br><span class="line">  hasClass: function (name) &#123;</span><br><span class="line">    //如果没有传参数，则直接返回false</span><br><span class="line">    if (!name) return false;</span><br><span class="line">    return emptyArray.some.call(this, function (el) &#123;</span><br><span class="line">      //这里this为classRE(name)，name被转成正则表达式，这里使用正则因为className(el)可能是空格隔开的多个class组成</span><br><span class="line">      return this.test(className(el))</span><br><span class="line">    &#125;, classRE(name))</span><br><span class="line">  &#125;,</span><br><span class="line">  //为每个匹配的元素添加指定的class类名。多个class类名使用空格分隔</span><br><span class="line">  addClass: function (name) &#123;</span><br><span class="line">    if (!name) return this;</span><br><span class="line">    return this.each(function (idx) &#123;</span><br><span class="line">      //处理非dom元素，继续下一个元素(没有return false)</span><br><span class="line">      if (!(&apos;className&apos; in this)) return;</span><br><span class="line">      classList = [];</span><br><span class="line">      //className(this)：获取当前dom元素的className；处理name为函数情况</span><br><span class="line">      var cls = className(this), newName = funcArg(this, name, idx, cls);</span><br><span class="line">      //根据newName的空格分成数组，分别判断当前元素是否存在；如果不存在则添加到数组中</span><br><span class="line">      newName.split(/\s+/g).forEach(function (klass) &#123;</span><br><span class="line">        if (!$(this).hasClass(klass)) classList.push(klass)</span><br><span class="line">      &#125;, this);</span><br><span class="line">      //设置dom元素的className</span><br><span class="line">      classList.length &amp;&amp; className(this, cls + (cls ? &quot; &quot; : &quot;&quot;) + classList.join(&quot; &quot;))</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //移除当前对象集合中所有元素的指定class。如果没有指定name参数，将移出所有的class。多个class参数名称可以利用空格分隔</span><br><span class="line">  removeClass: function (name) &#123;</span><br><span class="line">    return this.each(function (idx) &#123;</span><br><span class="line">      if (!(&apos;className&apos; in this)) return;</span><br><span class="line">      if (name === undefined) return className(this, &apos;&apos;);</span><br><span class="line">      classList = className(this);</span><br><span class="line">      //使用正则表达式移除相应klass</span><br><span class="line">      funcArg(this, name, idx, classList).split(/\s+/g).forEach(function (klass) &#123;</span><br><span class="line">        classList = classList.replace(classRE(klass), &quot; &quot;)</span><br><span class="line">      &#125;);</span><br><span class="line">      className(this, classList.trim())</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //在匹配的元素集合中的每个元素上添加或删除一个或多个样式类。如果class的名称存在则删除它，如果不存在，就添加它</span><br><span class="line">  toggleClass: function (name, when) &#123;</span><br><span class="line">    if (!name) return this;</span><br><span class="line">    return this.each(function (idx) &#123;</span><br><span class="line">      var $this = $(this), names = funcArg(this, name, idx, className(this));</span><br><span class="line">      names.split(/\s+/g).forEach(function (klass) &#123;</span><br><span class="line">        (when === undefined ? !$this.hasClass(klass) : when) ?</span><br><span class="line">          $this.addClass(klass) : $this.removeClass(klass)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //读写元素 滚动条的垂直偏移</span><br><span class="line">  scrollTop: function (value) &#123;</span><br><span class="line">    if (!this.length) return;</span><br><span class="line">    var hasScrollTop = &apos;scrollTop&apos; in this[0];</span><br><span class="line">    if (value === undefined) return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset;</span><br><span class="line">    return this.each(hasScrollTop ?</span><br><span class="line">      function () &#123;</span><br><span class="line">        this.scrollTop = value</span><br><span class="line">      &#125; :</span><br><span class="line">      function () &#123;</span><br><span class="line">        this.scrollTo(this.scrollX, value)</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //读写元素 滚动条的水平偏移</span><br><span class="line">  scrollLeft: function (value) &#123;</span><br><span class="line">    if (!this.length) return;</span><br><span class="line">    var hasScrollLeft = &apos;scrollLeft&apos; in this[0];</span><br><span class="line">    if (value === undefined) return hasScrollLeft ? this[0].scrollLeft : this[0].pageXOffset;</span><br><span class="line">    return this.each(hasScrollLeft ?</span><br><span class="line">      function () &#123;</span><br><span class="line">        this.scrollLeft = value</span><br><span class="line">      &#125; :</span><br><span class="line">      function () &#123;</span><br><span class="line">        this.scrollTo(value, this.scrollY)</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  //获取对象集合中第一个元素的位置(获取相对父元素的坐标)</span><br><span class="line">  position: function () &#123;</span><br><span class="line">    if (!this.length) return;</span><br><span class="line">    //获取第一个元素</span><br><span class="line">    var elem = this[0],</span><br><span class="line">      //获取第一个定位过的祖先元素</span><br><span class="line">      offsetParent = this.offsetParent(),</span><br><span class="line">      //对象集合中第一个元素的offset</span><br><span class="line">      offset = this.offset(),</span><br><span class="line">      parentOffset = rootNodeRE.test(offsetParent[0].nodeName) ? &#123;top: 0, left: 0&#125; : offsetParent.offset();</span><br><span class="line">    // Subtract element margins(offset减去margin影响的值，再减去父元素的偏移量和边框宽度就等于相对于父元素的坐标)</span><br><span class="line">    // note: when an element has margin: auto the offsetLeft and marginLeft are the same in Safari causing offset.left to incorrectly be 0</span><br><span class="line">    offset.top -= parseFloat($(elem).css(&apos;margin-top&apos;)) || 0;</span><br><span class="line">    offset.left -= parseFloat($(elem).css(&apos;margin-left&apos;)) || 0;</span><br><span class="line">    //加上父元素的边框</span><br><span class="line">    parentOffset.top += parseFloat($(offsetParent[0]).css(&apos;border-top-width&apos;)) || 0;</span><br><span class="line">    parentOffset.left += parseFloat($(offsetParent[0]).css(&apos;border-left-width&apos;)) || 0;</span><br><span class="line">    // Subtract the two offsets</span><br><span class="line">    return &#123;</span><br><span class="line">      top: offset.top - parentOffset.top,</span><br><span class="line">      left: offset.left - parentOffset.left</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  //找到第一个定位过的祖先元素(读取父元素中第一个其position设为relative或absolute的可见元素)</span><br><span class="line">  offsetParent: function () &#123;</span><br><span class="line">    return this.map(function () &#123;</span><br><span class="line">      var parent = this.offsetParent || document.body;</span><br><span class="line">      while (parent &amp;&amp; !rootNodeRE.test(parent.nodeName) &amp;&amp; $(parent).css(&quot;position&quot;) == &quot;static&quot;)</span><br><span class="line">        parent = parent.offsetParent;</span><br><span class="line">      return parent</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// for now</span><br><span class="line">$.fn.detach = $.fn.remove;</span><br><span class="line">//width:获取对象集合中第一个元素的宽或者设置对象集合中所有元素的宽；height:获取对象集合中第一个元素的高度或者设置对象集合中所有元素的高度</span><br><span class="line">[&apos;width&apos;, &apos;height&apos;].forEach(function (dimension) &#123;</span><br><span class="line">  //width、height=&gt;Width、Height</span><br><span class="line">  var dimensionProperty =</span><br><span class="line">    dimension.replace(/./, function (m) &#123;</span><br><span class="line">      return m[0].toUpperCase()</span><br><span class="line">    &#125;);</span><br><span class="line">  //$.fn.width、$.fn.height</span><br><span class="line">  $.fn[dimension] = function (value) &#123;</span><br><span class="line">    //获取对象集合中第一个元素</span><br><span class="line">    var offset, el = this[0];</span><br><span class="line">    //window用innerWidth、innerHeight获取</span><br><span class="line">    if (value === undefined) return isWindow(el) ? el[&apos;inner&apos; + dimensionProperty] :</span><br><span class="line">      //document，用scrollWidth、scrollHeight获取</span><br><span class="line">      isDocument(el) ? el.documentElement[&apos;scroll&apos; + dimensionProperty] :</span><br><span class="line">        //否则用offsetWidth、offsetHeight</span><br><span class="line">        (offset = this.offset()) &amp;&amp; offset[dimension];</span><br><span class="line">    else return this.each(function (idx) &#123;</span><br><span class="line">      el = $(this);</span><br><span class="line">      //如果value是函数，那么执行&apos;arg.call(context, idx, payload)&apos;，el[dimension]()为原先值；否则直接返回value</span><br><span class="line">      el.css(dimension, funcArg(this, value, idx, el[dimension]()))</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">//递归遍历 node 的子节点，将节点交由回调函数 fun 处理</span><br><span class="line">function traverseNode(node, fun) &#123;</span><br><span class="line">  fun(node);</span><br><span class="line">  for (var i = 0, len = node.childNodes.length; i &lt; len; i++)</span><br><span class="line">    traverseNode(node.childNodes[i], fun)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//生成after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo方法</span><br><span class="line">adjacencyOperators.forEach(function (operator, operatorIndex) &#123;</span><br><span class="line">  var inside = operatorIndex % 2; //=&gt; prepend, append</span><br><span class="line">  /**</span><br><span class="line">   * after:在每个匹配的元素后插入内容(外部插入)</span><br><span class="line">   * prepend:将参数内容插入到每个匹配元素的前面(内部插入)</span><br><span class="line">   * before:在匹配每个元素的前面插入内容(外部插入)</span><br><span class="line">   * append:在每个匹配的元素末尾插入内容(内部插入)</span><br><span class="line">   * */</span><br><span class="line">  $.fn[operator] = function () &#123;</span><br><span class="line">    //参数可以是节点数组、zepto对象或者html片段</span><br><span class="line">    var argType, nodes = $.map(arguments, function (arg) &#123;</span><br><span class="line">        var arr = [];</span><br><span class="line">        argType = type(arg);</span><br><span class="line">        //如果是dom节点数组、zepto对象数组、html片段数组或者其混合状态</span><br><span class="line">        if (argType == &quot;array&quot;) &#123;</span><br><span class="line">          arg.forEach(function (el) &#123;</span><br><span class="line">            if (el.nodeType !== undefined) return arr.push(el);</span><br><span class="line">            else if ($.zepto.isZ(el)) return arr = arr.concat(el.get());</span><br><span class="line">            arr = arr.concat(zepto.fragment(el))</span><br><span class="line">          &#125;);</span><br><span class="line">          return arr</span><br><span class="line">        &#125;</span><br><span class="line">        //如果是对象或者null直接返回；否则生成dom元素并返回</span><br><span class="line">        return argType == &quot;object&quot; || arg == null ?</span><br><span class="line">          arg : zepto.fragment(arg)</span><br><span class="line">      &#125;),</span><br><span class="line">      //如果zepto对象内dom元素大于1,需要克隆里面的元素，拿克隆的元素来进行操作，否则会出现多次操作同一元素，前面的操作会被覆盖无效</span><br><span class="line">      parent, copyByClone = this.length &gt; 1;</span><br><span class="line">    //为0，不需要操作，直接返回</span><br><span class="line">    if (nodes.length &lt; 1) return this;</span><br><span class="line">    //遍历zepto对象下的dom元素</span><br><span class="line">    return this.each(function (_, target) &#123;</span><br><span class="line">      //inside 1(内部插入)：prepend, append取自身；inside 0(外部插入)：after, before取父元素</span><br><span class="line">      parent = inside ? target : target.parentNode;</span><br><span class="line">      //0:after、1:prepend、2:before、3:append</span><br><span class="line">      target = operatorIndex == 0 ? target.nextSibling :</span><br><span class="line">        operatorIndex == 1 ? target.firstChild :</span><br><span class="line">          operatorIndex == 2 ? target :</span><br><span class="line">            null;</span><br><span class="line">      //父元素是否在document中</span><br><span class="line">      var parentInDocument = $.contains(document.documentElement, parent);</span><br><span class="line">      //遍历待插入的元素(一个疑问：nodes可能会二维数组，没有对这种情况进行判断处理)</span><br><span class="line">      nodes.forEach(function (node) &#123;</span><br><span class="line">        //拷贝需要添加的节点，避免多次操作同一元素，前面的操作会被覆盖无效</span><br><span class="line">        if (copyByClone) node = node.cloneNode(true);</span><br><span class="line">        //定位元素不存在，没法执行插入操作，直接删除，返回</span><br><span class="line">        else if (!parent) return $(node).remove();</span><br><span class="line">        //insertBefore(newnode,existingnode):newnode 需要插入的节点对象；existingnode 在其之前插入新节点的子节点，如果未规定会在结尾插入</span><br><span class="line">        parent.insertBefore(node, target);</span><br><span class="line">        //如果父元素在document里，则调用traverseNode来处理node节点及node节点的所有子节点</span><br><span class="line">        if (parentInDocument) traverseNode(node, function (el) &#123;</span><br><span class="line">          //脚本通过insertBefore的方法插入到dom中时，是不会执行脚本的，所以需要使用eval来进行处理。</span><br><span class="line">          if (el.nodeName != null &amp;&amp; el.nodeName.toUpperCase() === &apos;SCRIPT&apos; &amp;&amp;</span><br><span class="line">            (!el.type || el.type === &apos;text/javascript&apos;) &amp;&amp; !el.src) &#123;</span><br><span class="line">            /**</span><br><span class="line">             * ownerDocument:返回的是元素的根节点，也即document对象；defaultView返回的是document对象所关联的window对象；</span><br><span class="line">             * 这里主要是处理iframe里的script，因为在iframe中有独立的window对象；如果不存在该属性，则默认使用当前的window对象</span><br><span class="line">             * */</span><br><span class="line">            var target = el.ownerDocument ? el.ownerDocument.defaultView : window;</span><br><span class="line">            //最后调用window的eval方法，执行script中的脚本，脚本用el.innerHTML取得</span><br><span class="line">            target[&apos;eval&apos;].call(target, el.innerHTML)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;;</span><br><span class="line">  //生成after=&gt;insertAfter、prepend=&gt;prependTo、before=&gt;insertBefore、append=&gt;appendTo方法(简单地反向调用对应的方法)</span><br><span class="line">  $.fn[inside ? operator + &apos;To&apos; : &apos;insert&apos; + (operatorIndex ? &apos;Before&apos; : &apos;After&apos;)] = function (html) &#123;</span><br><span class="line">    $(html)[operator](this);</span><br><span class="line">    return this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="二、源码分析"><a href="#二、源码分析" class="headerlink" title="二、源码分析"></a>二、源码分析</h3><h4 id="1、prop-amp-attr"><a href="#1、prop-amp-attr" class="headerlink" title="1、prop &amp; attr"></a>1、prop &amp; attr</h4><p>prop 是直接读取获取设置 dom 元素上的属性值，删除使用 delete；<br>attr 是调用 setAttribute、getAttribute 和 removeAttribute 方法。</p>
+<h4 id="2、css"><a href="#2、css" class="headerlink" title="2、css"></a>2、css</h4><p>读取 dom.style 上的属性值(行内样式)或者调用 getComputedStyle(element, ‘’).getPropertyValue(property) 方法(计算样式)；设置 css 值时设置的是 dom.style.cssText，不用去重，就算重复了也没关系，后面的属性值会覆盖前面的。</p>
+<h4 id="3、after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo"><a href="#3、after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo" class="headerlink" title="3、after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo"></a>3、after、prepend、before、append、insertAfter、insertBefore、appendTo、prependTo</h4><p>after、prepend、before、append 巧妙的用了 parent.insertBefore(node, target) 方法来统一处理；insertAfter、insertBefore、appendTo、prependTo 巧妙的反向调用对应的方法</p>
+<h4 id="4、cloneNode-true"><a href="#4、cloneNode-true" class="headerlink" title="4、cloneNode(true)"></a>4、cloneNode(true)</h4><p>拷贝节点副本，为了避免同时添加一个元素多次，后面的操作会覆盖前面的(设置 true 为深拷贝，同时拷贝其子节点)</p>
+<h4 id="5、wrap、wrapAll、wrapInner"><a href="#5、wrap、wrapAll、wrapInner" class="headerlink" title="5、wrap、wrapAll、wrapInner"></a>5、wrap、wrapAll、wrapInner</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">原文</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li title=&apos;苹果&apos;&gt;苹果&lt;/li&gt;</span><br><span class="line">  &lt;li title=&apos;橘子&apos;&gt;橘子&lt;/li&gt;</span><br><span class="line">  &lt;li title=&apos;菠萝&apos;&gt;菠萝&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"> </span><br><span class="line">1、$(&quot;li&quot;).wrap(&quot;&lt;div&gt;&lt;/div&gt;&quot;);</span><br><span class="line">每一个选择器都添加</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;div&gt;&lt;li title=&quot;苹果&quot;&gt;苹果&lt;/li&gt;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;&lt;li title=&quot;橘子&quot;&gt;橘子&lt;/li&gt;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;&lt;li title=&quot;菠萝&quot;&gt;菠萝&lt;/li&gt;&lt;/div&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"> </span><br><span class="line">2、$(&quot;li&quot;).wrapAll(&quot;&lt;div&gt;&lt;/div&gt;&quot;);</span><br><span class="line">在所有选中的选择器最外面添加</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;li title=&quot;苹果&quot;&gt;苹果&lt;/li&gt;</span><br><span class="line">    &lt;li title=&quot;橘子&quot;&gt;橘子&lt;/li&gt;</span><br><span class="line">    &lt;li title=&quot;菠萝&quot;&gt;菠萝&lt;/li&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"> </span><br><span class="line">3、$(&quot;li&quot;).wrapInner(&quot;&lt;div&gt;&lt;/div&gt;&quot;);</span><br><span class="line">为选择器的内容添加</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li title=&apos;苹果&apos;&gt;&lt;div&gt;苹果&lt;/div&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li title=&apos;橘子&apos;&gt;&lt;div&gt;橘子&lt;/div&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li title=&apos;菠萝&apos;&gt;&lt;div&gt;菠萝&lt;/div&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<p>这几个方法有点绕，看上面的实例就知道了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-18T05:58:06.000Z" itemprop="dateUpdated">2018-04-18 13:58:06</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/zepto/core2Js/" target="_blank" rel="external">http://blog.master-ss.cn/zepto/core2Js/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/zepto/core2Js/&title=《zpeto 之核心代码二》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/zepto/core2Js/&title=《zpeto 之核心代码二》 — 青松的博客&source=这篇研究 zepto 核心代码的实例方法。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/zepto/core2Js/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zpeto 之核心代码二》 — 青松的博客&url=http://blog.master-ss.cn/zepto/core2Js/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/zepto/core2Js/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/css/sass/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">css 之 Sass 入门一</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/zepto/core1Js/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">zpeto 之核心代码一</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/zepto/core2Js/&title=《zpeto 之核心代码二》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/zepto/core2Js/&title=《zpeto 之核心代码二》 — 青松的博客&source=这篇研究 zepto 核心代码的实例方法。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/zepto/core2Js/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zpeto 之核心代码二》 — 青松的博客&url=http://blog.master-ss.cn/zepto/core2Js/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/zepto/core2Js/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAB0ElEQVR42u3aS27DMAwFwNz/0u62gFv1kTLVBBitAiORxlkQ/Oj1itd1W/fn35/cf/vbnq+JhYuLu829lmv9nfvBCT3f/4dXwsXFPchdB5p10LniVd0fFxf3c7l5ZpInRri4uJ/LXSc361/h4uK+P7da3iSJS04cqdVwcXE3uL0E5dnPI/1dXFzcFvcqrnXAytOUq7VwcXHPcPOA0mt99pqk68QIFxf3DHddnPQuW+xkW1Hxg4uLO8zND6hS8lctpzi4uLhj3DxlSQJW9SJX9TkuLu4Z7k7xkyRAeQqV/ym4uLjT3Gpw6Q1Tkz8laqzg4uIe5OZXLvYHpdV0Kpr84OLiPsqtliK9hmlSIOU74OLinuROpCn73dyoVsPFxR3g5s3KKmJ/EBvNhHFxcQe41cJmp+mZJ0BR3MXFxR3m7qQj1TFJ/mJ/1Gq4uLjD3EI21LrQ+UAWhouLe4S7H6R6A5J12GreAcHFxX2IWx2O9g7Ii6j8MgcuLu40tzdMraY+eYu2PETBxcUd41YDTS8NqhY/0UwYFxf3Dbjrg3faqVEKhYuL+5bc/OJFL6itz8LFxT3J3RmL5sVP9SVxcXH/i1ttelaLonyHnZIJFxf3Ie4XVh0BLwlMDb4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

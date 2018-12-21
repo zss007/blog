@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 media &amp; close &amp; well 样式 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="现在开始介绍 bootstrap 的多媒体(media)、关闭图标(close)和凹陷容器(well)样式。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 media &amp; close &amp; well 样式">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/media&close&well/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="现在开始介绍 bootstrap 的多媒体(media)、关闭图标(close)和凹陷容器(well)样式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:39:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 media &amp; close &amp; well 样式">
+<meta name="twitter:description" content="现在开始介绍 bootstrap 的多媒体(media)、关闭图标(close)和凹陷容器(well)样式。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 media &amp; close &amp; well 样式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 media &amp; close &amp; well 样式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-11T15:18:38.000Z" itemprop="datePublished" class="page-time">
+  2017-11-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、media-less"><span class="post-toc-text">1、media.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1、media-less-源码"><span class="post-toc-text">1.1、media.less 源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2、media-less-应用"><span class="post-toc-text">1.2、media.less 应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、close-less"><span class="post-toc-text">2、close.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1、close-less-源码"><span class="post-toc-text">2.1、close.less 源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2、close-less-应用"><span class="post-toc-text">2.2、close.less 应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、wells-less-less"><span class="post-toc-text">3、wells.less.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-1、wells-less-源码"><span class="post-toc-text">3.1、wells.less 源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2、wells-less-应用"><span class="post-toc-text">3.2、wells.less 应用</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/media&amp;close&amp;well" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 media & close & well 样式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-11 23:18:38" datetime="2017-11-11T15:18:38.000Z" itemprop="datePublished">2017-11-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>现在开始介绍 bootstrap 的多媒体(media)、关闭图标(close)和凹陷容器(well)样式。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><h4 id="1、media-less"><a href="#1、media-less" class="headerlink" title="1、media.less"></a>1、media.less</h4><h5 id="1-1、media-less-源码"><a href="#1-1、media-less-源码" class="headerlink" title="1.1、media.less 源码"></a>1.1、media.less 源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">.media &#123;</span><br><span class="line">  // Proper spacing between instances of .media</span><br><span class="line">  margin-top: 15px;</span><br><span class="line"></span><br><span class="line">  &amp;:first-child &#123;</span><br><span class="line">    margin-top: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media,</span><br><span class="line">.media-body &#123;</span><br><span class="line">  zoom: 1;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-body &#123;</span><br><span class="line">  width: 10000px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-object &#123;</span><br><span class="line">  display: block;</span><br><span class="line"></span><br><span class="line">  // Fix collapse in webkit from max-width: 100% and display: table-cell.</span><br><span class="line">  &amp;.img-thumbnail &#123;</span><br><span class="line">    max-width: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-right,</span><br><span class="line">.media &gt; .pull-right &#123;</span><br><span class="line">  padding-left: 10px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-left,</span><br><span class="line">.media &gt; .pull-left &#123;</span><br><span class="line">  padding-right: 10px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-left,</span><br><span class="line">.media-right,</span><br><span class="line">.media-body &#123;</span><br><span class="line">  display: table-cell;</span><br><span class="line">  vertical-align: top;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-middle &#123;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.media-bottom &#123;</span><br><span class="line">  vertical-align: bottom;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Reset margins on headings for tighter default spacing</span><br><span class="line">.media-heading &#123;</span><br><span class="line">  margin-top: 0;</span><br><span class="line">  margin-bottom: 5px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Media list variation</span><br><span class="line">//</span><br><span class="line">// Undo default ul/ol styles</span><br><span class="line">.media-list &#123;</span><br><span class="line">  padding-left: 0;</span><br><span class="line">  list-style: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2、media-less-应用"><a href="#1-2、media-less-应用" class="headerlink" title="1.2、media.less 应用"></a>1.2、media.less 应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;media-list&quot;&gt;</span><br><span class="line">  &lt;li class=&quot;media&quot;&gt;</span><br><span class="line">    &lt;!--使用table布局同行显示--&gt;</span><br><span class="line">    &lt;a class=&quot;media-left&quot; href=&quot;#&quot;&gt;</span><br><span class="line">      &lt;img src=&quot;/assets/bootstrap/kittens.jpg&quot; width=&quot;64px&quot; alt=&quot;通用的占位符图像&quot;&gt;</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">    &lt;div class=&quot;media-body&quot;&gt;</span><br><span class="line">      &lt;h4 class=&quot;media-heading&quot;&gt;媒体标题&lt;/h4&gt;</span><br><span class="line">      &lt;p&gt;这是一些示例文本。这是一些示例文本。</span><br><span class="line">        这是一些示例文本。这是一些示例文本。</span><br><span class="line">        这是一些示例文本。这是一些示例文本。</span><br><span class="line">        这是一些示例文本。这是一些示例文本。</span><br><span class="line">        这是一些示例文本。这是一些示例文本。&lt;/p&gt;</span><br><span class="line">      &lt;!-- 嵌套的媒体对象 --&gt;</span><br><span class="line">      &lt;div class=&quot;media&quot;&gt;</span><br><span class="line">        &lt;a class=&quot;media-left&quot; href=&quot;#&quot;&gt;</span><br><span class="line">          &lt;img src=&quot;/assets/bootstrap/kittens.jpg&quot; width=&quot;64px&quot; alt=&quot;通用的占位符图像&quot;&gt;</span><br><span class="line">        &lt;/a&gt;</span><br><span class="line">        &lt;div class=&quot;media-body&quot;&gt;</span><br><span class="line">          &lt;h4 class=&quot;media-heading&quot;&gt;嵌套的媒体标题&lt;/h4&gt;</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          &lt;!-- 嵌套的媒体对象 --&gt;</span><br><span class="line">          &lt;div class=&quot;media&quot;&gt;</span><br><span class="line">            &lt;a class=&quot;media-left&quot; href=&quot;#&quot;&gt;</span><br><span class="line">              &lt;img src=&quot;/assets/bootstrap/kittens.jpg&quot; width=&quot;64px&quot; alt=&quot;通用的占位符图像&quot;&gt;</span><br><span class="line">            &lt;/a&gt;</span><br><span class="line">            &lt;div class=&quot;media-body&quot;&gt;</span><br><span class="line">              &lt;h4 class=&quot;media-heading&quot;&gt;嵌套的媒体标题&lt;/h4&gt;</span><br><span class="line">              这是一些示例文本。这是一些示例文本。</span><br><span class="line">              这是一些示例文本。这是一些示例文本。</span><br><span class="line">              这是一些示例文本。这是一些示例文本。</span><br><span class="line">              这是一些示例文本。这是一些示例文本。</span><br><span class="line">              这是一些示例文本。这是一些示例文本。</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;!-- 嵌套的媒体对象 --&gt;</span><br><span class="line">      &lt;div class=&quot;media&quot;&gt;</span><br><span class="line">        &lt;a class=&quot;media-left&quot; href=&quot;#&quot;&gt;</span><br><span class="line">          &lt;img src=&quot;/assets/bootstrap/kittens.jpg&quot; width=&quot;64px&quot; alt=&quot;通用的占位符图像&quot;&gt;</span><br><span class="line">        &lt;/a&gt;</span><br><span class="line">        &lt;div class=&quot;media-body&quot;&gt;</span><br><span class="line">          &lt;h4 class=&quot;media-heading&quot;&gt;嵌套的媒体标题&lt;/h4&gt;</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">          这是一些示例文本。这是一些示例文本。</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;media&quot;&gt;</span><br><span class="line">    &lt;a class=&quot;media-right&quot; href=&quot;#&quot;&gt;</span><br><span class="line">      &lt;img src=&quot;/assets/bootstrap/kittens.jpg&quot; width=&quot;64px&quot; alt=&quot;通用的占位符图像&quot;&gt;</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">    &lt;div class=&quot;media-body&quot;&gt;</span><br><span class="line">      &lt;h4 class=&quot;media-heading&quot;&gt;媒体标题&lt;/h4&gt;</span><br><span class="line">      这是一些示例文本。这是一些示例文本。</span><br><span class="line">      这是一些示例文本。这是一些示例文本。</span><br><span class="line">      这是一些示例文本。这是一些示例文本。</span><br><span class="line">      这是一些示例文本。这是一些示例文本。</span><br><span class="line">      这是一些示例文本。这是一些示例文本。</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2、close-less"><a href="#2、close-less" class="headerlink" title="2、close.less"></a>2、close.less</h4><h5 id="2-1、close-less-源码"><a href="#2-1、close-less-源码" class="headerlink" title="2.1、close.less 源码"></a>2.1、close.less 源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Close icons</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">.close &#123;</span><br><span class="line">  float: right;</span><br><span class="line">  font-size: (@font-size-base * 1.5);</span><br><span class="line">  font-weight: @close-font-weight;</span><br><span class="line">  line-height: 1;</span><br><span class="line">  color: @close-color;</span><br><span class="line">  text-shadow: @close-text-shadow;</span><br><span class="line">  .opacity(.2);</span><br><span class="line"></span><br><span class="line">  &amp;:hover,</span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    color: @close-color;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">    .opacity(.5);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Additional properties for button version</span><br><span class="line">  // iOS requires the button element instead of an anchor tag.</span><br><span class="line">  // If you want the anchor version, it requires `href=&quot;#&quot;`.</span><br><span class="line">  // See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile</span><br><span class="line">  button&amp; &#123;</span><br><span class="line">    padding: 0;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">    background: transparent;</span><br><span class="line">    border: 0;</span><br><span class="line">    -webkit-appearance: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-2、close-less-应用"><a href="#2-2、close-less-应用" class="headerlink" title="2.2、close.less 应用"></a>2.2、close.less 应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span class=&quot;close&quot;&gt;x&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="3、wells-less-less"><a href="#3、wells-less-less" class="headerlink" title="3、wells.less.less"></a>3、wells.less.less</h4><h5 id="3-1、wells-less-源码"><a href="#3-1、wells-less-源码" class="headerlink" title="3.1、wells.less 源码"></a>3.1、wells.less 源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Wells</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Base class</span><br><span class="line">.well &#123;</span><br><span class="line">  min-height: 20px;</span><br><span class="line">  padding: 19px;</span><br><span class="line">  margin-bottom: 20px;</span><br><span class="line">  background-color: @well-bg;</span><br><span class="line">  border: 1px solid @well-border;</span><br><span class="line">  border-radius: @border-radius-base;</span><br><span class="line">  .box-shadow(inset 0 1px 1px rgba(0,0,0,.05));</span><br><span class="line">  blockquote &#123;</span><br><span class="line">    border-color: #ddd;</span><br><span class="line">    border-color: rgba(0,0,0,.15);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Sizes</span><br><span class="line">.well-lg &#123;</span><br><span class="line">  padding: 24px;</span><br><span class="line">  border-radius: @border-radius-large;</span><br><span class="line">&#125;</span><br><span class="line">.well-sm &#123;</span><br><span class="line">  padding: 9px;</span><br><span class="line">  border-radius: @border-radius-small;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-2、wells-less-应用"><a href="#3-2、wells-less-应用" class="headerlink" title="3.2、wells.less 应用"></a>3.2、wells.less 应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--box-shadow: inset 达到凹陷的效果--&gt;</span><br><span class="line">&lt;div class=&quot;well&quot;&gt;您好，我在 Well 中！&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;well well-lg&quot;&gt;您好，我在大的 Well 中！&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;well well-sm&quot;&gt;您好，我在小的 Well 中！&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:39:15.000Z" itemprop="dateUpdated">2018-04-15 21:39:15</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/media&amp;close&amp;well/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/media&amp;close&amp;well/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/media&close&well/&title=《bootstrap 之 media & close & well 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/media&close&well/&title=《bootstrap 之 media & close & well 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的多媒体(media)、关闭图标(close)和凹陷容器(well)样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/media&close&well/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 media & close & well 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/media&close&well/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/media&close&well/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/affix/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 affix</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/bootstrap/jumbotron&thumbnail&progressBar/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">bootstrap 之 jumbotron &amp; thumbnail &amp; progressBar 样式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/media&close&well/&title=《bootstrap 之 media & close & well 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/media&close&well/&title=《bootstrap 之 media & close & well 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的多媒体(media)、关闭图标(close)和凹陷容器(well)样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/media&close&well/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 media & close & well 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/media&close&well/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/media&close&well/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3awW4DIQxF0fz/T083XbSqhtxnk0pjLqsoSoDDwsI2rxce15/x8/u7369nu/u8/m9ryJAh47GMaznWDDLz3RZr697uQYYMGQcwOmGRhOD1ihsCugwZMmTcLMznIUFThgwZMj7B4IGYB2sZMmTI6CSxKX4NWK/+wVxchgwZD2TUCmf/8/kj/Q0ZMmQ8inGFg8xDvt+1n++ZZciQMZqRlvI7Eb1/uXyzHxkyZAxlpCllp4iWBtzg+GTIkHEAo7Z82pisNSFQyU+GDBmjGSTMpansrsZkuqIMGTJmM/i2+u1GfjT8kZkMGTJOYNRSVl6M4xdQwg66CjJkyBjBqIW8NECnqS8vut3m4jJkyBjE6F8HyYWPXwT5f1EIliFDxjgGz275VoKyfqm92noVIkOGjEcx+ill2kJIjwkdgQwZMoYy+o8t0ucU5MjikC1DhozRDBL4OuloGkx5th0EdBkyZDyccYGRti1rhf4U8Os3MmTIGM1IN5SW1WpN0Fo7U4YMGScwaulo2k7oHNmbHcqQIeMABkkX+fMLsgneqkRsGTJkHMZIn1zsbRKkF0cZMmTMZlzh6JT4SRAnTzrQrVOGDBmDGJ1CGG9P1pqg6XHIkCFjNqPWwuQbTUMnbznIkCHjNAYPfGlyu/fah/obMmTIkEHCH7g4dkp1GxaQIUPGMYzOM1aeKgctTBkyZIxmkLSTP4yoldhqia4MGTJOYOxKTUma2rn8bWhqypAh43mML6j9vCrMN8KvAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

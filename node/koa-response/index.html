@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>koa 之 response | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Koa Response 对象是在 node 的响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="koa 之 response">
+<meta property="og:url" content="http://blog.master-ss.cn/node/koa-response/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="Koa Response 对象是在 node 的响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-21T05:36:48.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="koa 之 response">
+<meta name="twitter:description" content="Koa Response 对象是在 node 的响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">koa 之 response</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">koa 之 response</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-26T06:25:04.000Z" itemprop="datePublished" class="page-time">
+  2018-04-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-node/koa-response" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">koa 之 response</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-26 14:25:04" datetime="2018-04-26T06:25:04.000Z" itemprop="datePublished">2018-04-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Koa Response 对象是在 node 的响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> contentDisposition = <span class="built_in">require</span>(<span class="string">'content-disposition'</span>);  <span class="comment">// 解析 HTTP 的 Content-Disposition</span></span><br><span class="line"><span class="keyword">const</span> ensureErrorHandler = <span class="built_in">require</span>(<span class="string">'error-inject'</span>); <span class="comment">// 注入失败回调函数到 stream</span></span><br><span class="line"><span class="keyword">const</span> getType = <span class="built_in">require</span>(<span class="string">'mime-types'</span>).contentType;  <span class="comment">// 根据字符串或文件扩展名等获取相应 Content-Type</span></span><br><span class="line"><span class="keyword">const</span> onFinish = <span class="built_in">require</span>(<span class="string">'on-finished'</span>);  <span class="comment">// 当 http 请求关闭、完成或报错时执行回调函数</span></span><br><span class="line"><span class="keyword">const</span> isJSON = <span class="built_in">require</span>(<span class="string">'koa-is-json'</span>);  <span class="comment">// 判断参数是否为 JSON 数据，排除法</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">escape</span> = <span class="built_in">require</span>(<span class="string">'escape-html'</span>);  <span class="comment">// 转换 html 字符串</span></span><br><span class="line"><span class="keyword">const</span> typeis = <span class="built_in">require</span>(<span class="string">'type-is'</span>).is; <span class="comment">// 推断请求的 Content-Type 属性</span></span><br><span class="line"><span class="keyword">const</span> statuses = <span class="built_in">require</span>(<span class="string">'statuses'</span>); <span class="comment">// 状态码</span></span><br><span class="line"><span class="keyword">const</span> destroy = <span class="built_in">require</span>(<span class="string">'destroy'</span>); <span class="comment">// 销毁流</span></span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>); <span class="comment">// 断言</span></span><br><span class="line"><span class="keyword">const</span> extname = <span class="built_in">require</span>(<span class="string">'path'</span>).extname;  <span class="comment">// 返回 path 的扩展名</span></span><br><span class="line"><span class="keyword">const</span> vary = <span class="built_in">require</span>(<span class="string">'vary'</span>); <span class="comment">// 设置 http 的 Vary 头部属性</span></span><br><span class="line"><span class="keyword">const</span> only = <span class="built_in">require</span>(<span class="string">'only'</span>); <span class="comment">// 返回指定属性的对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Response 的原型对象</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// 获取请求 socket</span></span><br><span class="line">  get socket() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.ctx.req.socket;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应标头对象</span></span><br><span class="line">  get header() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; res &#125; = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> res.getHeaders === <span class="string">'function'</span></span><br><span class="line">      ? res.getHeaders()</span><br><span class="line">      : res._headers || &#123;&#125;;  <span class="comment">// Node &lt; 7.7</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应标头对象，别名是 response.header</span></span><br><span class="line">  get headers() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.header;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应状态</span></span><br><span class="line">  get status() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.res.statusCode;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过数字代码设置响应状态</span></span><br><span class="line">  set status(code) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.headerSent) <span class="keyword">return</span>;  <span class="comment">// 如果响应头已被发送，则不作任何操作</span></span><br><span class="line"></span><br><span class="line">    assert(<span class="string">'number'</span> == <span class="keyword">typeof</span> code, <span class="string">'status code must be a number'</span>);</span><br><span class="line">    assert(statuses[code], <span class="string">`invalid status code: <span class="subst">$&#123;code&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">this</span>._explicitStatus = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.res.statusCode = code;</span><br><span class="line">    <span class="comment">// this.req.httpVersionMajor：返回客户端发送的 HTTP 版本</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.req.httpVersionMajor &lt; <span class="number">2</span>) <span class="keyword">this</span>.res.statusMessage = statuses[code];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.body &amp;&amp; statuses.empty[code]) <span class="keyword">this</span>.body = <span class="literal">null</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应的状态消息</span></span><br><span class="line">  get message() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.res.statusMessage || statuses[<span class="keyword">this</span>.status];</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将响应的状态消息设置为给定值</span></span><br><span class="line">  set message(msg) &#123;</span><br><span class="line">    <span class="keyword">this</span>.res.statusMessage = msg;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应主体</span></span><br><span class="line">  get body() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._body;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置响应体（val: String | Buffer| Object | Stream）</span></span><br><span class="line">  set body(val) &#123;</span><br><span class="line">    <span class="keyword">const</span> original = <span class="keyword">this</span>._body;</span><br><span class="line">    <span class="keyword">this</span>._body = val;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// no content</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">null</span> == val) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!statuses.empty[<span class="keyword">this</span>.status]) <span class="keyword">this</span>.status = <span class="number">204</span>;</span><br><span class="line">      <span class="keyword">this</span>.remove(<span class="string">'Content-Type'</span>);</span><br><span class="line">      <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line">      <span class="keyword">this</span>.remove(<span class="string">'Transfer-Encoding'</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set the status</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>._explicitStatus) <span class="keyword">this</span>.status = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set the content-type only if not yet set</span></span><br><span class="line">    <span class="keyword">const</span> setType = !<span class="keyword">this</span>.header[<span class="string">'content-type'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// string</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> val) &#123;</span><br><span class="line">      <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="regexp">/^\s*&lt;/</span>.test(val) ? <span class="string">'html'</span> : <span class="string">'text'</span>;</span><br><span class="line">      <span class="keyword">this</span>.length = Buffer.byteLength(val);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// buffer</span></span><br><span class="line">    <span class="keyword">if</span> (Buffer.isBuffer(val)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="string">'bin'</span>;</span><br><span class="line">      <span class="keyword">this</span>.length = val.length;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// stream</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="string">'function'</span> == <span class="keyword">typeof</span> val.pipe) &#123;</span><br><span class="line">      onFinish(<span class="keyword">this</span>.res, destroy.bind(<span class="literal">null</span>, val));</span><br><span class="line">      ensureErrorHandler(val, err =&gt; <span class="keyword">this</span>.ctx.onerror(err));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// overwriting</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="literal">null</span> != original &amp;&amp; original != val) <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="string">'bin'</span>;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// json</span></span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line">    <span class="keyword">this</span>.type = <span class="string">'json'</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将响应的 Content-Length 设置为给定值</span></span><br><span class="line">  set length(n) &#123;</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">'Content-Length'</span>, n);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 以数字返回响应的 Content-Length，或者从 ctx.body 推导出来，或者 undefined</span></span><br><span class="line">  get length() &#123;</span><br><span class="line">    <span class="keyword">const</span> len = <span class="keyword">this</span>.header[<span class="string">'content-length'</span>];</span><br><span class="line">    <span class="keyword">const</span> body = <span class="keyword">this</span>.body;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">null</span> == len) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!body) <span class="keyword">return</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> Buffer.byteLength(body);</span><br><span class="line">      <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> body.length;</span><br><span class="line">      <span class="keyword">if</span> (isJSON(body)) <span class="keyword">return</span> Buffer.byteLength(<span class="built_in">JSON</span>.stringify(body));</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 转为数字，并去掉小数部分</span></span><br><span class="line">    <span class="keyword">return</span> ~~len;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回一个布尔值（只读）。如果响应头已被发送则为 true，否则为 false</span></span><br><span class="line">  get headerSent() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.res.headersSent;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在 field 上的 Vary</span></span><br><span class="line">  vary(field) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.headerSent) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    vary(<span class="keyword">this</span>.res, field);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行 302 重定向到 url，如：this.redirect('back'); | this.redirect('back', '/index.html');</span></span><br><span class="line">  <span class="comment">// | this.redirect('/login'); | this.redirect('http://google.com');</span></span><br><span class="line">  redirect(url, alt) &#123;</span><br><span class="line">    <span class="comment">// location</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="string">'back'</span> == url) url = <span class="keyword">this</span>.ctx.get(<span class="string">'Referrer'</span>) || alt || <span class="string">'/'</span>;</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">'Location'</span>, url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// status</span></span><br><span class="line">    <span class="keyword">if</span> (!statuses.redirect[<span class="keyword">this</span>.status]) <span class="keyword">this</span>.status = <span class="number">302</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// html</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.ctx.accepts(<span class="string">'html'</span>)) &#123;</span><br><span class="line">      url = <span class="built_in">escape</span>(url);</span><br><span class="line">      <span class="keyword">this</span>.type = <span class="string">'text/html; charset=utf-8'</span>;</span><br><span class="line">      <span class="keyword">this</span>.body = <span class="string">`Redirecting to &lt;a href="<span class="subst">$&#123;url&#125;</span>"&gt;<span class="subst">$&#123;url&#125;</span>&lt;/a&gt;.`</span>;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// text</span></span><br><span class="line">    <span class="keyword">this</span>.type = <span class="string">'text/plain; charset=utf-8'</span>;</span><br><span class="line">    <span class="keyword">this</span>.body = <span class="string">`Redirecting to <span class="subst">$&#123;url&#125;</span>.`</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将 Content-Disposition 设置为 "附件" 以指示客户端提示下载，参数 filename 可选</span></span><br><span class="line">  attachment(filename) &#123;</span><br><span class="line">    <span class="keyword">if</span> (filename) <span class="keyword">this</span>.type = extname(filename);  <span class="comment">// 获取文件拓展名</span></span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">'Content-Disposition'</span>, contentDisposition(filename));</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 mime 字符串或文件扩展名设置响应 Content-Type</span></span><br><span class="line">  set type(type) &#123;</span><br><span class="line">    type = getType(type); <span class="comment">// 根据字符串或文件扩展名等获取相应 Content-Type，如：.html、html、json、application/json、png</span></span><br><span class="line">    <span class="keyword">if</span> (type) &#123;</span><br><span class="line">      <span class="keyword">this</span>.set(<span class="string">'Content-Type'</span>, type);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.remove(<span class="string">'Content-Type'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将 Last-Modified 标头设置为适当的 UTC 字符串。参数可以是 Date 或日期字符串</span></span><br><span class="line">  set lastModified(val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> val) val = <span class="keyword">new</span> <span class="built_in">Date</span>(val);</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">'Last-Modified'</span>, val.toUTCString());</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果存在 Last-Modified，则将其返回为 Date, </span></span><br><span class="line">  get lastModified() &#123;</span><br><span class="line">    <span class="keyword">const</span> date = <span class="keyword">this</span>.get(<span class="string">'last-modified'</span>);</span><br><span class="line">    <span class="keyword">if</span> (date) <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>(date);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置包含 " 包裹的 ETag 响应</span></span><br><span class="line">  set etag(val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="regexp">/^(W\/)?"/</span>.test(val)) val = <span class="string">`"<span class="subst">$&#123;val&#125;</span>"`</span>;</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">'ETag'</span>, val);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应对象的 ETag 属性</span></span><br><span class="line">  get etag() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'ETag'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取响应 Content-Type 不含参数 "charset"</span></span><br><span class="line">  get type() &#123;</span><br><span class="line">    <span class="keyword">const</span> type = <span class="keyword">this</span>.get(<span class="string">'Content-Type'</span>);</span><br><span class="line">    <span class="keyword">if</span> (!type) <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">return</span> type.split(<span class="string">';'</span>)[<span class="number">0</span>];</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 非常类似 ctx.request.is()。检查响应类型是否是所提供的类型之一，这对于创建操纵响应的中间件特别有用</span></span><br><span class="line">  is(types) &#123;</span><br><span class="line">    <span class="keyword">const</span> type = <span class="keyword">this</span>.type;</span><br><span class="line">    <span class="keyword">if</span> (!types) <span class="keyword">return</span> type || <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(types)) types = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> typeis(type, types);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 不区分大小写获取响应标头字段值 field，如： this.get('content-type') =&gt; "text/plain"</span></span><br><span class="line">  get(field) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.header[field.toLowerCase()] || <span class="string">''</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置响应标头 field 到 value，如：this.set('Foo', ['bar', 'baz']); | this.set('Accept', 'application/json'); | this.set(&#123; Accept: 'text/plain', 'X-API-Key': 'tobi' &#125;);</span></span><br><span class="line">  set(field, val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.headerSent) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">2</span> == <span class="built_in">arguments</span>.length) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(val)) val = val.map(<span class="built_in">String</span>);</span><br><span class="line">      <span class="keyword">else</span> val = <span class="built_in">String</span>(val);</span><br><span class="line">      <span class="keyword">this</span>.res.setHeader(field, val);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> field) &#123;</span><br><span class="line">        <span class="keyword">this</span>.set(key, field[key]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用值 val 附加额外的标头 field，比如：this.append('Link', ['&lt;http://localhost/&gt;', '&lt;http://localhost:3000/&gt;']); |</span></span><br><span class="line">  <span class="comment">// this.append('Set-Cookie', 'foo=bar; Path=/; HttpOnly'); | this.append('Warning', '199 Miscellaneous warning');</span></span><br><span class="line">  append(field, val) &#123;</span><br><span class="line">    <span class="keyword">const</span> prev = <span class="keyword">this</span>.get(field);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (prev) &#123;</span><br><span class="line">      val = <span class="built_in">Array</span>.isArray(prev)</span><br><span class="line">        ? prev.concat(val)</span><br><span class="line">        : [prev].concat(val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.set(field, val);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除标头 field</span></span><br><span class="line">  remove(field) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.headerSent) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.res.removeHeader(field);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查请求是否 writable（需检查 socket 是否存在）</span></span><br><span class="line">  get writable() &#123;</span><br><span class="line">    <span class="comment">// can't write any more after response finished</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.res.finished) <span class="keyword">return</span> <span class="literal">false</span>;  <span class="comment">// 表示响应是否已完成，如果已完成则返回 false</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> socket = <span class="keyword">this</span>.res.socket;</span><br><span class="line">    <span class="comment">// There are already pending outgoing res, but still writable</span></span><br><span class="line">    <span class="comment">// https://github.com/nodejs/node/blob/v4.4.7/lib/_http_server.js#L486</span></span><br><span class="line">    <span class="keyword">if</span> (!socket) <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 如果不存在 socket，则返回 true</span></span><br><span class="line">    <span class="keyword">return</span> socket.writable;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 为特定属性的对象添加 body 属性</span></span><br><span class="line">  inspect() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.res) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">const</span> o = <span class="keyword">this</span>.toJSON();</span><br><span class="line">    o.body = <span class="keyword">this</span>.body;</span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回只有特定属性的对象</span></span><br><span class="line">  toJSON() &#123;</span><br><span class="line">    <span class="keyword">return</span> only(<span class="keyword">this</span>, [</span><br><span class="line">      <span class="string">'status'</span>,</span><br><span class="line">      <span class="string">'message'</span>,</span><br><span class="line">      <span class="string">'header'</span></span><br><span class="line">    ]);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 刷新任何设置的标头，并开始主体</span></span><br><span class="line">  flushHeaders() &#123;</span><br><span class="line">    <span class="keyword">this</span>.res.flushHeaders();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-21T05:36:48.809Z" itemprop="dateUpdated">2018-12-21 13:36:48</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/koa-response/" target="_blank" rel="external">http://blog.master-ss.cn/node/koa-response/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/koa-response/&title=《koa 之 response》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/koa-response/&title=《koa 之 response》 — 青松的博客&source=Koa Response 对象是在 node 的响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/koa-response/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《koa 之 response》 — 青松的博客&url=http://blog.master-ss.cn/node/koa-response/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/koa-response/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/node/delegates/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">node 之 delegates</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/node/koa-request/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">koa 之 request</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/koa-response/&title=《koa 之 response》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/koa-response/&title=《koa 之 response》 — 青松的博客&source=Koa Response 对象是在 node 的响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/koa-response/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《koa 之 response》 — 青松的博客&url=http://blog.master-ss.cn/node/koa-response/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/koa-response/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aQY6EMAwF0b7/pZntSAxQ33GPhFNZIdSd5LGwYjufDx7Hr0HenMd5tqvn8+/bhgwZMl7LIMvfv7/fxNXv71dPP40MGTJ2YFxFMB4i7+dJMXxvMmTIkHG/MNkEecPXlSFDhozvpZo8KMuQIUPGShLbdRxcCeUNubgMGTJeyODh8v+fv9LfkCFDxqsYRzhIsWxlW0dpyJAhYzaDLxNMVyqrkfcPKbEMGTKGMla2wtNXctzkjYQ//itDhozRjPUrEffb5c3LtuaEDBkyhjL4VtKyPj9o1maTIUPGbgzemOQBmrc8eSr7UG6TIUPGOEbtOgU/rq1faUUfS4YMGaMZtUNb2uAkIbs2Jyq6yZAhYwSDTMHbAHyjvKlAWggyZMiYzai1J7sOjitJLIroMmTIGMFoSBrDcn/tEsYDUoYMGUMZ6Y2MrsSVtw1Qg1OGDBmjGXzThFFrM/CUOIj3MmTIGMTg4ay2PA+jvKAWl9hkyJDxckaaQKbPQbWvNzGWIUPGOEZ6+Os6LKbh9QEjQ4aMDRi1g11Xq3LlqpkMGTJ2Y6QA8iG6ymoPZTsZMmQMZRzhqB0TeWzkiasMGTL2YayXvUggJltPC3xFjAwZMl7LqKWRvYlrW09DhgwZoxnpbauu4t36/DJkyJCRtjlJC2Hl0ga6bCFDhgwZpZw4LcOln0OGDBk7MHixPl2eN0drrQUZMmTswOCpY3phYqUkR3YiQ4aMDRg/ZVW8KpBSsJoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

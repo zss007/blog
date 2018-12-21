@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>tools 之 git | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="现在项目托管一般是使用 git，而之前则是 svn，那么两者之前的区别在哪呢。git 为什么能取代 svn，成为代码托管的首选呢。其实 svn 是集中式版本管理，需要一个中央服务器，每次工作的时候先从服务器获取最新数据，然后提交自己的修改到服务器，而集中式版本管理最大的毛病是必须联网才能工作，而且提交一个较大的文件需要特别多的时间。而 git 则是分布式版本管理，每个人的电脑都是一个版本库，通常需">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tools 之 git">
+<meta property="og:url" content="http://blog.master-ss.cn/tools/git/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="现在项目托管一般是使用 git，而之前则是 svn，那么两者之前的区别在哪呢。git 为什么能取代 svn，成为代码托管的首选呢。其实 svn 是集中式版本管理，需要一个中央服务器，每次工作的时候先从服务器获取最新数据，然后提交自己的修改到服务器，而集中式版本管理最大的毛病是必须联网才能工作，而且提交一个较大的文件需要特别多的时间。而 git 则是分布式版本管理，每个人的电脑都是一个版本库，通常需">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-27T02:35:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tools 之 git">
+<meta name="twitter:description" content="现在项目托管一般是使用 git，而之前则是 svn，那么两者之前的区别在哪呢。git 为什么能取代 svn，成为代码托管的首选呢。其实 svn 是集中式版本管理，需要一个中央服务器，每次工作的时候先从服务器获取最新数据，然后提交自己的修改到服务器，而集中式版本管理最大的毛病是必须联网才能工作，而且提交一个较大的文件需要特别多的时间。而 git 则是分布式版本管理，每个人的电脑都是一个版本库，通常需">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tools 之 git</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tools 之 git</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-22T14:27:35.000Z" itemprop="datePublished" class="page-time">
+  2017-11-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、常用命令及工作流程"><span class="post-toc-text">一、常用命令及工作流程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、创建版本库"><span class="post-toc-text">1、创建版本库</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、增加-删除文件"><span class="post-toc-text">2、增加/删除文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、代码提交"><span class="post-toc-text">3、代码提交</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、分支"><span class="post-toc-text">4、分支</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、查看信息"><span class="post-toc-text">5、查看信息</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、远程同步"><span class="post-toc-text">6、远程同步</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7、撤销"><span class="post-toc-text">7、撤销</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、-gitignore"><span class="post-toc-text">二、.gitignore</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、-editorconfig"><span class="post-toc-text">三、.editorconfig</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、补充"><span class="post-toc-text">四、补充</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tools/git" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tools 之 git</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-22 22:27:35" datetime="2017-11-22T14:27:35.000Z" itemprop="datePublished">2017-11-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>现在项目托管一般是使用 git，而之前则是 svn，那么两者之前的区别在哪呢。git 为什么能取代 svn，成为代码托管的首选呢。<br>其实 svn 是集中式版本管理，需要一个中央服务器，每次工作的时候先从服务器获取最新数据，然后提交自己的修改到服务器，而集中式版本管理最大的毛病是必须联网才能工作，而且提交一个较大的文件需要特别多的时间。而 git 则是分布式版本管理，每个人的电脑都是一个版本库，通常需要一台充当 “中央服务器” 的电脑，作用仅限于方便交换修改，而且他的分支管理把 svn 甩在了后面。<br><a id="more"></a></p>
+<h3 id="一、常用命令及工作流程"><a href="#一、常用命令及工作流程" class="headerlink" title="一、常用命令及工作流程"></a>一、常用命令及工作流程</h3><h4 id="1、创建版本库"><a href="#1、创建版本库" class="headerlink" title="1、创建版本库"></a>1、创建版本库</h4><p>创建版本有两种情况，一种是本地新建的项目新建一个 git 代码库，另外一种则是从远程服务器下载项目(即 git 代码库)，创建成功后会有一个 .git 的隐藏文件，请不要去修改它，否则会破坏 git 仓库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 在当前目录新建一个 Git 代码库</span><br><span class="line">$ git init</span><br><span class="line">    </span><br><span class="line"># 下载一个项目和它的整个代码历史</span><br><span class="line">$ git clone [url]</span><br></pre></td></tr></table></figure></p>
+<h4 id="2、增加-删除文件"><a href="#2、增加-删除文件" class="headerlink" title="2、增加/删除文件"></a>2、增加/删除文件</h4><p>这里的 add 和 rm 并不是提交到仓库上，而是提交到缓存区。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 添加指定文件到暂存区</span><br><span class="line">$ git add [file1] [file2] ...</span><br><span class="line">    </span><br><span class="line"># 添加指定目录到暂存区，包括子目录</span><br><span class="line">$ git add [dir]</span><br><span class="line">    </span><br><span class="line"># 添加当前目录的所有文件到暂存区</span><br><span class="line">$ git add .</span><br><span class="line">    </span><br><span class="line"># 删除工作区文件，并且将这次删除放入暂存区</span><br><span class="line">$ git rm [file1] [file2] ...</span><br></pre></td></tr></table></figure></p>
+<h4 id="3、代码提交"><a href="#3、代码提交" class="headerlink" title="3、代码提交"></a>3、代码提交</h4><p>这里的 commit 才是把本地代码修改提交到仓库上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 提交暂存区到仓库区</span><br><span class="line">$ git commit -m [message]</span><br><span class="line">    </span><br><span class="line"># 提交暂存区的指定文件到仓库区</span><br><span class="line">$ git commit [file1] [file2] ... -m [message]</span><br></pre></td></tr></table></figure></p>
+<h4 id="4、分支"><a href="#4、分支" class="headerlink" title="4、分支"></a>4、分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有本地分支</span><br><span class="line">$ git branch</span><br><span class="line">    </span><br><span class="line"># 列出所有远程分支</span><br><span class="line">$ git branch -r</span><br><span class="line">    </span><br><span class="line"># 列出所有本地分支和远程分支</span><br><span class="line">$ git branch -a</span><br><span class="line">    </span><br><span class="line"># 新建一个分支，但依然停留在当前分支</span><br><span class="line">$ git branch [branch-name]</span><br><span class="line">    </span><br><span class="line"># 新建一个分支，并切换到该分支</span><br><span class="line">$ git checkout -b [branch]</span><br><span class="line">    </span><br><span class="line"># 合并指定分支到当前分支</span><br><span class="line">$ git merge [branch]</span><br><span class="line">    </span><br><span class="line"># 删除分支</span><br><span class="line">$ git branch -d [branch-name]</span><br><span class="line">    </span><br><span class="line"># 删除远程分支</span><br><span class="line">$ git push origin --delete [branch-name]</span><br><span class="line">$ git branch -dr [remote/branch]</span><br></pre></td></tr></table></figure>
+<h4 id="5、查看信息"><a href="#5、查看信息" class="headerlink" title="5、查看信息"></a>5、查看信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 显示有变更的文件</span><br><span class="line">$ git status</span><br><span class="line">    </span><br><span class="line"># 显示当前分支的版本历史</span><br><span class="line">$ git log</span><br></pre></td></tr></table></figure>
+<h4 id="6、远程同步"><a href="#6、远程同步" class="headerlink" title="6、远程同步"></a>6、远程同步</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 显示某个远程仓库的信息</span><br><span class="line">$ git remote show [remote]</span><br><span class="line">    </span><br><span class="line"># 增加一个新的远程仓库，并命名(为本地代码指定远程服务器)</span><br><span class="line">$ git remote add [shortname] [url]</span><br><span class="line">    </span><br><span class="line"># 取回远程仓库的变化，并与本地分支合并</span><br><span class="line">$ git pull [remote] [branch]</span><br><span class="line">    </span><br><span class="line"># 上传本地指定分支到远程仓库(提交本地仓库变化到服务器仓库中)</span><br><span class="line">$ git push [remote] [branch]</span><br><span class="line">    </span><br><span class="line"># 强行推送当前分支到远程仓库，即使有冲突</span><br><span class="line">$ git push [remote] --force</span><br><span class="line">    </span><br><span class="line"># 推送所有分支到远程仓库</span><br><span class="line">$ git push [remote] --all</span><br><span class="line"></span><br><span class="line"># 添加远程仓库地址</span><br><span class="line">git remote add origin [url]</span><br><span class="line"></span><br><span class="line"># 修改远程仓库地址</span><br><span class="line">git remote set-url origin [url]</span><br><span class="line"></span><br><span class="line">#从远程服务器上获取分支信息并更新到本地(有时同事在服务器上新增、删除分支，但是本地看不到分支变化，可用该命令从服务器拉取分支信息刷新本地分支)</span><br><span class="line">git remote update origin --prune</span><br></pre></td></tr></table></figure>
+<h4 id="7、撤销"><a href="#7、撤销" class="headerlink" title="7、撤销"></a>7、撤销</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 重置暂存区的指定文件，与上一次 commit 保持一致，但工作区(即当前电脑看到的目录)不变</span><br><span class="line">$ git reset [file]</span><br><span class="line">    </span><br><span class="line"># 重置暂存区与工作区，与上一次 commit 保持一致</span><br><span class="line">$ git reset --hard</span><br><span class="line">    </span><br><span class="line"># 重置当前分支的指针为指定 commit，同时重置暂存区，但工作区不变</span><br><span class="line">$ git reset [commit]</span><br><span class="line">    </span><br><span class="line"># 重置当前分支的 HEAD 为指定 commit，同时重置暂存区和工作区，与指定 commit 一致</span><br><span class="line">$ git reset --hard [commit]</span><br><span class="line">    </span><br><span class="line"># 后者的所有变化都将被前者抵消，并且应用到当前分支</span><br><span class="line">$ git revert [commit]</span><br><span class="line">    </span><br><span class="line"># 暂时将未提交的变化移除</span><br><span class="line">$ git stash</span><br></pre></td></tr></table></figure>
+<h3 id="二、-gitignore"><a href="#二、-gitignore" class="headerlink" title="二、.gitignore"></a>二、.gitignore</h3><p>如果我们有些文件不需要提交到远程服务器，比如执行特定命令后生成的文件，这个时候 .gitignore 文件就可以用来配置这些。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 1、忽略目录 fd1 下的全部内容；注意，不管是根目录下的 /fd1/ 目录，还是某个子目录 /child/fd1/ 目录，都会被忽略；</span><br><span class="line">fd1/*</span><br><span class="line"></span><br><span class="line"># 2、忽略根目录下的 /fd1/ 目录的全部内容；</span><br><span class="line">/fd1/*</span><br><span class="line"></span><br><span class="line"># 3、忽略全部内容，但是不忽略 .gitignore 文件、根目录下的 /fw/bin/ 和 /fw/sf/ 目录；</span><br><span class="line">/*</span><br><span class="line">!.gitignore</span><br><span class="line">!/fw/bin/</span><br><span class="line">!/fw/sf/</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、-editorconfig"><a href="#三、-editorconfig" class="headerlink" title="三、.editorconfig"></a>三、.editorconfig</h3><p>既然我们这里是讲 git，为什么需要讲到 .editorconfig，它只是与编码规范有关。<br>让我们先来了解下它吧。当多人开发共同开发一个项目时，往往会使用不同的编辑器，比如 Sublime、Atom、Webstorm 等，而且不同人会在不同系统环境下开发，这就会导致一个问题，那就是不同编辑器编码规范是不同的，而且不同系统环境下也不一样，很有可能就会导致代码冲突，而 .editorconfig 则是用来统一配置这些。如果编译器不支持，可能需要一个 editorconfig 插件。以 Webstorm 为例，点开 Preferences，点击 Plugins，搜索 EditorConfig，如果不存在则到 repositories 下载。常用编码规范如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># http://editorconfig.org</span><br><span class="line">root = true</span><br><span class="line"></span><br><span class="line"># 对所有文件生效</span><br><span class="line">[*]</span><br><span class="line"># 文件编码</span><br><span class="line">charset = utf-8</span><br><span class="line"># 缩进类型</span><br><span class="line">indent_style = space</span><br><span class="line"># 缩进数量</span><br><span class="line">indent_size = 2</span><br><span class="line"># 换行符格式</span><br><span class="line">end_of_line = lf</span><br><span class="line"># 是否在文件的最后插入一个空行</span><br><span class="line">insert_final_newline = true</span><br><span class="line"># 是否删除行尾的空格</span><br><span class="line">trim_trailing_whitespace = true</span><br><span class="line"></span><br><span class="line">[*.md]</span><br><span class="line">insert_final_newline = false</span><br><span class="line">trim_trailing_whitespace = false</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h3><p>Git 会忽略空的文件夹。如果你想版本控制包括空文件夹，根据惯例会在空文件夹下放置 .gitkeep 文件。其实对文件名没有特定的要求，一旦一个空文件夹下有文件后，这个文件夹就会在版本控制范围内。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-27T02:35:28.000Z" itemprop="dateUpdated">2018-04-27 10:35:28</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/tools/git/" target="_blank" rel="external">http://blog.master-ss.cn/tools/git/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/git/&title=《tools 之 git》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/git/&title=《tools 之 git》 — 青松的博客&source=现在项目托管一般是使用 git，而之前则是 svn，那么两者之前的区别在哪呢。git 为什么能取代 svn，成为代码托管的首选呢。其实 svn 是集中式版..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/git/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tools 之 git》 — 青松的博客&url=http://blog.master-ss.cn/tools/git/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/git/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/promise/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 promise</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/tools/npm/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tools 之 npm</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/git/&title=《tools 之 git》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/git/&title=《tools 之 git》 — 青松的博客&source=现在项目托管一般是使用 git，而之前则是 svn，那么两者之前的区别在哪呢。git 为什么能取代 svn，成为代码托管的首选呢。其实 svn 是集中式版..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/git/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tools 之 git》 — 青松的博客&url=http://blog.master-ss.cn/tools/git/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/git/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxUlEQVR42u3aQXLCMAwFUO5/abru0CRfUmyg87xi2pC8sNBYX3484vU8WEf/ff3u0T0fKxYuLu6Y+zxdr9fk302uzw24uLj7ueeFJqfPr7+w4eLifiT3/C/nperoBXBxcf8Hd9Le4OLifgs3L0O9gCMvbbf1ari4uANunlKu+7wk38XFxW1xn8WVNEL59eWn4+LibuH2NijJeHUSkp5vjHBxcfdw50PTJDCd7GRGmx5cXNwitxp8TDZDk1jk144MFxf3A7h3jUOqG6M/7oyLi7uFW31wfvyih47uiYuLu5hbDTLywWpy5+qoBhcXdw+3GlP2btoLVvJXxcXFXcHNo4oE2otCCm0VLi7uYm5e4art0A3xaK/5wcXFHXPzR+ahRt7q9MIXXFzcPdzqYYsedLJhOsx3cXFxF3Or5Wx+8CL5OS56NVxc3I3cKnoSgox2Ybi4uAu4kyKVx6a9EQsuLu67uPlKYpHeQa6kmJZfBhcXd8ydNDP5iDRvdS5+V1xc3I3cpPmpfr6r+WnGIri4uNu51ZHJXSMZXFzcT+bm5ala1JbXXVxc3JhbPYZVLU+9JgoXF/dd3DwwnYxDVrdMuLi4N3F/AFEmkJ8qr3uUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

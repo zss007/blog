@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>tools 之 source-map | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tools 之 source-map">
+<meta property="og:url" content="http://blog.master-ss.cn/tools/source-map/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/chrome-tools.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/firefox-tools.png">
+<meta property="og:updated_time" content="2018-04-19T07:25:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tools 之 source-map">
+<meta name="twitter:description" content="一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/tools/chrome-tools.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tools 之 source-map</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tools 之 source-map</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-01T14:24:22.000Z" itemprop="datePublished" class="page-time">
+  2018-04-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、什么是-Source-Map"><span class="post-toc-text">一、什么是 Source Map</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、Source-Map-如何生效"><span class="post-toc-text">二、Source Map 如何生效</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、Source-Map-原理"><span class="post-toc-text">三、Source Map 原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-1-打开-Source-map-文件，它大概是这个样子："><span class="post-toc-text">3.1 打开 Source map 文件，它大概是这个样子：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-整个文件就是一个-JavaScript-对象，可以被解释器读取。它主要有以下几个属性："><span class="post-toc-text">3.2 整个文件就是一个 JavaScript 对象，可以被解释器读取。它主要有以下几个属性：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-3-两个文件的各个位置一一对应的关键就是-map-文件的-mappings-属性。这是一个很长的字符串，它分成三层。"><span class="post-toc-text">3.3 两个文件的各个位置一一对应的关键就是 map 文件的 mappings 属性。这是一个很长的字符串，它分成三层。</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-4-举例来说，假定-mappings-属性的内容如下："><span class="post-toc-text">3.4 举例来说，假定 mappings 属性的内容如下：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-5-每个位置使用五位，表示五个字段。从左边算起："><span class="post-toc-text">3.5 每个位置使用五位，表示五个字段。从左边算起：</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tools/source-map" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tools 之 source-map</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-01 22:24:22" datetime="2018-04-01T14:24:22.000Z" itemprop="datePublished">2018-04-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。<br><a id="more"></a></p>
+<h3 id="一、什么是-Source-Map"><a href="#一、什么是-Source-Map" class="headerlink" title="一、什么是 Source Map"></a>一、什么是 Source Map</h3><p>Source Map 提供了一个映射压缩文件到原文件初始位置的方法。这就意味着，使用浏览器或者其他软件可以轻松调试文件，即使是在资源文件以及被压缩后。Chrome 和 Firefox 开发工具都已经内置支持 Source Map 了。当代码出错的时候，调试工具将直接显示原文件代码，而不是压缩后的，给开发者带来了很大方便。<br><img src="/assets/tools/chrome-tools.png"><br><img src="/assets/tools/firefox-tools.png"></p>
+<h3 id="二、Source-Map-如何生效"><a href="#二、Source-Map-如何生效" class="headerlink" title="二、Source Map 如何生效"></a>二、Source Map 如何生效</h3><p>只要在转换后的代码尾部，加上一行就可以启用 Source Map 了，map 文件可以放在网络上，也可以放在本地文件系统。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//@ sourceMappingURL=/path/to/file.js.map</span><br></pre></td></tr></table></figure></p>
+<p>可以使用 UglifyJS 等工具生成 Source Map。</p>
+<h3 id="三、Source-Map-原理"><a href="#三、Source-Map-原理" class="headerlink" title="三、Source Map 原理"></a>三、Source Map 原理</h3><h5 id="3-1-打开-Source-map-文件，它大概是这个样子："><a href="#3-1-打开-Source-map-文件，它大概是这个样子：" class="headerlink" title="3.1 打开 Source map 文件，它大概是这个样子："></a>3.1 打开 Source map 文件，它大概是这个样子：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">　 version : 3,</span><br><span class="line"> 　file: &quot;out.js&quot;,</span><br><span class="line"> 　sourceRoot : &quot;&quot;,</span><br><span class="line"> 　sources: [&quot;foo.js&quot;, &quot;bar.js&quot;],</span><br><span class="line"> 　names: [&quot;src&quot;, &quot;maps&quot;, &quot;are&quot;, &quot;fun&quot;],</span><br><span class="line"> 　mappings: &quot;AAgBC,SAAQ,CAAEA&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-整个文件就是一个-JavaScript-对象，可以被解释器读取。它主要有以下几个属性："><a href="#3-2-整个文件就是一个-JavaScript-对象，可以被解释器读取。它主要有以下几个属性：" class="headerlink" title="3.2 整个文件就是一个 JavaScript 对象，可以被解释器读取。它主要有以下几个属性："></a>3.2 整个文件就是一个 JavaScript 对象，可以被解释器读取。它主要有以下几个属性：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- version：Source map 的版本规范，目前为3。</span><br><span class="line">  </span><br><span class="line">- file：转换后的文件名。</span><br><span class="line">  </span><br><span class="line">- sourceRoot：转换前的文件所在的目录。如果与转换前的文件在同一目录，该项为空。</span><br><span class="line">  </span><br><span class="line">- sources：转换前的文件。该项是一个数组，表示可能存在多个文件合并。</span><br><span class="line">  </span><br><span class="line">- names：转换前的所有变量名和属性名。</span><br><span class="line">  </span><br><span class="line">- mappings：记录位置信息的字符串。</span><br></pre></td></tr></table></figure>
+<h5 id="3-3-两个文件的各个位置一一对应的关键就是-map-文件的-mappings-属性。这是一个很长的字符串，它分成三层。"><a href="#3-3-两个文件的各个位置一一对应的关键就是-map-文件的-mappings-属性。这是一个很长的字符串，它分成三层。" class="headerlink" title="3.3 两个文件的各个位置一一对应的关键就是 map 文件的 mappings 属性。这是一个很长的字符串，它分成三层。"></a>3.3 两个文件的各个位置一一对应的关键就是 map 文件的 mappings 属性。这是一个很长的字符串，它分成三层。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第一层是行对应，以分号（;）表示，每个分号对应转换后源码的一行。所以，第一个分号前的内容，就对应源码的第一行，以此类推。</span><br><span class="line">  </span><br><span class="line">第二层是位置对应，以逗号（,）表示，每个逗号对应转换后源码的一个位置。所以，第一个逗号前的内容，就对应该行源码的第一个位置，以此类推。</span><br><span class="line">  </span><br><span class="line">第三层是位置转换，以 VLQ 编码表示，代表该位置对应的转换前的源码位置。</span><br></pre></td></tr></table></figure>
+<h5 id="3-4-举例来说，假定-mappings-属性的内容如下："><a href="#3-4-举例来说，假定-mappings-属性的内容如下：" class="headerlink" title="3.4 举例来说，假定 mappings 属性的内容如下："></a>3.4 举例来说，假定 mappings 属性的内容如下：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 表示转换后的源码分成两行，第一行有两个位置，第二行有一个位</span><br><span class="line">mappings:&quot;AAAAA,BBBBB;CCCCC&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="3-5-每个位置使用五位，表示五个字段。从左边算起："><a href="#3-5-每个位置使用五位，表示五个字段。从左边算起：" class="headerlink" title="3.5 每个位置使用五位，表示五个字段。从左边算起："></a>3.5 每个位置使用五位，表示五个字段。从左边算起：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- 第一位，表示这个位置在（转换后的代码的）的第几列。</span><br><span class="line">  </span><br><span class="line">- 第二位，表示这个位置属于 sources 属性中的哪一个文件。</span><br><span class="line">  </span><br><span class="line">- 第三位，表示这个位置属于转换前代码的第几行。</span><br><span class="line">  </span><br><span class="line">- 第四位，表示这个位置属于转换前代码的第几列。</span><br><span class="line">  </span><br><span class="line">- 第五位，表示这个位置属于names属性中的哪一个变量。</span><br></pre></td></tr></table></figure>
+<p>有几点需要说明。首先，所有的值都是以 0 作为基数的。其次，第五位不是必需的，如果该位置没有对应 names 属性中的变量，可以省略第五位。再次，每一位都采用 VLQ 编码表示；由于 VLQ 编码是变长的，所以每一位可以由多个字符构成。如果某个位置是 AAAAA，由于 A 在 VLQ 编码中表示 0，因此这个位置的五个位实际上都是 0。它的意思是，该位置在转换后代码的第 0 列，对应 sources 属性中第 0 个文件，属于转换前代码的第 0 行第 0 列，对应 names 属性中的第 0 个变量。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-19T07:25:43.000Z" itemprop="dateUpdated">2018-04-19 15:25:43</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/tools/source-map/" target="_blank" rel="external">http://blog.master-ss.cn/tools/source-map/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/source-map/&title=《tools 之 source-map》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/source-map/&title=《tools 之 source-map》 — 青松的博客&source=一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/source-map/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tools 之 source-map》 — 青松的博客&url=http://blog.master-ss.cn/tools/source-map/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/source-map/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/proxy/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 Proxy</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/decorator/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之 Decorator</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/source-map/&title=《tools 之 source-map》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/source-map/&title=《tools 之 source-map》 — 青松的博客&source=一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/source-map/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tools 之 source-map》 — 青松的博客&url=http://blog.master-ss.cn/tools/source-map/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/source-map/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABw0lEQVR42u3aQWoDMQwF0Nz/0il0VWgz+ZJsZwrPqxBmnKcshCz58YjX83v9/Px79d597Fi4uLhj7vNyJcRXT87/gj/2wcXFPcjNt6sGkHOvn8HFxb0nNw/jev88PFxc3P/OnSQvXFzce3Krx5skSVXT3+KzGi4u7oDba5iu/by9v4uLi7toKpEklLwtkqetl7+Oi4t7hFv9yWqeSdJislvzH8LFxW1xq68l6WlVSAuixMXFXcTNm5hJGdS7qPGmuMHFxT3OrY5Rq+PVSRi4uLif4lZbIfNiqDDIwcXF/RC3N7+Y7FBIgri4uEe41TSUX6HoFT2FVgsuLu5mblKs9C5vVQ9RUYrExcXdzL1+odooWdsefXP4wcXF3cZNXlhWQ83vieDi4h7hVq9B5MVQXujkhyJcXNzz3N6oIy+SJkHi4uKe5OZXIraPRiZ1GS4u7lLupDGah1fteb5MiLi4uEe41bQyKWXyxsok/eHi4q7iVpNXUsT0jkBRMLi4uAe5O/JitQAqDFRwcXFvw622OPNvCiMWXFzcG3PLI9L4/BINUXBxcY9wJwPUPKlVj0+4uLif4vYaptUUVm21jOi4uLh97hdyKFLBK8mr1AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

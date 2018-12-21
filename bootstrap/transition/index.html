@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 transition | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="最近一段时间研究了下 bootstrap 源码，现在开始总结，先从 transition(动画)开始。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 transition">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/transition/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="最近一段时间研究了下 bootstrap 源码，现在开始总结，先从 transition(动画)开始。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:59:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 transition">
+<meta name="twitter:description" content="最近一段时间研究了下 bootstrap 源码，现在开始总结，先从 transition(动画)开始。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 transition</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 transition</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-28T15:37:32.000Z" itemprop="datePublished" class="page-time">
+  2017-10-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码分析"><span class="post-toc-text">二、源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、transitionEnd"><span class="post-toc-text">1、transitionEnd</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、emulateTransitionEnd"><span class="post-toc-text">2、emulateTransitionEnd</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、event-special-bsTransitionEnd"><span class="post-toc-text">3、event.special.bsTransitionEnd</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/transition" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 transition</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-28 23:37:32" datetime="2017-10-28T15:37:32.000Z" itemprop="datePublished">2017-10-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近一段时间研究了下 bootstrap 源码，现在开始总结，先从 transition(动画)开始。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">/* ========================================================================</span><br><span class="line"> * Bootstrap: transition.js v3.3.7(动画过渡)</span><br><span class="line"> * http://getbootstrap.com/javascript/#transitions</span><br><span class="line"> * ========================================================================</span><br><span class="line"> * Copyright 2011-2016 Twitter, Inc.</span><br><span class="line"> * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)</span><br><span class="line"> * ======================================================================== */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+function ($) &#123;</span><br><span class="line">  &apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)</span><br><span class="line">  // ============================================================</span><br><span class="line">  // 判断浏览器是否支持哪种transitionEnd，如果不支持则返回false</span><br><span class="line">  function transitionEnd() &#123;</span><br><span class="line">    var el = document.createElement(&apos;bootstrap&apos;)</span><br><span class="line"></span><br><span class="line">    var transEndEventNames = &#123;</span><br><span class="line">      WebkitTransition : &apos;webkitTransitionEnd&apos;,</span><br><span class="line">      MozTransition    : &apos;transitionend&apos;,</span><br><span class="line">      OTransition      : &apos;oTransitionEnd otransitionend&apos;,</span><br><span class="line">      transition       : &apos;transitionend&apos;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (var name in transEndEventNames) &#123;</span><br><span class="line">      if (el.style[name] !== undefined) &#123;</span><br><span class="line">        return &#123; end: transEndEventNames[name] &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return false // explicit for ie8 (  ._.)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // http://blog.alexmaccaw.com/css-transitions</span><br><span class="line">  $.fn.emulateTransitionEnd = function (duration) &#123;</span><br><span class="line">    var called = false</span><br><span class="line">    var $el = this</span><br><span class="line">    $(this).one(&apos;bsTransitionEnd&apos;, function () &#123; called = true &#125;)</span><br><span class="line">    // 如果没有监听到了bsTransitionEnd，那么采用定时器触发事件</span><br><span class="line">    var callback = function () &#123; if (!called) $($el).trigger($.support.transition.end) &#125;</span><br><span class="line">    setTimeout(callback, duration)</span><br><span class="line">    return this</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 初始化</span><br><span class="line">  $(function () &#123;</span><br><span class="line">    $.support.transition = transitionEnd()</span><br><span class="line"></span><br><span class="line">    if (!$.support.transition) return</span><br><span class="line"></span><br><span class="line">    // 用于传入事件类型，来自定义事件。这样就能自己添加事件$el.one(&apos;bsTransitionEnd&apos;, function() &#123;&#125;)，而不用$el.one($.support.transition.end, function() &#123;&#125;)</span><br><span class="line">    $.event.special.bsTransitionEnd = &#123;</span><br><span class="line">      bindType: $.support.transition.end,</span><br><span class="line">      delegateType: $.support.transition.end,</span><br><span class="line">      handle: function (e) &#123;</span><br><span class="line">        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;(jQuery);</span><br></pre></td></tr></table></figure>
+<h3 id="二、源码分析"><a href="#二、源码分析" class="headerlink" title="二、源码分析"></a>二、源码分析</h3><h4 id="1、transitionEnd"><a href="#1、transitionEnd" class="headerlink" title="1、transitionEnd"></a>1、transitionEnd</h4><p>遍历各浏览器兼容的transitionEnd，判断哪个是当前浏览器兼容，并返回。</p>
+<h4 id="2、emulateTransitionEnd"><a href="#2、emulateTransitionEnd" class="headerlink" title="2、emulateTransitionEnd"></a>2、emulateTransitionEnd</h4><p>当监听到bsTransitionEnd设置called标志量为true，并设置定时器，如果bsTransitionEnd没有被触发，那么采用定时器来触发transitionEnd事件。</p>
+<h4 id="3、event-special-bsTransitionEnd"><a href="#3、event-special-bsTransitionEnd" class="headerlink" title="3、event.special.bsTransitionEnd"></a>3、event.special.bsTransitionEnd</h4><p>采用jQuery处理特殊的事件，将兼容的transitionEnd委托为bsTransitionEnd。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:59:44.000Z" itemprop="dateUpdated">2018-04-15 21:59:44</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/transition/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/transition/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/transition/&title=《bootstrap 之 transition》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/transition/&title=《bootstrap 之 transition》 — 青松的博客&source=最近一段时间研究了下 bootstrap 源码，现在开始总结，先从 transition(动画)开始。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/transition/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 transition》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/transition/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/transition/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/buttonStyle/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 button 样式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/css/sass2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">css 之 Sass 入门二</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/transition/&title=《bootstrap 之 transition》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/transition/&title=《bootstrap 之 transition》 — 青松的博客&source=最近一段时间研究了下 bootstrap 源码，现在开始总结，先从 transition(动画)开始。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/transition/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 transition》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/transition/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/transition/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aO27DMBAFwNz/0k6bxsx7XCWAyWEVBILMUbHY39dXfF4/Tv588rafT7a/Uh8MDIyPZbyWZ/1Mjnn3zhz2y69jYGBcwEgusf47CbUJYP3+t//HwMDAWD6zDsFtIoiBgYHxVMDNE8p1MZynjxgYGBj5hZJWWt6w2yueMTAwbmO0jf7//PtP5hsYGBgfxXiVJ0/41qleXu5Gt8LAwDia0bbyJ4naqEBNEk0MDIxDGXkwzXmT5v7mohgGBsbRjL1RYtIUmy9t1IsdGBgYhzLawWT+bSaDyXoIgYGBcRljfa3JeaqUfds1xMDAOJSRrzskvLbQzZO/uiLHwMA4lDEfRuYDg3ngfluLY2BgHM3Yu1bLa9fOindiYGAczUjKy71QOx+O1mkiBgbGcYw8mCZBcG+1KwfUSSEGBsYRjElrbFK4toOHGoOBgXEoox06tuC9JYw6oGNgYFzA2Lv6U2PO0bIFBgbGBYwkXXt2eaL9fPlHwcDAOI+xtx5RfJuH2nO/fCYMDIwLGG3ATV49KYk3G20YGBgXMPLguDekzC/aDj4xMDBOZbzKk2DmzbiaioGBcTQjP+36RZsa5onmXumLgYHx6Yy2jMyf3wud7R0wMDDuYeQt+DyAPjZZbQcDGBgYGMli1laTrg3KUTsRAwPjSsZ88NmOHKIwjYGBcQGjLUonLbZJUMbAwLiTMdrUeGgAkP/iaKiJgYHxeYxvdxZBzxzLcT0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

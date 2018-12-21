@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 form 样式 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="现在开始介绍 bootstrap 的表单(forms)样式。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 form 样式">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/forms/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="现在开始介绍 bootstrap 的表单(forms)样式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:34:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 form 样式">
+<meta name="twitter:description" content="现在开始介绍 bootstrap 的表单(forms)样式。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 form 样式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 form 样式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-06T15:51:20.000Z" itemprop="datePublished" class="page-time">
+  2017-11-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、forms-less"><span class="post-toc-text">1、forms.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1、forms-less-源码"><span class="post-toc-text">1.1、forms.less 源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2、forms-less应用"><span class="post-toc-text">1.2、forms.less应用</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/forms" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 form 样式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-06 23:51:20" datetime="2017-11-06T15:51:20.000Z" itemprop="datePublished">2017-11-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>现在开始介绍 bootstrap 的表单(forms)样式。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><h4 id="1、forms-less"><a href="#1、forms-less" class="headerlink" title="1、forms.less"></a>1、forms.less</h4><h5 id="1-1、forms-less-源码"><a href="#1-1、forms-less-源码" class="headerlink" title="1.1、forms.less 源码"></a>1.1、forms.less 源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Forms(表单)</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line">// Normalize non-controls(定制非表单控件)</span><br><span class="line">//</span><br><span class="line">// Restyle and baseline non-control form elements.</span><br><span class="line">fieldset &#123;</span><br><span class="line">  padding: 0;</span><br><span class="line">  margin: 0;</span><br><span class="line">  border: 0;</span><br><span class="line">  // Chrome and Firefox set a `min-width: min-content;` on fieldsets,</span><br><span class="line">  // so we reset that to ensure it behaves more like a standard block element.</span><br><span class="line">  // See https://github.com/twbs/bootstrap/issues/12359.</span><br><span class="line">  min-width: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">legend &#123;</span><br><span class="line">  display: block;</span><br><span class="line">  width: 100%;</span><br><span class="line">  padding: 0;</span><br><span class="line">  margin-bottom: @line-height-computed;</span><br><span class="line">  font-size: (@font-size-base * 1.5);</span><br><span class="line">  line-height: inherit;</span><br><span class="line">  color: @legend-color;</span><br><span class="line">  border: 0;</span><br><span class="line">  border-bottom: 1px solid @legend-border-color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">label &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)</span><br><span class="line">  margin-bottom: 5px;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Normalize form controls(定制表单控件)</span><br><span class="line">//</span><br><span class="line">// While most of our form styles require extra classes, some basic normalization</span><br><span class="line">// is required to ensure optimum display with or without those classes to better</span><br><span class="line">// address browser inconsistencies.</span><br><span class="line"></span><br><span class="line">// Override content-box in Normalize (* isn&apos;t specific enough)</span><br><span class="line">input[type=&quot;search&quot;] &#123;</span><br><span class="line">  .box-sizing(border-box);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Position radios and checkboxes better</span><br><span class="line">input[type=&quot;radio&quot;],</span><br><span class="line">input[type=&quot;checkbox&quot;] &#123;</span><br><span class="line">  margin: 4px 0 0;</span><br><span class="line">  margin-top: 1px \9; // IE8-9</span><br><span class="line">  line-height: normal;</span><br><span class="line">&#125;</span><br><span class="line">input[type=&quot;file&quot;] &#123;</span><br><span class="line">  display: block;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Make range inputs behave like textual form controls</span><br><span class="line">input[type=&quot;range&quot;] &#123;</span><br><span class="line">  display: block;</span><br><span class="line">  width: 100%;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Make multiple select elements height not fixed</span><br><span class="line">select[multiple],</span><br><span class="line">select[size] &#123;</span><br><span class="line">  height: auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Focus for file, radio, and checkbox</span><br><span class="line">input[type=&quot;file&quot;]:focus,</span><br><span class="line">input[type=&quot;radio&quot;]:focus,</span><br><span class="line">input[type=&quot;checkbox&quot;]:focus &#123;</span><br><span class="line">  .tab-focus();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Adjust output element</span><br><span class="line">output &#123;</span><br><span class="line">  display: block;</span><br><span class="line">  padding-top: (@padding-base-vertical + 1);</span><br><span class="line">  font-size: @font-size-base;</span><br><span class="line">  line-height: @line-height-base;</span><br><span class="line">  color: @input-color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Common form controls(普通的表单控件)</span><br><span class="line">//</span><br><span class="line">// Shared size and type resets for form controls. Apply `.form-control` to any</span><br><span class="line">// of the following form controls:</span><br><span class="line">//</span><br><span class="line">// select</span><br><span class="line">// textarea</span><br><span class="line">// input[type=&quot;text&quot;]</span><br><span class="line">// input[type=&quot;password&quot;]</span><br><span class="line">// input[type=&quot;datetime&quot;]</span><br><span class="line">// input[type=&quot;datetime-local&quot;]</span><br><span class="line">// input[type=&quot;date&quot;]</span><br><span class="line">// input[type=&quot;month&quot;]</span><br><span class="line">// input[type=&quot;time&quot;]</span><br><span class="line">// input[type=&quot;week&quot;]</span><br><span class="line">// input[type=&quot;number&quot;]</span><br><span class="line">// input[type=&quot;email&quot;]</span><br><span class="line">// input[type=&quot;url&quot;]</span><br><span class="line">// input[type=&quot;search&quot;]</span><br><span class="line">// input[type=&quot;tel&quot;]</span><br><span class="line">// input[type=&quot;color&quot;]</span><br><span class="line">.form-control &#123;</span><br><span class="line">  display: block;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: @input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)</span><br><span class="line">  padding: @padding-base-vertical @padding-base-horizontal;</span><br><span class="line">  font-size: @font-size-base;</span><br><span class="line">  line-height: @line-height-base;</span><br><span class="line">  color: @input-color;</span><br><span class="line">  background-color: @input-bg;</span><br><span class="line">  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214</span><br><span class="line">  border: 1px solid @input-border;</span><br><span class="line">  border-radius: @input-border-radius; // Note: This has no effect on &lt;select&gt;s in some browsers, due to the limited stylability of &lt;select&gt;s in CSS.</span><br><span class="line">  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));</span><br><span class="line">  .transition(~&quot;border-color ease-in-out .15s, box-shadow ease-in-out .15s&quot;);</span><br><span class="line"></span><br><span class="line">  // Customize the `:focus` state to imitate native WebKit styles.</span><br><span class="line">  .form-control-focus();</span><br><span class="line"></span><br><span class="line">  // Placeholder</span><br><span class="line">  .placeholder();</span><br><span class="line"></span><br><span class="line">  // Unstyle the caret on `&lt;select&gt;`s in IE10+.</span><br><span class="line">  &amp;::-ms-expand &#123;</span><br><span class="line">    border: 0;</span><br><span class="line">    background-color: transparent;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Disabled and read-only inputs</span><br><span class="line">  //</span><br><span class="line">  // HTML5 says that controls under a fieldset &gt; legend:first-child won&apos;t be</span><br><span class="line">  // disabled if the fieldset is disabled. Due to implementation difficulty, we</span><br><span class="line">  // don&apos;t honor that edge case; we style them as disabled anyway.</span><br><span class="line">  &amp;[disabled],</span><br><span class="line">  &amp;[readonly],</span><br><span class="line">  fieldset[disabled] &amp; &#123;</span><br><span class="line">    background-color: @input-bg-disabled;</span><br><span class="line">    opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &amp;[disabled],</span><br><span class="line">  fieldset[disabled] &amp; &#123;</span><br><span class="line">    cursor: @cursor-disabled;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Reset height for `textarea`s</span><br><span class="line">  textarea&amp; &#123;</span><br><span class="line">    height: auto;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Search inputs in iOS</span><br><span class="line">//</span><br><span class="line">// This overrides the extra rounded corners on search inputs in iOS so that our</span><br><span class="line">// `.form-control` class can properly style them. Note that this cannot simply</span><br><span class="line">// be added to `.form-control` as it&apos;s not specific enough. For details, see</span><br><span class="line">// https://github.com/twbs/bootstrap/issues/11586.</span><br><span class="line">input[type=&quot;search&quot;] &#123;</span><br><span class="line">  -webkit-appearance: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Special styles for iOS temporal inputs</span><br><span class="line">//</span><br><span class="line">// In Mobile Safari, setting `display: block` on temporal inputs causes the</span><br><span class="line">// text within the input to become vertically misaligned. As a workaround, we</span><br><span class="line">// set a pixel line-height that matches the given height of the input, but only</span><br><span class="line">// for Safari. See https://bugs.webkit.org/show_bug.cgi?id=139848</span><br><span class="line">//</span><br><span class="line">// Note that as of 9.3, iOS doesn&apos;t support `week`.</span><br><span class="line">@media screen and (-webkit-min-device-pixel-ratio: 0) &#123;</span><br><span class="line">  input[type=&quot;date&quot;],</span><br><span class="line">  input[type=&quot;time&quot;],</span><br><span class="line">  input[type=&quot;datetime-local&quot;],</span><br><span class="line">  input[type=&quot;month&quot;] &#123;</span><br><span class="line">    &amp;.form-control &#123;</span><br><span class="line">      line-height: @input-height-base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &amp;.input-sm,</span><br><span class="line">    .input-group-sm &amp; &#123;</span><br><span class="line">      line-height: @input-height-small;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &amp;.input-lg,</span><br><span class="line">    .input-group-lg &amp; &#123;</span><br><span class="line">      line-height: @input-height-large;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Form groups(表单组)</span><br><span class="line">//</span><br><span class="line">// Designed to help with the organization and spacing of vertical forms. For</span><br><span class="line">// horizontal forms, use the predefined grid classes.</span><br><span class="line">.form-group &#123;</span><br><span class="line">  margin-bottom: @form-group-margin-bottom;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Checkboxes and radios(表单控件:复选框checkbox和单选框radio)</span><br><span class="line">//</span><br><span class="line">// Indent the labels to position radios/checkboxes as hanging controls.</span><br><span class="line">.radio,</span><br><span class="line">.checkbox &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  display: block;</span><br><span class="line">  margin-top: 10px;</span><br><span class="line">  margin-bottom: 10px;</span><br><span class="line"></span><br><span class="line">  label &#123;</span><br><span class="line">    min-height: @line-height-computed; // Ensure the input doesn&apos;t jump when there is no text</span><br><span class="line">    padding-left: 20px;</span><br><span class="line">    margin-bottom: 0;</span><br><span class="line">    font-weight: normal;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.radio input[type=&quot;radio&quot;],</span><br><span class="line">.radio-inline input[type=&quot;radio&quot;],</span><br><span class="line">.checkbox input[type=&quot;checkbox&quot;],</span><br><span class="line">.checkbox-inline input[type=&quot;checkbox&quot;] &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  margin-left: -20px;</span><br><span class="line">  margin-top: 4px \9;</span><br><span class="line">&#125;</span><br><span class="line">.radio + .radio,</span><br><span class="line">.checkbox + .checkbox &#123;</span><br><span class="line">  margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Radios and checkboxes on same line(复选框和单选框水平排列)</span><br><span class="line">.radio-inline,</span><br><span class="line">.checkbox-inline &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  padding-left: 20px;</span><br><span class="line">  margin-bottom: 0;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">  font-weight: normal;</span><br><span class="line">  cursor: pointer;</span><br><span class="line">&#125;</span><br><span class="line">.radio-inline + .radio-inline,</span><br><span class="line">.checkbox-inline + .checkbox-inline &#123;</span><br><span class="line">  margin-top: 0;</span><br><span class="line">  margin-left: 10px; // space out consecutive inline controls</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Apply same disabled cursor tweak as for inputs(添加disable样式)</span><br><span class="line">// Some special care is needed because &lt;label&gt;s don&apos;t inherit their parent&apos;s `cursor`.</span><br><span class="line">//</span><br><span class="line">// Note: Neither radios nor checkboxes can be readonly.</span><br><span class="line">input[type=&quot;radio&quot;],</span><br><span class="line">input[type=&quot;checkbox&quot;] &#123;</span><br><span class="line">  &amp;[disabled],</span><br><span class="line">  &amp;.disabled,</span><br><span class="line">  fieldset[disabled] &amp; &#123;</span><br><span class="line">    cursor: @cursor-disabled;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// These classes are used directly on &lt;label&gt;s</span><br><span class="line">.radio-inline,</span><br><span class="line">.checkbox-inline &#123;</span><br><span class="line">  &amp;.disabled,</span><br><span class="line">  fieldset[disabled] &amp; &#123;</span><br><span class="line">    cursor: @cursor-disabled;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// These classes are used on elements with &lt;label&gt; descendants</span><br><span class="line">.radio,</span><br><span class="line">.checkbox &#123;</span><br><span class="line">  &amp;.disabled,</span><br><span class="line">  fieldset[disabled] &amp; &#123;</span><br><span class="line">    label &#123;</span><br><span class="line">      cursor: @cursor-disabled;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Static form control text(静态表单控制文本)</span><br><span class="line">//</span><br><span class="line">// Apply class to a `p` element to make any string of text align with labels in</span><br><span class="line">// a horizontal form layout.</span><br><span class="line">.form-control-static &#123;</span><br><span class="line">  // Size it appropriately next to real form controls</span><br><span class="line">  padding-top: (@padding-base-vertical + 1);</span><br><span class="line">  padding-bottom: (@padding-base-vertical + 1);</span><br><span class="line">  // Remove default margin from `p`</span><br><span class="line">  margin-bottom: 0;</span><br><span class="line">  min-height: (@line-height-computed + @font-size-base);</span><br><span class="line"></span><br><span class="line">  &amp;.input-lg,</span><br><span class="line">  &amp;.input-sm &#123;</span><br><span class="line">    padding-left: 0;</span><br><span class="line">    padding-right: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Form control sizing(表单控件大小)</span><br><span class="line">//</span><br><span class="line">// Build on `.form-control` with modifier classes to decrease or increase the</span><br><span class="line">// height and font-size of form controls.</span><br><span class="line">//</span><br><span class="line">// The `.form-group-* form-control` variations are sadly duplicated to avoid the</span><br><span class="line">// issue documented in https://github.com/twbs/bootstrap/issues/15074.</span><br><span class="line">.input-sm &#123;</span><br><span class="line">  .input-size(@input-height-small; @padding-small-vertical; @padding-small-horizontal; @font-size-small; @line-height-small; @input-border-radius-small);</span><br><span class="line">&#125;</span><br><span class="line">.form-group-sm &#123;</span><br><span class="line">  .form-control &#123;</span><br><span class="line">    height: @input-height-small;</span><br><span class="line">    padding: @padding-small-vertical @padding-small-horizontal;</span><br><span class="line">    font-size: @font-size-small;</span><br><span class="line">    line-height: @line-height-small;</span><br><span class="line">    border-radius: @input-border-radius-small;</span><br><span class="line">  &#125;</span><br><span class="line">  select.form-control &#123;</span><br><span class="line">    height: @input-height-small;</span><br><span class="line">    line-height: @input-height-small;</span><br><span class="line">  &#125;</span><br><span class="line">  textarea.form-control,</span><br><span class="line">  select[multiple].form-control &#123;</span><br><span class="line">    height: auto;</span><br><span class="line">  &#125;</span><br><span class="line">  .form-control-static &#123;</span><br><span class="line">    height: @input-height-small;</span><br><span class="line">    min-height: (@line-height-computed + @font-size-small);</span><br><span class="line">    padding: (@padding-small-vertical + 1) @padding-small-horizontal;</span><br><span class="line">    font-size: @font-size-small;</span><br><span class="line">    line-height: @line-height-small;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.input-lg &#123;</span><br><span class="line">  .input-size(@input-height-large; @padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @input-border-radius-large);</span><br><span class="line">&#125;</span><br><span class="line">.form-group-lg &#123;</span><br><span class="line">  .form-control &#123;</span><br><span class="line">    height: @input-height-large;</span><br><span class="line">    padding: @padding-large-vertical @padding-large-horizontal;</span><br><span class="line">    font-size: @font-size-large;</span><br><span class="line">    line-height: @line-height-large;</span><br><span class="line">    border-radius: @input-border-radius-large;</span><br><span class="line">  &#125;</span><br><span class="line">  select.form-control &#123;</span><br><span class="line">    height: @input-height-large;</span><br><span class="line">    line-height: @input-height-large;</span><br><span class="line">  &#125;</span><br><span class="line">  textarea.form-control,</span><br><span class="line">  select[multiple].form-control &#123;</span><br><span class="line">    height: auto;</span><br><span class="line">  &#125;</span><br><span class="line">  .form-control-static &#123;</span><br><span class="line">    height: @input-height-large;</span><br><span class="line">    min-height: (@line-height-computed + @font-size-large);</span><br><span class="line">    padding: (@padding-large-vertical + 1) @padding-large-horizontal;</span><br><span class="line">    font-size: @font-size-large;</span><br><span class="line">    line-height: @line-height-large;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Form control feedback states(验证状态)</span><br><span class="line">//</span><br><span class="line">// Apply contextual and semantic states to individual form controls.</span><br><span class="line">.has-feedback &#123;</span><br><span class="line">  // Enable absolute positioning</span><br><span class="line">  position: relative;</span><br><span class="line"></span><br><span class="line">  // Ensure icons don&apos;t overlap text</span><br><span class="line">  .form-control &#123;</span><br><span class="line">    padding-right: (@input-height-base * 1.25);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// Feedback icon (requires .glyphicon classes)</span><br><span class="line">.form-control-feedback &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 0;</span><br><span class="line">  right: 0;</span><br><span class="line">  z-index: 2; // Ensure icon is above input groups</span><br><span class="line">  display: block;</span><br><span class="line">  width: @input-height-base;</span><br><span class="line">  height: @input-height-base;</span><br><span class="line">  line-height: @input-height-base;</span><br><span class="line">  text-align: center;</span><br><span class="line">  pointer-events: none;</span><br><span class="line">&#125;</span><br><span class="line">.input-lg + .form-control-feedback,</span><br><span class="line">.input-group-lg + .form-control-feedback,</span><br><span class="line">.form-group-lg .form-control + .form-control-feedback &#123;</span><br><span class="line">  width: @input-height-large;</span><br><span class="line">  height: @input-height-large;</span><br><span class="line">  line-height: @input-height-large;</span><br><span class="line">&#125;</span><br><span class="line">.input-sm + .form-control-feedback,</span><br><span class="line">.input-group-sm + .form-control-feedback,</span><br><span class="line">.form-group-sm .form-control + .form-control-feedback &#123;</span><br><span class="line">  width: @input-height-small;</span><br><span class="line">  height: @input-height-small;</span><br><span class="line">  line-height: @input-height-small;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Feedback states</span><br><span class="line">.has-success &#123;</span><br><span class="line">  .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);</span><br><span class="line">&#125;</span><br><span class="line">.has-warning &#123;</span><br><span class="line">  .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);</span><br><span class="line">&#125;</span><br><span class="line">.has-error &#123;</span><br><span class="line">  .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Reposition feedback icon if input has visible label above</span><br><span class="line">.has-feedback label &#123;</span><br><span class="line"></span><br><span class="line">  &amp; ~ .form-control-feedback &#123;</span><br><span class="line">    top: (@line-height-computed + 5); // Height of the `label` and its margin</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.sr-only ~ .form-control-feedback &#123;</span><br><span class="line">    top: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Help text(提示信息)</span><br><span class="line">//</span><br><span class="line">// Apply to any element you wish to create light text for placement immediately</span><br><span class="line">// below a form control. Use for general help, formatting, or instructional text.</span><br><span class="line">.help-block &#123;</span><br><span class="line">  display: block; // account for any element using help-block</span><br><span class="line">  margin-top: 5px;</span><br><span class="line">  margin-bottom: 10px;</span><br><span class="line">  color: lighten(@text-color, 25%); // lighten the text some for contrast</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Inline forms(内联表单)</span><br><span class="line">//</span><br><span class="line">// Make forms appear inline(-block) by adding the `.form-inline` class. Inline</span><br><span class="line">// forms begin stacked on extra small (mobile) devices and then go inline when</span><br><span class="line">// viewports reach &lt;768px.</span><br><span class="line">//</span><br><span class="line">// Requires wrapping inputs and labels with `.form-group` for proper display of</span><br><span class="line">// default HTML form controls and our custom form controls (e.g., input groups).</span><br><span class="line">//</span><br><span class="line">// Heads up! This is mixin-ed into `.navbar-form` in navbars.less.</span><br><span class="line">.form-inline &#123;</span><br><span class="line"></span><br><span class="line">  // Kick in the inline</span><br><span class="line">  @media (min-width: @screen-sm-min) &#123;</span><br><span class="line">    // Inline-block all the things for &quot;inline&quot;</span><br><span class="line">    .form-group &#123;</span><br><span class="line">      display: inline-block;</span><br><span class="line">      margin-bottom: 0;</span><br><span class="line">      vertical-align: middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // In navbar-form, allow folks to *not* use `.form-group`</span><br><span class="line">    .form-control &#123;</span><br><span class="line">      display: inline-block;</span><br><span class="line">      width: auto; // Prevent labels from stacking above inputs in `.form-group`</span><br><span class="line">      vertical-align: middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Make static controls behave like regular ones</span><br><span class="line">    .form-control-static &#123;</span><br><span class="line">      display: inline-block;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .input-group &#123;</span><br><span class="line">      display: inline-table;</span><br><span class="line">      vertical-align: middle;</span><br><span class="line"></span><br><span class="line">      .input-group-addon,</span><br><span class="line">      .input-group-btn,</span><br><span class="line">      .form-control &#123;</span><br><span class="line">        width: auto;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Input groups need that 100% width though</span><br><span class="line">    .input-group &gt; .form-control &#123;</span><br><span class="line">      width: 100%;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .control-label &#123;</span><br><span class="line">      margin-bottom: 0;</span><br><span class="line">      vertical-align: middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Remove default margin on radios/checkboxes that were used for stacking, and</span><br><span class="line">    // then undo the floating of radios and checkboxes to match.</span><br><span class="line">    .radio,</span><br><span class="line">    .checkbox &#123;</span><br><span class="line">      display: inline-block;</span><br><span class="line">      margin-top: 0;</span><br><span class="line">      margin-bottom: 0;</span><br><span class="line">      vertical-align: middle;</span><br><span class="line"></span><br><span class="line">      label &#123;</span><br><span class="line">        padding-left: 0;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    .radio input[type=&quot;radio&quot;],</span><br><span class="line">    .checkbox input[type=&quot;checkbox&quot;] &#123;</span><br><span class="line">      position: relative;</span><br><span class="line">      margin-left: 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Re-override the feedback icon.</span><br><span class="line">    .has-feedback .form-control-feedback &#123;</span><br><span class="line">      top: 0;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Horizontal forms(水平表单)</span><br><span class="line">//</span><br><span class="line">// Horizontal forms are built on grid classes and allow you to create forms with</span><br><span class="line">// labels on the left and inputs on the right.</span><br><span class="line">.form-horizontal &#123;</span><br><span class="line"></span><br><span class="line">  // Consistent vertical alignment of radios and checkboxes</span><br><span class="line">  //</span><br><span class="line">  // Labels also get some reset styles, but that is scoped to a media query below.</span><br><span class="line">  .radio,</span><br><span class="line">  .checkbox,</span><br><span class="line">  .radio-inline,</span><br><span class="line">  .checkbox-inline &#123;</span><br><span class="line">    margin-top: 0;</span><br><span class="line">    margin-bottom: 0;</span><br><span class="line">    padding-top: (@padding-base-vertical + 1); // Default padding plus a border</span><br><span class="line">  &#125;</span><br><span class="line">  // Account for padding we&apos;re adding to ensure the alignment and of help text</span><br><span class="line">  // and other content below items</span><br><span class="line">  .radio,</span><br><span class="line">  .checkbox &#123;</span><br><span class="line">    min-height: (@line-height-computed + (@padding-base-vertical + 1));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Make form groups behave like rows</span><br><span class="line">  .form-group &#123;</span><br><span class="line">    .make-row();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Reset spacing and right align labels, but scope to media queries so that</span><br><span class="line">  // labels on narrow viewports stack the same as a default form example.</span><br><span class="line">  @media (min-width: @screen-sm-min) &#123;</span><br><span class="line">    .control-label &#123;</span><br><span class="line">      text-align: right;</span><br><span class="line">      margin-bottom: 0;</span><br><span class="line">      padding-top: (@padding-base-vertical + 1); // Default padding plus a border</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Validation states</span><br><span class="line">  //</span><br><span class="line">  // Reposition the icon because it&apos;s now within a grid column and columns have</span><br><span class="line">  // `position: relative;` on them. Also accounts for the grid gutter padding.</span><br><span class="line">  .has-feedback .form-control-feedback &#123;</span><br><span class="line">    right: floor((@grid-gutter-width / 2));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Form group sizes</span><br><span class="line">  //</span><br><span class="line">  // Quick utility class for applying `.input-lg` and `.input-sm` styles to the</span><br><span class="line">  // inputs and labels within a `.form-group`.</span><br><span class="line">  .form-group-lg &#123;</span><br><span class="line">    @media (min-width: @screen-sm-min) &#123;</span><br><span class="line">      .control-label &#123;</span><br><span class="line">        padding-top: (@padding-large-vertical + 1);</span><br><span class="line">        font-size: @font-size-large;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  .form-group-sm &#123;</span><br><span class="line">    @media (min-width: @screen-sm-min) &#123;</span><br><span class="line">      .control-label &#123;</span><br><span class="line">        padding-top: (@padding-small-vertical + 1);</span><br><span class="line">        font-size: @font-size-small;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2、forms-less应用"><a href="#1-2、forms-less应用" class="headerlink" title="1.2、forms.less应用"></a>1.2、forms.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--默认垂直表单--&gt;</span><br><span class="line">&lt;form role=&quot;form&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;name1&quot;&gt;名称&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;name1&quot; placeholder=&quot;请输入名称&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;inputfile1&quot;&gt;文件输入&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; id=&quot;inputfile1&quot;&gt;</span><br><span class="line">    &lt;p class=&quot;help-block&quot;&gt;这里是块级帮助文本的实例。&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;checkbox&quot;&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">      &lt;input type=&quot;checkbox&quot;&gt;请打勾</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;!--内联表单--&gt;</span><br><span class="line">&lt;form class=&quot;form-inline&quot; role=&quot;form&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;sr-only&quot; for=&quot;name2&quot;&gt;名称&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;name2&quot; placeholder=&quot;请输入名称&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;sr-only&quot; for=&quot;inputfile2&quot;&gt;文件输入&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; id=&quot;inputfile2&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;checkbox&quot;&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">      &lt;input type=&quot;checkbox&quot;&gt;请打勾</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;!--水平表单--&gt;</span><br><span class="line">&lt;form class=&quot;form-horizontal&quot; role=&quot;form&quot;&gt;</span><br><span class="line">  &lt;!--表单帮助文本--&gt;</span><br><span class="line">  &lt;label&gt;帮助文本实例&lt;/label&gt;</span><br><span class="line">  &lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;&quot;&gt;</span><br><span class="line">  &lt;span class=&quot;help-block&quot;&gt;一个较长的帮助文本块，超过一行，</span><br><span class="line">  需要扩展到下一行。本实例中的帮助文本总共有两行。&lt;/span&gt;</span><br><span class="line">  &lt;!--在一个水平表单内的表单标签后放置纯文本--&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Email&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;p class=&quot;form-control-static&quot;&gt;email@example.com&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;firstname&quot; class=&quot;col-sm-2 control-label&quot;&gt;名字&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;firstname&quot; placeholder=&quot;请输入名字&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;lastname&quot; class=&quot;col-sm-2 control-label&quot;&gt;姓&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;lastname&quot; placeholder=&quot;请输入姓&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-offset-2 col-sm-10&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;checkbox&quot;&gt;</span><br><span class="line">        &lt;label&gt;</span><br><span class="line">          &lt;input type=&quot;checkbox&quot;&gt;请记住我</span><br><span class="line">        &lt;/label&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-offset-2 col-sm-10&quot;&gt;</span><br><span class="line">      &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;登录&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;!--表单控件状态--&gt;</span><br><span class="line">&lt;form class=&quot;form-horizontal&quot; role=&quot;form&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;聚焦&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;input class=&quot;form-control&quot; id=&quot;focusedInput&quot; type=&quot;text&quot; value=&quot;该输入框获得焦点...&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;disabledInput&quot; class=&quot;col-sm-2 control-label&quot;&gt;禁用&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;!--禁用的输入框 input--&gt;</span><br><span class="line">      &lt;input class=&quot;form-control&quot; id=&quot;disabledInput&quot; type=&quot;text&quot; placeholder=&quot;该输入框禁止输入...&quot; disabled&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;!--禁用的字段集 fieldset--&gt;</span><br><span class="line">  &lt;fieldset disabled&gt;</span><br><span class="line">    &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">      &lt;label for=&quot;disabledTextInput&quot; class=&quot;col-sm-2 control-label&quot;&gt;禁用输入（Fieldset disabled）&lt;/label&gt;</span><br><span class="line">      &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;text&quot; id=&quot;disabledTextInput&quot; class=&quot;form-control&quot; placeholder=&quot;禁止输入&quot;&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">      &lt;label for=&quot;disabledSelect&quot; class=&quot;col-sm-2 control-label&quot;&gt;禁用选择菜单（Fieldset disabled）&lt;/label&gt;</span><br><span class="line">      &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">        &lt;select id=&quot;disabledSelect&quot; class=&quot;form-control&quot;&gt;</span><br><span class="line">          &lt;option&gt;禁止选择&lt;/option&gt;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/fieldset&gt;</span><br><span class="line">  &lt;!--验证状态--&gt;</span><br><span class="line">  &lt;div class=&quot;form-group has-success&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;inputSuccess&quot;&gt;输入成功&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;inputSuccess&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group has-warning&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;inputWarning&quot;&gt;输入警告&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;inputWarning&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;form-group has-error&quot;&gt;</span><br><span class="line">    &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;inputError&quot;&gt;输入错误&lt;/label&gt;</span><br><span class="line">    &lt;div class=&quot;col-sm-10&quot;&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;inputError&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:34:58.000Z" itemprop="dateUpdated">2018-04-15 21:34:58</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/forms/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/forms/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/forms/&title=《bootstrap 之 form 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/forms/&title=《bootstrap 之 form 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的表单(forms)样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/forms/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 form 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/forms/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/forms/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/inputGroup&label/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 inputGroup &amp; label 样式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/bootstrap/base&type/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">bootstrap 之 bootstrap &amp; type 样式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/forms/&title=《bootstrap 之 form 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/forms/&title=《bootstrap 之 form 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的表单(forms)样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/forms/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 form 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/forms/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/forms/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3aS46EMAwFQO5/aWY7EgKenU/3jCqrVieEysayHY4jHufN+D17XXmdve55rBi4uLjD3PNx3K1JXnmdzfe/rsHFxd3PfX5ZNTA9h7benri4uN/MXXEAXFzc/8G9S1zmrsfFxf0sN2989MqhvJkyrVbDxcUd4OZdynW/l/R3cXFxW9yzOJJj9IJg9HZcXNwt3DygPDc9q/8PvRcXF3cjNy9L8iKnl3MVajVcXNyN3N5GSdjqtUVeAhkuLu5Ubh6MqmEuCYLlz79wcXE3ckdYeRKT4F6KKFxc3C3cagjrtTzy5Kn8LC4u7jJuvjS/JklYeYF029/FxcVdxi0vLdKTtKm6My4u7mru3JQleSrv5hb6u7i4uIu5+Ub5hxoj96TN/gouLu5UbjUk5UEtSXrKH2bh4uIu4+YhbPyapHcpi4uL+1luNQwlBxtKa8arK1xc3Jh7Fkdeg+SsfD0uLu4ebj56m+bXsePhDxcXdy631x5Nmim9UudlFhcXdyN3pCjKm6eTazVcXNyv5Fabp9WiCxcX929x5x4gSZJwcXH3c/Nr0V6oyq9nXkInLi7uFu5463Nkh/zYuLi4W7g/H3hSwWJDW8wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

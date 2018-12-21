@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之 module 加载 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之 module 加载">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/module-load/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T13:37:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之 module 加载">
+<meta name="twitter:description" content="介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之 module 加载</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之 module 加载</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-04T04:43:26.000Z" itemprop="datePublished" class="page-time">
+  2018-03-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、浏览器加载"><span class="post-toc-text">一、浏览器加载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、ES6-模块与-CommonJS-模块的差异"><span class="post-toc-text">二、ES6 模块与 CommonJS 模块的差异</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、Node-加载"><span class="post-toc-text">三、Node 加载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、ES6-模块加载-CommonJS-模块"><span class="post-toc-text">四、ES6 模块加载 CommonJS 模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、CommonJS-模块加载-ES6-模块"><span class="post-toc-text">五、CommonJS 模块加载 ES6 模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、循环加载"><span class="post-toc-text">六、循环加载</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/module-load" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之 module 加载</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-04 12:43:26" datetime="2018-03-04T04:43:26.000Z" itemprop="datePublished">2018-03-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。<br><a id="more"></a></p>
+<h3 id="一、浏览器加载"><a href="#一、浏览器加载" class="headerlink" title="一、浏览器加载"></a>一、浏览器加载</h3><p>HTML 网页中，浏览器通过 <code>&lt;script&gt;</code> 标签加载 JavaScript 脚本。默认情况下，浏览器是同步加载 JavaScript 脚本，即渲染引擎遇到 <code>&lt;script&gt;</code> 标签就会停下来，等到执行完脚本，再继续向下渲染。如果是外部脚本，还必须加入脚本下载的时间。如果脚本体积很大，下载和执行的时间就会很长，因此造成浏览器堵塞，用户会感觉到浏览器“卡死”了，没有任何响应。这显然是很不好的体验，所以浏览器允许脚本异步加载。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// defer 要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），才会执行；多个 defer 脚本，会按照它们在页面出现的顺序加载</span><br><span class="line">&lt;script src=&quot;path/to/myModule.js&quot; defer&gt;&lt;/script&gt;</span><br><span class="line">  </span><br><span class="line">// async 一旦下载完，渲染引擎就会中断渲染，执行这个脚本以后，再继续渲染；多个 async 脚本是不能保证加载顺序</span><br><span class="line">&lt;script src=&quot;path/to/myModule.js&quot; async&gt;&lt;/script&gt;</span><br><span class="line">  </span><br><span class="line">// 浏览器加载 ES6 模块（加入 type=&quot;module&quot; 属性，效果等同于 defer 属性）</span><br><span class="line">&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  </span><br><span class="line">// 浏览器加载 ES6 模块，同时打开 async 属性（只要加载完成，渲染引擎就会中断渲染立即执行。执行完成后，再恢复渲染）</span><br><span class="line">&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot; async&gt;&lt;/script&gt;</span><br><span class="line">  </span><br><span class="line">// ES6 模块也允许内嵌在网页中，语法行为与加载外部脚本完全一致</span><br><span class="line">&lt;script type=&quot;module&quot;&gt;</span><br><span class="line">  import utils from &quot;./utils.js&quot;;</span><br><span class="line">  // other code</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">  </span><br><span class="line">// ES6 模块之中，顶层的 this 返回undefined，而不是指向 window 。也就是说，在模块顶层使用 this 关键字，是无意义的</span><br><span class="line">import utils from &apos;https://example.com/js/utils.js&apos;;</span><br><span class="line">const x = 1;</span><br><span class="line">console.log(x === window.x); //false</span><br><span class="line">console.log(this === undefined); // true</span><br><span class="line">  </span><br><span class="line">// 利用顶层的 this 等于 undefined 这个语法点，可以侦测当前代码是否在 ES6 模块之中</span><br><span class="line">const isNotModuleScript = this !== undefined;</span><br></pre></td></tr></table></figure></p>
+<p>对于外部的模块脚本，有几点需要注意：<br>1.代码是在模块作用域之中运行，而不是在全局作用域运行。模块内部的顶层变量，外部不可见。<br>2.模块脚本自动采用严格模式，不管有没有声明use strict。<br>3.模块之中，可以使用import命令加载其他模块（.js后缀不可省略，需要提供绝对 URL 或相对 URL），也可以使用export命令输出对外接口。<br>4.模块之中，顶层的this关键字返回undefined，而不是指向window。也就是说，在模块顶层使用this关键字，是无意义的。<br>5.同一个模块如果加载多次，将只执行一次。 </p>
+<h3 id="二、ES6-模块与-CommonJS-模块的差异"><a href="#二、ES6-模块与-CommonJS-模块的差异" class="headerlink" title="二、ES6 模块与 CommonJS 模块的差异"></a>二、ES6 模块与 CommonJS 模块的差异</h3><p>他们有两个重大差异：CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用；CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。第二个差异是因为 CommonJS 加载的是一个对象（即module.exports属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">// lib.js</span><br><span class="line">var counter = 3;</span><br><span class="line">function incCounter() &#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  counter: counter,</span><br><span class="line">  incCounter: incCounter,</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// main.js（mod.counter 是一个原始类型的值，会被缓存）</span><br><span class="line">var mod = require(&apos;./lib&apos;);</span><br><span class="line">console.log(mod.counter);  // 3</span><br><span class="line">mod.incCounter();</span><br><span class="line">console.log(mod.counter); // 3</span><br><span class="line">  </span><br><span class="line">// lib.js（除非写成一个函数，才能得到内部变动后的值）</span><br><span class="line">var counter = 3;</span><br><span class="line">function incCounter() &#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  get counter() &#123; // 输出的 counter 属性实际上是一个取值器函数</span><br><span class="line">    return counter</span><br><span class="line">  &#125;,</span><br><span class="line">  incCounter: incCounter,</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// lib.js（ES6 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块）</span><br><span class="line">export let counter = 3;</span><br><span class="line">export function incCounter() &#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// main.js（原始值变了，import 加载的值也会跟着变）</span><br><span class="line">import &#123; counter, incCounter &#125; from &apos;./lib&apos;;</span><br><span class="line">console.log(counter); // 3</span><br><span class="line">incCounter();</span><br><span class="line">console.log(counter); // 4</span><br><span class="line">  </span><br><span class="line">// lib.js</span><br><span class="line">export let obj = &#123;&#125;;</span><br><span class="line">  </span><br><span class="line">// main.js</span><br><span class="line">import &#123; obj &#125; from &apos;./lib&apos;;</span><br><span class="line">obj.prop = 123; // OK</span><br><span class="line">obj = &#123;&#125;; // TypeError（变量 obj 指向的地址是只读的，不能重新赋值，这就好比 main.js 创造了一个名为 obj 的 const 变量）</span><br><span class="line">  </span><br><span class="line">// mod.js（export 通过接口，输出的是同一个值。不同的脚本加载这个接口，得到的都是同样的实例）</span><br><span class="line">function C() &#123;</span><br><span class="line">  this.sum = 0;</span><br><span class="line">  this.add = function () &#123;</span><br><span class="line">    this.sum += 1;</span><br><span class="line">  &#125;;</span><br><span class="line">  this.show = function () &#123;</span><br><span class="line">    console.log(this.sum);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">export let c = new C();</span><br><span class="line">  </span><br><span class="line">// x.js</span><br><span class="line">import &#123;c&#125; from &apos;./mod&apos;;</span><br><span class="line">c.add();</span><br><span class="line">  </span><br><span class="line">// y.js</span><br><span class="line">import &#123;c&#125; from &apos;./mod&apos;;</span><br><span class="line">c.show();</span><br><span class="line">  </span><br><span class="line">// main.js（输出 1，证明了 x.js 和 y.js 加载的都是 C 的同一个实例）</span><br><span class="line">import &apos;./x&apos;;</span><br><span class="line">import &apos;./y&apos;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、Node-加载"><a href="#三、Node-加载" class="headerlink" title="三、Node 加载"></a>三、Node 加载</h3><p>Node 对 ES6 模块的处理比较麻烦，因为它有自己的 CommonJS 模块格式，与 ES6 模块格式是不兼容的。目前的解决方案是，将两者分开，ES6 模块和 CommonJS 采用各自的加载方案。Node 要求 ES6 模块采用 .mjs 后缀文件名。也就是说，只要脚本文件里面使用 import 或者 export 命令，那么就必须采用 .mjs 后缀名。require 命令不能加载 .mjs 文件，会报错，只有 import 命令才可以加载 .mjs 文件。反过来，.mjs 文件里面也不能使用 require 命令，必须使用 import。目前，这项功能还在试验阶段。安装 Node v8.5.0 或以上版本，要用 –experimental-modules 参数才能打开该功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 支持 URL 路径，Node 会按 URL 规则解读；同一个脚本只要参数不同，就会被加载多次，并且保存成不同的缓存。由于这个原因，只要文件名中含有:、%、#、? 等特殊字符，最好对这些字符进行转义</span><br><span class="line">import &apos;./foo?query=1&apos;; // 加载 ./foo 传入参数 ?query=1</span><br><span class="line">  </span><br><span class="line">// 如果模块名不含路径，那么 import 命令会去 node_modules 目录寻找这个模块</span><br><span class="line">import &apos;baz&apos;;</span><br><span class="line">import &apos;abc/123&apos;;</span><br><span class="line">  </span><br><span class="line">// 如果模块名包含路径，那么 import 命令会按照路径去寻找这个名字的脚本文件</span><br><span class="line">import &apos;file:///etc/config/app.json&apos;;  // 只支持加载本地模块（file:协议），不支持加载远程模块</span><br><span class="line">import &apos;./foo&apos;;</span><br><span class="line">import &apos;./foo?search&apos;;</span><br><span class="line">import &apos;../bar&apos;;</span><br><span class="line">import &apos;/baz&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>如果脚本文件省略了后缀名，比如 import ‘./foo’，Node 会依次尝试四个后缀名：./foo.mjs、./foo.js、./foo.json、./foo.node。如果这些脚本文件都不存在，Node 就会去加载 ./foo/package.json 的 main 字段指定的脚本。如果 ./foo/package.json 不存在或者没有 main 字段，那么就会依次加载 ./foo/index.mjs、./foo/index.js、./foo/index.json、./foo/index.node。如果以上四个文件还是都不存在，就会抛出错误。Node 的 import 命令是异步加载，这一点与浏览器的处理方法相同。<br>ES6 模块应该是通用的，同一个模块不用修改，就可以用在浏览器环境和服务器环境。为了达到这个目标，Node 规定 ES6 模块之中不能使用 CommonJS 模块的特有的一些内部变量。首先，就是this关键字。ES6 模块之中，顶层的 this 指向 undefined；CommonJS 模块的顶层 this 指向当前模块。其次，以下这些顶层变量在 ES6 模块之中都是不存在的：arguments、require、module、exports、<code>__filename</code>、__dirname。</p>
+<h3 id="四、ES6-模块加载-CommonJS-模块"><a href="#四、ES6-模块加载-CommonJS-模块" class="headerlink" title="四、ES6 模块加载 CommonJS 模块"></a>四、ES6 模块加载 CommonJS 模块</h3><p>CommonJS 模块的输出都定义在 module.exports 这个属性上面。Node 的 import 命令加载 CommonJS 模块，Node 会自动将 module.exports 属性，当作模块的默认输出，即等同于export default xxx。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">// a.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  foo: &apos;hello&apos;,</span><br><span class="line">  bar: &apos;world&apos;</span><br><span class="line">&#125;;</span><br><span class="line">// 等同于（即 import 命令实际上输入的是这样一个对象 &#123; default: module.exports &#125;）</span><br><span class="line">export default &#123;</span><br><span class="line">  foo: &apos;hello&apos;,</span><br><span class="line">  bar: &apos;world&apos;</span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line">// 写法一（一共有三种写法，可以拿到 CommonJS 模块的 module.exports）</span><br><span class="line">import baz from &apos;./a&apos;;</span><br><span class="line">// baz = &#123;foo: &apos;hello&apos;, bar: &apos;world&apos;&#125;;</span><br><span class="line">// 写法二</span><br><span class="line">import &#123;default as baz&#125; from &apos;./a&apos;;</span><br><span class="line">// baz = &#123;foo: &apos;hello&apos;, bar: &apos;world&apos;&#125;;</span><br><span class="line">// 写法三（通过 baz.default 拿到 module.exports）</span><br><span class="line">import * as baz from &apos;./a&apos;;</span><br><span class="line">// baz = &#123;</span><br><span class="line">//   get default() &#123;return module.exports;&#125;,</span><br><span class="line">//   get foo() &#123;return this.default.foo&#125;.bind(baz),</span><br><span class="line">//   get bar() &#123;return this.default.bar&#125;.bind(baz)</span><br><span class="line">// &#125;</span><br><span class="line">  </span><br><span class="line">// b.js</span><br><span class="line">module.exports = null;</span><br><span class="line">// es.js</span><br><span class="line">import foo from &apos;./b&apos;;</span><br><span class="line">// foo = null;</span><br><span class="line">import * as bar from &apos;./b&apos;;</span><br><span class="line">// bar = &#123; default:null &#125;; // 通过 bar.default 这样的写法，才能拿到 module.exports</span><br><span class="line">  </span><br><span class="line">// c.js</span><br><span class="line">module.exports = function two() &#123;</span><br><span class="line">  return 2;</span><br><span class="line">&#125;;</span><br><span class="line">// es.js</span><br><span class="line">import foo from &apos;./c&apos;;</span><br><span class="line">foo(); // 2</span><br><span class="line">import * as bar from &apos;./c&apos;;</span><br><span class="line">bar.default(); // 2</span><br><span class="line">bar(); // throws, bar is not a function（bar 本身是一个对象，不能当作函数调用，只能通过 bar.default 调用）</span><br><span class="line">  </span><br><span class="line">// foo.js（CommonJS 模块的输出缓存机制，在 ES6 加载方式下依然有效）</span><br><span class="line">module.exports = 123;</span><br><span class="line">setTimeout(_ =&gt; module.exports = null); // 对于加载 foo.js 的脚本，module.exports 将一直是 123，而不会变成 null</span><br><span class="line">  </span><br><span class="line">// ES6 模块是编译时确定输出接口，CommonJS 模块是运行时确定输出接口</span><br><span class="line">import &#123; readfile &#125; from &apos;fs&apos;;  // 不正确，因为 fs 是 CommonJS 格式，只有在运行时才能确定 readfile 接口，而 import 命令要求编译时就确定这个接口</span><br><span class="line">  </span><br><span class="line">// 解决方法就是改为整体输入</span><br><span class="line">import * as express from &apos;express&apos;; // 写法一</span><br><span class="line">const app = express.default();</span><br><span class="line">import express from &apos;express&apos;;  // 写法二</span><br><span class="line">const app = express();</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、CommonJS-模块加载-ES6-模块"><a href="#五、CommonJS-模块加载-ES6-模块" class="headerlink" title="五、CommonJS 模块加载 ES6 模块"></a>五、CommonJS 模块加载 ES6 模块</h3><p>CommonJS 模块加载 ES6 模块，不能使用 require 命令，而要使用 import() 函数。ES6 模块的所有输出接口，会成为输入对象的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// es.mjs</span><br><span class="line">let foo = &#123; bar: &apos;my-default&apos; &#125;;</span><br><span class="line">export default foo;</span><br><span class="line">foo = null;</span><br><span class="line">  </span><br><span class="line">// cjs.js</span><br><span class="line">const es_namespace = await import(&apos;./es&apos;);</span><br><span class="line">// es_namespace = &#123;</span><br><span class="line">//   get default() &#123;</span><br><span class="line">//     ...</span><br><span class="line">//   &#125;</span><br><span class="line">// &#125;</span><br><span class="line">console.log(es_namespace.default); // 由于存在缓存机制，es.mjs 对 foo 的重新赋值没有在模块外部反映出来</span><br><span class="line">// &#123; bar:&apos;my-default&apos; &#125;</span><br><span class="line">  </span><br><span class="line">// es.js</span><br><span class="line">export let foo = &#123; bar:&apos;my-default&apos; &#125;;</span><br><span class="line">export &#123; foo as bar &#125;;</span><br><span class="line">export function f() &#123;&#125;;</span><br><span class="line">export class c &#123;&#125;;</span><br><span class="line"></span><br><span class="line">// cjs.js</span><br><span class="line">const es_namespace = await import(&apos;./es&apos;);</span><br><span class="line">// es_namespace = &#123;</span><br><span class="line">//   get foo() &#123;return foo;&#125;</span><br><span class="line">//   get bar() &#123;return foo;&#125;</span><br><span class="line">//   get f() &#123;return f;&#125;</span><br><span class="line">//   get c() &#123;return c;&#125;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="六、循环加载"><a href="#六、循环加载" class="headerlink" title="六、循环加载"></a>六、循环加载</h3><p>“循环加载” 指的是，a 脚本的执行依赖 b 脚本，而 b 脚本的执行又依赖 a 脚本。通常，“循环加载”表示存在强耦合，如果处理不好，还可能导致递归加载，使得程序无法执行，因此应该避免出现。但是实际上，这是很难避免的，尤其是依赖关系复杂的大项目，很容易出现 a 依赖 b，b 依赖 c，c 又依赖 a 这样的情况。这意味着，模块加载机制必须考虑 “循环加载” 的情况。目前最常见的两种模块格式 CommonJS 和 ES6，处理“循环加载”的方法是不一样的，返回的结果也不一样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">// require 命令生成的对象</span><br><span class="line">&#123;</span><br><span class="line">  id: &apos;...&apos;,  // id 属性是模块名</span><br><span class="line">  exports: &#123; ... &#125;, // 模块输出的各个接口</span><br><span class="line">  loaded: true, // 布尔值，表示该模块的脚本是否执行完毕</span><br><span class="line">  ... // 其他属性</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// a.js</span><br><span class="line">exports.done = false;</span><br><span class="line">var b = require(&apos;./b.js&apos;);  // 1、加载另一个脚本文件 b.js，此时 a.js 代码就停在这里，等待 b.js 执行完毕，再往下执行</span><br><span class="line">console.log(&apos;在 a.js 之中，b.done = %j&apos;, b.done);</span><br><span class="line">exports.done = true;</span><br><span class="line">console.log(&apos;a.js 执行完毕&apos;); // 5、a.js 接着往下执行，直到执行完毕</span><br><span class="line">  </span><br><span class="line">// b.js</span><br><span class="line">exports.done = false;</span><br><span class="line">var a = require(&apos;./a.js&apos;);  // 2、发生了 &quot;循环加载&quot;，系统会去 a.js 模块对应对象的 exports 属性取值，可是因为 a.js 还没有执行完，从 exports 属性只能取回已经执行的部分，而不是最后的值</span><br><span class="line">console.log(&apos;在 b.js 之中，a.done = %j&apos;, a.done); // 3、已经执行的部分，只有一行，从 a.js 只输入一个变量 done，值为 false</span><br><span class="line">exports.done = true;</span><br><span class="line">console.log(&apos;b.js 执行完毕&apos;); // 4、全部执行完毕，再把执行权交还给 a.js</span><br><span class="line">  </span><br><span class="line">// main.js</span><br><span class="line">var a = require(&apos;./a.js&apos;);  // 0、开始加载 a.js</span><br><span class="line">var b = require(&apos;./b.js&apos;);  // 6、不会再次执行 b.js，而是输出缓存的 b.js 的执行结果</span><br><span class="line">console.log(&apos;在 main.js 之中, a.done=%j, b.done=%j&apos;, a.done, b.done);</span><br><span class="line">// 在 b.js 之中，a.done = false</span><br><span class="line">// b.js 执行完毕</span><br><span class="line">// 在 a.js 之中，b.done = true</span><br><span class="line">// a.js 执行完毕</span><br><span class="line">// 在 main.js 之中, a.done=true, b.done=true</span><br><span class="line">  </span><br><span class="line">// 由于 CommonJS 模块遇到循环加载时，返回的是当前已经执行的部分的值，而不是代码全部执行后的值，两者可能会有差异。所以，输入变量的时候，必须非常小心。</span><br><span class="line">var a = require(&apos;a&apos;); // 安全的写法</span><br><span class="line">var foo = require(&apos;a&apos;).foo; // 危险的写法</span><br><span class="line"></span><br><span class="line">exports.good = function (arg) &#123;</span><br><span class="line">  return a.foo(&apos;good&apos;, arg); // 使用的是 a.foo 的最新值</span><br><span class="line">&#125;;</span><br><span class="line">exports.bad = function (arg) &#123;</span><br><span class="line">  return foo(&apos;bad&apos;, arg); // 使用的是一个部分加载时的值</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>1、先介绍目前最流行的 CommonJS 模块格式的加载原理：CommonJS 的一个模块，就是一个脚本文件。require 命令第一次加载该脚本，就会执行整个脚本，然后在内存生成一个对象。以后需要用到这个模块的时候，就会到 exports 属性上面取值。即使再次执行 require 命令，也不会再次执行该模块，而是到缓存之中取值。也就是说，CommonJS 模块无论加载多少次，都只会在第一次加载时运行一次，以后再加载，就返回第一次运行的结果，除非手动清除系统缓存。CommonJS 模块的重要特性是加载时执行，即脚本代码在 require 的时候，就会全部执行。一旦出现某个模块被 “循环加载”，就只输出已经执行的部分，还未执行的部分不会输出。如上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">// a.mjs</span><br><span class="line">import &#123;bar&#125; from &apos;./b&apos;; // 1、执行 b.mjs，然后再执行 a.js</span><br><span class="line">console.log(&apos;a.mjs&apos;);</span><br><span class="line">console.log(bar);</span><br><span class="line">export let foo = &apos;foo&apos;;</span><br><span class="line">  </span><br><span class="line">// b.mjs</span><br><span class="line">import &#123;foo&#125; from &apos;./a&apos;; // 2、不会去执行 a.mjs，而是认为这个接口已经存在了，继续往下执行</span><br><span class="line">console.log(&apos;b.mjs&apos;);</span><br><span class="line">console.log(foo);  // 3、发现这个接口根本没定义，因此报错</span><br><span class="line">export let bar = &apos;bar&apos;;</span><br><span class="line">// node --experimental-modules a.mjs</span><br><span class="line">// b.mjs</span><br><span class="line">// ReferenceError: foo is not defined</span><br><span class="line">  </span><br><span class="line">// 解决方法：因为函数具有提升作用，在执行 import &#123;bar&#125; from &apos;./b&apos; 时，函数 foo 就已经有定义了，所以 b.mjs 加载的时候不会报错</span><br><span class="line">// a.mjs</span><br><span class="line">import &#123;bar&#125; from &apos;./b&apos;;</span><br><span class="line">console.log(&apos;a.mjs&apos;);</span><br><span class="line">console.log(bar());</span><br><span class="line">function foo() &#123; return &apos;foo&apos; &#125;</span><br><span class="line">export &#123;foo&#125;;</span><br><span class="line">  </span><br><span class="line">// b.mjs</span><br><span class="line">import &#123;foo&#125; from &apos;./a&apos;;</span><br><span class="line">console.log(&apos;b.mjs&apos;);</span><br><span class="line">console.log(foo());</span><br><span class="line">function bar() &#123; return &apos;bar&apos; &#125;</span><br><span class="line">export &#123;bar&#125;;</span><br><span class="line">  </span><br><span class="line">// a.mjs（代码第四行改成了函数表达式，就不具有提升作用，执行就会报错）</span><br><span class="line">import &#123;bar&#125; from &apos;./b&apos;;</span><br><span class="line">console.log(&apos;a.mjs&apos;);</span><br><span class="line">console.log(bar());</span><br><span class="line">const foo = () =&gt; &apos;foo&apos;;</span><br><span class="line">export &#123;foo&#125;;</span><br><span class="line">  </span><br><span class="line">// even.js</span><br><span class="line">import &#123; odd &#125; from &apos;./odd&apos;</span><br><span class="line">export var counter = 0;</span><br><span class="line">export function even(n) &#123;</span><br><span class="line">  counter++;</span><br><span class="line">  return n === 0 || odd(n - 1);</span><br><span class="line">&#125;</span><br><span class="line">// odd.js</span><br><span class="line">import &#123; even &#125; from &apos;./even&apos;;</span><br><span class="line">export function odd(n) &#123;</span><br><span class="line">  return n !== 0 &amp;&amp; even(n - 1);</span><br><span class="line">&#125;</span><br><span class="line">$ babel-node</span><br><span class="line">&gt; import * as m from &apos;./even.js&apos;;</span><br><span class="line">&gt; m.even(10);</span><br><span class="line">true</span><br><span class="line">&gt; m.counter</span><br><span class="line">6</span><br><span class="line">&gt; m.even(20)</span><br><span class="line">true</span><br><span class="line">&gt; m.counter</span><br><span class="line">17</span><br><span class="line">// 要是改写成 CommonJS，就根本无法执行，会报错：</span><br><span class="line">// even.js 加载 odd.js，而 odd.js 又去加载 even.js，形成 &quot;循环加载&quot;。这时，执行引擎就会输出 even.js 已经执行的部分（不存在任何结果），</span><br><span class="line">// 所以在 odd.js 之中，变量 even 等于 null，等到后面调用 even(n-1) 就会报错。</span><br></pre></td></tr></table></figure></p>
+<p>2、ES6 模块是动态引用，如果使用 import 从一个模块加载变量（即import foo from ‘foo’），那些变量不会被缓存，而是成为一个指向被加载模块的引用，需要开发者自己保证，真正取值的时候能够取到值。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T13:37:41.000Z" itemprop="dateUpdated">2018-04-22 21:37:41</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/module-load/" target="_blank" rel="external">http://blog.master-ss.cn/es6/module-load/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/module-load/&title=《es6 之 module 加载》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/module-load/&title=《es6 之 module 加载》 — 青松的博客&source=介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/module-load/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 module 加载》 — 青松的博客&url=http://blog.master-ss.cn/es6/module-load/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/module-load/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/iterator/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 Iterator</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/module/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之 module</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/module-load/&title=《es6 之 module 加载》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/module-load/&title=《es6 之 module 加载》 — 青松的博客&source=介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/module-load/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 module 加载》 — 青松的博客&url=http://blog.master-ss.cn/es6/module-load/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/module-load/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aQW6EMAwF0Ln/padSd9UM4RsngUqPFaoy8OjCir/zesXX+/f6vD9amawfP6d14eLitrnv4TXmft4f/TZ55tiAi4u7n5sUr7w8dT77xIaLi/swbvU1SdnCxcX979xqGzPerODi4j6fm2xNjl6Zr0/+HdN6NVxc3Aa3E5jOut+U7+Li4ranErOK2hGu/HZcXNwt3PGDqmPRcZFKmp+ozOHi4m7hVoPO6vikf74CFxd3J3dFkDE3LvnzF1xc3C3cavKQ18UOt7ASFxd3ATdvVwqxxXCrlJfCL7/CxcW9iVsl5g1PP3LFxcXdw02GHHmrU33xhKMVuLi4i7lVSt5ddYa1X96Ii4u7mFstJXk4ko9LcXFxn8zNByHX2qd8iFuY/ODi4i7g5sewOgOVzvGOk4EKLi7uAm41Bs3LUH/zhIuLey83jz+ubWI68SguLu5d3GsD1Dw2bY1U81NjuLi4k7jrotIkMK0GLri4uDu5edtT/YC8lUoKHy4u7n5utXhVxyp5BT1Zg4uL+zBu+dFBYSrvxXBxcR/JvXbssjNkxcXFvYtbHa/mO5Bq8zMtFsHFxW1wq4Fp/gHJ5qZ6yAMXF3cx9weKzHad+VKh+AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

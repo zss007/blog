@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 navbar 样式 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="现在开始介绍 bootstrap 的导航条(navbar)样式。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 navbar 样式">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/navbar/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="现在开始介绍 bootstrap 的导航条(navbar)样式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:46:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 navbar 样式">
+<meta name="twitter:description" content="现在开始介绍 bootstrap 的导航条(navbar)样式。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 navbar 样式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 navbar 样式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-11T11:26:51.000Z" itemprop="datePublished" class="page-time">
+  2017-11-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、navbar-less"><span class="post-toc-text">1、navbar.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1、navbar-less源码"><span class="post-toc-text">1.1、navbar.less源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2、navbar-less应用"><span class="post-toc-text">1.2、navbar.less应用</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/navbar" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 navbar 样式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-11 19:26:51" datetime="2017-11-11T11:26:51.000Z" itemprop="datePublished">2017-11-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>现在开始介绍 bootstrap 的导航条(navbar)样式。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><h4 id="1、navbar-less"><a href="#1、navbar-less" class="headerlink" title="1、navbar.less"></a>1、navbar.less</h4><h5 id="1-1、navbar-less源码"><a href="#1-1、navbar-less源码" class="headerlink" title="1.1、navbar.less源码"></a>1.1、navbar.less源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Navbars</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line">// Wrapper and base class(基础导航条)</span><br><span class="line">//</span><br><span class="line">// Provide a static navbar from which we expand to create full-width, fixed, and</span><br><span class="line">// other navbar variations.</span><br><span class="line">.navbar &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)</span><br><span class="line">  margin-bottom: @navbar-margin-bottom;</span><br><span class="line">  border: 1px solid transparent;</span><br><span class="line"></span><br><span class="line">  // Prevent floats from breaking the navbar</span><br><span class="line">  &amp;:extend(.clearfix all);</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    border-radius: @navbar-border-radius;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Navbar heading(导航条头部)</span><br><span class="line">//</span><br><span class="line">// Groups `.navbar-brand` and `.navbar-toggle` into a single component for easy</span><br><span class="line">// styling of responsive aspects.</span><br><span class="line">.navbar-header &#123;</span><br><span class="line">  &amp;:extend(.clearfix all);</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    float: left;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Navbar collapse(导航条折叠)</span><br><span class="line">//</span><br><span class="line">// Group your navbar content into this for easy collapsing and expanding across</span><br><span class="line">// various device sizes. By default, this content is collapsed when &lt;768px, but</span><br><span class="line">// will expand past that for a horizontal display.</span><br><span class="line">//</span><br><span class="line">// To start (on mobile devices) the navbar links, forms, and buttons are stacked</span><br><span class="line">// vertically and include a `max-height` to overflow in case you have too much</span><br><span class="line">// content for the user&apos;s viewport.</span><br><span class="line">.navbar-collapse &#123;</span><br><span class="line">  overflow-x: visible;</span><br><span class="line">  padding-right: @navbar-padding-horizontal;</span><br><span class="line">  padding-left:  @navbar-padding-horizontal;</span><br><span class="line">  border-top: 1px solid transparent;</span><br><span class="line">  box-shadow: inset 0 1px 0 rgba(255,255,255,.1);</span><br><span class="line">  &amp;:extend(.clearfix all);</span><br><span class="line">  -webkit-overflow-scrolling: touch;</span><br><span class="line"></span><br><span class="line">  &amp;.in &#123;</span><br><span class="line">    overflow-y: auto;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    width: auto;</span><br><span class="line">    border-top: 0;</span><br><span class="line">    box-shadow: none;</span><br><span class="line"></span><br><span class="line">    &amp;.collapse &#123;</span><br><span class="line">      display: block !important;</span><br><span class="line">      height: auto !important;</span><br><span class="line">      padding-bottom: 0; // Override default setting</span><br><span class="line">      overflow: visible !important;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &amp;.in &#123;</span><br><span class="line">      overflow-y: visible;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Undo the collapse side padding for navbars with containers to ensure</span><br><span class="line">    // alignment of right-aligned contents.</span><br><span class="line">    .navbar-fixed-top &amp;,</span><br><span class="line">    .navbar-static-top &amp;,</span><br><span class="line">    .navbar-fixed-bottom &amp; &#123;</span><br><span class="line">      padding-left: 0;</span><br><span class="line">      padding-right: 0;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.navbar-fixed-top,</span><br><span class="line">.navbar-fixed-bottom &#123;</span><br><span class="line">  .navbar-collapse &#123;</span><br><span class="line">    max-height: @navbar-collapse-max-height;</span><br><span class="line"></span><br><span class="line">    @media (max-device-width: @screen-xs-min) and (orientation: landscape) &#123;</span><br><span class="line">      max-height: 200px;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Both navbar header and collapse</span><br><span class="line">//</span><br><span class="line">// When a container is present, change the behavior of the header and collapse.</span><br><span class="line">.container,</span><br><span class="line">.container-fluid &#123;</span><br><span class="line">  &gt; .navbar-header,</span><br><span class="line">  &gt; .navbar-collapse &#123;</span><br><span class="line">    margin-right: -@navbar-padding-horizontal;</span><br><span class="line">    margin-left:  -@navbar-padding-horizontal;</span><br><span class="line"></span><br><span class="line">    @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">      margin-right: 0;</span><br><span class="line">      margin-left:  0;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//</span><br><span class="line">// Navbar alignment options</span><br><span class="line">//</span><br><span class="line">// Display the navbar across the entirety of the page or fixed it to the top or</span><br><span class="line">// bottom of the page.</span><br><span class="line"></span><br><span class="line">// Static top (unfixed, but 100% wide) navbar</span><br><span class="line">.navbar-static-top &#123;</span><br><span class="line">  z-index: @zindex-navbar;</span><br><span class="line">  border-width: 0 0 1px;</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    border-radius: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Fix the top/bottom navbars when screen real estate supports it(固定导航条)</span><br><span class="line">.navbar-fixed-top,</span><br><span class="line">.navbar-fixed-bottom &#123;</span><br><span class="line">  position: fixed;</span><br><span class="line">  right: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  z-index: @zindex-navbar-fixed;</span><br><span class="line"></span><br><span class="line">  // Undo the rounded corners</span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    border-radius: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.navbar-fixed-top &#123;</span><br><span class="line">  top: 0;</span><br><span class="line">  border-width: 0 0 1px;</span><br><span class="line">&#125;</span><br><span class="line">.navbar-fixed-bottom &#123;</span><br><span class="line">  bottom: 0;</span><br><span class="line">  margin-bottom: 0; // override .navbar defaults</span><br><span class="line">  border-width: 1px 0 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Brand/project name(导航条标题)</span><br><span class="line">.navbar-brand &#123;</span><br><span class="line">  float: left;</span><br><span class="line">  padding: @navbar-padding-vertical @navbar-padding-horizontal;</span><br><span class="line">  font-size: @font-size-large;</span><br><span class="line">  line-height: @line-height-computed;</span><br><span class="line">  height: @navbar-height;</span><br><span class="line"></span><br><span class="line">  &amp;:hover,</span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &gt; img &#123;</span><br><span class="line">    display: block;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    .navbar &gt; .container &amp;,</span><br><span class="line">    .navbar &gt; .container-fluid &amp; &#123;</span><br><span class="line">      margin-left: -@navbar-padding-horizontal;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Navbar toggle(响应式导航条触发)</span><br><span class="line">//</span><br><span class="line">// Custom button for toggling the `.navbar-collapse`, powered by the collapse</span><br><span class="line">// JavaScript plugin.</span><br><span class="line">.navbar-toggle &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  float: right;</span><br><span class="line">  margin-right: @navbar-padding-horizontal;</span><br><span class="line">  padding: 9px 10px;</span><br><span class="line">  .navbar-vertical-align(34px);</span><br><span class="line">  background-color: transparent;</span><br><span class="line">  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214</span><br><span class="line">  border: 1px solid transparent;</span><br><span class="line">  border-radius: @border-radius-base;</span><br><span class="line"></span><br><span class="line">  // We remove the `outline` here, but later compensate by attaching `:hover`</span><br><span class="line">  // styles to `:focus`.</span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    outline: 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Bars(响应式导航触发图标的bar)</span><br><span class="line">  .icon-bar &#123;</span><br><span class="line">    display: block;</span><br><span class="line">    width: 22px;</span><br><span class="line">    height: 2px;</span><br><span class="line">    border-radius: 1px;</span><br><span class="line">  &#125;</span><br><span class="line">  .icon-bar + .icon-bar &#123;</span><br><span class="line">    margin-top: 4px;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    display: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Navbar nav links(导航条)</span><br><span class="line">//</span><br><span class="line">// Builds on top of the `.nav` components with its own modifier class to make</span><br><span class="line">// the nav the full height of the horizontal nav (above 768px).</span><br><span class="line">.navbar-nav &#123;</span><br><span class="line">  margin: (@navbar-padding-vertical / 2) -@navbar-padding-horizontal;</span><br><span class="line"></span><br><span class="line">  &gt; li &gt; a &#123;</span><br><span class="line">    padding-top:    10px;</span><br><span class="line">    padding-bottom: 10px;</span><br><span class="line">    line-height: @line-height-computed;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @media (max-width: @grid-float-breakpoint-max) &#123;</span><br><span class="line">    // Dropdowns get custom display when collapsed</span><br><span class="line">    .open .dropdown-menu &#123;</span><br><span class="line">      position: static;</span><br><span class="line">      float: none;</span><br><span class="line">      width: auto;</span><br><span class="line">      margin-top: 0;</span><br><span class="line">      background-color: transparent;</span><br><span class="line">      border: 0;</span><br><span class="line">      box-shadow: none;</span><br><span class="line">      &gt; li &gt; a,</span><br><span class="line">      .dropdown-header &#123;</span><br><span class="line">        padding: 5px 15px 5px 25px;</span><br><span class="line">      &#125;</span><br><span class="line">      &gt; li &gt; a &#123;</span><br><span class="line">        line-height: @line-height-computed;</span><br><span class="line">        &amp;:hover,</span><br><span class="line">        &amp;:focus &#123;</span><br><span class="line">          background-image: none;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Uncollapse the nav</span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    margin: 0;</span><br><span class="line"></span><br><span class="line">    &gt; li &#123;</span><br><span class="line">      float: left;</span><br><span class="line">      &gt; a &#123;</span><br><span class="line">        padding-top:    @navbar-padding-vertical;</span><br><span class="line">        padding-bottom: @navbar-padding-vertical;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Navbar form(带表单的导航条)</span><br><span class="line">//</span><br><span class="line">// Extension of the `.form-inline` with some extra flavor for optimum display in</span><br><span class="line">// our navbars.</span><br><span class="line">.navbar-form &#123;</span><br><span class="line">  margin-left: -@navbar-padding-horizontal;</span><br><span class="line">  margin-right: -@navbar-padding-horizontal;</span><br><span class="line">  padding: 10px @navbar-padding-horizontal;</span><br><span class="line">  border-top: 1px solid transparent;</span><br><span class="line">  border-bottom: 1px solid transparent;</span><br><span class="line">  @shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);</span><br><span class="line">  .box-shadow(@shadow);</span><br><span class="line"></span><br><span class="line">  // Mixin behavior for optimum display</span><br><span class="line">  .form-inline();</span><br><span class="line"></span><br><span class="line">  .form-group &#123;</span><br><span class="line">    @media (max-width: @grid-float-breakpoint-max) &#123;</span><br><span class="line">      margin-bottom: 5px;</span><br><span class="line"></span><br><span class="line">      &amp;:last-child &#123;</span><br><span class="line">        margin-bottom: 0;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Vertically center in expanded, horizontal navbar</span><br><span class="line">  .navbar-vertical-align(@input-height-base);</span><br><span class="line"></span><br><span class="line">  // Undo 100% width for pull classes</span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    width: auto;</span><br><span class="line">    border: 0;</span><br><span class="line">    margin-left: 0;</span><br><span class="line">    margin-right: 0;</span><br><span class="line">    padding-top: 0;</span><br><span class="line">    padding-bottom: 0;</span><br><span class="line">    .box-shadow(none);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Dropdown menus(下拉菜单)</span><br><span class="line">// Menu position and menu carets</span><br><span class="line">.navbar-nav &gt; li &gt; .dropdown-menu &#123;</span><br><span class="line">  margin-top: 0;</span><br><span class="line">  .border-top-radius(0);</span><br><span class="line">&#125;</span><br><span class="line">// Menu position and menu caret support for dropups via extra dropup class</span><br><span class="line">.navbar-fixed-bottom .navbar-nav &gt; li &gt; .dropdown-menu &#123;</span><br><span class="line">  margin-bottom: 0;</span><br><span class="line">  .border-top-radius(@navbar-border-radius);</span><br><span class="line">  .border-bottom-radius(0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Buttons in navbars(导航条按钮)</span><br><span class="line">//</span><br><span class="line">// Vertically center a button within a navbar (when *not* in a form).</span><br><span class="line">.navbar-btn &#123;</span><br><span class="line">  .navbar-vertical-align(@input-height-base);</span><br><span class="line"></span><br><span class="line">  &amp;.btn-sm &#123;</span><br><span class="line">    .navbar-vertical-align(@input-height-small);</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.btn-xs &#123;</span><br><span class="line">    .navbar-vertical-align(22);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Text in navbars(导航条文本)</span><br><span class="line">//</span><br><span class="line">// Add a class to make any element properly align itself vertically within the navbars.</span><br><span class="line">.navbar-text &#123;</span><br><span class="line">  .navbar-vertical-align(@line-height-computed);</span><br><span class="line"></span><br><span class="line">  @media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    margin-left: @navbar-padding-horizontal;</span><br><span class="line">    margin-right: @navbar-padding-horizontal;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Component alignment(表单对齐方式)</span><br><span class="line">//</span><br><span class="line">// Repurpose the pull utilities as their own navbar utilities to avoid specificity</span><br><span class="line">// issues with parents and chaining. Only do this when the navbar is uncollapsed</span><br><span class="line">// though so that navbar contents properly stack and align in mobile.</span><br><span class="line">//</span><br><span class="line">// Declared after the navbar components to ensure more specificity on the margins.</span><br><span class="line">@media (min-width: @grid-float-breakpoint) &#123;</span><br><span class="line">  .navbar-left  &#123; .pull-left(); &#125;</span><br><span class="line">  .navbar-right &#123;</span><br><span class="line">    .pull-right();</span><br><span class="line">    margin-right: -@navbar-padding-horizontal;</span><br><span class="line"></span><br><span class="line">    ~ .navbar-right &#123;</span><br><span class="line">      margin-right: 0;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Alternate navbars</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line">// Default navbar(默认导航条样式)</span><br><span class="line">.navbar-default &#123;</span><br><span class="line">  background-color: @navbar-default-bg;</span><br><span class="line">  border-color: @navbar-default-border;</span><br><span class="line"></span><br><span class="line">  .navbar-brand &#123;</span><br><span class="line">    color: @navbar-default-brand-color;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      color: @navbar-default-brand-hover-color;</span><br><span class="line">      background-color: @navbar-default-brand-hover-bg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-text &#123;</span><br><span class="line">    color: @navbar-default-color;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-nav &#123;</span><br><span class="line">    &gt; li &gt; a &#123;</span><br><span class="line">      color: @navbar-default-link-color;</span><br><span class="line"></span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-default-link-hover-color;</span><br><span class="line">        background-color: @navbar-default-link-hover-bg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &gt; .active &gt; a &#123;</span><br><span class="line">      &amp;,</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-default-link-active-color;</span><br><span class="line">        background-color: @navbar-default-link-active-bg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &gt; .disabled &gt; a &#123;</span><br><span class="line">      &amp;,</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-default-link-disabled-color;</span><br><span class="line">        background-color: @navbar-default-link-disabled-bg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-toggle &#123;</span><br><span class="line">    border-color: @navbar-default-toggle-border-color;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      background-color: @navbar-default-toggle-hover-bg;</span><br><span class="line">    &#125;</span><br><span class="line">    .icon-bar &#123;</span><br><span class="line">      background-color: @navbar-default-toggle-icon-bar-bg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-collapse,</span><br><span class="line">  .navbar-form &#123;</span><br><span class="line">    border-color: @navbar-default-border;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Dropdown menu items(下拉菜单)</span><br><span class="line">  .navbar-nav &#123;</span><br><span class="line">    // Remove background color from open dropdown</span><br><span class="line">    &gt; .open &gt; a &#123;</span><br><span class="line">      &amp;,</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        background-color: @navbar-default-link-active-bg;</span><br><span class="line">        color: @navbar-default-link-active-color;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @media (max-width: @grid-float-breakpoint-max) &#123;</span><br><span class="line">      // Dropdowns get custom display when collapsed</span><br><span class="line">      .open .dropdown-menu &#123;</span><br><span class="line">        &gt; li &gt; a &#123;</span><br><span class="line">          color: @navbar-default-link-color;</span><br><span class="line">          &amp;:hover,</span><br><span class="line">          &amp;:focus &#123;</span><br><span class="line">            color: @navbar-default-link-hover-color;</span><br><span class="line">            background-color: @navbar-default-link-hover-bg;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &gt; .active &gt; a &#123;</span><br><span class="line">          &amp;,</span><br><span class="line">          &amp;:hover,</span><br><span class="line">          &amp;:focus &#123;</span><br><span class="line">            color: @navbar-default-link-active-color;</span><br><span class="line">            background-color: @navbar-default-link-active-bg;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &gt; .disabled &gt; a &#123;</span><br><span class="line">          &amp;,</span><br><span class="line">          &amp;:hover,</span><br><span class="line">          &amp;:focus &#123;</span><br><span class="line">            color: @navbar-default-link-disabled-color;</span><br><span class="line">            background-color: @navbar-default-link-disabled-bg;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Links in navbars(导航条链接)</span><br><span class="line">  //</span><br><span class="line">  // Add a class to ensure links outside the navbar nav are colored correctly.</span><br><span class="line">  .navbar-link &#123;</span><br><span class="line">    color: @navbar-default-link-color;</span><br><span class="line">    &amp;:hover &#123;</span><br><span class="line">      color: @navbar-default-link-hover-color;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .btn-link &#123;</span><br><span class="line">    color: @navbar-default-link-color;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      color: @navbar-default-link-hover-color;</span><br><span class="line">    &#125;</span><br><span class="line">    &amp;[disabled],</span><br><span class="line">    fieldset[disabled] &amp; &#123;</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-default-link-disabled-color;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Inverse navbar(反色导航条)</span><br><span class="line">.navbar-inverse &#123;</span><br><span class="line">  background-color: @navbar-inverse-bg;</span><br><span class="line">  border-color: @navbar-inverse-border;</span><br><span class="line"></span><br><span class="line">  .navbar-brand &#123;</span><br><span class="line">    color: @navbar-inverse-brand-color;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      color: @navbar-inverse-brand-hover-color;</span><br><span class="line">      background-color: @navbar-inverse-brand-hover-bg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-text &#123;</span><br><span class="line">    color: @navbar-inverse-color;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-nav &#123;</span><br><span class="line">    &gt; li &gt; a &#123;</span><br><span class="line">      color: @navbar-inverse-link-color;</span><br><span class="line"></span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-inverse-link-hover-color;</span><br><span class="line">        background-color: @navbar-inverse-link-hover-bg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &gt; .active &gt; a &#123;</span><br><span class="line">      &amp;,</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-inverse-link-active-color;</span><br><span class="line">        background-color: @navbar-inverse-link-active-bg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &gt; .disabled &gt; a &#123;</span><br><span class="line">      &amp;,</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-inverse-link-disabled-color;</span><br><span class="line">        background-color: @navbar-inverse-link-disabled-bg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Darken the responsive nav toggle</span><br><span class="line">  .navbar-toggle &#123;</span><br><span class="line">    border-color: @navbar-inverse-toggle-border-color;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      background-color: @navbar-inverse-toggle-hover-bg;</span><br><span class="line">    &#125;</span><br><span class="line">    .icon-bar &#123;</span><br><span class="line">      background-color: @navbar-inverse-toggle-icon-bar-bg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-collapse,</span><br><span class="line">  .navbar-form &#123;</span><br><span class="line">    border-color: darken(@navbar-inverse-bg, 7%);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Dropdowns</span><br><span class="line">  .navbar-nav &#123;</span><br><span class="line">    &gt; .open &gt; a &#123;</span><br><span class="line">      &amp;,</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        background-color: @navbar-inverse-link-active-bg;</span><br><span class="line">        color: @navbar-inverse-link-active-color;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @media (max-width: @grid-float-breakpoint-max) &#123;</span><br><span class="line">      // Dropdowns get custom display</span><br><span class="line">      .open .dropdown-menu &#123;</span><br><span class="line">        &gt; .dropdown-header &#123;</span><br><span class="line">          border-color: @navbar-inverse-border;</span><br><span class="line">        &#125;</span><br><span class="line">        .divider &#123;</span><br><span class="line">          background-color: @navbar-inverse-border;</span><br><span class="line">        &#125;</span><br><span class="line">        &gt; li &gt; a &#123;</span><br><span class="line">          color: @navbar-inverse-link-color;</span><br><span class="line">          &amp;:hover,</span><br><span class="line">          &amp;:focus &#123;</span><br><span class="line">            color: @navbar-inverse-link-hover-color;</span><br><span class="line">            background-color: @navbar-inverse-link-hover-bg;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &gt; .active &gt; a &#123;</span><br><span class="line">          &amp;,</span><br><span class="line">          &amp;:hover,</span><br><span class="line">          &amp;:focus &#123;</span><br><span class="line">            color: @navbar-inverse-link-active-color;</span><br><span class="line">            background-color: @navbar-inverse-link-active-bg;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &gt; .disabled &gt; a &#123;</span><br><span class="line">          &amp;,</span><br><span class="line">          &amp;:hover,</span><br><span class="line">          &amp;:focus &#123;</span><br><span class="line">            color: @navbar-inverse-link-disabled-color;</span><br><span class="line">            background-color: @navbar-inverse-link-disabled-bg;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .navbar-link &#123;</span><br><span class="line">    color: @navbar-inverse-link-color;</span><br><span class="line">    &amp;:hover &#123;</span><br><span class="line">      color: @navbar-inverse-link-hover-color;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .btn-link &#123;</span><br><span class="line">    color: @navbar-inverse-link-color;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      color: @navbar-inverse-link-hover-color;</span><br><span class="line">    &#125;</span><br><span class="line">    &amp;[disabled],</span><br><span class="line">    fieldset[disabled] &amp; &#123;</span><br><span class="line">      &amp;:hover,</span><br><span class="line">      &amp;:focus &#123;</span><br><span class="line">        color: @navbar-inverse-link-disabled-color;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2、navbar-less应用"><a href="#1-2、navbar-less应用" class="headerlink" title="1.2、navbar.less应用"></a>1.2、navbar.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--默认的导航栏--&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;navbar-header&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;菜鸟教程&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">        &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;#&quot;&gt;iOS&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;SVN&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li class=&quot;dropdown&quot;&gt;</span><br><span class="line">          &lt;a href=&quot;#&quot; class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;</span><br><span class="line">            Java</span><br><span class="line">            &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;</span><br><span class="line">          &lt;/a&gt;</span><br><span class="line">          &lt;ul class=&quot;dropdown-menu&quot;&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;jmeter&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;EJB&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Jasper Report&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;另一个分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line">&lt;!--响应式的导航栏--&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;navbar-header&quot;&gt;</span><br><span class="line">      &lt;button type=&quot;button&quot; class=&quot;navbar-toggle&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#example-navbar-collapse&quot;&gt;</span><br><span class="line">        &lt;span class=&quot;sr-only&quot;&gt;切换导航&lt;/span&gt;</span><br><span class="line">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;菜鸟教程&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;example-navbar-collapse&quot;&gt;</span><br><span class="line">      &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">        &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;#&quot;&gt;iOS&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;SVN&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li class=&quot;dropdown&quot;&gt;</span><br><span class="line">          &lt;a href=&quot;#&quot; class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;</span><br><span class="line">            Java &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;</span><br><span class="line">          &lt;/a&gt;</span><br><span class="line">          &lt;ul class=&quot;dropdown-menu&quot;&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;jmeter&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;EJB&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Jasper Report&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;另一个分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line">&lt;!--导航栏中的表单&amp;按钮&amp;文本&amp;链接&amp;对齐方式--&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;navbar-header&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;菜鸟教程&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p class=&quot;navbar-text&quot;&gt;Runoob 用户登录&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;form class=&quot;navbar-form navbar-left&quot; role=&quot;search&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Search&quot;&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">      &lt;button type=&quot;button&quot; class=&quot;btn btn-default navbar-btn&quot;&gt;导航栏按钮&lt;/button&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span><br><span class="line">      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-user&quot;&gt;&lt;/span&gt; 注册&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-log-in&quot;&gt;&lt;/span&gt; 登录&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line">&lt;!--固定到底部&amp;反色导航栏--&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-inverse navbar-fixed-bottom&quot; role=&quot;navigation&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;navbar-header&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;菜鸟教程&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">        &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;#&quot;&gt;iOS&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;SVN&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li class=&quot;dropdown&quot;&gt;</span><br><span class="line">          &lt;a href=&quot;#&quot; class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;</span><br><span class="line">            Java &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;</span><br><span class="line">          &lt;/a&gt;</span><br><span class="line">          &lt;ul class=&quot;dropdown-menu&quot;&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;jmeter&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;EJB&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Jasper Report&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;另一个分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line">&lt;!--静态的顶部(设置z-index为1000)--&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-default navbar-static-top&quot; role=&quot;navigation&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;navbar-header&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;菜鸟教程&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">        &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;#&quot;&gt;iOS&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;SVN&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li class=&quot;dropdown&quot;&gt;</span><br><span class="line">          &lt;a href=&quot;#&quot; class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;</span><br><span class="line">            Java &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;</span><br><span class="line">          &lt;/a&gt;</span><br><span class="line">          &lt;ul class=&quot;dropdown-menu&quot;&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;jmeter&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;EJB&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Jasper Report&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;另一个分离的链接&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/nav&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:46:48.000Z" itemprop="dateUpdated">2018-04-15 21:46:48</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/navbar/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/navbar/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/navbar/&title=《bootstrap 之 navbar 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/navbar/&title=《bootstrap 之 navbar 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的导航条(navbar)样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/navbar/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 navbar 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/navbar/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/navbar/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/nav&pagination/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 navs &amp; pagination 样式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/bootstrap/inputGroup&label/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">bootstrap 之 inputGroup &amp; label 样式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/navbar/&title=《bootstrap 之 navbar 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/navbar/&title=《bootstrap 之 navbar 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的导航条(navbar)样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/navbar/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 navbar 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/navbar/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/navbar/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aS46EMAwFQO5/aXo70jTw7HzEjCqrFiKh0gsrtnMc8Th/jOTJ7+dXax4rBi4u7jD3vB0JJYdW1/myJVxc3I3c+0BTXfo+5N2v/2DDxcV9JTefm28AFxf3P3Grn8fFxf1b3GoaUy1t5KFtWq6Gi4s7wM0/tu73kvouLi5ui3sWR1Lm6JVNo6/j4uJu4eYBpbDccJH0YR1cXNwt3Gq46b0/cpI5kqwLFxd3KrdaBElCWLV9Uj7i4OLiLuPmn5x13WrkOS4u7k5uL9BUGyoJ7iGJwsXF3cKtBqPqAai6mULpBBcXdxm32j7JyygJKz9OFTo/uLi4k7i9yb0NVJu1l8kPLi7uMm7ewMgvYVSLp72rHri4uDu5SbZ0n/wkCU/ego16wri4uAu4sxoq1eCV/zUPPWFcXNxl3GrzI7+cka8TFWVwcXE3cnvNzl6jpXkKw8XF3cI9i6PXlM3/pqM6ARcXdwE3H8kGqoWSueEPFxd3Lrd3/SI/mlRD4dBBBxcXdyp3pDVSLZpMyNVwcXFfxh2/qNFLt3Bxcd/MHQ9hyfuXT3BxcTdy87borHZpnvzg4uLu5+YF0+bk4MDUC3m4uLgLuB+DQyn485d38AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

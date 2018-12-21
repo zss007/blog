@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之数值扩展 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ES6 扩展了数值。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之数值扩展">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/number-expand/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="ES6 扩展了数值。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T13:43:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之数值扩展">
+<meta name="twitter:description" content="ES6 扩展了数值。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之数值扩展</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之数值扩展</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-29T05:58:07.000Z" itemprop="datePublished" class="page-time">
+  2018-01-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、Number-isFinite-amp-Number-isNaN"><span class="post-toc-text">一、Number.isFinite() &amp; Number.isNaN()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、Number-parseInt-Number-parseFloat"><span class="post-toc-text">二、Number.parseInt(), Number.parseFloat()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、Number-isInteger"><span class="post-toc-text">三、Number.isInteger()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、Number-EPSILON"><span class="post-toc-text">四、Number.EPSILON</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、Number-isSafeInteger"><span class="post-toc-text">五、Number.isSafeInteger()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、Math-对象的扩展"><span class="post-toc-text">六、Math 对象的扩展</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、Math-trunc"><span class="post-toc-text">1、Math.trunc()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、Math-sign"><span class="post-toc-text">2、Math.sign()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、Math-cbrt"><span class="post-toc-text">3、Math.cbrt()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、Math-clz32"><span class="post-toc-text">4、Math.clz32()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、Math-imul"><span class="post-toc-text">5、Math.imul()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、Math-fround"><span class="post-toc-text">6、Math.fround()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7、Math-hypot"><span class="post-toc-text">7、Math.hypot()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#8、Math-expm1-Math-log1p-Math-log10-Math-log2"><span class="post-toc-text">8、Math.expm1(), Math.log1p(), Math.log10(), Math.log2()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#9、双曲函数方法"><span class="post-toc-text">9、双曲函数方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#10、指数运算符"><span class="post-toc-text">10、指数运算符</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/number-expand" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之数值扩展</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-29 13:58:07" datetime="2018-01-29T05:58:07.000Z" itemprop="datePublished">2018-01-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>ES6 扩展了数值。<br><a id="more"></a></p>
+<h3 id="一、Number-isFinite-amp-Number-isNaN"><a href="#一、Number-isFinite-amp-Number-isNaN" class="headerlink" title="一、Number.isFinite() &amp; Number.isNaN()"></a>一、Number.isFinite() &amp; Number.isNaN()</h3><p>ES6 在 Number 对象上，新提供了 Number.isFinite() 和 Number.isNaN() 两个方法。<br>Number.isFinite() 用来检查一个数值是否为有限的（finite），即不是 Infinity。注意，如果参数类型不是数值，Number.isFinite 一律返回 false。<br>Number.isNaN() 用来检查一个值是否为 NaN。注意，如果参数类型不是数值，Number.isNaN 一律返回 false。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Number.isFinite(15); // true</span><br><span class="line">Number.isFinite(0.8); // true</span><br><span class="line">Number.isFinite(NaN); // false</span><br><span class="line">Number.isFinite(Infinity); // false</span><br><span class="line">Number.isFinite(-Infinity); // false</span><br><span class="line">Number.isFinite(&apos;foo&apos;); // false</span><br><span class="line">Number.isFinite(&apos;15&apos;); // false</span><br><span class="line">Number.isFinite(true); // false</span><br><span class="line">      </span><br><span class="line">Number.isNaN(NaN) // true</span><br><span class="line">Number.isNaN(15) // false</span><br><span class="line">Number.isNaN(&apos;15&apos;) // false</span><br><span class="line">Number.isNaN(true) // false</span><br><span class="line">Number.isNaN(9/NaN) // true</span><br><span class="line">Number.isNaN(&apos;true&apos; / 0) // true</span><br><span class="line">Number.isNaN(&apos;true&apos; / &apos;true&apos;) // true</span><br></pre></td></tr></table></figure></p>
+<p>它们与传统的全局方法 isFinite() 和 isNaN() 的区别在于，传统方法先调用 Number() 将非数值的值转为数值，再进行判断，而这两个新方法只对数值有效，Number.isFinite() 对于非数值一律返回 false, Number.isNaN() 只有对于 NaN 才返回 true，非 NaN 一律返回 false。</p>
+<h3 id="二、Number-parseInt-Number-parseFloat"><a href="#二、Number-parseInt-Number-parseFloat" class="headerlink" title="二、Number.parseInt(), Number.parseFloat()"></a>二、Number.parseInt(), Number.parseFloat()</h3><p>ES6 将全局方法 parseInt() 和 parseFloat()，移植到 Number 对象上面，行为完全保持不变。这样做的目的，是逐步减少全局性方法，使得语言逐步模块化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// ES5的写法</span><br><span class="line">parseInt(&apos;12.34&apos;) // 12</span><br><span class="line">parseFloat(&apos;123.45#&apos;) // 123.45</span><br><span class="line">    </span><br><span class="line">// ES6的写法</span><br><span class="line">Number.parseInt(&apos;12.34&apos;) // 12</span><br><span class="line">Number.parseFloat(&apos;123.45#&apos;) // 123.45</span><br><span class="line">    </span><br><span class="line">Number.parseInt === parseInt // true</span><br><span class="line">Number.parseFloat === parseFloat // true</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、Number-isInteger"><a href="#三、Number-isInteger" class="headerlink" title="三、Number.isInteger()"></a>三、Number.isInteger()</h3><p>Number.isInteger() 用来判断一个数值是否为整数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Number.isInteger(25) // true</span><br><span class="line">Number.isInteger(25.1) // false</span><br><span class="line">    </span><br><span class="line">// JavaScript 内部，整数和浮点数采用的是同样的储存方法，所以 25 和 25.0 被视为同一个值</span><br><span class="line">Number.isInteger(25) // true</span><br><span class="line">Number.isInteger(25.0) // true</span><br><span class="line">    </span><br><span class="line">// 如果参数不是数值，Number.isInteger 返回 false。</span><br><span class="line">Number.isInteger() // false</span><br><span class="line">Number.isInteger(null) // false</span><br><span class="line">Number.isInteger(&apos;15&apos;) // false</span><br><span class="line">Number.isInteger(true) // false</span><br><span class="line">    </span><br><span class="line">// 5E-325 由于值太小，会被自动转为 0，因此返回 true。如果对数据精度的要求较高，不建议使用 Number.isInteger() 判断一个数值是否为整数</span><br><span class="line">Number.isInteger(5E-324) // false</span><br><span class="line">Number.isInteger(5E-325) // true</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、Number-EPSILON"><a href="#四、Number-EPSILON" class="headerlink" title="四、Number.EPSILON"></a>四、Number.EPSILON</h3><p>ES6 在 Number 对象上面，新增一个极小的常量 Number.EPSILON。根据规格，它表示 1 与大于 1 的最小浮点数之间的差。对于 64 位浮点数来说，大于 1 的最小浮点数相当于二进制的1.00..001，小数点后面有连续 51 个零。这个值减去 1 之后，就等于 2 的 -52 次方。Number.EPSILON 实际上是 JavaScript 能够表示的最小精度。误差如果小于这个值，就可以认为已经没有意义了，即不存在误差了。引入一个这么小的量的目的，在于为浮点数计算，设置一个误差范围。我们知道浮点数计算是不精确的，Number.EPSILON 可以用来设置 “能够接受的误差范围”。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Number.EPSILON === Math.pow(2, -52)</span><br><span class="line">// true</span><br><span class="line">Number.EPSILON</span><br><span class="line">// 2.220446049250313e-16</span><br><span class="line">    </span><br><span class="line">5.551115123125783e-17 &lt; Number.EPSILON</span><br><span class="line">// true</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、Number-isSafeInteger"><a href="#五、Number-isSafeInteger" class="headerlink" title="五、Number.isSafeInteger()"></a>五、Number.isSafeInteger()</h3><p>JavaScript 能够准确表示的整数范围在 -2^53 到 2^53 之间（不含两个端点），超过这个范围，无法精确表示这个值。ES6 引入了 Number.MAX_SAFE_INTEGER 和<br>Number.MIN_SAFE_INTEGER 这两个常量，用来表示这个范围的上下限。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Number.MAX_SAFE_INTEGER === Math.pow(2, 53) - 1</span><br><span class="line">// true</span><br><span class="line">Number.MAX_SAFE_INTEGER === 9007199254740991</span><br><span class="line">// true</span><br><span class="line">    </span><br><span class="line">Number.MIN_SAFE_INTEGER === -Number.MAX_SAFE_INTEGER</span><br><span class="line">// true</span><br><span class="line">Number.MIN_SAFE_INTEGER === -9007199254740991</span><br><span class="line">// true</span><br><span class="line">    </span><br><span class="line">// Number.isSafeInteger() 则是用来判断一个整数是否落在这个范围之内</span><br><span class="line">Number.isSafeInteger(&apos;a&apos;) // false</span><br><span class="line">Number.isSafeInteger(null) // false</span><br><span class="line">Number.isSafeInteger(NaN) // false</span><br><span class="line">Number.isSafeInteger(Infinity) // false</span><br><span class="line">Number.isSafeInteger(-Infinity) // false</span><br><span class="line">Number.isSafeInteger(3) // true</span><br><span class="line">Number.isSafeInteger(1.2) // false</span><br><span class="line">Number.isSafeInteger(9007199254740990) // true</span><br><span class="line">Number.isSafeInteger(9007199254740992) // false</span><br><span class="line">Number.isSafeInteger(Number.MIN_SAFE_INTEGER - 1) // false</span><br><span class="line">Number.isSafeInteger(Number.MIN_SAFE_INTEGER) // true</span><br><span class="line">Number.isSafeInteger(Number.MAX_SAFE_INTEGER) // true</span><br><span class="line">Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1) // false</span><br><span class="line">    </span><br><span class="line">// 使用这个函数时，不要只验证运算结果，而要同时验证参与运算的每个值</span><br><span class="line">Number.isSafeInteger(9007199254740993)</span><br><span class="line">// false</span><br><span class="line">Number.isSafeInteger(990)</span><br><span class="line">// true</span><br><span class="line">Number.isSafeInteger(9007199254740993 - 990)</span><br><span class="line">// true</span><br><span class="line">9007199254740993 - 990</span><br><span class="line">// 返回结果 9007199254740002</span><br><span class="line">// 正确答案应该是 9007199254740003</span><br></pre></td></tr></table></figure></p>
+<h3 id="六、Math-对象的扩展"><a href="#六、Math-对象的扩展" class="headerlink" title="六、Math 对象的扩展"></a>六、Math 对象的扩展</h3><h4 id="1、Math-trunc"><a href="#1、Math-trunc" class="headerlink" title="1、Math.trunc()"></a>1、Math.trunc()</h4><p>Math.trunc 方法用于去除一个数的小数部分，返回整数部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Math.trunc(4.1) // 4</span><br><span class="line">Math.trunc(4.9) // 4</span><br><span class="line">Math.trunc(-4.1) // -4</span><br><span class="line">Math.trunc(-4.9) // -4</span><br><span class="line">Math.trunc(-0.1234) // -0</span><br><span class="line">    </span><br><span class="line">// 对于非数值，Math.trunc 内部使用 Number 方法将其先转为数值</span><br><span class="line">Math.trunc(&apos;123.456&apos;) // 123</span><br><span class="line">Math.trunc(true) //1</span><br><span class="line">Math.trunc(false) // 0</span><br><span class="line">Math.trunc(null) // 0</span><br><span class="line">    </span><br><span class="line">// 对于空值和无法截取整数的值，返回 NaN</span><br><span class="line">Math.trunc(NaN);      // NaN</span><br><span class="line">Math.trunc(&apos;foo&apos;);    // NaN</span><br><span class="line">Math.trunc();         // NaN</span><br><span class="line">Math.trunc(undefined) // NaN</span><br></pre></td></tr></table></figure></p>
+<h4 id="2、Math-sign"><a href="#2、Math-sign" class="headerlink" title="2、Math.sign()"></a>2、Math.sign()</h4><p>Math.sign 方法用来判断一个数到底是正数、负数、还是零。对于非数值，会先将其转换为数值。参数为正数，返回 +1；参数为负数，返回 -1；参数为 0，返回 0；参数为 -0，返回 -0；其他值，返回 NaN。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Math.sign(-5) // -1</span><br><span class="line">Math.sign(5) // +1</span><br><span class="line">Math.sign(0) // +0</span><br><span class="line">Math.sign(-0) // -0</span><br><span class="line">Math.sign(NaN) // NaN</span><br><span class="line">    </span><br><span class="line">// 如果参数是非数值，会自动转为数值。对于那些无法转为数值的值，会返回 NaN</span><br><span class="line">Math.sign(&apos;&apos;)  // 0</span><br><span class="line">Math.sign(true)  // +1</span><br><span class="line">Math.sign(false)  // 0</span><br><span class="line">Math.sign(null)  // 0</span><br><span class="line">Math.sign(&apos;9&apos;)  // +1</span><br><span class="line">Math.sign(&apos;foo&apos;)  // NaN</span><br><span class="line">Math.sign()  // NaN</span><br><span class="line">Math.sign(undefined)  // NaN</span><br></pre></td></tr></table></figure></p>
+<h4 id="3、Math-cbrt"><a href="#3、Math-cbrt" class="headerlink" title="3、Math.cbrt()"></a>3、Math.cbrt()</h4><p>Math.cbrt 方法用于计算一个数的立方根。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Math.cbrt(-1) // -1</span><br><span class="line">Math.cbrt(0)  // 0</span><br><span class="line">Math.cbrt(1)  // 1</span><br><span class="line">Math.cbrt(2)  // 1.2599210498948734</span><br><span class="line">    </span><br><span class="line">// 对于非数值，Math.cbrt方法内部也是先使用Number方法将其转为数值</span><br><span class="line">Math.cbrt(&apos;8&apos;) // 2</span><br><span class="line">Math.cbrt(&apos;hello&apos;) // NaN</span><br></pre></td></tr></table></figure></p>
+<h4 id="4、Math-clz32"><a href="#4、Math-clz32" class="headerlink" title="4、Math.clz32()"></a>4、Math.clz32()</h4><p>JavaScript 的整数使用 32 位二进制形式表示，Math.clz32 方法返回一个数的 32 位无符号整数形式有多少个前导 0。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Math.clz32(0) // 32</span><br><span class="line">Math.clz32(1) // 31</span><br><span class="line">Math.clz32(1000) // 22</span><br><span class="line">Math.clz32(0b01000000000000000000000000000000) // 1</span><br><span class="line">Math.clz32(0b00100000000000000000000000000000) // 2</span><br><span class="line">    </span><br><span class="line">// 对于小数，Math.clz32方法只考虑整数部分</span><br><span class="line">Math.clz32(3.2) // 30</span><br><span class="line">Math.clz32(3.9) // 30</span><br><span class="line">    </span><br><span class="line">// 对于空值或其他类型的值，Math.clz32方法会将它们先转为数值，然后再计算</span><br><span class="line">Math.clz32() // 32</span><br><span class="line">Math.clz32(NaN) // 32</span><br><span class="line">Math.clz32(Infinity) // 32</span><br><span class="line">Math.clz32(null) // 32</span><br><span class="line">Math.clz32(&apos;foo&apos;) // 32</span><br><span class="line">Math.clz32([]) // 32</span><br><span class="line">Math.clz32(&#123;&#125;) // 32</span><br><span class="line">Math.clz32(true) // 31</span><br></pre></td></tr></table></figure></p>
+<h4 id="5、Math-imul"><a href="#5、Math-imul" class="headerlink" title="5、Math.imul()"></a>5、Math.imul()</h4><p>Math.imul 方法返回两个数以 32 位带符号整数形式相乘的结果，返回的也是一个 32 位的带符号整数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Math.imul(2, 4)   // 8</span><br><span class="line">Math.imul(-1, 8)  // -8</span><br><span class="line">Math.imul(-2, -2) // 4</span><br><span class="line">    </span><br><span class="line">// Math.imul(a, b)与a * b的结果是相同的。因为 JavaScript 有精度限制，超过 2 的 53 次方的值无法精确表示，Math.imul 方法可以返回正确的低位数值。</span><br><span class="line">(0x7fffffff * 0x7fffffff)|0 // 0</span><br><span class="line">// 因为它们的乘积超过了 2 的 53 次方，JavaScript 无法保存额外的精度，就把低位的值都变成了 0。Math.imul 方法可以返回正确的值 1</span><br><span class="line">Math.imul(0x7fffffff, 0x7fffffff) // 1</span><br></pre></td></tr></table></figure></p>
+<h4 id="6、Math-fround"><a href="#6、Math-fround" class="headerlink" title="6、Math.fround()"></a>6、Math.fround()</h4><p>Math.fround 方法返回一个数的32位单精度浮点数形式。Math.fround 方法的主要作用，是将 64 位双精度浮点数转为 32 位单精度浮点数。如果小数的精度超过 24 个二进制位，返回值就会不同于原值，否则返回值不变（即与 64 位双精度值一致）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 未丢失有效精度</span><br><span class="line">Math.fround(1.125) // 1.125</span><br><span class="line">Math.fround(7.25)  // 7.25</span><br><span class="line">    </span><br><span class="line">// 丢失精度</span><br><span class="line">Math.fround(0.3)   // 0.30000001192092896</span><br><span class="line">Math.fround(0.7)   // 0.699999988079071</span><br><span class="line">Math.fround(1.0000000123) // 1</span><br><span class="line">    </span><br><span class="line">// 对于 NaN 和 Infinity，此方法返回原值</span><br><span class="line">Math.fround(NaN)      // NaN</span><br><span class="line">Math.fround(Infinity) // Infinity</span><br><span class="line">    </span><br><span class="line">// 其它类型的非数值，Math.fround 方法会先将其转为数值，再返回单精度浮点数</span><br><span class="line">Math.fround(&apos;5&apos;)      // 5</span><br><span class="line">Math.fround(true)     // 1</span><br><span class="line">Math.fround(null)     // 0</span><br><span class="line">Math.fround([])       // 0</span><br><span class="line">Math.fround(&#123;&#125;)       // NaN</span><br></pre></td></tr></table></figure></p>
+<h4 id="7、Math-hypot"><a href="#7、Math-hypot" class="headerlink" title="7、Math.hypot()"></a>7、Math.hypot()</h4><p>Math.hypot 方法返回所有参数的平方和的平方根。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Math.hypot(3, 4);        // 5</span><br><span class="line">Math.hypot(3, 4, 5);     // 7.0710678118654755</span><br><span class="line">Math.hypot();            // 0</span><br><span class="line">// 参数不是数值，Math.hypot 方法会将其转为数值。只要有一个参数无法转为数值，就会返回 NaN</span><br><span class="line">Math.hypot(NaN);         // NaN</span><br><span class="line">Math.hypot(3, 4, &apos;foo&apos;); // NaN</span><br><span class="line">Math.hypot(3, 4, &apos;5&apos;);   // 7.0710678118654755</span><br><span class="line">Math.hypot(-3);          // 3</span><br></pre></td></tr></table></figure></p>
+<h4 id="8、Math-expm1-Math-log1p-Math-log10-Math-log2"><a href="#8、Math-expm1-Math-log1p-Math-log10-Math-log2" class="headerlink" title="8、Math.expm1(), Math.log1p(), Math.log10(), Math.log2()"></a>8、Math.expm1(), Math.log1p(), Math.log10(), Math.log2()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// Math.expm1(x) 返回 Math.pow(e, x) - 1，即 Math.exp(x) - 1。</span><br><span class="line">Math.expm1(-1) // -0.6321205588285577</span><br><span class="line">Math.expm1(0)  // 0</span><br><span class="line">Math.expm1(1)  // 1.718281828459045</span><br><span class="line">    </span><br><span class="line">// Math.log1p(x) 方法返回 1 + x 的自然对数，即 Math.log(1 + x)。如果 x 小于 -1，返回 NaN</span><br><span class="line">Math.log1p(1)  // 0.6931471805599453</span><br><span class="line">Math.log1p(0)  // 0</span><br><span class="line">Math.log1p(-1) // -Infinity</span><br><span class="line">Math.log1p(-2) // NaN</span><br><span class="line">    </span><br><span class="line">// Math.log10(x) 返回以 10 为底的 x 的对数。如果 x 小于 0，则返回 NaN</span><br><span class="line">Math.log10(2)      // 0.3010299956639812</span><br><span class="line">Math.log10(1)      // 0</span><br><span class="line">Math.log10(0)      // -Infinity</span><br><span class="line">Math.log10(-2)     // NaN</span><br><span class="line">Math.log10(100000) // 5</span><br><span class="line">    </span><br><span class="line">// Math.log2(x) 返回以 2 为底的 x 的对数。如果 x 小于 0，则返回 NaN</span><br><span class="line">Math.log2(3)       // 1.584962500721156</span><br><span class="line">Math.log2(2)       // 1</span><br><span class="line">Math.log2(1)       // 0</span><br><span class="line">Math.log2(0)       // -Infinity</span><br><span class="line">Math.log2(-2)      // NaN</span><br><span class="line">Math.log2(1024)    // 10</span><br><span class="line">Math.log2(1 &lt;&lt; 29) // 29</span><br></pre></td></tr></table></figure>
+<h4 id="9、双曲函数方法"><a href="#9、双曲函数方法" class="headerlink" title="9、双曲函数方法"></a>9、双曲函数方法</h4><p>Math.sinh(x) 返回x的双曲正弦（hyperbolic sine）<br>Math.cosh(x) 返回x的双曲余弦（hyperbolic cosine）<br>Math.tanh(x) 返回x的双曲正切（hyperbolic tangent）<br>Math.asinh(x) 返回x的反双曲正弦（inverse hyperbolic sine）<br>Math.acosh(x) 返回x的反双曲余弦（inverse hyperbolic cosine）<br>Math.atanh(x) 返回x的反双曲正切（inverse hyperbolic tangent）</p>
+<h4 id="10、指数运算符"><a href="#10、指数运算符" class="headerlink" title="10、指数运算符"></a>10、指数运算符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">2 ** 2 // 4</span><br><span class="line">2 ** 3 // 8</span><br><span class="line">    </span><br><span class="line">// 指数运算符可以与等号结合，形成一个新的赋值运算符（**=）</span><br><span class="line">let a = 1.5;</span><br><span class="line">a **= 2;</span><br><span class="line">// 等同于 a = a * a;</span><br><span class="line">let b = 4;</span><br><span class="line">b **= 3;</span><br><span class="line">// 等同于 b = b * b * b;</span><br><span class="line">    </span><br><span class="line">// 在 V8 引擎中，指数运算符与 Math.pow 的实现不相同，对于特别大的运算结果，两者会有细微的差异</span><br><span class="line">Math.pow(99, 99)</span><br><span class="line">// 3.697296376497263e+197</span><br><span class="line">99 ** 99</span><br><span class="line">// 3.697296376497268e+197</span><br><span class="line">// 两个运算结果的最后一位有效数字是有差异的</span><br></pre></td></tr></table></figure>
+<p>ES2016 新增了一个指数运算符（**）</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T13:43:40.000Z" itemprop="dateUpdated">2018-04-22 21:43:40</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/number-expand/" target="_blank" rel="external">http://blog.master-ss.cn/es6/number-expand/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/number-expand/&title=《es6 之数值扩展》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/number-expand/&title=《es6 之数值扩展》 — 青松的博客&source=ES6 扩展了数值。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/number-expand/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之数值扩展》 — 青松的博客&url=http://blog.master-ss.cn/es6/number-expand/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/number-expand/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/function-expand/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之函数扩展</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/string-expand/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之字符串扩展</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/number-expand/&title=《es6 之数值扩展》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/number-expand/&title=《es6 之数值扩展》 — 青松的博客&source=ES6 扩展了数值。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/number-expand/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之数值扩展》 — 青松的博客&url=http://blog.master-ss.cn/es6/number-expand/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/number-expand/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3azW7DIBBFYb//S7tSV5FSO+cOOCrMYRW1NvBlQeaH48Dj/B2vn1//cvX8+zNXb51v43hiyJAhY1nGeTvul7/67/27Jxh8bzJkyOjDIIfs/dRzN8r3JkOGDBlXoV4a9pGDuPaMDBkyZJDwjoSJJE396u+GDBkyFmTwAI5gyObIQfxILi5DhowFGbXGwHc+P97fkCFDxr9nnKUxq/1ZK9L9MYMMGTK2ZvDwLt0WCSJnJbQyZMjowxgvlvHAjqeswVcvQ4aMBoznmpRpoFlMaGXIkLEp436jfLF0hvRY//AVy5Ahow2Dh2L8ymnapORHdvGEliFDxkYMHiCSI5IU1Mgql0msDBky2jBqTQKeS6ZBZFBukyFDRhtGSkpbjzw1JeFgsbMhQ4aMZRlpyZ4nsSNv8dVlyJDRgTFSYqttiLdOUWotQ4aMrRk8geTlMELif+dNUBkyZOzK4GX9OLEM09e02CdDhow+jLSsn5b+axfFSOgpQ4aMzoxZV77Gi/6cKkOGjA4MMtGsFkJ6dSMo58mQIaMBI6jPgbfSa2F8ztgtQ4aMLRi1cv94g3PkIA5+Q2TIkLE4o7aVkVELQz8U+2TIkLE1Y3z5WUf2yAwyZMjowEhDOp6C1o7puNAmQ4aMNow0600Xm8uTIUOGjDREI0kpwadFPRkyZMjguW9t05OLazJkyGjAIEksD+/I8yPXzmTIkNGNMav1yI/vtEcxDSlDhoz1GD/luyLgRTOF0AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

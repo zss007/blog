@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>tools 之 bower | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Bower 是 twitter 推出的包管理工具，支持包的下载、更新、卸载等操作。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tools 之 bower">
+<meta property="og:url" content="http://blog.master-ss.cn/tools/bower/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="Bower 是 twitter 推出的包管理工具，支持包的下载、更新、卸载等操作。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-19T07:05:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tools 之 bower">
+<meta name="twitter:description" content="Bower 是 twitter 推出的包管理工具，支持包的下载、更新、卸载等操作。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tools 之 bower</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tools 之 bower</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-02-26T01:54:21.000Z" itemprop="datePublished" class="page-time">
+  2017-02-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、为什么使用-Bower"><span class="post-toc-text">一、为什么使用 Bower</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、开始使用"><span class="post-toc-text">二、开始使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#包的安装"><span class="post-toc-text">包的安装</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、新建-bower-json"><span class="post-toc-text">三、新建 bower.json</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、使用下载的包"><span class="post-toc-text">四、使用下载的包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、常用命令"><span class="post-toc-text">五、常用命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、注册"><span class="post-toc-text">六、注册</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#添加配置文件-即新建-bower-json"><span class="post-toc-text">添加配置文件(即新建 bower.json)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注册自己的包"><span class="post-toc-text">注册自己的包</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、配置"><span class="post-toc-text">七、配置</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tools/bower" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tools 之 bower</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-02-26 09:54:21" datetime="2017-02-26T01:54:21.000Z" itemprop="datePublished">2017-02-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Bower 是 twitter 推出的包管理工具，支持包的下载、更新、卸载等操作。<br><a id="more"></a></p>
+<h3 id="一、为什么使用-Bower"><a href="#一、为什么使用-Bower" class="headerlink" title="一、为什么使用 Bower"></a>一、为什么使用 Bower</h3><p>以往，我们要使用 jQuery、Bootstrap 等模块，会到网上进行搜索，找到下载地址，然后通过浏览器或其它工具下载下来使用。Bower 提供了更简单的获取模块方式。只要一条命令，需要的资源就下载下来了。<br>Bower 是命令行工具，通过 npm 安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g bower</span><br></pre></td></tr></table></figure></p>
+<p>这行命令是 Bower 的全局安装，-g 操作表示全局。Bower 依赖 node, npm 和 git。</p>
+<h3 id="二、开始使用"><a href="#二、开始使用" class="headerlink" title="二、开始使用"></a>二、开始使用</h3><h4 id="包的安装"><a href="#包的安装" class="headerlink" title="包的安装"></a>包的安装</h4><p>通过命令 <em>bower install</em> 安装软件包，默认会安装到 <em>bower_components/目录</em>.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bower install &lt;package&gt;</span><br></pre></td></tr></table></figure></p>
+<p>想要下载的包可以是 GitHub 上的短链接（如 jquery/jquery）、 .git 、 一个 URL 或者其它.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 通过 bower.json 文件安装</span><br><span class="line">bower install</span><br><span class="line"># 通过在 github 上注册的包名安装</span><br><span class="line">bower install jquery</span><br><span class="line"># GitHub 短链接（github 别名自动解析 git 库）</span><br><span class="line">bower install desandro/masonry</span><br><span class="line"># Github上的 .git</span><br><span class="line">bower install git://github.com/user/package.git</span><br><span class="line"># URL</span><br><span class="line">bower install http://example.com/script.js</span><br><span class="line"># 下载本地库</span><br><span class="line">bower install ./repos/jquery</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、新建-bower-json"><a href="#三、新建-bower-json" class="headerlink" title="三、新建 bower.json"></a>三、新建 bower.json</h3><p>可以通过 bower init 命令新建一个 bower.json 文件。会提示你输入一些基本信息，根据提示按回车或者空格即可，然后会生成一个 bower.json 文件，用来保存该项目的配置，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;blue-leaf&quot;,  //包名，必选。</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,  //有意义的版本号。</span><br><span class="line">  &quot;description&quot;: &quot;Physics-like animations for pretty particles&quot;, //描述</span><br><span class="line">  &quot;main&quot;: [  //字符串或者数组，指定主要会用到包里面哪些文件(不会直接用到)</span><br><span class="line">    &quot;js/motion.js&quot;,</span><br><span class="line">    &quot;sass/motion.scss&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;dependencies&quot;: &#123;  //哈希结构，依赖的包，可以指定版本号</span><br><span class="line">    &quot;get-size&quot;: &quot;~1.2.2&quot;,</span><br><span class="line">    &quot;eventEmitter&quot;: &quot;~4.2.11&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123; //哈希结构，生产环境下依赖的包</span><br><span class="line">    &quot;qunit&quot;: &quot;~1.16.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;moduleType&quot;: [ //模块类型</span><br><span class="line">    &quot;amd&quot;,</span><br><span class="line">    &quot;globals&quot;,</span><br><span class="line">    &quot;node&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;keywords&quot;: [ //关键字(便于bower搜索查找)</span><br><span class="line">    &quot;motion&quot;,</span><br><span class="line">    &quot;physics&quot;,</span><br><span class="line">    &quot;particles&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;authors&quot;: [ //作者</span><br><span class="line">    &quot;Betty Beta &lt;bbeta@example.com&gt;&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;license&quot;: &quot;MIT&quot;,  //证书</span><br><span class="line">  &quot;ignore&quot;: [ //忽略包的文件夹</span><br><span class="line">    &quot;**/.*&quot;,</span><br><span class="line">    &quot;node_modules&quot;,</span><br><span class="line">    &quot;bower_components&quot;,</span><br><span class="line">    &quot;test&quot;,</span><br><span class="line">    &quot;tests&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;private&quot;: true //布尔值，设置为true代表你想保持私有，并且将来不会发布它</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果想保存依赖信息(dependencies)到你的 bower.json 文件，可以使用：bower install PACKAGE –save,或者使用 bower install <package> –save-dev 保存依赖信息(devDependencies).</package></p>
+<h3 id="四、使用下载的包"><a href="#四、使用下载的包" class="headerlink" title="四、使用下载的包"></a>四、使用下载的包</h3><p>对于已经下载下来的包，默认在当前目录的 bower_components 文件夹。你可以直接在项目里引用。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;bower_components/jquery/dist/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>推荐将 Bower 与其它工具一起使用。</p>
+<h3 id="五、常用命令"><a href="#五、常用命令" class="headerlink" title="五、常用命令"></a>五、常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bower help //命令查看帮助</span><br><span class="line">bower install jquery --save //添加依赖并更新 bower.json 文件</span><br><span class="line">bower cache clean //安装失败清除缓存</span><br><span class="line">bower install storejs //安装 storejs</span><br><span class="line">bower uninstall storejs //卸载 storejs</span><br><span class="line">bower info jquery //包的信息</span><br><span class="line">bower update //包的更新(根据 bower.json 文件中的版本号更新)</span><br><span class="line">bower search bootstrap //包的查找</span><br><span class="line">bower uninstall jquery //包的卸载</span><br></pre></td></tr></table></figure>
+<h3 id="六、注册"><a href="#六、注册" class="headerlink" title="六、注册"></a>六、注册</h3><h4 id="添加配置文件-即新建-bower-json"><a href="#添加配置文件-即新建-bower-json" class="headerlink" title="添加配置文件(即新建 bower.json)"></a>添加配置文件(即新建 bower.json)</h4><h4 id="注册自己的包"><a href="#注册自己的包" class="headerlink" title="注册自己的包"></a>注册自己的包</h4><p>可以注册自己的包，这样其他人也可以使用了，这个操作只是在服务器上保存了一个映射，服务器本身不托管代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bower register storejs git://github.com/jaywcjlove/store.js.git</span><br></pre></td></tr></table></figure></p>
+<h3 id="七、配置"><a href="#七、配置" class="headerlink" title="七、配置"></a>七、配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;cwd&quot;: &quot;~/my-project&quot;,  //当前工作目录，运行bower的目录</span><br><span class="line">  &quot;directory&quot;: &quot;bower_components&quot;,  //自定义bower下载的代码包的目录</span><br><span class="line">  &quot;registry&quot;: &quot;https://bower.herokuapp.com&quot;, //注册表配置,默认为bower注册表URL</span><br><span class="line">  &quot;shorthand-resolver&quot;: &quot;git://github.com/&#123;&#123;owner&#125;&#125;/&#123;&#123;package&#125;&#125;.git&quot;,  //为速记包名称定义自定义模板,定义Bower在为给定速记构造URL时使用的自定义模板的支持</span><br><span class="line">  &quot;proxy&quot;: &quot;http://proxy.local&quot;,  //设置http代理</span><br><span class="line">  &quot;https-proxy&quot;: &quot;https://proxy.local&quot;, //设置https代理</span><br><span class="line">  &quot;ca&quot;: &quot;/var/certificate.pem&quot;, //要使用的CA证书，默认为null</span><br><span class="line">  &quot;color&quot;: true, //启用或禁用在CLI输出中使用颜色</span><br><span class="line">  &quot;timeout&quot;: 60000, //发出请求时使用的超时值</span><br><span class="line">  &quot;strict-ssl&quot;: true, //是否在通过https发出请求时执行SSL密钥验证</span><br><span class="line">  &quot;storage&quot;: &#123; //在哪里存储持久数据，如缓存，bower需要</span><br><span class="line">    &quot;packages&quot; : &quot;~/.bower/packages&quot;,</span><br><span class="line">    &quot;registry&quot; : &quot;~/.bower/registry&quot;,</span><br><span class="line">    &quot;links&quot; : &quot;~/.bower/links&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tmp&quot;: &quot;〜/.bower/tmp&quot; //在哪里存储临时文件和文件夹。默认为系统临时目录后缀/bower</span><br><span class="line">  &quot;interactive&quot;: true, //使bower交互，在必要时提示</span><br><span class="line">  &quot;resolvers&quot;: [  //用于定位和提取包的Pluggable Resolver列表</span><br><span class="line">    &quot;mercurial-bower-resolver&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;shallowCloneHosts&quot;: [ //允许将已知支持浅克隆的主机列入白名单</span><br><span class="line">    &quot;myGitHost.example.com&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;scripts&quot;: &#123; //脚本,可用于在Bower使用期间触发其他自动化工具,这些钩子旨在允许外部工具帮助将新安装的组件连接到父项目和其他类似的任务中</span><br><span class="line">    &quot;preinstall&quot;: &quot;&quot;,</span><br><span class="line">    &quot;postinstall&quot;: &quot;&quot;,</span><br><span class="line">    &quot;preuninstall&quot;: &quot;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;ignoredDependencies&quot;: [ //当解析包时，Bower将忽略这些依赖关系</span><br><span class="line">    &quot;jquery&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Bower 的配置文件是 .bowerrc，使用 JSON 格式进行描述，如上。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-19T07:05:21.000Z" itemprop="dateUpdated">2018-04-19 15:05:21</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/tools/bower/" target="_blank" rel="external">http://blog.master-ss.cn/tools/bower/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/bower/&title=《tools 之 bower》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/bower/&title=《tools 之 bower》 — 青松的博客&source=Bower 是 twitter 推出的包管理工具，支持包的下载、更新、卸载等操作。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/bower/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tools 之 bower》 — 青松的博客&url=http://blog.master-ss.cn/tools/bower/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/bower/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/essay/hooks/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">cordova 之 hooks</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/bower/&title=《tools 之 bower》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/bower/&title=《tools 之 bower》 — 青松的博客&source=Bower 是 twitter 推出的包管理工具，支持包的下载、更新、卸载等操作。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/bower/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tools 之 bower》 — 青松的博客&url=http://blog.master-ss.cn/tools/bower/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/bower/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3ay27DIBAF0Pz/T7ubLlJVxneGgB3psKoiCw5djJjH6xWv422d/fL/97Nv3r98rVi4uLjT3GO4xtxk5/FZuQEXF3c/d3zY2cFJmBuHvNyAi4v7fG6Crl4PFxf3e7nVx1CeSuHi4j6NmyCSNKZHXJKr4eLiTnDzKuW6v5fUd3FxcVvco7jGgSkpoPTO/d0BFxd3C7faFEkKozm99zDCxcXdw01AeXNlKmnJ98HFxV3G7W3ag86URf68yHBxcbdze0lOTuk9mHBxcXdy82TjU+MXveEtXFzcndzksOo31WsUUixcXNwt3CSxmW+U5kXV8pgXLi7uAm5epEiulCdCSVi8yNVwcXEXc6tl07zpMlUePQtkuLi4i7m9jXrhr1CbGQdNXFzcB3DzLKp3mXykAxcX915utahRbZP0dsPFxb2XWyhVtEavys+aXm8HFxe3xT2Kq9o+mWmx4OLi3sXtFUmrrHxEY6aAgouL+1nuTGE0b7J+Kq3CxcXdye0NY1WbrNXnES4u7rdwq63ZmaSrkFfh4uLeys2v0QtqF3vi4uJu5PbaotViaD7IddFkxcXFXcytljvzYaxeWJz5N+Hi4k5zfwDaMOIx3RC2eQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

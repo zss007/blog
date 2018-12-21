@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 scaffolding &amp; tables 样式 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="现在开始介绍 bootstrap 的 scaffolding(脚手架) 和 tables(表格)，包括 scaffolding.less、tables.less。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 scaffolding &amp; tables 样式">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/scaffolding&tables/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="现在开始介绍 bootstrap 的 scaffolding(脚手架) 和 tables(表格)，包括 scaffolding.less、tables.less。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:53:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 scaffolding &amp; tables 样式">
+<meta name="twitter:description" content="现在开始介绍 bootstrap 的 scaffolding(脚手架) 和 tables(表格)，包括 scaffolding.less、tables.less。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 scaffolding &amp; tables 样式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 scaffolding &amp; tables 样式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-06T15:04:38.000Z" itemprop="datePublished" class="page-time">
+  2017-11-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、scaffolding-less"><span class="post-toc-text">1、scaffolding.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1、scaffolding-less源码"><span class="post-toc-text">1.1、scaffolding.less源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2、scaffolding-less应用"><span class="post-toc-text">1.2、scaffolding.less应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、tables-less"><span class="post-toc-text">2、tables.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1、tables-less源码"><span class="post-toc-text">2.1、tables.less源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2、tables-less应用"><span class="post-toc-text">2.2、tables.less应用</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/scaffolding&amp;tables" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 scaffolding & tables 样式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-06 23:04:38" datetime="2017-11-06T15:04:38.000Z" itemprop="datePublished">2017-11-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>现在开始介绍 bootstrap 的 scaffolding(脚手架) 和 tables(表格)，包括 scaffolding.less、tables.less。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><h4 id="1、scaffolding-less"><a href="#1、scaffolding-less" class="headerlink" title="1、scaffolding.less"></a>1、scaffolding.less</h4><h5 id="1-1、scaffolding-less源码"><a href="#1-1、scaffolding-less源码" class="headerlink" title="1.1、scaffolding.less源码"></a>1.1、scaffolding.less源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Scaffolding(脚手架)</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Reset the box-sizing(content-box:标准盒模型；border-box:IE低版本/怪异模式)</span><br><span class="line">//</span><br><span class="line">// Heads up! This reset may cause conflicts with some third-party widgets.</span><br><span class="line">// For recommendations on resolving such conflicts, see</span><br><span class="line">// http://getbootstrap.com/getting-started/#third-box-sizing</span><br><span class="line">* &#123;</span><br><span class="line">  .box-sizing(border-box);</span><br><span class="line">&#125;</span><br><span class="line">*:before,</span><br><span class="line">*:after &#123;</span><br><span class="line">  .box-sizing(border-box);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Body reset</span><br><span class="line"></span><br><span class="line">html &#123;</span><br><span class="line">  font-size: 10px;</span><br><span class="line">  -webkit-tap-highlight-color: rgba(0,0,0,0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">body &#123;</span><br><span class="line">  font-family: @font-family-base;</span><br><span class="line">  font-size: @font-size-base;</span><br><span class="line">  line-height: @line-height-base;</span><br><span class="line">  color: @text-color;</span><br><span class="line">  background-color: @body-bg;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Reset fonts for relevant elements</span><br><span class="line">input,</span><br><span class="line">button,</span><br><span class="line">select,</span><br><span class="line">textarea &#123;</span><br><span class="line">  font-family: inherit;</span><br><span class="line">  font-size: inherit;</span><br><span class="line">  line-height: inherit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Links</span><br><span class="line"></span><br><span class="line">a &#123;</span><br><span class="line">  color: @link-color;</span><br><span class="line">  text-decoration: none;</span><br><span class="line"></span><br><span class="line">  &amp;:hover,</span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    color: @link-hover-color;</span><br><span class="line">    text-decoration: @link-hover-decoration;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    .tab-focus();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Figures</span><br><span class="line">//</span><br><span class="line">// We reset this here because previously Normalize had no `figure` margins. This</span><br><span class="line">// ensures we don&apos;t break anyone&apos;s use of the element.</span><br><span class="line"></span><br><span class="line">figure &#123;</span><br><span class="line">  margin: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Images(图像)</span><br><span class="line"></span><br><span class="line">img &#123;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Responsive images (ensure images don&apos;t scale beyond their parents，响应式图片展示防止图片拉伸超出父元素)</span><br><span class="line">.img-responsive &#123;</span><br><span class="line">  .img-responsive();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Rounded corners(圆角)</span><br><span class="line">.img-rounded &#123;</span><br><span class="line">  border-radius: @border-radius-large;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Image thumbnails(缩略图)</span><br><span class="line">//</span><br><span class="line">// Heads up! This is mixin-ed into thumbnails.less for `.thumbnail`.</span><br><span class="line">.img-thumbnail&#123;</span><br><span class="line">  padding: @thumbnail-padding;</span><br><span class="line">  line-height: @line-height-base;</span><br><span class="line">  background-color: @thumbnail-bg;</span><br><span class="line">  border: 1px solid @thumbnail-border;</span><br><span class="line">  border-radius: @thumbnail-border-radius;</span><br><span class="line">  .transition(all .2s ease-in-out);</span><br><span class="line"></span><br><span class="line">  // Keep them at most 100% wide</span><br><span class="line">  .img-responsive(inline-block);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Perfect circle(圆图片，设置border-radius为50%)</span><br><span class="line">.img-circle &#123;</span><br><span class="line">  border-radius: 50%; // set radius in percents</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Horizontal rules</span><br><span class="line"></span><br><span class="line">hr &#123;</span><br><span class="line">  margin-top:    @line-height-computed;</span><br><span class="line">  margin-bottom: @line-height-computed;</span><br><span class="line">  border: 0;</span><br><span class="line">  border-top: 1px solid @hr-border;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Only display content to screen readers</span><br><span class="line">//</span><br><span class="line">// 只在屏幕阅读器上使用</span><br><span class="line">// See: http://a11yproject.com/posts/how-to-hide-content</span><br><span class="line"></span><br><span class="line">.sr-only &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 1px;</span><br><span class="line">  height: 1px;</span><br><span class="line">  margin: -1px;</span><br><span class="line">  padding: 0;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">  clip: rect(0,0,0,0);</span><br><span class="line">  border: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Use in conjunction(联合，连接) with .sr-only to only display content when it&apos;s focused.</span><br><span class="line">// Useful for &quot;Skip to main content&quot; links; see http://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1</span><br><span class="line">// Credit: HTML5 Boilerplate</span><br><span class="line"></span><br><span class="line">.sr-only-focusable &#123;</span><br><span class="line">  &amp;:active,</span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    position: static;</span><br><span class="line">    width: auto;</span><br><span class="line">    height: auto;</span><br><span class="line">    margin: 0;</span><br><span class="line">    overflow: visible;</span><br><span class="line">    clip: auto;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// iOS &quot;clickable elements&quot; fix for role=&quot;button&quot;</span><br><span class="line">//</span><br><span class="line">// 修复iOS的addEventListener监听click事件在不是交互元素上不触发的bug</span><br><span class="line">// 方案:1、设置cursor: pointer；2、添加onclick属性；3、使用交互性的元素如a；4、不使用click，使用事件委托到父元素</span><br><span class="line">// Fixes &quot;clickability&quot; issue (and more generally(更普遍地，更概括地), the firing of events such as focus as well)</span><br><span class="line">// for traditionally non-focusable elements with role=&quot;button&quot;</span><br><span class="line">// see https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile</span><br><span class="line"></span><br><span class="line">[role=&quot;button&quot;] &#123;</span><br><span class="line">  cursor: pointer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2、scaffolding-less应用"><a href="#1-2、scaffolding-less应用" class="headerlink" title="1.2、scaffolding.less应用"></a>1.2、scaffolding.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--这里需要介绍图像 img 的应用--&gt;</span><br><span class="line">&lt;img src=&quot;http://www.runoob.com/wp-content/uploads/2014/06/download.png&quot; class=&quot;img-rounded&quot;&gt;</span><br><span class="line">&lt;img src=&quot;http://www.runoob.com/wp-content/uploads/2014/06/download.png&quot; class=&quot;img-circle&quot;&gt;</span><br><span class="line">&lt;img src=&quot;http://www.runoob.com/wp-content/uploads/2014/06/download.png&quot; class=&quot;img-thumbnail&quot;&gt;</span><br><span class="line">&lt;img src=&quot;http://www.runoob.com/wp-content/uploads/2014/06/download.png&quot; class=&quot;img-responsive&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2、tables-less"><a href="#2、tables-less" class="headerlink" title="2、tables.less"></a>2、tables.less</h4><h5 id="2-1、tables-less源码"><a href="#2-1、tables-less源码" class="headerlink" title="2.1、tables.less源码"></a>2.1、tables.less源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Tables 表格</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">table &#123;</span><br><span class="line">  background-color: @table-bg;</span><br><span class="line">&#125;</span><br><span class="line">caption &#123;</span><br><span class="line">  padding-top: @table-cell-padding;</span><br><span class="line">  padding-bottom: @table-cell-padding;</span><br><span class="line">  color: @text-muted;</span><br><span class="line">  text-align: left;</span><br><span class="line">&#125;</span><br><span class="line">th &#123;</span><br><span class="line">  text-align: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Baseline styles(基础表格)</span><br><span class="line"></span><br><span class="line">.table &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  max-width: 100%;</span><br><span class="line">  margin-bottom: @line-height-computed;</span><br><span class="line">  // Cells</span><br><span class="line">  &gt; thead,</span><br><span class="line">  &gt; tbody,</span><br><span class="line">  &gt; tfoot &#123;</span><br><span class="line">    &gt; tr &#123;</span><br><span class="line">      &gt; th,</span><br><span class="line">      &gt; td &#123;</span><br><span class="line">        padding: @table-cell-padding;</span><br><span class="line">        line-height: @line-height-base;</span><br><span class="line">        vertical-align: top;</span><br><span class="line">        border-top: 1px solid @table-border-color;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // Bottom align for column headings</span><br><span class="line">  &gt; thead &gt; tr &gt; th &#123;</span><br><span class="line">    vertical-align: bottom;</span><br><span class="line">    border-bottom: 2px solid @table-border-color;</span><br><span class="line">  &#125;</span><br><span class="line">  // Remove top border from thead by default</span><br><span class="line">  &gt; caption + thead,</span><br><span class="line">  &gt; colgroup + thead,</span><br><span class="line">  &gt; thead:first-child &#123;</span><br><span class="line">    &gt; tr:first-child &#123;</span><br><span class="line">      &gt; th,</span><br><span class="line">      &gt; td &#123;</span><br><span class="line">        border-top: 0;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // Account for multiple tbody instances(+: 相邻选择符)</span><br><span class="line">  &gt; tbody + tbody &#123;</span><br><span class="line">    border-top: 2px solid @table-border-color;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Nesting</span><br><span class="line">  .table &#123;</span><br><span class="line">    background-color: @body-bg;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Condensed table w/ half padding(紧凑型表格)</span><br><span class="line"></span><br><span class="line">.table-condensed &#123;</span><br><span class="line">  &gt; thead,</span><br><span class="line">  &gt; tbody,</span><br><span class="line">  &gt; tfoot &#123;</span><br><span class="line">    &gt; tr &#123;</span><br><span class="line">      &gt; th,</span><br><span class="line">      &gt; td &#123;</span><br><span class="line">        padding: @table-condensed-cell-padding;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Bordered version(带边框表格)</span><br><span class="line">//</span><br><span class="line">// Add borders all around the table and between all the columns.</span><br><span class="line"></span><br><span class="line">.table-bordered &#123;</span><br><span class="line">  border: 1px solid @table-border-color;</span><br><span class="line">  &gt; thead,</span><br><span class="line">  &gt; tbody,</span><br><span class="line">  &gt; tfoot &#123;</span><br><span class="line">    &gt; tr &#123;</span><br><span class="line">      &gt; th,</span><br><span class="line">      &gt; td &#123;</span><br><span class="line">        border: 1px solid @table-border-color;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  &gt; thead &gt; tr &#123;</span><br><span class="line">    &gt; th,</span><br><span class="line">    &gt; td &#123;</span><br><span class="line">      border-bottom-width: 2px;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Zebra-striping(斑马线表格)</span><br><span class="line">//</span><br><span class="line">// Default zebra-stripe styles (alternating gray and transparent backgrounds)</span><br><span class="line"></span><br><span class="line">.table-striped &#123;</span><br><span class="line">  &gt; tbody &gt; tr:nth-of-type(odd) &#123;</span><br><span class="line">    background-color: @table-bg-accent;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Hover effect(鼠标悬浮高亮的表格)</span><br><span class="line">//</span><br><span class="line">// Placed here since it has to come after the potential zebra striping</span><br><span class="line"></span><br><span class="line">.table-hover &#123;</span><br><span class="line">  &gt; tbody &gt; tr:hover &#123;</span><br><span class="line">    background-color: @table-bg-hover;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Table cell sizing</span><br><span class="line">//</span><br><span class="line">// Reset default table behavior(&apos;class*=&apos;: 选择所有类名中含有&apos;col-&apos;的元素; ^=: 表示开头; $=: 表示结尾)</span><br><span class="line"></span><br><span class="line">table col[class*=&quot;col-&quot;] &#123;</span><br><span class="line">  position: static; // Prevent border hiding in Firefox and IE9-11 (see https://github.com/twbs/bootstrap/issues/11623)</span><br><span class="line">  float: none;</span><br><span class="line">  display: table-column;</span><br><span class="line">&#125;</span><br><span class="line">table &#123;</span><br><span class="line">  td,</span><br><span class="line">  th &#123;</span><br><span class="line">    &amp;[class*=&quot;col-&quot;] &#123;</span><br><span class="line">      position: static; // Prevent border hiding in Firefox and IE9-11 (see https://github.com/twbs/bootstrap/issues/11623)</span><br><span class="line">      float: none;</span><br><span class="line">      display: table-cell;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Table backgrounds</span><br><span class="line">//</span><br><span class="line">// Exact selectors below required to override `.table-striped` and prevent</span><br><span class="line">// inheritance to nested tables.</span><br><span class="line"></span><br><span class="line">// Generate the contextual variants</span><br><span class="line">// 当前活动</span><br><span class="line">.table-row-variant(active; @table-bg-active);</span><br><span class="line">// 成功或者正确的行为</span><br><span class="line">.table-row-variant(success; @state-success-bg);</span><br><span class="line">// 中立的信息或行为</span><br><span class="line">.table-row-variant(info; @state-info-bg);</span><br><span class="line">// 表示警告，需要特别注意</span><br><span class="line">.table-row-variant(warning; @state-warning-bg);</span><br><span class="line">// 表示危险或者可能是错误的行为</span><br><span class="line">.table-row-variant(danger; @state-danger-bg);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Responsive tables(响应式表格)</span><br><span class="line">//</span><br><span class="line">// Wrap your tables in `.table-responsive` and we&apos;ll make them mobile friendly</span><br><span class="line">// by enabling horizontal scrolling. Only applies &lt;768px. Everything above that</span><br><span class="line">// will display normally.</span><br><span class="line"></span><br><span class="line">.table-responsive &#123;</span><br><span class="line">  overflow-x: auto;</span><br><span class="line">  min-height: 0.01%; // Workaround for IE9 bug (see https://github.com/twbs/bootstrap/issues/14837)</span><br><span class="line"></span><br><span class="line">  @media screen and (max-width: @screen-xs-max) &#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    margin-bottom: (@line-height-computed * 0.75);</span><br><span class="line">    overflow-y: hidden;</span><br><span class="line">    -ms-overflow-style: -ms-autohiding-scrollbar;</span><br><span class="line">    border: 1px solid @table-border-color;</span><br><span class="line"></span><br><span class="line">    // Tighten up spacing</span><br><span class="line">    &gt; .table &#123;</span><br><span class="line">      margin-bottom: 0;</span><br><span class="line"></span><br><span class="line">      // Ensure the content doesn&apos;t wrap</span><br><span class="line">      &gt; thead,</span><br><span class="line">      &gt; tbody,</span><br><span class="line">      &gt; tfoot &#123;</span><br><span class="line">        &gt; tr &#123;</span><br><span class="line">          &gt; th,</span><br><span class="line">          &gt; td &#123;</span><br><span class="line">            white-space: nowrap;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Special overrides for the bordered tables</span><br><span class="line">    &gt; .table-bordered &#123;</span><br><span class="line">      border: 0;</span><br><span class="line"></span><br><span class="line">      // Nuke the appropriate borders so that the parent can handle them</span><br><span class="line">      &gt; thead,</span><br><span class="line">      &gt; tbody,</span><br><span class="line">      &gt; tfoot &#123;</span><br><span class="line">        &gt; tr &#123;</span><br><span class="line">          &gt; th:first-child,</span><br><span class="line">          &gt; td:first-child &#123;</span><br><span class="line">            border-left: 0;</span><br><span class="line">          &#125;</span><br><span class="line">          &gt; th:last-child,</span><br><span class="line">          &gt; td:last-child &#123;</span><br><span class="line">            border-right: 0;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // Only nuke the last row&apos;s bottom-border in `tbody` and `tfoot` since</span><br><span class="line">      // chances are there will be only one `tr` in a `thead` and that would</span><br><span class="line">      // remove the border altogether.</span><br><span class="line">      &gt; tbody,</span><br><span class="line">      &gt; tfoot &#123;</span><br><span class="line">        &gt; tr:last-child &#123;</span><br><span class="line">          &gt; th,</span><br><span class="line">          &gt; td &#123;</span><br><span class="line">            border-bottom: 0;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-2、tables-less应用"><a href="#2-2、tables-less应用" class="headerlink" title="2.2、tables.less应用"></a>2.2、tables.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--table-responsive:响应式表格；上下文类：active等；table-bordered：边框表格；table-condensed：精简表格；table-hover：悬停表格；table-striped：条纹表格--&gt;</span><br><span class="line">&lt;table class=&quot;table table-responsive table-bordered table-condensed table-hover&quot;&gt;</span><br><span class="line">  &lt;caption&gt;表格布局&lt;/caption&gt;</span><br><span class="line">  &lt;thead&gt;</span><br><span class="line">  &lt;tr class=&quot;active&quot;&gt;</span><br><span class="line">    &lt;th&gt;名称&lt;/th&gt;</span><br><span class="line">    &lt;th&gt;城市&lt;/th&gt;</span><br><span class="line">    &lt;th&gt;邮编&lt;/th&gt;</span><br><span class="line">  &lt;/tr&gt;</span><br><span class="line">  &lt;/thead&gt;</span><br><span class="line">  &lt;tbody&gt;</span><br><span class="line">  &lt;tr class=&quot;success&quot;&gt;</span><br><span class="line">    &lt;td&gt;Tanmay&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;Bangalore&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;560001&lt;/td&gt;</span><br><span class="line">  &lt;/tr&gt;</span><br><span class="line">  &lt;tr class=&quot;danger&quot;&gt;</span><br><span class="line">    &lt;td&gt;Sachin&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;Mumbai&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;400003&lt;/td&gt;</span><br><span class="line">  &lt;/tr&gt;</span><br><span class="line">  &lt;tr class=&quot;warning&quot;&gt;</span><br><span class="line">    &lt;td&gt;Uma&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;Pune&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;411027&lt;/td&gt;</span><br><span class="line">  &lt;/tr&gt;</span><br><span class="line">  &lt;/tbody&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:53:27.000Z" itemprop="dateUpdated">2018-04-15 21:53:27</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/scaffolding&amp;tables/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/scaffolding&amp;tables/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/&title=《bootstrap 之 scaffolding & tables 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/&title=《bootstrap 之 scaffolding & tables 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的 scaffolding(脚手架) 和 tables(表格)，包括 scaffolding.less、tables.l..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/scaffolding&tables/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 scaffolding & tables 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/code&grid/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 code &amp; grid 样式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/bootstrap/carousel/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">bootstrap 之 carousel</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/&title=《bootstrap 之 scaffolding & tables 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/&title=《bootstrap 之 scaffolding & tables 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的 scaffolding(脚手架) 和 tables(表格)，包括 scaffolding.less、tables.l..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/scaffolding&tables/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 scaffolding & tables 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/scaffolding&tables/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW7DMAxE0dz/0u62QCt5ZmgXFfm9CmIj4vOCoUh9PvJ1fbtWd1ffrO7+/M39Kg9cMGDAOJZxba/KAjpPWXf1DAwYMOYw9kG4Ae2TtRKoHhsMGDBg7BdWfkd/NdkzMGDAgKGnSD1d7leBAQMGjMomtp5Gldbb63txGDBgHMhwG2d/+fmV+QYMGDCOYlzmpZd0lVLPjgoGDBitGe5Ws5LRSxtUJR4YMGA0ZWTpzx1q1qk3vwYDBowBDDfxZUfHlCMXboL+pcKFAQNGa0Y2yMwOZ2TUZWwwYMAYxtA3q5XjF+7ru0n3MGDAaM3IgstaY+7rMIKGAQPGMIZS9rmnHdwnszEqDBgwujKUFphy133SLfhuWnswYMBozbBb8PKosj7yVJL1Y0vCgAHjHzOytpc7QsiOXBjfwIABozXDDSVse5mFZpayYcCAMYGhH/bKWmN6gaiXnlLnDwYMGI0Y2ehRLxOf+k+wh5owYMBowXAHim7BVy8fb0YCMGDAGMNwP7vhZqc/jHECDBgwxjDcbarbRMu2wUajDQYMGK0Zyu5WP9oVnvswu2f2PBYGDBgHMi7zylJkNgwwClAYMGC0ZlQaYXpClJplZt8shMGAAeNYRn0bWd/o6sc+lq8DBgwYAxhv5O83yj5jMAADBozxDDeg914WDBgwYDx7ICMbPEjH1GDAgDGA4Q4Dsg3nPlC3QIQBA8Ychrt11BdQUnBlOAEDBowBjC827p07azXY5QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

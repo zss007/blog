@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 tooltip | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="这节介绍下 tooltip(提示框)模块的源码实现。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 tooltip">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/tooltip/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="这节介绍下 tooltip(提示框)模块的源码实现。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:57:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 tooltip">
+<meta name="twitter:description" content="这节介绍下 tooltip(提示框)模块的源码实现。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 tooltip</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 tooltip</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-10-30T12:53:42.000Z" itemprop="datePublished" class="page-time">
+  2017-10-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、tooltip-less"><span class="post-toc-text">1、tooltip.less</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、tooltip-js"><span class="post-toc-text">2、tooltip.js</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、应用-amp-源码分析"><span class="post-toc-text">二、应用 &amp; 源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、应用"><span class="post-toc-text">1、应用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、源码分析"><span class="post-toc-text">2、源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1、tooltip-less"><span class="post-toc-text">2.1、tooltip.less</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2、tooltip-js"><span class="post-toc-text">2.2、tooltip.js</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/tooltip" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 tooltip</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-10-30 20:53:42" datetime="2017-10-30T12:53:42.000Z" itemprop="datePublished">2017-10-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这节介绍下 tooltip(提示框)模块的源码实现。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><h4 id="1、tooltip-less"><a href="#1、tooltip-less" class="headerlink" title="1、tooltip.less"></a>1、tooltip.less</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Tooltips(提示框)</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line">// Base class(基础样式)</span><br><span class="line">.tooltip &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  z-index: @zindex-tooltip;</span><br><span class="line">  display: block;</span><br><span class="line">  // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.</span><br><span class="line">  // So reset our font and text properties to avoid inheriting weird values.</span><br><span class="line">  .reset-text();</span><br><span class="line">  font-size: @font-size-small;</span><br><span class="line"></span><br><span class="line">  .opacity(0);</span><br><span class="line"></span><br><span class="line">  &amp;.in     &#123; .opacity(@tooltip-opacity); &#125;</span><br><span class="line">  &amp;.top    &#123; margin-top:  -3px; padding: @tooltip-arrow-width 0; &#125;</span><br><span class="line">  &amp;.right  &#123; margin-left:  3px; padding: 0 @tooltip-arrow-width; &#125;</span><br><span class="line">  &amp;.bottom &#123; margin-top:   3px; padding: @tooltip-arrow-width 0; &#125;</span><br><span class="line">  &amp;.left   &#123; margin-left: -3px; padding: 0 @tooltip-arrow-width; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Wrapper for the tooltip content(提示框文本内容)</span><br><span class="line">.tooltip-inner &#123;</span><br><span class="line">  max-width: @tooltip-max-width;</span><br><span class="line">  padding: 3px 8px;</span><br><span class="line">  color: @tooltip-color;</span><br><span class="line">  text-align: center;</span><br><span class="line">  background-color: @tooltip-bg;</span><br><span class="line">  border-radius: @border-radius-base;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Arrows(提示框箭头)</span><br><span class="line">.tooltip-arrow &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 0;</span><br><span class="line">  height: 0;</span><br><span class="line">  border-color: transparent;</span><br><span class="line">  border-style: solid;</span><br><span class="line">&#125;</span><br><span class="line">// Note: Deprecated .top-left, .top-right, .bottom-left, and .bottom-right as of v3.3.1(提示框不同方向的箭头指向)</span><br><span class="line">.tooltip &#123;</span><br><span class="line">  &amp;.top .tooltip-arrow &#123;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    left: 50%;</span><br><span class="line">    margin-left: -@tooltip-arrow-width;</span><br><span class="line">    border-width: @tooltip-arrow-width @tooltip-arrow-width 0;</span><br><span class="line">    border-top-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.top-left .tooltip-arrow &#123;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    right: @tooltip-arrow-width;</span><br><span class="line">    margin-bottom: -@tooltip-arrow-width;</span><br><span class="line">    border-width: @tooltip-arrow-width @tooltip-arrow-width 0;</span><br><span class="line">    border-top-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.top-right .tooltip-arrow &#123;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    left: @tooltip-arrow-width;</span><br><span class="line">    margin-bottom: -@tooltip-arrow-width;</span><br><span class="line">    border-width: @tooltip-arrow-width @tooltip-arrow-width 0;</span><br><span class="line">    border-top-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.right .tooltip-arrow &#123;</span><br><span class="line">    top: 50%;</span><br><span class="line">    left: 0;</span><br><span class="line">    margin-top: -@tooltip-arrow-width;</span><br><span class="line">    border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;</span><br><span class="line">    border-right-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.left .tooltip-arrow &#123;</span><br><span class="line">    top: 50%;</span><br><span class="line">    right: 0;</span><br><span class="line">    margin-top: -@tooltip-arrow-width;</span><br><span class="line">    border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;</span><br><span class="line">    border-left-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.bottom .tooltip-arrow &#123;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: 50%;</span><br><span class="line">    margin-left: -@tooltip-arrow-width;</span><br><span class="line">    border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;</span><br><span class="line">    border-bottom-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.bottom-left .tooltip-arrow &#123;</span><br><span class="line">    top: 0;</span><br><span class="line">    right: @tooltip-arrow-width;</span><br><span class="line">    margin-top: -@tooltip-arrow-width;</span><br><span class="line">    border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;</span><br><span class="line">    border-bottom-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;.bottom-right .tooltip-arrow &#123;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: @tooltip-arrow-width;</span><br><span class="line">    margin-top: -@tooltip-arrow-width;</span><br><span class="line">    border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;</span><br><span class="line">    border-bottom-color: @tooltip-arrow-color;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2、tooltip-js"><a href="#2、tooltip-js" class="headerlink" title="2、tooltip.js"></a>2、tooltip.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br></pre></td><td class="code"><pre><span class="line">/* ========================================================================</span><br><span class="line"> * Bootstrap: tooltip.js v3.3.7(提示框)</span><br><span class="line"> * http://getbootstrap.com/javascript/#tooltip</span><br><span class="line"> * Inspired by the original jQuery.tipsy by Jason Frame</span><br><span class="line"> * ========================================================================</span><br><span class="line"> * Copyright 2011-2016 Twitter, Inc.</span><br><span class="line"> * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)</span><br><span class="line"> * ======================================================================== */</span><br><span class="line">+function ($) &#123;</span><br><span class="line">  &apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">  // TOOLTIP PUBLIC CLASS DEFINITION(提示框定义)</span><br><span class="line">  // ===============================</span><br><span class="line">  var Tooltip = function (element, options) &#123;</span><br><span class="line">    this.type       = null  // 插件类型</span><br><span class="line">    this.options    = null  // 自定义属性</span><br><span class="line">    this.enabled    = null  // 标志量，控制tooltip是否可以显示</span><br><span class="line">    this.timeout    = null  // 定时器</span><br><span class="line">    this.hoverState = null  // 提示框显示状态</span><br><span class="line">    this.$element   = null  // 对象绑定的元素</span><br><span class="line">    this.inState    = null  // 操作状态</span><br><span class="line"></span><br><span class="line">    this.init(&apos;tooltip&apos;, element, options)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Tooltip.VERSION  = &apos;3.3.7&apos;</span><br><span class="line"></span><br><span class="line">  Tooltip.TRANSITION_DURATION = 150</span><br><span class="line"></span><br><span class="line">  // 提示框默认设置</span><br><span class="line">  Tooltip.DEFAULTS = &#123;</span><br><span class="line">    animation: true,  // 是否使用动画</span><br><span class="line">    placement: &apos;top&apos;,  // 设置提示框内容位置信息</span><br><span class="line">    selector: false,  // CSS选择器，用于事件委托</span><br><span class="line">    template: &apos;&lt;div class=&quot;tooltip&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-arrow&quot;&gt;&lt;/div&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&apos;,  // 提示框模板</span><br><span class="line">    trigger: &apos;hover focus&apos;,  // 触发方法</span><br><span class="line">    title: &apos;&apos;,  // 提示框标题内容</span><br><span class="line">    delay: 0,  // 提示框显示隐藏延时时间</span><br><span class="line">    html: false,  // 设置&apos;tooltip-inner&apos;内内容html片段还是text纯文本</span><br><span class="line">    container: false,  // 提示框容器</span><br><span class="line">    viewport: &#123;</span><br><span class="line">      selector: &apos;body&apos;,</span><br><span class="line">      padding: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 提示框初始化</span><br><span class="line">  Tooltip.prototype.init = function (type, element, options) &#123;</span><br><span class="line">    this.enabled   = true</span><br><span class="line">    this.type      = type</span><br><span class="line">    this.$element  = $(element)</span><br><span class="line">    // 获取自定义选项</span><br><span class="line">    this.options   = this.getOptions(options)</span><br><span class="line">    // 获取视口，保证提示框在元素的边缘内</span><br><span class="line">    this.$viewport = this.options.viewport &amp;&amp; $($.isFunction(this.options.viewport) ? this.options.viewport.call(this, this.$element) : (this.options.viewport.selector || this.options.viewport))</span><br><span class="line">    // 显示条件存储对象</span><br><span class="line">    this.inState   = &#123; click: false, hover: false, focus: false &#125;</span><br><span class="line"></span><br><span class="line">    // 不能直接为document添加提示框，需要添加CSS选择符来选中document的子元素</span><br><span class="line">    if (this.$element[0] instanceof document.constructor &amp;&amp; !this.options.selector) &#123;</span><br><span class="line">      throw new Error(&apos;`selector` option must be specified when initializing &apos; + this.type + &apos; on the window.document object!&apos;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理不同触发情况</span><br><span class="line">    var triggers = this.options.trigger.split(&apos; &apos;)</span><br><span class="line">    for (var i = triggers.length; i--;) &#123;</span><br><span class="line">      var trigger = triggers[i]</span><br><span class="line"></span><br><span class="line">      if (trigger == &apos;click&apos;) &#123;</span><br><span class="line">        // 点击触发调用toggle方法</span><br><span class="line">        this.$element.on(&apos;click.&apos; + this.type, this.options.selector, $.proxy(this.toggle, this))</span><br><span class="line">      &#125; else if (trigger != &apos;manual&apos;) &#123;</span><br><span class="line">        var eventIn  = trigger == &apos;hover&apos; ? &apos;mouseenter&apos; : &apos;focusin&apos;</span><br><span class="line">        var eventOut = trigger == &apos;hover&apos; ? &apos;mouseleave&apos; : &apos;focusout&apos;</span><br><span class="line"></span><br><span class="line">        // hover或者focus触发调用enter/leave方法</span><br><span class="line">        this.$element.on(eventIn  + &apos;.&apos; + this.type, this.options.selector, $.proxy(this.enter, this))</span><br><span class="line">        this.$element.on(eventOut + &apos;.&apos; + this.type, this.options.selector, $.proxy(this.leave, this))</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    this.options.selector ?</span><br><span class="line">      (this._options = $.extend(&#123;&#125;, this.options, &#123; trigger: &apos;manual&apos;, selector: &apos;&apos; &#125;)) :</span><br><span class="line">      this.fixTitle()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 返回默认自定义选项</span><br><span class="line">  Tooltip.prototype.getDefaults = function () &#123;</span><br><span class="line">    return Tooltip.DEFAULTS</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取自定义选项</span><br><span class="line">  Tooltip.prototype.getOptions = function (options) &#123;</span><br><span class="line">    options = $.extend(&#123;&#125;, this.getDefaults(), this.$element.data(), options)</span><br><span class="line"></span><br><span class="line">    if (options.delay &amp;&amp; typeof options.delay == &apos;number&apos;) &#123;</span><br><span class="line">      options.delay = &#123;</span><br><span class="line">        show: options.delay,</span><br><span class="line">        hide: options.delay</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return options</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取委托的自定义选项</span><br><span class="line">  Tooltip.prototype.getDelegateOptions = function () &#123;</span><br><span class="line">    var options  = &#123;&#125;</span><br><span class="line">    var defaults = this.getDefaults()</span><br><span class="line"></span><br><span class="line">    this._options &amp;&amp; $.each(this._options, function (key, value) &#123;</span><br><span class="line">      if (defaults[key] != value) options[key] = value</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    return options</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 提示框显示</span><br><span class="line">  Tooltip.prototype.enter = function (obj) &#123;</span><br><span class="line">    // 要不通过toggle方法来触发的enter，要不通过hover/focus触发的，所以obj要不为event对象，要不为tooltip实例对象</span><br><span class="line">    var self = obj instanceof this.constructor ?</span><br><span class="line">      obj : $(obj.currentTarget).data(&apos;bs.&apos; + this.type)</span><br><span class="line"></span><br><span class="line">    // 如果不存在self，说明是hover/focus触发，而且是委托</span><br><span class="line">    if (!self) &#123;</span><br><span class="line">      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())</span><br><span class="line">      $(obj.currentTarget).data(&apos;bs.&apos; + this.type, self)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 如果是obj是event对象，那么切换focus/hover状态</span><br><span class="line">    if (obj instanceof $.Event) &#123;</span><br><span class="line">      self.inState[obj.type == &apos;focusin&apos; ? &apos;focus&apos; : &apos;hover&apos;] = true</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 如果提示框模板元素已经显示，那么不做任何操作直接返回</span><br><span class="line">    if (self.tip().hasClass(&apos;in&apos;) || self.hoverState == &apos;in&apos;) &#123;</span><br><span class="line">      self.hoverState = &apos;in&apos;</span><br><span class="line">      return</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    clearTimeout(self.timeout)</span><br><span class="line"></span><br><span class="line">    self.hoverState = &apos;in&apos;</span><br><span class="line"></span><br><span class="line">    if (!self.options.delay || !self.options.delay.show) return self.show()</span><br><span class="line"></span><br><span class="line">    // 根据定时器时间来执行提示框显示操作</span><br><span class="line">    self.timeout = setTimeout(function () &#123;</span><br><span class="line">      // 如果定时器执行时，状态已经被切换了，那么需要重新根据状态判断是否继续进行操作</span><br><span class="line">      if (self.hoverState == &apos;in&apos;) self.show()</span><br><span class="line">    &#125;, self.options.delay.show)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 判断是否存在显示条件</span><br><span class="line">  Tooltip.prototype.isInStateTrue = function () &#123;</span><br><span class="line">    for (var key in this.inState) &#123;</span><br><span class="line">      if (this.inState[key]) return true</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 提示框隐藏</span><br><span class="line">  Tooltip.prototype.leave = function (obj) &#123;</span><br><span class="line">    // 要不通过toggle方法来触发的leave，要不通过hover/focus触发的，所以obj要不为event对象，要不为tooltip实例对象</span><br><span class="line">    var self = obj instanceof this.constructor ?</span><br><span class="line">      obj : $(obj.currentTarget).data(&apos;bs.&apos; + this.type)</span><br><span class="line"></span><br><span class="line">    // 如果不存在self，说明是hover/focus触发，而且是委托</span><br><span class="line">    if (!self) &#123;</span><br><span class="line">      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())</span><br><span class="line">      $(obj.currentTarget).data(&apos;bs.&apos; + this.type, self)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 如果是obj是event对象，那么切换focus/hover状态</span><br><span class="line">    if (obj instanceof $.Event) &#123;</span><br><span class="line">      self.inState[obj.type == &apos;focusout&apos; ? &apos;focus&apos; : &apos;hover&apos;] = false</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 如果存在还显示的状态，那么直接返回</span><br><span class="line">    if (self.isInStateTrue()) return</span><br><span class="line"></span><br><span class="line">    clearTimeout(self.timeout)</span><br><span class="line"></span><br><span class="line">    self.hoverState = &apos;out&apos;</span><br><span class="line"></span><br><span class="line">    if (!self.options.delay || !self.options.delay.hide) return self.hide()</span><br><span class="line"></span><br><span class="line">    self.timeout = setTimeout(function () &#123;</span><br><span class="line">      // 如果定时器执行时，状态已经被切换了，那么需要重新根据状态判断是否继续进行操作</span><br><span class="line">      if (self.hoverState == &apos;out&apos;) self.hide()</span><br><span class="line">    &#125;, self.options.delay.hide)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 显示提示框具体操作</span><br><span class="line">  Tooltip.prototype.show = function () &#123;</span><br><span class="line">    // 自定义事件</span><br><span class="line">    var e = $.Event(&apos;show.bs.&apos; + this.type)</span><br><span class="line"></span><br><span class="line">    // 如果存在显示标题内容而且显示控制标志量enabled为true</span><br><span class="line">    if (this.hasContent() &amp;&amp; this.enabled) &#123;</span><br><span class="line">      this.$element.trigger(e)</span><br><span class="line"></span><br><span class="line">      // 判断对象对应的dom是否在文档内</span><br><span class="line">      var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0])</span><br><span class="line">      if (e.isDefaultPrevented() || !inDom) return</span><br><span class="line"></span><br><span class="line">      var that = this</span><br><span class="line">      var $tip = this.tip()  // 获取提示框DOM元素</span><br><span class="line">      var tipId = this.getUID(this.type)  // 获取不存在于document中的ID</span><br><span class="line"></span><br><span class="line">      this.setContent()  // 设置标题模板内容</span><br><span class="line">      $tip.attr(&apos;id&apos;, tipId)  // 设置模板id</span><br><span class="line">      this.$element.attr(&apos;aria-describedby&apos;, tipId)  // 设置触发元素aria-describedby属性</span><br><span class="line"></span><br><span class="line">      if (this.options.animation) $tip.addClass(&apos;fade&apos;)  // 如果使用动画，添加fade类</span><br><span class="line"></span><br><span class="line">      // 获取提示框位置信息</span><br><span class="line">      var placement = typeof this.options.placement == &apos;function&apos; ?</span><br><span class="line">        this.options.placement.call(this, $tip[0], this.$element[0]) :</span><br><span class="line">        this.options.placement</span><br><span class="line"></span><br><span class="line">      // 如果使用auto，尽量会被替换掉，默认替换为top；如果同时存在其他方向，默认使用其他方向</span><br><span class="line">      var autoToken = /\s?auto?\s?/i</span><br><span class="line">      var autoPlace = autoToken.test(placement)</span><br><span class="line">      if (autoPlace) placement = placement.replace(autoToken, &apos;&apos;) || &apos;top&apos;</span><br><span class="line"></span><br><span class="line">      // 设置提示框样式</span><br><span class="line">      $tip</span><br><span class="line">        .detach()  // detach() 删除匹配的对象；与remove()不同的是，所有绑定的事件、附加的数据等都会保留下来</span><br><span class="line">        .css(&#123; top: 0, left: 0, display: &apos;block&apos; &#125;)</span><br><span class="line">        .addClass(placement)</span><br><span class="line">        .data(&apos;bs.&apos; + this.type, this)</span><br><span class="line"></span><br><span class="line">      // 将提示框添加到文档中</span><br><span class="line">      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)</span><br><span class="line">      // 触发自定义事件&apos;inserted.bs.tooltip&apos;</span><br><span class="line">      this.$element.trigger(&apos;inserted.bs.&apos; + this.type)</span><br><span class="line"></span><br><span class="line">      // 位置对象pos =  &#123;top: , right: , bottom: , left: , width: ,scroll:&#125;</span><br><span class="line">      var pos          = this.getPosition()</span><br><span class="line">      // 提示框自身实际的 width height</span><br><span class="line">      var actualWidth  = $tip[0].offsetWidth</span><br><span class="line">      var actualHeight = $tip[0].offsetHeight</span><br><span class="line"></span><br><span class="line">      // 如果出现了auto，那么根据viewport动态调整placement</span><br><span class="line">      if (autoPlace) &#123;</span><br><span class="line">        var orgPlacement = placement</span><br><span class="line">        var viewportDim = this.getPosition(this.$viewport)</span><br><span class="line"></span><br><span class="line">        placement = placement == &apos;bottom&apos; &amp;&amp; pos.bottom + actualHeight &gt; viewportDim.bottom ? &apos;top&apos;    :</span><br><span class="line">                    placement == &apos;top&apos;    &amp;&amp; pos.top    - actualHeight &lt; viewportDim.top    ? &apos;bottom&apos; :</span><br><span class="line">                    placement == &apos;right&apos;  &amp;&amp; pos.right  + actualWidth  &gt; viewportDim.width  ? &apos;left&apos;   :</span><br><span class="line">                    placement == &apos;left&apos;   &amp;&amp; pos.left   - actualWidth  &lt; viewportDim.left   ? &apos;right&apos;  :</span><br><span class="line">                    placement</span><br><span class="line"></span><br><span class="line">        $tip</span><br><span class="line">          .removeClass(orgPlacement)</span><br><span class="line">          .addClass(placement)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // 计算提示框的偏移量 &#123;top: , left: &#125;</span><br><span class="line">      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)</span><br><span class="line"></span><br><span class="line">      // 应用并设置偏移量</span><br><span class="line">      this.applyPlacement(calculatedOffset, placement)</span><br><span class="line"></span><br><span class="line">      var complete = function () &#123;</span><br><span class="line">        var prevHoverState = that.hoverState</span><br><span class="line">        that.$element.trigger(&apos;shown.bs.&apos; + that.type)</span><br><span class="line">        that.hoverState = null</span><br><span class="line"></span><br><span class="line">        // 其实这里不太需要，因为就算连续点击两次，后面hide方法会将hoverState设置为null；就算改成prevHoverState==null也只是连续执行两次leave</span><br><span class="line">        if (prevHoverState == &apos;out&apos;) that.leave(that)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      $.support.transition &amp;&amp; this.$tip.hasClass(&apos;fade&apos;) ?</span><br><span class="line">        $tip</span><br><span class="line">          .one(&apos;bsTransitionEnd&apos;, complete)</span><br><span class="line">          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :</span><br><span class="line">        complete()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 应用并设置偏移量</span><br><span class="line">  Tooltip.prototype.applyPlacement = function (offset, placement) &#123;</span><br><span class="line">    var $tip   = this.tip()</span><br><span class="line">    var width  = $tip[0].offsetWidth</span><br><span class="line">    var height = $tip[0].offsetHeight</span><br><span class="line"></span><br><span class="line">    // manually read margins because getBoundingClientRect includes difference</span><br><span class="line">    // 获得提示框自身的外边距的值</span><br><span class="line">    var marginTop = parseInt($tip.css(&apos;margin-top&apos;), 10)</span><br><span class="line">    var marginLeft = parseInt($tip.css(&apos;margin-left&apos;), 10)</span><br><span class="line"></span><br><span class="line">    // we must check for NaN for ie 8/9(是否是非数字)</span><br><span class="line">    if (isNaN(marginTop))  marginTop  = 0</span><br><span class="line">    if (isNaN(marginLeft)) marginLeft = 0</span><br><span class="line"></span><br><span class="line">    // 计算的偏移量 + 自身的外边距</span><br><span class="line">    offset.top  += marginTop</span><br><span class="line">    offset.left += marginLeft</span><br><span class="line"></span><br><span class="line">    // $.fn.offset doesn&apos;t round pixel values</span><br><span class="line">    // so we use setOffset directly with our own function B-0</span><br><span class="line">    // 应用了offset.setOffset方法，传入了using参数，因为offset设置值的时候，不能四舍五入</span><br><span class="line">    $.offset.setOffset($tip[0], $.extend(&#123;</span><br><span class="line">      using: function (props) &#123;</span><br><span class="line">        $tip.css(&#123;</span><br><span class="line">          top: Math.round(props.top),</span><br><span class="line">          left: Math.round(props.left)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, offset), 0)</span><br><span class="line"></span><br><span class="line">    // 添加 in class 让提示框显示</span><br><span class="line">    $tip.addClass(&apos;in&apos;)</span><br><span class="line"></span><br><span class="line">    // check to see if placing tip in new offset caused the tip to resize itself</span><br><span class="line">    // 获取显示后的提示框的宽和高，检查是否调整了自身的大小</span><br><span class="line">    var actualWidth  = $tip[0].offsetWidth</span><br><span class="line">    var actualHeight = $tip[0].offsetHeight</span><br><span class="line"></span><br><span class="line">    if (placement == &apos;top&apos; &amp;&amp; actualHeight != height) &#123;</span><br><span class="line">      offset.top = offset.top + height - actualHeight</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 根据viewport调整位置</span><br><span class="line">    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)</span><br><span class="line"></span><br><span class="line">    if (delta.left) offset.left += delta.left</span><br><span class="line">    else offset.top += delta.top</span><br><span class="line"></span><br><span class="line">    var isVertical          = /top|bottom/.test(placement)</span><br><span class="line">    var arrowDelta          = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight</span><br><span class="line">    var arrowOffsetPosition = isVertical ? &apos;offsetWidth&apos; : &apos;offsetHeight&apos;</span><br><span class="line"></span><br><span class="line">    $tip.offset(offset)</span><br><span class="line">    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 更新箭头位置</span><br><span class="line">  Tooltip.prototype.replaceArrow = function (delta, dimension, isVertical) &#123;</span><br><span class="line">    this.arrow()</span><br><span class="line">      .css(isVertical ? &apos;left&apos; : &apos;top&apos;, 50 * (1 - delta / dimension) + &apos;%&apos;)</span><br><span class="line">      .css(isVertical ? &apos;top&apos; : &apos;left&apos;, &apos;&apos;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 设置内容，并移除上面的</span><br><span class="line">  Tooltip.prototype.setContent = function () &#123;</span><br><span class="line">    var $tip  = this.tip()</span><br><span class="line">    var title = this.getTitle()</span><br><span class="line"></span><br><span class="line">    $tip.find(&apos;.tooltip-inner&apos;)[this.options.html ? &apos;html&apos; : &apos;text&apos;](title)</span><br><span class="line">    $tip.removeClass(&apos;fade in top bottom left right&apos;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 隐藏提示框具体操作</span><br><span class="line">  Tooltip.prototype.hide = function (callback) &#123;</span><br><span class="line">    var that = this</span><br><span class="line">    var $tip = $(this.$tip)</span><br><span class="line">    var e    = $.Event(&apos;hide.bs.&apos; + this.type)</span><br><span class="line"></span><br><span class="line">    function complete() &#123;</span><br><span class="line">      // 如果在提示框显示时，连续两次点击(假设元素触发方法为click，而且点击快速在动画时间内)，那么不销毁提示框模板元素，如果销毁会有问题</span><br><span class="line">      if (that.hoverState != &apos;in&apos;) $tip.detach()</span><br><span class="line">      if (that.$element) &#123; // TODO: Check whether guarding this code with this `if` is really necessary.</span><br><span class="line">        that.$element</span><br><span class="line">          .removeAttr(&apos;aria-describedby&apos;)</span><br><span class="line">          .trigger(&apos;hidden.bs.&apos; + that.type)</span><br><span class="line">      &#125;</span><br><span class="line">      callback &amp;&amp; callback()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    this.$element.trigger(e)</span><br><span class="line"></span><br><span class="line">    if (e.isDefaultPrevented()) return</span><br><span class="line"></span><br><span class="line">    $tip.removeClass(&apos;in&apos;)</span><br><span class="line"></span><br><span class="line">    $.support.transition &amp;&amp; $tip.hasClass(&apos;fade&apos;) ?</span><br><span class="line">      $tip</span><br><span class="line">        .one(&apos;bsTransitionEnd&apos;, complete)</span><br><span class="line">        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :</span><br><span class="line">      complete()</span><br><span class="line"></span><br><span class="line">    this.hoverState = null</span><br><span class="line"></span><br><span class="line">    return this</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 默认使用title属性作为提示框内容</span><br><span class="line">  Tooltip.prototype.fixTitle = function () &#123;</span><br><span class="line">    var $e = this.$element</span><br><span class="line">    if ($e.attr(&apos;title&apos;) || typeof $e.attr(&apos;data-original-title&apos;) != &apos;string&apos;) &#123;</span><br><span class="line">      $e.attr(&apos;data-original-title&apos;, $e.attr(&apos;title&apos;) || &apos;&apos;).attr(&apos;title&apos;, &apos;&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 是否有显示内容</span><br><span class="line">  Tooltip.prototype.hasContent = function () &#123;</span><br><span class="line">    return this.getTitle()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取位置</span><br><span class="line">  Tooltip.prototype.getPosition = function ($element) &#123;</span><br><span class="line">    // 不传入则为当前点击元素</span><br><span class="line">    $element   = $element || this.$element</span><br><span class="line"></span><br><span class="line">    // 转换为DOM对象</span><br><span class="line">    var el     = $element[0]</span><br><span class="line">    // 是否是body元素</span><br><span class="line">    var isBody = el.tagName == &apos;BODY&apos;</span><br><span class="line">    // 获取元素各边与页面上边和左边的距离 left right top bottom height width</span><br><span class="line">    var elRect    = el.getBoundingClientRect()</span><br><span class="line">    //兼容IE8 没有 width height 则计算</span><br><span class="line">    if (elRect.width == null) &#123;</span><br><span class="line">      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093</span><br><span class="line">      elRect = $.extend(&#123;&#125;, elRect, &#123; width: elRect.right - elRect.left, height: elRect.bottom - elRect.top &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    var isSvg = window.SVGElement &amp;&amp; el instanceof window.SVGElement</span><br><span class="line">    // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.</span><br><span class="line">    // See https://github.com/twbs/bootstrap/issues/20280</span><br><span class="line">    // 当前元素相对于文档的偏移量(因为SVG上得不到正确的offset结果，所以返回null)</span><br><span class="line">    var elOffset  = isBody ? &#123; top: 0, left: 0 &#125; : (isSvg ? null : $element.offset())</span><br><span class="line">    // 垂直滚动条的距离(document.documentElement.scrollTop和document.body.scrollTop 浏览器兼容)</span><br><span class="line">    var scroll    = &#123; scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() &#125;</span><br><span class="line">    var outerDims = isBody ? &#123; width: $(window).width(), height: $(window).height() &#125; : null</span><br><span class="line"></span><br><span class="line">    // 合并</span><br><span class="line">    return $.extend(&#123;&#125;, elRect, scroll, outerDims, elOffset)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 计算偏移量</span><br><span class="line">  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) &#123;</span><br><span class="line">    return placement == &apos;bottom&apos; ? &#123; top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2 &#125; :</span><br><span class="line">           placement == &apos;top&apos;    ? &#123; top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 &#125; :</span><br><span class="line">           placement == &apos;left&apos;   ? &#123; top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth &#125; :</span><br><span class="line">        /* placement == &apos;right&apos; */ &#123; top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 根据视口调节</span><br><span class="line">  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) &#123;</span><br><span class="line">    var delta = &#123; top: 0, left: 0 &#125;</span><br><span class="line">    //默认的话，this.$viewport = &apos;body&apos;</span><br><span class="line">    if (!this.$viewport) return delta</span><br><span class="line"></span><br><span class="line">    var viewportPadding = this.options.viewport &amp;&amp; this.options.viewport.padding || 0</span><br><span class="line">    //this.$viewport = &apos;body&apos; width height为window的</span><br><span class="line">    var viewportDimensions = this.getPosition(this.$viewport)</span><br><span class="line"></span><br><span class="line">    if (/right|left/.test(placement)) &#123;</span><br><span class="line">      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll</span><br><span class="line">      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight</span><br><span class="line">      if (topEdgeOffset &lt; viewportDimensions.top) &#123; // top overflow</span><br><span class="line">        delta.top = viewportDimensions.top - topEdgeOffset</span><br><span class="line">      &#125; else if (bottomEdgeOffset &gt; viewportDimensions.top + viewportDimensions.height) &#123; // bottom overflow</span><br><span class="line">        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      var leftEdgeOffset  = pos.left - viewportPadding</span><br><span class="line">      var rightEdgeOffset = pos.left + viewportPadding + actualWidth</span><br><span class="line">      if (leftEdgeOffset &lt; viewportDimensions.left) &#123; // left overflow</span><br><span class="line">        delta.left = viewportDimensions.left - leftEdgeOffset</span><br><span class="line">      &#125; else if (rightEdgeOffset &gt; viewportDimensions.right) &#123; // right overflow</span><br><span class="line">        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return delta</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取标题内容</span><br><span class="line">  Tooltip.prototype.getTitle = function () &#123;</span><br><span class="line">    var title</span><br><span class="line">    var $e = this.$element</span><br><span class="line">    var o  = this.options</span><br><span class="line"></span><br><span class="line">    title = $e.attr(&apos;data-original-title&apos;)</span><br><span class="line">      || (typeof o.title == &apos;function&apos; ? o.title.call($e[0]) :  o.title)</span><br><span class="line"></span><br><span class="line">    return title</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取&apos;tooltipxxx&apos;格式的id(用do..while得到不存在于document中的ID)</span><br><span class="line">  Tooltip.prototype.getUID = function (prefix) &#123;</span><br><span class="line">    do prefix += ~~(Math.random() * 1000000)</span><br><span class="line">    while (document.getElementById(prefix))</span><br><span class="line">    return prefix</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取提示模板元素</span><br><span class="line">  Tooltip.prototype.tip = function () &#123;</span><br><span class="line">    if (!this.$tip) &#123;</span><br><span class="line">      this.$tip = $(this.options.template)</span><br><span class="line">      if (this.$tip.length != 1) &#123;</span><br><span class="line">        throw new Error(this.type + &apos; `template` option must consist of exactly 1 top-level element!&apos;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return this.$tip</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 获取提示箭头(tooltip-arrow类)</span><br><span class="line">  Tooltip.prototype.arrow = function () &#123;</span><br><span class="line">    return (this.$arrow = this.$arrow || this.tip().find(&apos;.tooltip-arrow&apos;))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 设置enabled为true，使得提示框能够正常显示</span><br><span class="line">  Tooltip.prototype.enable = function () &#123;</span><br><span class="line">    this.enabled = true</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 与enable相反</span><br><span class="line">  Tooltip.prototype.disable = function () &#123;</span><br><span class="line">    this.enabled = false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 切换enabled</span><br><span class="line">  Tooltip.prototype.toggleEnabled = function () &#123;</span><br><span class="line">    this.enabled = !this.enabled</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 切换提示框显示状态</span><br><span class="line">  Tooltip.prototype.toggle = function (e) &#123;</span><br><span class="line">    var self = this</span><br><span class="line">    if (e) &#123;</span><br><span class="line">      // 如果是事件委托的话，那么提示框元素并不会存储bs.tooltip属性对象，而是存储到委托元素上去了，所以重新为提示框元素初始化</span><br><span class="line">      self = $(e.currentTarget).data(&apos;bs.&apos; + this.type)</span><br><span class="line">      if (!self) &#123;</span><br><span class="line">        // getDelegateOptions: 重置CSS选择器，并将触发器设置为manual，并不设置监听，而是继续使用委托</span><br><span class="line">        self = new this.constructor(e.currentTarget, this.getDelegateOptions())</span><br><span class="line">        $(e.currentTarget).data(&apos;bs.&apos; + this.type, self)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (e) &#123;</span><br><span class="line">      // 切换点击状态，判断是否存在显示条件，并执行相应操作</span><br><span class="line">      self.inState.click = !self.inState.click</span><br><span class="line">      if (self.isInStateTrue()) self.enter(self)</span><br><span class="line">      else self.leave(self)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 如果不存在参数e(JS调用toggle触发)，那么动态判断当前点击提示框是否显示，并执行相应操作</span><br><span class="line">      self.tip().hasClass(&apos;in&apos;) ? self.leave(self) : self.enter(self)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 销毁tooltip实例</span><br><span class="line">  Tooltip.prototype.destroy = function () &#123;</span><br><span class="line">    var that = this</span><br><span class="line">    clearTimeout(this.timeout)</span><br><span class="line">    this.hide(function () &#123;</span><br><span class="line">      that.$element.off(&apos;.&apos; + that.type).removeData(&apos;bs.&apos; + that.type)</span><br><span class="line">      if (that.$tip) &#123;</span><br><span class="line">        that.$tip.detach()</span><br><span class="line">      &#125;</span><br><span class="line">      that.$tip = null</span><br><span class="line">      that.$arrow = null</span><br><span class="line">      that.$viewport = null</span><br><span class="line">      that.$element = null</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // TOOLTIP PLUGIN DEFINITION</span><br><span class="line">  // =========================</span><br><span class="line">  function Plugin(option) &#123;</span><br><span class="line">    return this.each(function () &#123;</span><br><span class="line">      var $this   = $(this)</span><br><span class="line">      var data    = $this.data(&apos;bs.tooltip&apos;)</span><br><span class="line">      var options = typeof option == &apos;object&apos; &amp;&amp; option</span><br><span class="line"></span><br><span class="line">      // 如果没有tooltip初始化，那么直接指向destroy|hide方法不进行任何操作</span><br><span class="line">      if (!data &amp;&amp; /destroy|hide/.test(option)) return</span><br><span class="line">      if (!data) $this.data(&apos;bs.tooltip&apos;, (data = new Tooltip(this, options)))</span><br><span class="line">      if (typeof option == &apos;string&apos;) data[option]()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  var old = $.fn.tooltip</span><br><span class="line"></span><br><span class="line">  $.fn.tooltip             = Plugin</span><br><span class="line">  $.fn.tooltip.Constructor = Tooltip</span><br><span class="line"></span><br><span class="line">  // TOOLTIP NO CONFLICT</span><br><span class="line">  // ===================</span><br><span class="line">  $.fn.tooltip.noConflict = function () &#123;</span><br><span class="line">    $.fn.tooltip = old</span><br><span class="line">    return this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;(jQuery);</span><br></pre></td></tr></table></figure>
+<h3 id="二、应用-amp-源码分析"><a href="#二、应用-amp-源码分析" class="headerlink" title="二、应用 &amp; 源码分析"></a>二、应用 &amp; 源码分析</h3><h4 id="1、应用"><a href="#1、应用" class="headerlink" title="1、应用"></a>1、应用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">这是一个 &lt;a href=&quot;#&quot; class=&quot;tooltip-test&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;left&quot; title=&quot;左侧的 Tooltip&quot;&gt;左侧的 Tooltip&lt;/a&gt;.</span><br><span class="line">&lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;left&quot; title=&quot;左侧的 Tooltip&quot;&gt;左侧的 Tooltip&lt;/button&gt;</span><br><span class="line">// 不能直接通过自定义属性data-来触发，需依赖于JavaScript</span><br><span class="line">&lt;script&gt;</span><br><span class="line">	$(function () &#123; $(&quot;[data-toggle=&apos;tooltip&apos;]&quot;).tooltip(); &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2、源码分析"><a href="#2、源码分析" class="headerlink" title="2、源码分析"></a>2、源码分析</h4><h5 id="2-1、tooltip-less"><a href="#2-1、tooltip-less" class="headerlink" title="2.1、tooltip.less"></a>2.1、tooltip.less</h5><p>1、容器为绝对布局，默认 opacity 为 0 ，即隐藏<br>2、提示框模板内容也很简单，只含有箭头和内容文本，箭头根据提示框出现方向进行调整显示  </p>
+<h5 id="2-2、tooltip-js"><a href="#2-2、tooltip-js" class="headerlink" title="2.2、tooltip.js"></a>2.2、tooltip.js</h5><p>1、有多种触发方式，设置 inState = { click: false, hover: false, focus: false } 对象，切换对象中属性，只要对象中有一个属性为true那么显示提示框<br>2、含 selector 选择器，如果存在selector，那么使用事件委托进行处理<br>3、显示时，动态生成提示框内容并插入到文档中，然后再经过一系列的计算得到并设置提示框的 top、 left(个人觉得插入到触发元素中更简单快捷，但是语义化不符合要求)<br>4、通过 while (document.getElementById(prefix)) 可以得到一个文档中没有的ID<br>5、需要注意如果连续触发而且存在动画的情况，需要判断处理显示隐藏问题，源码中通过hoverState做限制</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:57:46.000Z" itemprop="dateUpdated">2018-04-15 21:57:46</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/tooltip/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/tooltip/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/tooltip/&title=《bootstrap 之 tooltip》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/tooltip/&title=《bootstrap 之 tooltip》 — 青松的博客&source=这节介绍下 tooltip(提示框)模块的源码实现。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/tooltip/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 tooltip》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/tooltip/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/tooltip/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/popover/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 popover</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/bootstrap/dropdown/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">bootstrap 之 dropdown</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/tooltip/&title=《bootstrap 之 tooltip》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/tooltip/&title=《bootstrap 之 tooltip》 — 青松的博客&source=这节介绍下 tooltip(提示框)模块的源码实现。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/tooltip/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 tooltip》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/tooltip/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/tooltip/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3ay1LDMAwF0P7/T4cZtlD3SjLMxDledaA4OV4I6/F6xev6Xslvrx8r2Wf9V9sWBgbGbRnXcr17/PqRCSZ/7vo7GBgYz2EkYTRnVA8oP763P8fAwMCI1/oIqq+IgYGB0dsuufAlYXcdoDEwMDAmF7jqg5PdkiPblotjYGDckFFtDPzn5z/sb2BgYNyEcW1d64C7q2Hwyw4YGBhHM/IS/6Q8l/+kl9BiYGCczZgnnPOyfh6O3+6DgYFxNKNXuK+W7Hsls3JZDQMD42jG/CV6zc78KPN9MDAwzmNUG5PJa82pCTKKzRgYGMcx8gtcb0giuZI2S3UYGBhHM/K6ei8drRbm1geBgYGBsXcgLL8sTr45OjMMDIybMMpzGcUUNL90Vkc93t5wMTAwHsColszyYF1NYvPPGBgYZzPyEYpqKKwOZBTKahgYGI9kTMJcdZCi+XJ5QMfAwDiOUR32moxf5IDyZREDA+NoRi+VTeJ33pLMG6gf3goDA+MBjGpjoLfmKXE5fcXAwDiIUS3TT8ptu4puGBgYz2H0wt+uNmRvzKLZxsDAwLghY3Kxq7YnJ+nuhyPAwMA4mtHreebtgaT0X20qYGBgPJORBNnJ+MUk0yyk0xgYGA9gzINss/U4TqQxMDAw5i2B3hHk/wAwMDAwJuGyWjjb0LvAwMA4mpEEuN4Qat5aGNUFMTAwjmb0GgO94Fsd4MgPGgMD41DGF5c6iYflvzmcAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>zepto 之 ajax.js | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="$.ajax是 zepto 发送请求的核心方法，$.get,$.post,$.jsonp都是封装了$.ajax方法。$.ajax将 jsonp 与异步请求的代码格式统一起来，内部主要是先处理url、数据和请求头部，然后新建 XMLHttpRequest 对象发送请求。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zepto 之 ajax.js">
+<meta property="og:url" content="http://blog.master-ss.cn/zepto/ajaxJs/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="$.ajax是 zepto 发送请求的核心方法，$.get,$.post,$.jsonp都是封装了$.ajax方法。$.ajax将 jsonp 与异步请求的代码格式统一起来，内部主要是先处理url、数据和请求头部，然后新建 XMLHttpRequest 对象发送请求。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-18T02:43:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zepto 之 ajax.js">
+<meta name="twitter:description" content="$.ajax是 zepto 发送请求的核心方法，$.get,$.post,$.jsonp都是封装了$.ajax方法。$.ajax将 jsonp 与异步请求的代码格式统一起来，内部主要是先处理url、数据和请求头部，然后新建 XMLHttpRequest 对象发送请求。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">zepto 之 ajax.js</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">zepto 之 ajax.js</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-26T01:33:44.000Z" itemprop="datePublished" class="page-time">
+  2017-07-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/zepto/">zepto</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码分析"><span class="post-toc-text">二、源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、事件处理"><span class="post-toc-text">1、事件处理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、判断是否跨域-确定-settings-crossDomain-的值"><span class="post-toc-text">2、判断是否跨域,确定 settings.crossDomain 的值</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、清除-ajax-缓存-settings-catch-false"><span class="post-toc-text">3、清除 ajax 缓存(settings.catch === false)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、ajax-超时处理"><span class="post-toc-text">4、ajax 超时处理</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-zepto/ajaxJs" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">zepto 之 ajax.js</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-26 09:33:44" datetime="2017-07-26T01:33:44.000Z" itemprop="datePublished">2017-07-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/zepto/">zepto</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><code>$.ajax</code>是 zepto 发送请求的核心方法，<code>$.get</code>,<code>$.post</code>,<code>$.jsonp</code>都是封装了<code>$.ajax</code>方法。<code>$.ajax</code>将 jsonp 与异步请求的代码格式统一起来，内部主要是先处理url、数据和请求头部，然后新建 XMLHttpRequest 对象发送请求。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br></pre></td><td class="code"><pre><span class="line">(function ($) &#123;</span><br><span class="line">    var jsonpID = +new Date(),</span><br><span class="line">        document = window.document,</span><br><span class="line">        key,</span><br><span class="line">        name,</span><br><span class="line">        rscript = /&lt;script\b[^&lt;]*(?:(?!&lt;\/script&gt;)&lt;[^&lt;]*)*&lt;\/script&gt;/gi,</span><br><span class="line">        scriptTypeRE = /^(?:text|application)\/javascript/i,</span><br><span class="line">        xmlTypeRE = /^(?:text|application)\/xml/i,</span><br><span class="line">        jsonType = &apos;application/json&apos;,</span><br><span class="line">        htmlType = &apos;text/html&apos;,</span><br><span class="line">        blankRE = /^\s*$/,</span><br><span class="line">        originAnchor = document.createElement(&apos;a&apos;);</span><br><span class="line"></span><br><span class="line">    originAnchor.href = window.location.href;</span><br><span class="line"></span><br><span class="line">    //触发自定义事件并且如果阻止默认事件触发返回false</span><br><span class="line">    function triggerAndReturn(context, eventName, data) &#123;</span><br><span class="line">        var event = $.Event(eventName);</span><br><span class="line">        $(context).trigger(event, data);</span><br><span class="line">        return !event.isDefaultPrevented()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //触发ajax的全局事件</span><br><span class="line">    function triggerGlobal(settings, context, eventName, data) &#123;</span><br><span class="line">        if (settings.global) return triggerAndReturn(context || document, eventName, data)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //正在ajax请求数量</span><br><span class="line">    $.active = 0;</span><br><span class="line"></span><br><span class="line">    //第一次ajax触发时触发,绑定在document上</span><br><span class="line">    function ajaxStart(settings) &#123;</span><br><span class="line">        if (settings.global &amp;&amp; $.active++ === 0) triggerGlobal(settings, null, &apos;ajaxStart&apos;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //所有ajax都已经停止触发,绑定在document上</span><br><span class="line">    function ajaxStop(settings) &#123;</span><br><span class="line">        if (settings.global &amp;&amp; !(--$.active)) triggerGlobal(settings, null, &apos;ajaxStop&apos;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //触发beforeSend事件或全局ajaxBeforeSend事件，如果有一个返回false,则取消此次请求；否则触发ajaxSend全局事件</span><br><span class="line">    function ajaxBeforeSend(xhr, settings) &#123;</span><br><span class="line">        var context = settings.context;</span><br><span class="line">        if (settings.beforeSend.call(context, xhr, settings) === false ||</span><br><span class="line">            triggerGlobal(settings, context, &apos;ajaxBeforeSend&apos;, [xhr, settings]) === false)</span><br><span class="line">            return false;</span><br><span class="line"></span><br><span class="line">        triggerGlobal(settings, context, &apos;ajaxSend&apos;, [xhr, settings])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //请求成功调用函数</span><br><span class="line">    function ajaxSuccess(data, xhr, settings, deferred) &#123;</span><br><span class="line">        var context = settings.context, status = &apos;success&apos;;</span><br><span class="line">        settings.success.call(context, data, status, xhr);</span><br><span class="line">        if (deferred) deferred.resolveWith(context, [data, status, xhr]);</span><br><span class="line">        triggerGlobal(settings, context, &apos;ajaxSuccess&apos;, [xhr, settings, data]);</span><br><span class="line">        ajaxComplete(status, xhr, settings)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //请求失败调用函数 type: &quot;timeout&quot;, &quot;error&quot;, &quot;abort&quot;, &quot;parsererror&quot;</span><br><span class="line">    function ajaxError(error, type, xhr, settings, deferred) &#123;</span><br><span class="line">        var context = settings.context;</span><br><span class="line">        settings.error.call(context, xhr, type, error);</span><br><span class="line">        if (deferred) deferred.rejectWith(context, [xhr, type, error]);</span><br><span class="line">        triggerGlobal(settings, context, &apos;ajaxError&apos;, [xhr, settings, error || type]);</span><br><span class="line">        ajaxComplete(type, xhr, settings)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //请求完成调用函数 status: &quot;success&quot;, &quot;notmodified&quot;, &quot;error&quot;, &quot;timeout&quot;, &quot;abort&quot;, &quot;parsererror&quot;</span><br><span class="line">    function ajaxComplete(status, xhr, settings) &#123;</span><br><span class="line">        var context = settings.context;</span><br><span class="line">        settings.complete.call(context, xhr, status);</span><br><span class="line">        triggerGlobal(settings, context, &apos;ajaxComplete&apos;, [xhr, settings]);</span><br><span class="line">        ajaxStop(settings)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //执行自定义过滤函数</span><br><span class="line">    function ajaxDataFilter(data, type, settings) &#123;</span><br><span class="line">        if (settings.dataFilter == empty) return data;</span><br><span class="line">        var context = settings.context;</span><br><span class="line">        return settings.dataFilter.call(context, data, type)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Empty function, used as default callback</span><br><span class="line">    function empty() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $.ajaxJSONP = function (options, deferred) &#123;</span><br><span class="line">        if (!(&apos;type&apos; in options)) return $.ajax(options)</span><br><span class="line"></span><br><span class="line">        var _callbackName = options.jsonpCallback,</span><br><span class="line">            callbackName = ($.isFunction(_callbackName) ?</span><br><span class="line">                    _callbackName() : _callbackName) || (&apos;Zepto&apos; + (jsonpID++)),</span><br><span class="line">            script = document.createElement(&apos;script&apos;),</span><br><span class="line">            originalCallback = window[callbackName],</span><br><span class="line">            responseData,</span><br><span class="line">            abort = function (errorType) &#123;</span><br><span class="line">                $(script).triggerHandler(&apos;error&apos;, errorType || &apos;abort&apos;)</span><br><span class="line">            &#125;,</span><br><span class="line">            xhr = &#123;abort: abort&#125;, abortTimeout</span><br><span class="line"></span><br><span class="line">        if (deferred) deferred.promise(xhr)</span><br><span class="line"></span><br><span class="line">        $(script).on(&apos;load error&apos;, function (e, errorType) &#123;</span><br><span class="line">            clearTimeout(abortTimeout)</span><br><span class="line">            $(script).off().remove()</span><br><span class="line"></span><br><span class="line">            if (e.type == &apos;error&apos; || !responseData) &#123;</span><br><span class="line">                ajaxError(null, errorType || &apos;error&apos;, xhr, options, deferred)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                ajaxSuccess(responseData[0], xhr, options, deferred)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            window[callbackName] = originalCallback</span><br><span class="line">            if (responseData &amp;&amp; $.isFunction(originalCallback))</span><br><span class="line">                originalCallback(responseData[0])</span><br><span class="line"></span><br><span class="line">            originalCallback = responseData = undefined</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        if (ajaxBeforeSend(xhr, options) === false) &#123;</span><br><span class="line">            abort(&apos;abort&apos;)</span><br><span class="line">            return xhr</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        window[callbackName] = function () &#123;</span><br><span class="line">            responseData = arguments</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        script.src = options.url.replace(/\?(.+)=\?/, &apos;?$1=&apos; + callbackName)</span><br><span class="line">        document.head.appendChild(script)</span><br><span class="line"></span><br><span class="line">        if (options.timeout &gt; 0) abortTimeout = setTimeout(function () &#123;</span><br><span class="line">            abort(&apos;timeout&apos;)</span><br><span class="line">        &#125;, options.timeout)</span><br><span class="line"></span><br><span class="line">        return xhr</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //包含Ajax请求的默认设置的全局对象</span><br><span class="line">    $.ajaxSettings = &#123;</span><br><span class="line">        // Default type of request</span><br><span class="line">        type: &apos;GET&apos;,</span><br><span class="line">        // Callback that is executed before request</span><br><span class="line">        beforeSend: empty,</span><br><span class="line">        // Callback that is executed if the request succeeds</span><br><span class="line">        success: empty,</span><br><span class="line">        // Callback that is executed the the server drops error</span><br><span class="line">        error: empty,</span><br><span class="line">        // Callback that is executed on request complete (both: error and success)</span><br><span class="line">        complete: empty,</span><br><span class="line">        // The context for the callbacks</span><br><span class="line">        context: null,</span><br><span class="line">        // Whether to trigger &quot;global&quot; Ajax events</span><br><span class="line">        global: true,</span><br><span class="line">        // Transport</span><br><span class="line">        xhr: function () &#123;</span><br><span class="line">            return new window.XMLHttpRequest()</span><br><span class="line">        &#125;,</span><br><span class="line">        // MIME types mapping</span><br><span class="line">        // IIS returns Javascript as &quot;application/x-javascript&quot;</span><br><span class="line">        accepts: &#123;</span><br><span class="line">            script: &apos;text/javascript, application/javascript, application/x-javascript&apos;,</span><br><span class="line">            json: jsonType,</span><br><span class="line">            xml: &apos;application/xml, text/xml&apos;,</span><br><span class="line">            html: htmlType,</span><br><span class="line">            text: &apos;text/plain&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        // Whether the request is to another domain</span><br><span class="line">        crossDomain: false,</span><br><span class="line">        // Default timeout</span><br><span class="line">        timeout: 0,</span><br><span class="line">        // Whether data should be serialized to string</span><br><span class="line">        processData: true,</span><br><span class="line">        // Whether the browser should be allowed to cache GET responses</span><br><span class="line">        cache: true,</span><br><span class="line">        //Used to handle the raw response data of XMLHttpRequest.</span><br><span class="line">        //This is a pre-filtering function to sanitize the response.</span><br><span class="line">        //The sanitized response should be returned</span><br><span class="line">        dataFilter: empty</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //根据媒体类型获取dataType:html,json,scirpt,xml,text等</span><br><span class="line">    function mimeToDataType(mime) &#123;</span><br><span class="line">        if (mime) mime = mime.split(&apos;;&apos;, 2)[0];</span><br><span class="line">        return mime &amp;&amp; ( mime == htmlType ? &apos;html&apos; :</span><br><span class="line">                mime == jsonType ? &apos;json&apos; :</span><br><span class="line">                    scriptTypeRE.test(mime) ? &apos;script&apos; :</span><br><span class="line">                        xmlTypeRE.test(mime) &amp;&amp; &apos;xml&apos; ) || &apos;text&apos;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //将查询参数追加到URL后面</span><br><span class="line">    function appendQuery(url, query) &#123;</span><br><span class="line">        if (query == &apos;&apos;) return url;</span><br><span class="line">        return (url + &apos;&amp;&apos; + query).replace(/[&amp;?]&#123;1,2&#125;/, &apos;?&apos;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // serialize payload and append it to the URL for GET requests</span><br><span class="line">    function serializeData(options) &#123;</span><br><span class="line">        //对于非Get请求。是否自动将data转换为字符串</span><br><span class="line">        if (options.processData &amp;&amp; options.data &amp;&amp; $.type(options.data) != &quot;string&quot;)</span><br><span class="line">            options.data = $.param(options.data, options.traditional);</span><br><span class="line">        //get请求，将序列化的数据追加到url后面</span><br><span class="line">        if (options.data &amp;&amp; (!options.type || options.type.toUpperCase() == &apos;GET&apos; || &apos;jsonp&apos; == options.dataType))</span><br><span class="line">            options.url = appendQuery(options.url, options.data), options.data = undefined</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $.ajax = function (options) &#123;</span><br><span class="line">        var settings = $.extend(&#123;&#125;, options || &#123;&#125;),</span><br><span class="line">            deferred = $.Deferred &amp;&amp; $.Deferred(),</span><br><span class="line">            urlAnchor, hashIndex;</span><br><span class="line">        //复制默认配置值到选项中(如果选项中没设置)</span><br><span class="line">        for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key];</span><br><span class="line"></span><br><span class="line">        //触发ajaxStart时间，可在document进行监听</span><br><span class="line">        ajaxStart(settings);</span><br><span class="line"></span><br><span class="line">        //判断是否跨域(通过页面url和接口url进行比较,判断ip协议和端口号是否相等)</span><br><span class="line">        if (!settings.crossDomain) &#123;</span><br><span class="line">            urlAnchor = document.createElement(&apos;a&apos;);</span><br><span class="line">            urlAnchor.href = settings.url;</span><br><span class="line">            //解决ie的hack</span><br><span class="line">            urlAnchor.href = urlAnchor.href;</span><br><span class="line">            settings.crossDomain = (originAnchor.protocol + &apos;//&apos; + originAnchor.host) !== (urlAnchor.protocol + &apos;//&apos; + urlAnchor.host)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //未设置url，取当前地址栏(如果有hash，截掉hash)</span><br><span class="line">        if (!settings.url) settings.url = window.location.toString();</span><br><span class="line">        if ((hashIndex = settings.url.indexOf(&apos;#&apos;)) &gt; -1) settings.url = settings.url.slice(0, hashIndex);</span><br><span class="line">        serializeData(settings);</span><br><span class="line"></span><br><span class="line">        ///\?.+=\?/.test(settings.url):有xxx.html?a=1?=cccc类似形式，为jsonp</span><br><span class="line">        var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url);</span><br><span class="line">        if (hasPlaceholder) dataType = &apos;jsonp&apos;;</span><br><span class="line"></span><br><span class="line">        //不设置缓存，加时间戳 &apos;_=&apos; + Date.now()</span><br><span class="line">        if (settings.cache === false || (</span><br><span class="line">                (!options || options.cache !== true) &amp;&amp;</span><br><span class="line">                (&apos;script&apos; == dataType || &apos;jsonp&apos; == dataType)</span><br><span class="line">            ))</span><br><span class="line">            settings.url = appendQuery(settings.url, &apos;_=&apos; + Date.now());</span><br><span class="line"></span><br><span class="line">        //如果是jsonp,调用$.ajaxJSONP,不走XHR，走script</span><br><span class="line">        if (&apos;jsonp&apos; == dataType) &#123;</span><br><span class="line">            if (!hasPlaceholder)  //判断url是否有类似jsonp的参数</span><br><span class="line">                settings.url = appendQuery(settings.url,</span><br><span class="line">                    settings.jsonp ? (settings.jsonp + &apos;=?&apos;) : settings.jsonp === false ? &apos;&apos; : &apos;callback=?&apos;);</span><br><span class="line">            return $.ajaxJSONP(settings, deferred)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //媒体类型</span><br><span class="line">        var mime = settings.accepts[dataType],</span><br><span class="line">            headers = &#123;&#125;,</span><br><span class="line">            //设置请求头的方法</span><br><span class="line">            setHeader = function (name, value) &#123;</span><br><span class="line">                headers[name.toLowerCase()] = [name, value]</span><br><span class="line">            &#125;,</span><br><span class="line">            //如果URL没协议，读取本地URL的协议</span><br><span class="line">            protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol,</span><br><span class="line">            xhr = settings.xhr(),</span><br><span class="line">            nativeSetHeader = xhr.setRequestHeader,</span><br><span class="line">            abortTimeout;</span><br><span class="line"></span><br><span class="line">        //将xhr设为只读Deferred对象，不能更改状态</span><br><span class="line">        if (deferred) deferred.promise(xhr);</span><br><span class="line"></span><br><span class="line">        //如果没有跨域(x-requested-with XMLHttpRequest 表明是AJax异步;x-requested-with null 表明同步,浏览器工具栏未显示,在后台request可以获取到)</span><br><span class="line">        if (!settings.crossDomain) setHeader(&apos;X-Requested-With&apos;, &apos;XMLHttpRequest&apos;);</span><br><span class="line">        setHeader(&apos;Accept&apos;, mime || &apos;*/*&apos;);</span><br><span class="line">        if (mime = settings.mimeType || mime) &#123;</span><br><span class="line">            //媒体数据源里对应多个，如 script: &apos;text/javascript, application/javascript, application/x-javascript&apos;,设置最新的写法</span><br><span class="line">            if (mime.indexOf(&apos;,&apos;) &gt; -1) mime = mime.split(&apos;,&apos;, 2)[0];</span><br><span class="line">            //对Mozilla的修正</span><br><span class="line">            xhr.overrideMimeType &amp;&amp; xhr.overrideMimeType(mime)</span><br><span class="line">        &#125;</span><br><span class="line">        /**</span><br><span class="line">         * Content-Type: 内容类型指定响应的HTTP内容类型。决定浏览器将以什么形式、什么编码读取这个文件. 如果未指定ContentType，默认为TEXT/HTML。</span><br><span class="line">         * 当action为get时候，浏览器用x-www-form-urlencoded的编码方式把form数据转换成一个字串（name1=value1&amp;name2=value2...），然后把这个字串append到</span><br><span class="line">         * url后面，用?分割，加载这个新的url；当action为post时候，浏览器把form数据封装到http body中，然后发送到server。</span><br><span class="line">         * 如果method==get，则请求头部不用设置Content-Type，若method==post，则请求头部的Content-Type默认设置&apos;application/x-www-form-urlencoded&apos;</span><br><span class="line">         * */</span><br><span class="line">        if (settings.contentType || (settings.contentType !== false &amp;&amp; settings.data &amp;&amp; settings.type.toUpperCase() != &apos;GET&apos;))</span><br><span class="line">            setHeader(&apos;Content-Type&apos;, settings.contentType || &apos;application/x-www-form-urlencoded&apos;);</span><br><span class="line"></span><br><span class="line">        //设置请求头</span><br><span class="line">        if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name])</span><br><span class="line">        xhr.setRequestHeader = setHeader;</span><br><span class="line"></span><br><span class="line">        xhr.onreadystatechange = function () &#123;</span><br><span class="line">            /**</span><br><span class="line">             0：请求未初始化（还没有调用 open()）。</span><br><span class="line">             1：请求已经建立，但是还没有发送（还没有调用 send()）。</span><br><span class="line">             2：请求已发送，正在处理中（通常现在可以从响应中获取内容头）。</span><br><span class="line">             3：请求在处理中；通常响应中已有部分数据可用了，但是服务器还没有完成响应的生成。</span><br><span class="line">             4：响应已完成；您可以获取并使用服务器的响应了。</span><br><span class="line">             */</span><br><span class="line">            if (xhr.readyState == 4) &#123;</span><br><span class="line">                xhr.onreadystatechange = empty;</span><br><span class="line">                //使用了闭包</span><br><span class="line">                clearTimeout(abortTimeout);</span><br><span class="line">                var result, error = false;</span><br><span class="line">                /**</span><br><span class="line">                 * 根据状态来判断请求是否成功</span><br><span class="line">                 * &gt;=200 &amp;&amp; &lt; 300 表示成功</span><br><span class="line">                 * 304 文件未修改 成功</span><br><span class="line">                 * xhr.status == 0 &amp;&amp; protocol == &apos;file:&apos;  未请求，打开的本地文件，非localhost  ip形式</span><br><span class="line">                 * */</span><br><span class="line">                if ((xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300) || xhr.status == 304 || (xhr.status == 0 &amp;&amp; protocol == &apos;file:&apos;)) &#123;</span><br><span class="line">                    //getResponseHeader:从响应信息中获取指定的http头</span><br><span class="line">                    dataType = dataType || mimeToDataType(settings.mimeType || xhr.getResponseHeader(&apos;content-type&apos;));</span><br><span class="line">                    //响应值</span><br><span class="line">                    if (xhr.responseType == &apos;arraybuffer&apos; || xhr.responseType == &apos;blob&apos;)</span><br><span class="line">                        result = xhr.response;</span><br><span class="line">                    else &#123;</span><br><span class="line">                        result = xhr.responseText;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            /**</span><br><span class="line">                             * http://perfectionkills.com/global-eval-what-are-the-options/</span><br><span class="line">                             * sanitize response accordingly if data filter callback provided</span><br><span class="line">                             * (1,eval)(result)  (1,eval)这是一个典型的逗号操作符，返回最右边的值</span><br><span class="line">                             * (1,eval)  eval 的区别是:前者是一个值，不可以再覆盖。后者是变量,如var a = 1; (1,a) = 1;会报错；</span><br><span class="line">                             * (1,eval)(result)  eval(result) 的区别是:前者变成值后，只能读取window域下的变量。而后者，遵循作用域链，从局部变量上溯到window域</span><br><span class="line">                             * 显然(1,eval)(result)  避免了作用域链的上溯操作，性能更好</span><br><span class="line">                             * */</span><br><span class="line">                            result = ajaxDataFilter(result, dataType, settings);</span><br><span class="line">                            if (dataType == &apos;script&apos;) (1, eval)(result);</span><br><span class="line">                            else if (dataType == &apos;xml&apos;) result = xhr.responseXML;</span><br><span class="line">                            else if (dataType == &apos;json&apos;) result = blankRE.test(result) ? null : $.parseJSON(result)</span><br><span class="line">                        &#125; catch (e) &#123;</span><br><span class="line">                            error = e</span><br><span class="line">                        &#125;</span><br><span class="line">                        //解析出错，抛出 &apos;parsererror&apos;事件</span><br><span class="line">                        if (error) return ajaxError(error, &apos;parsererror&apos;, xhr, settings, deferred)</span><br><span class="line">                    &#125;</span><br><span class="line">                    //执行success</span><br><span class="line">                    ajaxSuccess(result, xhr, settings, deferred)</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    //如果请求出错,xhr.status = 0 / null 执行abort,其他执行error</span><br><span class="line">                    ajaxError(xhr.statusText || null, xhr.status ? &apos;error&apos; : &apos;abort&apos;, xhr, settings, deferred)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        //执行请求前置器,若返回false则中断请求</span><br><span class="line">        if (ajaxBeforeSend(xhr, settings) === false) &#123;</span><br><span class="line">            xhr.abort();</span><br><span class="line">            ajaxError(null, &apos;abort&apos;, xhr, settings, deferred);</span><br><span class="line">            return xhr</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 这是一个小技巧，默认async为true，若settings里面设置了，则为设置的值</span><br><span class="line">        var async = &apos;async&apos; in settings ? settings.async : true;</span><br><span class="line">        //准备xhr请求</span><br><span class="line">        xhr.open(settings.type, settings.url, async, settings.username, settings.password);</span><br><span class="line"></span><br><span class="line">        //对象包含的属性被逐字复制到XMLHttpRequest的实例(如设置跨域凭证withCredentials)</span><br><span class="line">        if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name]</span><br><span class="line"></span><br><span class="line">        //设置请求头</span><br><span class="line">        for (name in headers) nativeSetHeader.apply(xhr, headers[name])</span><br><span class="line"></span><br><span class="line">        //超时处理：设置了settings.timeout，超时后调用xhr.abort()中断请求</span><br><span class="line">        if (settings.timeout &gt; 0) abortTimeout = setTimeout(function () &#123;</span><br><span class="line">            xhr.onreadystatechange = empty;</span><br><span class="line">            xhr.abort();</span><br><span class="line">            ajaxError(null, &apos;timeout&apos;, xhr, settings, deferred)</span><br><span class="line">        &#125;, settings.timeout);</span><br><span class="line"></span><br><span class="line">        // avoid sending empty string (#319)</span><br><span class="line">        xhr.send(settings.data ? settings.data : null);</span><br><span class="line">        return xhr</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //进行可选参数(data/success)校验</span><br><span class="line">    function parseArguments(url, data, success, dataType) &#123;</span><br><span class="line">        if ($.isFunction(data)) dataType = success, success = data, data = undefined;</span><br><span class="line">        if (!$.isFunction(success)) dataType = success, success = undefined;</span><br><span class="line">        return &#123;</span><br><span class="line">            url: url</span><br><span class="line">            , data: data</span><br><span class="line">            , success: success</span><br><span class="line">            , dataType: dataType</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //$.ajax的简写方式 get请求</span><br><span class="line">    $.get = function (/* url, data, success, dataType */) &#123;</span><br><span class="line">        return $.ajax(parseArguments.apply(null, arguments))</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //$.ajax的简写方式 post请求</span><br><span class="line">    $.post = function (/* url, data, success, dataType */) &#123;</span><br><span class="line">        var options = parseArguments.apply(null, arguments);</span><br><span class="line">        options.type = &apos;POST&apos;;</span><br><span class="line">        return $.ajax(options)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //$.ajax的简写方式 获取JSON数据</span><br><span class="line">    $.getJSON = function (/* url, data, success */) &#123;</span><br><span class="line">        var options = parseArguments.apply(null, arguments);</span><br><span class="line">        options.dataType = &apos;json&apos;;</span><br><span class="line">        return $.ajax(options)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 通过GET Ajax载入远程HTML内容代码并插入至当前的dom元素中</span><br><span class="line">     * 可以使用匹配selector选择器的HTML内容来更新集合,如$(&apos;#some_element&apos;).load(&apos;/foo.html #bar&apos;)</span><br><span class="line">     * 如果没有给定CSS选择器，将使用完整的返回文本</span><br><span class="line">     * 在没有选择器的情况下，任何javascript块都会添加。如果带上选择器，匹配选择器内的script将会被删除</span><br><span class="line">     * */</span><br><span class="line">    $.fn.load = function (url, data, success) &#123;</span><br><span class="line">        if (!this.length) return this;</span><br><span class="line">        var self = this, parts = url.split(/\s/), selector,</span><br><span class="line">            options = parseArguments(url, data, success),</span><br><span class="line">            callback = options.success;</span><br><span class="line">        if (parts.length &gt; 1) options.url = parts[0], selector = parts[1];</span><br><span class="line">        // response.replace(rscript, &quot;&quot;) 过滤出script标签</span><br><span class="line">        //$(&apos;&lt;div&gt;&apos;).html(response.replace(rscript, &quot;&quot;))  innerHTML方式转换成DOM</span><br><span class="line">        options.success = function (response) &#123;</span><br><span class="line">            self.html(selector ?</span><br><span class="line">                $(&apos;&lt;div&gt;&apos;).html(response.replace(rscript, &quot;&quot;)).find(selector)</span><br><span class="line">                : response);</span><br><span class="line">            //dom操作后执行成功回调函数(注:callback存储的是自定义成功回调函数,options.success后面被重新赋值为ajax回调函数,不会死循环)</span><br><span class="line">            callback &amp;&amp; callback.apply(self, arguments)</span><br><span class="line">        &#125;;</span><br><span class="line">        $.ajax(options);</span><br><span class="line">        return this</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    var escape = encodeURIComponent;</span><br><span class="line"></span><br><span class="line">    //序列化</span><br><span class="line">    function serialize(params, obj, traditional, scope) &#123;</span><br><span class="line">        var type, array = $.isArray(obj), hash = $.isPlainObject(obj);</span><br><span class="line">        $.each(obj, function (key, value) &#123;</span><br><span class="line">            type = $.type(value);</span><br><span class="line">            //如果是第二次递归调用的话，需要处理一下key的值</span><br><span class="line">            if (scope) key = traditional ? scope :</span><br><span class="line">                scope + &apos;[&apos; + (hash || type == &apos;object&apos; || type == &apos;array&apos; ? key : &apos;&apos;) + &apos;]&apos;;</span><br><span class="line">            // 处理[&#123;name:&apos;&apos;,value:&apos;&apos;&#125;,&#123;name:&apos;&apos;,value:&apos;&apos;&#125;]这种类型</span><br><span class="line">            if (!scope &amp;&amp; array) params.add(value.name, value.value);</span><br><span class="line">            // 处理嵌套对象如&#123;&apos;key&apos;:[]&#125;或者&#123;&apos;key&apos;:&#123;&#125;&#125;</span><br><span class="line">            else if (type == &quot;array&quot; || (!traditional &amp;&amp; type == &quot;object&quot;))</span><br><span class="line">                serialize(params, value, traditional, key);</span><br><span class="line">            else params.add(key, value)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 序列化一个对象，在Ajax请求中提交的数据使用URL编码的查询字符串表示形式。</span><br><span class="line">     * 如果shallow设置为true。嵌套对象不会被序列化，嵌套数组的值不会使用放括号在他们的key上。</span><br><span class="line">     * */</span><br><span class="line">    $.param = function (obj, traditional) &#123;</span><br><span class="line">        var params = [];</span><br><span class="line">        params.add = function (key, value) &#123;</span><br><span class="line">            if ($.isFunction(value)) value = value();</span><br><span class="line">            if (value == null) value = &quot;&quot;;</span><br><span class="line">            this.push(escape(key) + &apos;=&apos; + escape(value))</span><br><span class="line">        &#125;;</span><br><span class="line">        serialize(params, obj, traditional);</span><br><span class="line">        return params.join(&apos;&amp;&apos;).replace(/%20/g, &apos;+&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(Zepto);</span><br></pre></td></tr></table></figure>
+<h3 id="二、源码分析"><a href="#二、源码分析" class="headerlink" title="二、源码分析"></a>二、源码分析</h3><h4 id="1、事件处理"><a href="#1、事件处理" class="headerlink" title="1、事件处理"></a>1、事件处理</h4><p>ajaxStart/ajaxStop: 绑定在 document 上，通过全局变量 $.active 变量判断是否触发自定义相应事件；<br>ajaxBeforeSend: ajax 请求前执行自定义拦截函数，同时执行全局 ajaxBeforeSend 函数；如果同时满足触发 ajaxSend 自定义事件，否则触发自定义 abort 事件，执行 ajaxError 函数；<br>ajaxSuccess/ajaxError: ajax 成功/失败回调函数，触发相应自定义函数后调用 ajaxComplete 函数；<br>ajaxComplete: ajax 请求完成回调函数，触发自定义事件，同时触发 ajaxStop 事件。</p>
+<h4 id="2、判断是否跨域-确定-settings-crossDomain-的值"><a href="#2、判断是否跨域-确定-settings-crossDomain-的值" class="headerlink" title="2、判断是否跨域,确定 settings.crossDomain 的值"></a>2、判断是否跨域,确定 settings.crossDomain 的值</h4><p>调用两次 document.createElement(‘a’) 创建两个 a 标签，一个设置为当前 url 地址，一个设置为接口地址，比较两个 a 标签的端口号和 ip 协议判断是否跨域。</p>
+<h4 id="3、清除-ajax-缓存-settings-catch-false"><a href="#3、清除-ajax-缓存-settings-catch-false" class="headerlink" title="3、清除 ajax 缓存(settings.catch === false)"></a>3、清除 ajax 缓存(settings.catch === false)</h4><p>在 url 后面添加时间戳参数，防止 ajax 请求缓存。</p>
+<h4 id="4、ajax-超时处理"><a href="#4、ajax-超时处理" class="headerlink" title="4、ajax 超时处理"></a>4、ajax 超时处理</h4><p>ajax 执行时设置一个定时器，时间为超时时间，如果超过则执行 xhr.abort，并且触发 timeout 自定义事件；如果在超时时间内请求成功，则清除定时器，onreadystatechange 函数内部使用了闭包。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-18T02:43:05.000Z" itemprop="dateUpdated">2018-04-18 10:43:05</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/zepto/ajaxJs/" target="_blank" rel="external">http://blog.master-ss.cn/zepto/ajaxJs/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/zepto/ajaxJs/&title=《zepto 之 ajax.js》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/zepto/ajaxJs/&title=《zepto 之 ajax.js》 — 青松的博客&source=$.ajax是 zepto 发送请求的核心方法，$.get,$.post,$.jsonp都是封装了$.ajax方法。$.ajax将 jsonp 与异步请求..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/zepto/ajaxJs/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zepto 之 ajax.js》 — 青松的博客&url=http://blog.master-ss.cn/zepto/ajaxJs/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/zepto/ajaxJs/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/zepto/callbacksJs/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">zepto 之 callbacks.js</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/zepto/dataJs/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">zepto 之 data.js</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/zepto/ajaxJs/&title=《zepto 之 ajax.js》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/zepto/ajaxJs/&title=《zepto 之 ajax.js》 — 青松的博客&source=$.ajax是 zepto 发送请求的核心方法，$.get,$.post,$.jsonp都是封装了$.ajax方法。$.ajax将 jsonp 与异步请求..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/zepto/ajaxJs/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zepto 之 ajax.js》 — 青松的博客&url=http://blog.master-ss.cn/zepto/ajaxJs/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/zepto/ajaxJs/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAB00lEQVR42u3aSwoCMRBFUfe/6RYcKZJwXyopW7gZiWj69KSo3+OBz/U639+8f08+z+/cduTKlVvmXtNDHjl/GXIn+b1cuXL7ufNAM3rY8NLpPaVgJ1eu3Jtx58Fr/hrk5eXKlfuP3FEqU/+vXLly78klhQopdXjL43itJleu3AI3bZie+HywvytXrtyQe4Vn7QYyjEH3yJUrt4U7v4gMTnhJQ36JwpxcuXIbuWtDjnmZVEmnUK0mV67cA9x0QFJvkaRD2Y9v5MqV+yPuWgK0toDFw1lp9iJXrtyQizKgQrmSrnaRsChXrtzTXB56eKuUh0ISEIN6S65cuVu5lWEqT014WxZNeuXKldvI5U0QXuSkhdDwX3Llym3hpstYGyqtpQRIrly5ndxKQlNppK6FNrly5fZwU9CudYp0eUuuXLmdXJ64pAtY6XoWCm1y5cpt5KZNT748sTcIypUrt5PLD09f0sZo0KeRK1fuYe7afDMdq6QD3XSsK1eu3BPctK3JwxAPcMGQRq5cuY3cNHiRlQveRgmeK1eu3JtxK2OSdP1ieINcuXL/hEteg5RJpGSSK1duJ3dXgkKGpqR82tAWkStXboG7bT0iXMJYC3Zy5co9zH0CAFwP9tfzKdgAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

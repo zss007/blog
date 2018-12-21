@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之字符串扩展 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ES6 扩展了字符串对象。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之字符串扩展">
+<meta property="og:url" content="http://blog.master-ss.cn/es6/string-expand/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="ES6 扩展了字符串对象。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-22T14:01:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之字符串扩展">
+<meta name="twitter:description" content="ES6 扩展了字符串对象。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之字符串扩展</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之字符串扩展</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-28T06:56:48.000Z" itemprop="datePublished" class="page-time">
+  2018-01-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、codePointAt"><span class="post-toc-text">一、codePointAt()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、String-fromCodePoint"><span class="post-toc-text">二、String.fromCodePoint()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、字符串的遍历器接口"><span class="post-toc-text">三、字符串的遍历器接口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、normalize"><span class="post-toc-text">四、normalize()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、includes-startsWith-endsWith"><span class="post-toc-text">五、includes(), startsWith(), endsWith()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、repeat"><span class="post-toc-text">六、repeat()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、padStart-，padEnd"><span class="post-toc-text">七、padStart()，padEnd()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#八、模板字符串"><span class="post-toc-text">八、模板字符串</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#九、标签模板"><span class="post-toc-text">九、标签模板</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#十、String-raw"><span class="post-toc-text">十、String.raw()</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-es6/string-expand" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之字符串扩展</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-01-28 14:56:48" datetime="2018-01-28T06:56:48.000Z" itemprop="datePublished">2018-01-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>ES6 扩展了字符串对象。<br><a id="more"></a></p>
+<h3 id="一、codePointAt"><a href="#一、codePointAt" class="headerlink" title="一、codePointAt()"></a>一、codePointAt()</h3><p>JavaScript 内部，字符以 UTF-16 的格式储存，每个字符固定为2个字节。对于那些需要4个字节储存的字符（Unicode 码点大于0xFFFF的字符），JavaScript 会认为它们是两个字符。ES6 提供了codePointAt方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点；对于那些两个字节储存的常规字符，它的返回结果与charCodeAt方法相同。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// 汉字“𠮷”（注意，这个字不是“吉祥”的“吉”）的码点是0x20BB7，UTF-16 编码为0xD842 0xDFB7（十进制为55362 57271），需要4个字节储存。</span><br><span class="line">var s = &quot;𠮷a&quot;;</span><br><span class="line">// JavaScript 不能正确处理，字符串长度会误判为2</span><br><span class="line">s.length // 2</span><br><span class="line">// charAt方法无法读取整个字符</span><br><span class="line">s.charAt(0) // &apos;&apos;</span><br><span class="line">s.charAt(1) // &apos;&apos;</span><br><span class="line">// charCodeAt方法只能分别返回前两个字节和后两个字节的值</span><br><span class="line">s.charCodeAt(0) // 55362</span><br><span class="line">s.charCodeAt(1) // 57271</span><br><span class="line">s.codePointAt(2) // 97</span><br><span class="line">    </span><br><span class="line">let s = &apos;𠮷a&apos;;</span><br><span class="line">// JavaScript 将“𠮷a”视为三个字符，codePointAt 方法在第一个字符上，正确地识别了“𠮷”，返回了它的十进制码点 134071（即十六进制的20BB7）</span><br><span class="line">s.codePointAt(0) // 134071</span><br><span class="line">// 在第二个字符（即“𠮷”的后两个字节）和第三个字符“a”上，codePointAt方法的结果与charCodeAt方法相同</span><br><span class="line">s.codePointAt(1) // 57271</span><br><span class="line">s.codePointAt(2) // 97</span><br><span class="line">    </span><br><span class="line">let s = &apos;𠮷a&apos;;</span><br><span class="line">// codePointAt方法返回的是码点的十进制值，如果想要十六进制的值，可以使用 toString 方法转换一下</span><br><span class="line">s.codePointAt(0).toString(16) // &quot;20bb7&quot;</span><br><span class="line">s.codePointAt(2).toString(16) // &quot;61&quot;</span><br><span class="line">    </span><br><span class="line">// 解决字符 a 在字符串 s 的位置序号问题</span><br><span class="line">let s = &apos;𠮷a&apos;;</span><br><span class="line">for (let ch of s) &#123;</span><br><span class="line">  console.log(ch.codePointAt(0).toString(16));</span><br><span class="line">&#125;</span><br><span class="line">// 20bb7</span><br><span class="line">// 61</span><br><span class="line">    </span><br><span class="line">// 测试一个字符由两个字节还是由四个字节组成的最简单方法</span><br><span class="line">function is32Bit(c) &#123;</span><br><span class="line">  return c.codePointAt(0) &gt; 0xFFFF;</span><br><span class="line">&#125;</span><br><span class="line">is32Bit(&quot;𠮷&quot;) // true</span><br><span class="line">is32Bit(&quot;a&quot;) // false</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、String-fromCodePoint"><a href="#二、String-fromCodePoint" class="headerlink" title="二、String.fromCodePoint()"></a>二、String.fromCodePoint()</h3><p>ES5 提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别 32 位的 UTF-16 字符（Unicode 编号大于0xFFFF）。<br>ES6 提供了String.fromCodePoint方法，可以识别大于0xFFFF的字符，弥补了String.fromCharCode方法的不足。在作用上，正好与codePointAt方法相反。<br>注意，fromCodePoint方法定义在String对象上，而codePointAt方法定义在字符串的实例对象上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String.fromCharCode(0x20BB7)</span><br><span class="line">// &quot;ஷ&quot;，String.fromCharCode不能识别大于0xFFFF的码点，所以0x20BB7就发生了溢出，最高位2被舍弃了，最后返回码点U+0BB7对应的字符，而不是码点U+20BB7对应的字符。</span><br><span class="line">    </span><br><span class="line">String.fromCodePoint(0x20BB7)</span><br><span class="line">// &quot;𠮷&quot;</span><br><span class="line">String.fromCodePoint(0x78, 0x1f680, 0x79) === &apos;x\uD83D\uDE80y&apos;</span><br><span class="line">// true，如果String.fromCodePoint方法有多个参数，则它们会被合并成一个字符串返回。</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、字符串的遍历器接口"><a href="#三、字符串的遍历器接口" class="headerlink" title="三、字符串的遍历器接口"></a>三、字符串的遍历器接口</h3><p>ES6 为字符串添加了遍历器接口，使得字符串可以被for…of循环遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">for (let codePoint of &apos;foo&apos;) &#123;</span><br><span class="line">  console.log(codePoint)</span><br><span class="line">&#125;</span><br><span class="line">// &quot;f&quot;</span><br><span class="line">// &quot;o&quot;</span><br><span class="line">// &quot;o&quot;</span><br><span class="line">      </span><br><span class="line">// 除了遍历字符串，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点</span><br><span class="line">let text = String.fromCodePoint(0x20BB7);</span><br><span class="line">// 字符串text只有一个字符，但是for循环会认为它包含两个字符（都不可打印）</span><br><span class="line">for (let i = 0; i &lt; text.length; i++) &#123;</span><br><span class="line">  console.log(text[i]);</span><br><span class="line">&#125;</span><br><span class="line">// &quot; &quot;</span><br><span class="line">// &quot; &quot;</span><br><span class="line">for (let i of text) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">// &quot;𠮷&quot;，而for...of循环会正确识别出这一个字符</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、normalize"><a href="#四、normalize" class="headerlink" title="四、normalize()"></a>四、normalize()</h3><p>许多欧洲语言有语调符号和重音符号。为了表示它们，Unicode 提供了两种方法。一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。这两种表示方法，在视觉和语义上都等价，但是 JavaScript 不能识别。<br>ES6 提供字符串实例的normalize()方法，用来将字符的不同表示方法统一为同样的形式，这称为 Unicode 正规化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&apos;\u01D1&apos;===&apos;\u004F\u030C&apos; //false</span><br><span class="line">&apos;\u01D1&apos;.length // 1</span><br><span class="line">&apos;\u004F\u030C&apos;.length // 2</span><br><span class="line">      </span><br><span class="line">&apos;\u01D1&apos;.normalize() === &apos;\u004F\u030C&apos;.normalize()</span><br><span class="line">// true</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、includes-startsWith-endsWith"><a href="#五、includes-startsWith-endsWith" class="headerlink" title="五、includes(), startsWith(), endsWith()"></a>五、includes(), startsWith(), endsWith()</h3><p>传统上，JavaScript 只有 indexOf 方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6 又提供了三种新方法。<br>1、includes()：返回布尔值，表示是否找到了参数字符串。<br>2、startsWith()：返回布尔值，表示参数字符串是否在原字符串的头部。<br>3、endsWith()：返回布尔值，表示参数字符串是否在原字符串的尾部。<br>支持第二个参数，表示开始搜索的位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let s = &apos;Hello world!&apos;;</span><br><span class="line">    </span><br><span class="line">s.startsWith(&apos;Hello&apos;) // true</span><br><span class="line">s.endsWith(&apos;!&apos;) // true</span><br><span class="line">s.includes(&apos;o&apos;) // true</span><br><span class="line">    </span><br><span class="line">// 使用第二个参数 n 时，endsWith 的行为与其他两个方法有所不同。它针对前 n 个字符，而其他两个方法针对从第 n 个位置直到字符串结束</span><br><span class="line">s.startsWith(&apos;world&apos;, 6) // true</span><br><span class="line">s.endsWith(&apos;Hello&apos;, 5) // true</span><br><span class="line">s.includes(&apos;Hello&apos;, 6) // false</span><br></pre></td></tr></table></figure></p>
+<h3 id="六、repeat"><a href="#六、repeat" class="headerlink" title="六、repeat()"></a>六、repeat()</h3><p>repeat 方法返回一个新字符串，表示将原字符串重复 n 次。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&apos;x&apos;.repeat(3) // &quot;xxx&quot;</span><br><span class="line">&apos;hello&apos;.repeat(2) // &quot;hellohello&quot;</span><br><span class="line">&apos;na&apos;.repeat(0) // &quot;&quot;</span><br><span class="line">    </span><br><span class="line">// 参数如果是小数，会被取整。</span><br><span class="line">&apos;na&apos;.repeat(2.9) // &quot;nana&quot;</span><br><span class="line">    </span><br><span class="line">// 如果 repeat 的参数是负数或者 Infinity，会报错。</span><br><span class="line">&apos;na&apos;.repeat(Infinity)</span><br><span class="line">// RangeError</span><br><span class="line">&apos;na&apos;.repeat(-1)</span><br><span class="line">// RangeError</span><br><span class="line">    </span><br><span class="line">// 如果参数是 0 到-1 之间的小数，则等同于 0，这是因为会先进行取整运算。0 到-1 之间的小数，取整以后等于 -0，repeat 视同为 0。</span><br><span class="line">&apos;na&apos;.repeat(-0.9) // &quot;&quot;</span><br><span class="line">    </span><br><span class="line">// 参数 NaN 等同于 0。</span><br><span class="line">&apos;na&apos;.repeat(NaN) // &quot;&quot;</span><br><span class="line">    </span><br><span class="line">// 如果 repeat 的参数是字符串，则会先转换成数字。</span><br><span class="line">&apos;na&apos;.repeat(&apos;na&apos;) // &quot;&quot;</span><br><span class="line">&apos;na&apos;.repeat(&apos;3&apos;) // &quot;nanana&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="七、padStart-，padEnd"><a href="#七、padStart-，padEnd" class="headerlink" title="七、padStart()，padEnd()"></a>七、padStart()，padEnd()</h3><p>ES2017 引入了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart() 用于头部补全，padEnd() 用于尾部补全。一共接受两个参数，第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&apos;x&apos;.padStart(5, &apos;ab&apos;) // &apos;ababx&apos;</span><br><span class="line">&apos;x&apos;.padStart(4, &apos;ab&apos;) // &apos;abax&apos;</span><br><span class="line">&apos;x&apos;.padEnd(5, &apos;ab&apos;) // &apos;xabab&apos;</span><br><span class="line">&apos;x&apos;.padEnd(4, &apos;ab&apos;) // &apos;xaba&apos;</span><br><span class="line"></span><br><span class="line">// 如果原字符串的长度，等于或大于指定的最小长度，则返回原字符串。</span><br><span class="line">&apos;xxx&apos;.padStart(2, &apos;ab&apos;) // &apos;xxx&apos;</span><br><span class="line">&apos;xxx&apos;.padEnd(2, &apos;ab&apos;) // &apos;xxx&apos;</span><br><span class="line">    </span><br><span class="line">// 如果用来补全的字符串与原字符串，两者的长度之和超过了指定的最小长度，则会截去超出位数的补全字符串</span><br><span class="line">&apos;abc&apos;.padStart(10, &apos;0123456789&apos;)</span><br><span class="line">// &apos;0123456abc&apos;</span><br><span class="line">    </span><br><span class="line">// 如果省略第二个参数，默认使用空格补全长度</span><br><span class="line">&apos;x&apos;.padStart(4) // &apos;   x&apos;</span><br><span class="line">&apos;x&apos;.padEnd(4) // &apos;x   &apos;</span><br><span class="line">            </span><br><span class="line">// padStart 的常见用途是为数值补全指定位数。下面代码生成 10 位的数值字符串</span><br><span class="line">&apos;1&apos;.padStart(10, &apos;0&apos;) // &quot;0000000001&quot;</span><br><span class="line">&apos;12&apos;.padStart(10, &apos;0&apos;) // &quot;0000000012&quot;</span><br><span class="line">&apos;123456&apos;.padStart(10, &apos;0&apos;) // &quot;0000123456&quot;</span><br><span class="line">    </span><br><span class="line">// 另一个用途是提示字符串格式</span><br><span class="line">&apos;12&apos;.padStart(10, &apos;YYYY-MM-DD&apos;) // &quot;YYYY-MM-12&quot;</span><br><span class="line">&apos;09-12&apos;.padStart(10, &apos;YYYY-MM-DD&apos;) // &quot;YYYY-09-12&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="八、模板字符串"><a href="#八、模板字符串" class="headerlink" title="八、模板字符串"></a>八、模板字符串</h3><p>模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">// 普通字符串</span><br><span class="line">`In JavaScript &apos;\n&apos; is a line-feed.`</span><br><span class="line">    </span><br><span class="line">// 多行字符串</span><br><span class="line">`In JavaScript this is</span><br><span class="line"> not legal.`</span><br><span class="line">    </span><br><span class="line">console.log(`string text line 1</span><br><span class="line">string text line 2`);</span><br><span class="line">    </span><br><span class="line">// 字符串中嵌入变量</span><br><span class="line">let name = &quot;Bob&quot;, time = &quot;today&quot;;</span><br><span class="line">`Hello $&#123;name&#125;, how are you $&#123;time&#125;?`</span><br><span class="line">    </span><br><span class="line">// 如果在模板字符串中需要使用反引号，则前面要用反斜杠转义</span><br><span class="line">let greeting = `\`Yo\` World!`;</span><br><span class="line">    </span><br><span class="line">// 如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。如果你不想要这个换行，可以使用 trim 方法消除它</span><br><span class="line">$(&apos;#list&apos;).html(`</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">`.trim());</span><br><span class="line">    </span><br><span class="line">// 模板字符串中嵌入变量，需要将变量名写在 $&#123;&#125; 之中。大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。</span><br><span class="line">let x = 1;</span><br><span class="line">let y = 2;</span><br><span class="line">`$&#123;x&#125; + $&#123;y&#125; = $&#123;x + y&#125;`</span><br><span class="line">// &quot;1 + 2 = 3&quot;</span><br><span class="line">`$&#123;x&#125; + $&#123;y * 2&#125; = $&#123;x + y * 2&#125;`</span><br><span class="line">// &quot;1 + 4 = 5&quot;</span><br><span class="line">let obj = &#123;x: 1, y: 2&#125;;</span><br><span class="line">`$&#123;obj.x + obj.y&#125;`</span><br><span class="line">// &quot;3&quot;</span><br><span class="line">    </span><br><span class="line">// 模板字符串之中还能调用函数</span><br><span class="line">function fn() &#123;</span><br><span class="line">  return &quot;Hello World&quot;;</span><br><span class="line">&#125;</span><br><span class="line">`foo $&#123;fn()&#125; bar`</span><br><span class="line">// foo Hello World bar</span><br><span class="line">    </span><br><span class="line">// 如果大括号中的值不是字符串，将按照一般的规则转为字符串。比如，大括号中是一个对象，将默认调用对象的 toString 方法。如果模板字符串中的变量没有声明，将报错。</span><br><span class="line">let msg = `Hello, $&#123;place&#125;`;</span><br><span class="line">// 报错，变量 place 没有声明</span><br><span class="line">    </span><br><span class="line">// 由于模板字符串的大括号内部，就是执行 JavaScript 代码，因此如果大括号内部是一个字符串，将会原样输出。</span><br><span class="line">`Hello $&#123;&apos;World&apos;&#125;`</span><br><span class="line">// &quot;Hello World&quot;</span><br><span class="line">    </span><br><span class="line">// 模板字符串甚至还能嵌套</span><br><span class="line">const tmpl = addrs =&gt; `</span><br><span class="line">  &lt;table&gt;</span><br><span class="line">  $&#123;addrs.map(addr =&gt; `</span><br><span class="line">    &lt;tr&gt;&lt;td&gt;$&#123;addr.first&#125;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">    &lt;tr&gt;&lt;td&gt;$&#123;addr.last&#125;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">  `).join(&apos;&apos;)&#125;</span><br><span class="line">  &lt;/table&gt;</span><br><span class="line">`;</span><br><span class="line">const data = [</span><br><span class="line">    &#123; first: &apos;&lt;Jane&gt;&apos;, last: &apos;Bond&apos; &#125;,</span><br><span class="line">    &#123; first: &apos;Lars&apos;, last: &apos;&lt;Croft&gt;&apos; &#125;,</span><br><span class="line">];</span><br><span class="line">console.log(tmpl(data));</span><br><span class="line">// &lt;table&gt;</span><br><span class="line">//</span><br><span class="line">//   &lt;tr&gt;&lt;td&gt;&lt;Jane&gt;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">//   &lt;tr&gt;&lt;td&gt;Bond&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">//</span><br><span class="line">//   &lt;tr&gt;&lt;td&gt;Lars&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">//   &lt;tr&gt;&lt;td&gt;&lt;Croft&gt;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">//</span><br><span class="line">// &lt;/table&gt;</span><br><span class="line">    </span><br><span class="line">// 如果需要引用模板字符串本身，在需要时执行</span><br><span class="line">// 写法一</span><br><span class="line">let str = &apos;return &apos; + &apos;`Hello $&#123;name&#125;!`&apos;;</span><br><span class="line">let func = new Function(&apos;name&apos;, str);</span><br><span class="line">func(&apos;Jack&apos;) // &quot;Hello Jack!&quot;</span><br><span class="line"></span><br><span class="line">// 写法二</span><br><span class="line">let str = &apos;(name) =&gt; `Hello $&#123;name&#125;!`&apos;;</span><br><span class="line">let func = eval.call(null, str);</span><br><span class="line">func(&apos;Jack&apos;) // &quot;Hello Jack!&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="九、标签模板"><a href="#九、标签模板" class="headerlink" title="九、标签模板"></a>九、标签模板</h3><p>模板字符串可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">// 标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数</span><br><span class="line">alert`123`</span><br><span class="line">// 等同于</span><br><span class="line">alert(123)</span><br><span class="line">    </span><br><span class="line">// 如果模板字符里面有变量，就不是简单的调用了，而是会将模板字符串先处理成多个参数，再调用函数</span><br><span class="line">let a = 5;</span><br><span class="line">let b = 10;</span><br><span class="line">tag`Hello $&#123; a + b &#125; world $&#123; a * b &#125;`;</span><br><span class="line">// 等同于</span><br><span class="line">tag([&apos;Hello &apos;, &apos; world &apos;, &apos;&apos;], 15, 50);</span><br><span class="line">// 我们可以按照需要编写 tag 函数的代码</span><br><span class="line">function tag(s, v1, v2) &#123;</span><br><span class="line">  console.log(s[0]);</span><br><span class="line">  console.log(s[1]);</span><br><span class="line">  console.log(s[2]);</span><br><span class="line">  console.log(v1);</span><br><span class="line">  console.log(v2);</span><br><span class="line"></span><br><span class="line">  return &quot;OK&quot;;</span><br><span class="line">&#125;</span><br><span class="line">// &quot;Hello &quot;</span><br><span class="line">// &quot; world &quot;</span><br><span class="line">// &quot;&quot;</span><br><span class="line">// 15</span><br><span class="line">// 50</span><br><span class="line">// &quot;OK&quot;</span><br><span class="line">    </span><br><span class="line">// “标签模板”的一个重要应用，就是过滤 HTML 字符串，防止用户输入恶意内容。</span><br><span class="line">let message = SaferHTML`&lt;p&gt;$&#123;sender&#125; has sent you a message.&lt;/p&gt;`;</span><br><span class="line">function SaferHTML(templateData) &#123;</span><br><span class="line">  let s = templateData[0];</span><br><span class="line">  for (let i = 1; i &lt; arguments.length; i++) &#123;</span><br><span class="line">    let arg = String(arguments[i]);</span><br><span class="line"></span><br><span class="line">    // Escape special characters in the substitution.</span><br><span class="line">    s += arg.replace(/&amp;/g, &quot;&amp;amp;&quot;)</span><br><span class="line">            .replace(/&lt;/g, &quot;&amp;lt;&quot;)</span><br><span class="line">            .replace(/&gt;/g, &quot;&amp;gt;&quot;);</span><br><span class="line"></span><br><span class="line">    // Don&apos;t escape special characters in the template.</span><br><span class="line">    s += templateData[i];</span><br><span class="line">  &#125;</span><br><span class="line">  return s;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// 模板处理函数的第一个参数（模板字符串数组），还有一个 raw 属性。接受的参数，实际上是一个数组，该数组有一个 raw 属性，保存的是转义后的原字符串</span><br><span class="line">console.log`123`</span><br><span class="line">    </span><br><span class="line">// tag函数的第一个参数 strings，有一个 raw 属性，也指向一个数组，数组中字符串里面的斜杠都被转义了</span><br><span class="line">tag`First line\nSecond line`</span><br><span class="line">function tag(strings) &#123;</span><br><span class="line">  console.log(strings.raw[0]);</span><br><span class="line">  // strings.raw[0] 为 &quot;First line\\nSecond line&quot;</span><br><span class="line">  // 打印输出 &quot;First line\nSecond line&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="十、String-raw"><a href="#十、String-raw" class="headerlink" title="十、String.raw()"></a>十、String.raw()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">String.raw`Hi\n$&#123;2+3&#125;!`;</span><br><span class="line">// 返回 &quot;Hi\\n5!&quot;</span><br><span class="line">String.raw`Hi\u000A!`;</span><br><span class="line">// 返回 &quot;Hi\\u000A!&quot;</span><br><span class="line"></span><br><span class="line">// 如果原字符串的斜杠已经转义，那么 String.raw 会进行再次转义</span><br><span class="line">String.raw`Hi\\n`</span><br><span class="line">// 返回 &quot;Hi\\\\n&quot;</span><br><span class="line">    </span><br><span class="line">// String.raw 方法也可以作为正常的函数使用。这时，它的第一个参数，应该是一个具有 raw 属性的对象，且 raw 属性的值应该是一个数组</span><br><span class="line">String.raw(&#123; raw: &apos;test&apos; &#125;, 0, 1, 2);</span><br><span class="line">// &apos;t0e1s2t&apos;</span><br><span class="line">// 等同于</span><br><span class="line">String.raw(&#123; raw: [&apos;t&apos;,&apos;e&apos;,&apos;s&apos;,&apos;t&apos;] &#125;, 0, 1, 2);</span><br></pre></td></tr></table></figure>
+<p>ES6 还为原生的 String 对象，提供了一个raw方法。String.raw 方法，往往用来充当模板字符串的处理函数，返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，对应于替换变量后的模板字符串。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-22T14:01:39.000Z" itemprop="dateUpdated">2018-04-22 22:01:39</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/es6/string-expand/" target="_blank" rel="external">http://blog.master-ss.cn/es6/string-expand/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/string-expand/&title=《es6 之字符串扩展》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/string-expand/&title=《es6 之字符串扩展》 — 青松的博客&source=ES6 扩展了字符串对象。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/string-expand/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之字符串扩展》 — 青松的博客&url=http://blog.master-ss.cn/es6/string-expand/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/string-expand/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/es6/number-expand/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之数值扩展</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/es6/destructuring/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之解构赋值</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/es6/string-expand/&title=《es6 之字符串扩展》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/es6/string-expand/&title=《es6 之字符串扩展》 — 青松的博客&source=ES6 扩展了字符串对象。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/es6/string-expand/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之字符串扩展》 — 青松的博客&url=http://blog.master-ss.cn/es6/string-expand/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/es6/string-expand/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aSW7DMBAEQP//0w6QW4BI7uYoi6niyTAki6UAk1n4eMTr+bmOvjn6nFx5/s3FCwMD420Zz9OVPCDfevLEo+ceXYOBgXEfxvnmjm6es9tXcPg9BgYGxlIATcDJ68DAwMC4ipGE5qR8xcDAwJgUsXnhOmmu/XgtjoGB8YaMdjDwm59/cL6BgYHxJoxnuSbtufO78iD7za4wMDC2ZswLyBx8QWJ3PnLAwMDYlNE2vNbK1OhdLiWLX/5vYGBgbMpIStbkAec/l9/bJqYYGBj3YczD6NqYIU8io+QVAwNjU8bawa+8WdYOL/PXhIGBgZFvPWn3r11TtO0wMDC2Zlx12CLf6NpQMy+2MTAw9mO0IXUSgtvEsSiMMTAwtma0adxk6Ng27OrGHwYGxtaMtsWfF73JkDJ/+mKGi4GBsSmjbX7loTMvTf/gzAgGBsY/ZkyOZ+XjhPn44UUIxsDA2JrRzgryUDi/5oJ0EAMDYwvGWmhrA26bJubDTgwMjL0ZySPXml9rQ4J2nICBgXFnRjIyzEvfq1LPw9/BwMDYmtGGtnyQ2Zag7cDgxV8GAwNjI8azXPkD2uHopFWHgYGxNyNf86Nd7XB0razFwMDYlbF2tKI9eLH2a0XjDwMD4waMyRCxHVhe1Yyr62MMDIwbMNqkbZI4LqaGGBgYGHHS1m6rDe6j1BADA+NtGfMidi2xa4eXGBgY92S0g4G1oDzZejuQwMDA2IjxAeRgHfM5H0mcAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bootstrap 之 pager &amp; listGroup &amp; badge 样式 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="现在开始介绍 bootstrap 的翻页(pager)、列表组(list-group)和徽章(badge) 样式。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap 之 pager &amp; listGroup &amp; badge 样式">
+<meta property="og:url" content="http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="现在开始介绍 bootstrap 的翻页(pager)、列表组(list-group)和徽章(badge) 样式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-15T13:48:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap 之 pager &amp; listGroup &amp; badge 样式">
+<meta name="twitter:description" content="现在开始介绍 bootstrap 的翻页(pager)、列表组(list-group)和徽章(badge) 样式。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/test" target="_blank">
+                <i class="icon icon-lg icon-address-book"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bootstrap 之 pager &amp; listGroup &amp; badge 样式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bootstrap 之 pager &amp; listGroup &amp; badge 样式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-11T14:17:31.000Z" itemprop="datePublished" class="page-time">
+  2017-11-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、pager-less"><span class="post-toc-text">1、pager.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1、pager-less源码"><span class="post-toc-text">1.1、pager.less源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2、pager-less应用"><span class="post-toc-text">1.2、pager.less应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、list-group-less"><span class="post-toc-text">2、list-group.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1、list-group-less源码"><span class="post-toc-text">2.1、list-group.less源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2、list-group-less应用"><span class="post-toc-text">2.2、list-group.less应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、badges-less"><span class="post-toc-text">3、badges.less</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-1、badges-less源码"><span class="post-toc-text">3.1、badges.less源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2、badges-less应用"><span class="post-toc-text">3.2、badges.less应用</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bootstrap/pager&amp;listGroup&amp;badge" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bootstrap 之 pager & listGroup & badge 样式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-11 22:17:31" datetime="2017-11-11T14:17:31.000Z" itemprop="datePublished">2017-11-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/bootstrap/">bootstrap</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>现在开始介绍 bootstrap 的翻页(pager)、列表组(list-group)和徽章(badge) 样式。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><h4 id="1、pager-less"><a href="#1、pager-less" class="headerlink" title="1、pager.less"></a>1、pager.less</h4><h5 id="1-1、pager-less源码"><a href="#1-1、pager-less源码" class="headerlink" title="1.1、pager.less源码"></a>1.1、pager.less源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Pager pagination(翻页分页导航)</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">.pager &#123;</span><br><span class="line">  padding-left: 0;</span><br><span class="line">  margin: @line-height-computed 0;</span><br><span class="line">  list-style: none;</span><br><span class="line">  text-align: center;</span><br><span class="line">  &amp;:extend(.clearfix all);</span><br><span class="line">  li &#123;</span><br><span class="line">    display: inline;</span><br><span class="line">    &gt; a,</span><br><span class="line">    &gt; span &#123;</span><br><span class="line">      display: inline-block;</span><br><span class="line">      padding: 5px 14px;</span><br><span class="line">      background-color: @pager-bg;</span><br><span class="line">      border: 1px solid @pager-border;</span><br><span class="line">      border-radius: @pager-border-radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &gt; a:hover,</span><br><span class="line">    &gt; a:focus &#123;</span><br><span class="line">      text-decoration: none;</span><br><span class="line">      background-color: @pager-hover-bg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .next &#123;</span><br><span class="line">    &gt; a,</span><br><span class="line">    &gt; span &#123;</span><br><span class="line">      float: right;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .previous &#123;</span><br><span class="line">    &gt; a,</span><br><span class="line">    &gt; span &#123;</span><br><span class="line">      float: left;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .disabled &#123;</span><br><span class="line">    &gt; a,</span><br><span class="line">    &gt; a:hover,</span><br><span class="line">    &gt; a:focus,</span><br><span class="line">    &gt; span &#123;</span><br><span class="line">      color: @pager-disabled-color;</span><br><span class="line">      background-color: @pager-bg;</span><br><span class="line">      cursor: @cursor-disabled;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2、pager-less应用"><a href="#1-2、pager-less应用" class="headerlink" title="1.2、pager.less应用"></a>1.2、pager.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--默认的翻页--&gt;</span><br><span class="line">&lt;ul class=&quot;pager&quot;&gt;</span><br><span class="line">  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;&amp;larr; Previous&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Next &amp;rarr;&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;!--对齐的链接--&gt;</span><br><span class="line">&lt;ul class=&quot;pager&quot;&gt;</span><br><span class="line">  &lt;!--翻页的状态--&gt;</span><br><span class="line">  &lt;li class=&quot;previous disabled&quot;&gt;&lt;a href=&quot;#&quot;&gt;&amp;larr; Older&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;next&quot;&gt;&lt;a href=&quot;#&quot;&gt;Newer &amp;rarr;&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2、list-group-less"><a href="#2、list-group-less" class="headerlink" title="2、list-group.less"></a>2、list-group.less</h4><h5 id="2-1、list-group-less源码"><a href="#2-1、list-group-less源码" class="headerlink" title="2.1、list-group.less源码"></a>2.1、list-group.less源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// List groups(列表组)</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Base class(基础列表样式)</span><br><span class="line">//</span><br><span class="line">// Easily usable on &lt;ul&gt;, &lt;ol&gt;, or &lt;div&gt;.</span><br><span class="line">.list-group &#123;</span><br><span class="line">  // No need to set list-style: none; since .list-group-item is block level</span><br><span class="line">  margin-bottom: 20px;</span><br><span class="line">  padding-left: 0; // reset padding because ul and ol</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Individual list items(基础列表项)</span><br><span class="line">//</span><br><span class="line">// Use on `li`s or `div`s within the `.list-group` parent.</span><br><span class="line">.list-group-item &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  display: block;</span><br><span class="line">  padding: 10px 15px;</span><br><span class="line">  // Place the border on the list items and negative margin up for better styling</span><br><span class="line">  margin-bottom: -1px;</span><br><span class="line">  background-color: @list-group-bg;</span><br><span class="line">  border: 1px solid @list-group-border;</span><br><span class="line"></span><br><span class="line">  // Round the first and last items</span><br><span class="line">  &amp;:first-child &#123;</span><br><span class="line">    .border-top-radius(@list-group-border-radius);</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;:last-child &#123;</span><br><span class="line">    margin-bottom: 0;</span><br><span class="line">    .border-bottom-radius(@list-group-border-radius);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Interactive list items</span><br><span class="line">//</span><br><span class="line">// Use anchor or button elements instead of `li`s or `div`s to create interactive items.</span><br><span class="line">// Includes an extra `.active` modifier class for showing selected items.</span><br><span class="line">// 带链接的列表组</span><br><span class="line">a.list-group-item,</span><br><span class="line">button.list-group-item &#123;</span><br><span class="line">  color: @list-group-link-color;</span><br><span class="line"></span><br><span class="line">  .list-group-item-heading &#123;</span><br><span class="line">    color: @list-group-link-heading-color;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Hover state</span><br><span class="line">  &amp;:hover,</span><br><span class="line">  &amp;:focus &#123;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">    color: @list-group-link-hover-color;</span><br><span class="line">    background-color: @list-group-hover-bg;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">button.list-group-item &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  text-align: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 列表项的状态设置</span><br><span class="line">.list-group-item &#123;</span><br><span class="line">  // Disabled state</span><br><span class="line">  &amp;.disabled,</span><br><span class="line">  &amp;.disabled:hover,</span><br><span class="line">  &amp;.disabled:focus &#123;</span><br><span class="line">    background-color: @list-group-disabled-bg;</span><br><span class="line">    color: @list-group-disabled-color;</span><br><span class="line">    cursor: @cursor-disabled;</span><br><span class="line"></span><br><span class="line">    // Force color to inherit for custom content</span><br><span class="line">    .list-group-item-heading &#123;</span><br><span class="line">      color: inherit;</span><br><span class="line">    &#125;</span><br><span class="line">    .list-group-item-text &#123;</span><br><span class="line">      color: @list-group-disabled-text-color;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Active class on item itself, not parent</span><br><span class="line">  &amp;.active,</span><br><span class="line">  &amp;.active:hover,</span><br><span class="line">  &amp;.active:focus &#123;</span><br><span class="line">    z-index: 2; // Place active items above their siblings for proper border styling</span><br><span class="line">    color: @list-group-active-color;</span><br><span class="line">    background-color: @list-group-active-bg;</span><br><span class="line">    border-color: @list-group-active-border;</span><br><span class="line"></span><br><span class="line">    // Force color to inherit for custom content</span><br><span class="line">    .list-group-item-heading,</span><br><span class="line">    .list-group-item-heading &gt; small,</span><br><span class="line">    .list-group-item-heading &gt; .small &#123;</span><br><span class="line">      color: inherit;</span><br><span class="line">    &#125;</span><br><span class="line">    .list-group-item-text &#123;</span><br><span class="line">      color: @list-group-active-text-color;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Contextual variants(多彩列表组)</span><br><span class="line">//</span><br><span class="line">// Add modifier classes to change text and background color on individual items.</span><br><span class="line">// Organizationally, this must come after the `:hover` states.</span><br><span class="line">.list-group-item-variant(success; @state-success-bg; @state-success-text);</span><br><span class="line">.list-group-item-variant(info; @state-info-bg; @state-info-text);</span><br><span class="line">.list-group-item-variant(warning; @state-warning-bg; @state-warning-text);</span><br><span class="line">.list-group-item-variant(danger; @state-danger-bg; @state-danger-text);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Custom content options(自定义列表组)</span><br><span class="line">//</span><br><span class="line">// Extra classes for creating well-formatted content within `.list-group-item`s.</span><br><span class="line">.list-group-item-heading &#123;</span><br><span class="line">  margin-top: 0;</span><br><span class="line">  margin-bottom: 5px;</span><br><span class="line">&#125;</span><br><span class="line">.list-group-item-text &#123;</span><br><span class="line">  margin-bottom: 0;</span><br><span class="line">  line-height: 1.3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-2、list-group-less应用"><a href="#2-2、list-group-less应用" class="headerlink" title="2.2、list-group.less应用"></a>2.2、list-group.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;list-group&quot;&gt;</span><br><span class="line">  &lt;li class=&quot;list-group-item&quot;&gt;免费域名注册&lt;/li&gt;</span><br><span class="line">  &lt;!--列表项的状态--&gt;</span><br><span class="line">  &lt;li class=&quot;list-group-item disabled&quot;&gt;免费 Window 空间托管&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;list-group-item&quot;&gt;图像的数量&lt;/li&gt;</span><br><span class="line">  &lt;!--添加徽章--&gt;</span><br><span class="line">  &lt;li class=&quot;list-group-item&quot;&gt;&lt;span class=&quot;badge&quot;&gt;新&lt;/span&gt;24*7 支持&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;list-group-item&quot;&gt;每年更新成本&lt;/li&gt;</span><br><span class="line">  &lt;!--添加链接--&gt;</span><br><span class="line">  &lt;a href=&quot;#&quot; class=&quot;list-group-item active&quot;&gt;免费域名注册&lt;/a&gt;</span><br><span class="line">  &lt;a href=&quot;#&quot; class=&quot;list-group-item&quot;&gt;24*7 支持&lt;/a&gt;</span><br><span class="line">  &lt;!--添加自定义内容--&gt;</span><br><span class="line">  &lt;a href=&quot;#&quot; class=&quot;list-group-item&quot;&gt;</span><br><span class="line">    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;</span><br><span class="line">      免费域名注册</span><br><span class="line">    &lt;/h4&gt;</span><br><span class="line">    &lt;p class=&quot;list-group-item-text&quot;&gt;</span><br><span class="line">      您将通过网页进行免费域名注册。</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">  &lt;/a&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="3、badges-less"><a href="#3、badges-less" class="headerlink" title="3、badges.less"></a>3、badges.less</h4><h5 id="3-1、badges-less源码"><a href="#3-1、badges-less源码" class="headerlink" title="3.1、badges.less源码"></a>3.1、badges.less源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">// Badges(徽章)</span><br><span class="line">// --------------------------------------------------</span><br><span class="line"></span><br><span class="line">// Base class</span><br><span class="line">.badge &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  min-width: 10px;</span><br><span class="line">  padding: 3px 7px;</span><br><span class="line">  font-size: @font-size-small;</span><br><span class="line">  font-weight: @badge-font-weight;</span><br><span class="line">  color: @badge-color;</span><br><span class="line">  line-height: @badge-line-height;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">  white-space: nowrap;</span><br><span class="line">  text-align: center;</span><br><span class="line">  background-color: @badge-bg;</span><br><span class="line">  border-radius: @badge-border-radius;</span><br><span class="line"></span><br><span class="line">  // Empty badges collapse automatically (not available in IE8)</span><br><span class="line">  &amp;:empty &#123;</span><br><span class="line">    display: none;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Quick fix for badges in buttons</span><br><span class="line">  .btn &amp; &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">    top: -1px;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .btn-xs &amp;,</span><br><span class="line">  .btn-group-xs &gt; .btn &amp; &#123;</span><br><span class="line">    top: 0;</span><br><span class="line">    padding: 1px 5px;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Hover state, but only for links</span><br><span class="line">  a&amp; &#123;</span><br><span class="line">    &amp;:hover,</span><br><span class="line">    &amp;:focus &#123;</span><br><span class="line">      color: @badge-link-hover-color;</span><br><span class="line">      text-decoration: none;</span><br><span class="line">      cursor: pointer;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Account for badges in navs</span><br><span class="line">  .list-group-item.active &gt; &amp;,</span><br><span class="line">  .nav-pills &gt; .active &gt; a &gt; &amp; &#123;</span><br><span class="line">    color: @badge-active-color;</span><br><span class="line">    background-color: @badge-active-bg;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .list-group-item &gt; &amp; &#123;</span><br><span class="line">    float: right;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .list-group-item &gt; &amp; + &amp; &#123;</span><br><span class="line">    margin-right: 5px;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .nav-pills &gt; li &gt; a &gt; &amp; &#123;</span><br><span class="line">    margin-left: 3px;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-2、badges-less应用"><a href="#3-2、badges-less应用" class="headerlink" title="3.2、badges.less应用"></a>3.2、badges.less应用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;h4&gt;胶囊式导航中的激活状态&lt;/h4&gt;</span><br><span class="line">&lt;ul class=&quot;nav nav-pills&quot;&gt;</span><br><span class="line">  &lt;li class=&quot;active&quot;&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot;&gt;首页</span><br><span class="line">      &lt;span class=&quot;badge&quot;&gt;42&lt;/span&gt;</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">  &lt;li&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot;&gt;简介&lt;/a&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">  &lt;li&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot;&gt;消息</span><br><span class="line">      &lt;span class=&quot;badge&quot;&gt;3&lt;/span&gt;</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;h4&gt;列表导航中的激活状态&lt;/h4&gt;</span><br><span class="line">&lt;ul class=&quot;nav nav-pills nav-stacked&quot; style=&quot;max-width: 260px;&quot;&gt;</span><br><span class="line">  &lt;li class=&quot;active&quot;&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot;&gt;</span><br><span class="line">      &lt;span class=&quot;badge pull-right&quot;&gt;42&lt;/span&gt;首页&lt;/a&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">  &lt;li&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot;&gt;简介&lt;/a&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">  &lt;li&gt;</span><br><span class="line">    &lt;a href=&quot;#&quot;&gt;</span><br><span class="line">      &lt;!--empty时隐藏徽标，使用 :empty 选择器--&gt;</span><br><span class="line">      &lt;span class=&quot;badge pull-right&quot;&gt;&lt;/span&gt;消息</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-15T13:48:53.000Z" itemprop="dateUpdated">2018-04-15 21:48:53</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/bootstrap/pager&amp;listGroup&amp;badge/" target="_blank" rel="external">http://blog.master-ss.cn/bootstrap/pager&amp;listGroup&amp;badge/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/&title=《bootstrap 之 pager & listGroup & badge 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/&title=《bootstrap 之 pager & listGroup & badge 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的翻页(pager)、列表组(list-group)和徽章(badge) 样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 pager & listGroup & badge 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/bootstrap/jumbotron&thumbnail&progressBar/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bootstrap 之 jumbotron &amp; thumbnail &amp; progressBar 样式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/bootstrap/breadcrumb&panel/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">bootstrap 之 breadcrumb &amp; panel 样式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/&title=《bootstrap 之 pager & listGroup & badge 样式》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/&title=《bootstrap 之 pager & listGroup & badge 样式》 — 青松的博客&source=现在开始介绍 bootstrap 的翻页(pager)、列表组(list-group)和徽章(badge) 样式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bootstrap 之 pager & listGroup & badge 样式》 — 青松的博客&url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/bootstrap/pager&listGroup&badge/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aQVLDMAwF0N7/0mHbGWj43wrMxHleMQ04el0ISfbrFa/jbb1/kj/9vluyz8ULAwPjtozjdCUvyP9qssOn38HAwHgO49PWeQJNQjxPsi0bAwMDoy3v2nBbMAYGBsYaIwku6T0xMDAwEkZeos0b2rY0vLgXx8DAuCFjLS3+z89/cr6BgYFxK8ZRrvOEu3aEeUFUGBgYWzPyBDchtRcy2ngwMDD2ZpwHkYfYjury7zhqWTEwMLZmJEHUA/oyWa8l6OjtGBgYWzCSxNoWcJNvsU21GBgYT2DMy7u1BNoO7PKyFQMDY1fGVYOweQvattOvtf8PGBgYt2WsHU9OBmprR6cf34uBgbEpI7mi2l4hTS6ttiXmL6kcAwPjMYzJytN0W2gW7SsGBsbDGPklsKuuebUHqBgYGBh5smuPJycFaNTEYmBgbMdIHrfXWJNw5+XjD59jYGBsypiHkozJ5k9/Sf0YGBhbM9p7C3nRlrepCW/xAgcGBsZGjCSIPP0lo7p5oVkUiBgYGBsxzkdsk8yWJ9A2oWNgYGAko7G16xdFlRrvjIGBsSvjKNe1R49tEfmRjYGBsTVjLc0lr29b3LysbItUDAyMPRht0szby7XUmceAgYHxNEae+NYGbWtfR7E/BgYGRtyUTirQUT2LgYGBETSr7bWJteOEy0pDDAyMGzLaUVqelPMR2+iIFAMDY2vGWtHWjsMWL3sNqBgYGFswvgCKwiy65+3cXAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
