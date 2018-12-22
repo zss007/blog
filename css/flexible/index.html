@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>css 之 H5 终端适配 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="这节主要是研究手淘团队的适配方案 amfe-flexible，及源码解析。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css 之 H5 终端适配">
+<meta property="og:url" content="http://blog.master-ss.cn/css/flexible/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="这节主要是研究手淘团队的适配方案 amfe-flexible，及源码解析。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-22T14:21:24.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css 之 H5 终端适配">
+<meta name="twitter:description" content="这节主要是研究手淘团队的适配方案 amfe-flexible，及源码解析。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://resume.master-ss.cn">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">css 之 H5 终端适配</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">css 之 H5 终端适配</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-12-22T08:58:39.151Z" itemprop="datePublished" class="page-time">
+  2018-12-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/css/">css</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、基础"><span class="post-toc-text">一、基础</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、css-中的-1px-并不等于设备的-1px"><span class="post-toc-text">1.1、css 中的 1px 并不等于设备的 1px</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、devicePixelRatio"><span class="post-toc-text">1.2、devicePixelRatio</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码分析"><span class="post-toc-text">二、源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1、源码"><span class="post-toc-text">2.1、源码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2、源码分析"><span class="post-toc-text">2.2、源码分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-3、-5px-方案"><span class="post-toc-text">2.3、.5px 方案</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-css/flexible" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">css 之 H5 终端适配</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-12-22 16:58:39" datetime="2018-12-22T08:58:39.151Z" itemprop="datePublished">2018-12-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/css/">css</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这节主要是研究手淘团队的适配方案 amfe-flexible，及<a href="https://github.com/amfe/lib-flexible" target="_blank" rel="noopener">源码</a>解析。<br><a id="more"></a></p>
+<h3 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础"></a>一、基础</h3><h4 id="1-1、css-中的-1px-并不等于设备的-1px"><a href="#1-1、css-中的-1px-并不等于设备的-1px" class="headerlink" title="1.1、css 中的 1px 并不等于设备的 1px"></a>1.1、css 中的 1px 并不等于设备的 1px</h4><p>在 css 中我们一般使用 px 作为单位，在桌面浏览器中 css 的 1 个像素往往都是对应着电脑屏幕的 1 个物理像素，这可能会造成我们的一个错觉，那就是 css 中的像素就是设备的物理像素。但实际情况却并非如此，css 中的像素只是一个抽象的单位，在不同的设备或不同的环境中，css 中的 1px 所代表的设备物理像素是不同的。在为桌面浏览器设计的网页中，我们无需对这个津津计较，但在移动设备上，必须弄明白这点。在早先的移动设备中，屏幕像素密度都比较低，如 iphone3，它的分辨率为 320x480，在 iphone3 上，一个 css 像素确实是等于一个屏幕物理像素的。后来随着技术的发展，移动设备的屏幕像素密度越来越高，从 iphone4 开始，苹果公司便推出了所谓的 Retina 屏，分辨率提高了一倍，变成 640x960，但屏幕尺寸却没变化，这就意味着同样大小的屏幕上，像素却多了一倍，这时，一个 css 像素是等于两个物理像素的。其他品牌的移动设备也是这个道理。例如安卓设备根据屏幕像素密度可分为 ldpi、mdpi、hdpi、xhdpi 等不同的等级，分辨率也是五花八门，安卓设备上的一个 css 像素相当于多少个屏幕物理像素，也因设备的不同而不同，没有一个定论。</p>
+<h4 id="1-2、devicePixelRatio"><a href="#1-2、devicePixelRatio" class="headerlink" title="1.2、devicePixelRatio"></a>1.2、devicePixelRatio</h4><p>在移动端浏览器中以及某些桌面浏览器中，window 对象有一个 devicePixelRatio 属性，它的官方的定义为：设备物理像素和设备独立像素的比例，也就是 devicePixelRatio = 物理像素 / 独立像素。css 中的 px 就可以看做是设备的独立像素，所以通过 devicePixelRatio，我们可以知道该设备上一个 css 像素代表多少个物理像素。例如，在 Retina 屏的iphone上，devicePixelRatio 的值为 2，也就是说 1 个 css 像素相当于 2 个物理像素。</p>
+<h3 id="二、源码分析"><a href="#二、源码分析" class="headerlink" title="二、源码分析"></a>二、源码分析</h3><h5 id="2-1、源码"><a href="#2-1、源码" class="headerlink" title="2.1、源码"></a>2.1、源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">(function flexible (window, document) &#123;</span><br><span class="line">  var docEl = document.documentElement</span><br><span class="line">  var dpr = window.devicePixelRatio || 1</span><br><span class="line"></span><br><span class="line">  // adjust body font size</span><br><span class="line">  function setBodyFontSize () &#123;</span><br><span class="line">    if (document.body) &#123;</span><br><span class="line">      document.body.style.fontSize = (12 * dpr) + &apos;px&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">      document.addEventListener(&apos;DOMContentLoaded&apos;, setBodyFontSize)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  setBodyFontSize();</span><br><span class="line"></span><br><span class="line">  // set 1rem = viewWidth / 10</span><br><span class="line">  function setRemUnit () &#123;</span><br><span class="line">    var rem = docEl.clientWidth / 10</span><br><span class="line">    docEl.style.fontSize = rem + &apos;px&apos;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setRemUnit()</span><br><span class="line"></span><br><span class="line">  // reset rem unit on page resize</span><br><span class="line">  window.addEventListener(&apos;resize&apos;, setRemUnit)</span><br><span class="line">  window.addEventListener(&apos;pageshow&apos;, function (e) &#123;</span><br><span class="line">    if (e.persisted) &#123;</span><br><span class="line">      setRemUnit()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // detect 0.5px supports</span><br><span class="line">  if (dpr &gt;= 2) &#123;</span><br><span class="line">    var fakeBody = document.createElement(&apos;body&apos;)</span><br><span class="line">    var testElement = document.createElement(&apos;div&apos;)</span><br><span class="line">    testElement.style.border = &apos;.5px solid transparent&apos;</span><br><span class="line">    fakeBody.appendChild(testElement)</span><br><span class="line">    docEl.appendChild(fakeBody)</span><br><span class="line">    if (testElement.offsetHeight === 1) &#123;</span><br><span class="line">      docEl.classList.add(&apos;hairlines&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">    docEl.removeChild(fakeBody)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;(window, document))</span><br></pre></td></tr></table></figure>
+<h5 id="2-2、源码分析"><a href="#2-2、源码分析" class="headerlink" title="2.2、源码分析"></a>2.2、源码分析</h5><ul>
+<li>setBodyFontSize 用来设置 body 的 fontSize，值为 (12 * dpr) + ‘px’</li>
+<li>setRemUnit 用来设置 document.documentElement 即 html 标签的 fontSize，值为 clientWidth 的 1/10</li>
+<li>resize、pageshow 在窗口大小调整或<a href="http://www.runoob.com/jsref/event-onpageshow.html" target="_blank" rel="noopener">从缓存中载入页面</a>时，重新调用 setRemUnit</li>
+</ul>
+<h5 id="2-3、-5px-方案"><a href="#2-3、-5px-方案" class="headerlink" title="2.3、.5px 方案"></a>2.3、.5px 方案</h5><p>2014 年的 WWDC 大会中，Ted O’Conor 在分享 “设计响应的Web体验” 主题时提到关于 Retina Hairlines 一词，也就是 Retina 极细的线：在 Retina 屏上仅仅显示 1 物理像素的边框。<br>amfe-flexible 的源码中，在页面上添加 div 元素，设置边框为 0.5px，并判断 offsetHeight 是否为 1 来判断是否支持 .5px，即如果支持 .5px 的话，那么在其 html 标签上添加 hairlines 类。这样就可以在写样式时进行 ”渐进增强“，即在支持 .5px 时使用其来显示极细的线。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-12-22T14:21:24.023Z" itemprop="dateUpdated">2018-12-22 22:21:24</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/css/flexible/" target="_blank" rel="external">http://blog.master-ss.cn/css/flexible/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/css/flexible/&title=《css 之 H5 终端适配》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/css/flexible/&title=《css 之 H5 终端适配》 — 青松的博客&source=这节主要是研究手淘团队的适配方案 amfe-flexible，及源码解析。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/css/flexible/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《css 之 H5 终端适配》 — 青松的博客&url=http://blog.master-ss.cn/css/flexible/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/css/flexible/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/js/extend/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">js 之面对对象</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/css/flexible/&title=《css 之 H5 终端适配》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/css/flexible/&title=《css 之 H5 终端适配》 — 青松的博客&source=这节主要是研究手淘团队的适配方案 amfe-flexible，及源码解析。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/css/flexible/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《css 之 H5 终端适配》 — 青松的博客&url=http://blog.master-ss.cn/css/flexible/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/css/flexible/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABy0lEQVR42u3aQY7DIAwF0N7/0pntSJ2Sbwy0HT1WVUTDIwvL2Dwe8biexu/n+Zzndz52DFxc3Db3Go7xnPHyr57k7/9jS7i4uAe540CTLDx+z3gzhWCHi4v7JdxOMoSLi/ufuOOZyXxcXNzP5yaHn85i1ZLKgrMaLi5ug5tXKff93lLfxcXFneJexVFtseQHpGh1XFzcI9w8oCRpTT6nsy4uLu5u7trrFHlZZO6qBy4u7nluvkz/X9WyyE1GhouLu5RbLZt22ir957i4uGe4+W7yEsk4bCXBKzr84OLiHuTmRc886ckToJvSCS4u7hFuXsSscpOC6Vz4w8XFfS93rtVaDXDllgwuLu4Rbn7I6ZQ45/57k2Dh4uJu43YuVVRx1UZs+fCDi4u7lJuwcm6n1RrdI8PFxT3OnWuKVENh3rDBxcV9FzdfuNoiXZDWzHVdcHFxp7hXcSTtln7YKt8VxcXFXcrNRxKwqhcvqp8AFxf3JLcTvJJvMBfIJhMdXFzcpdy5Q1Gn1ZoHuJdlEVxc3A/m5ilL9dC1JZDh4uJu4yZBaq41e/NmXFzcg9xqq3Vue8nzm7CIi4t7hJsXTKtF0v41r1Z9FxcXd4b7A4OY2FfJHjTVAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
