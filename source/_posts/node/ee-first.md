@@ -93,10 +93,11 @@ function listener(event, done) {
 }
 ```
 ### 二、分析
-##### 1、stuff 是一个二维数组，是`[ee, ...event]`的数组形式，done 只会被调用一次。
-##### 2、让 ee 监听相应的时间，并添加到 cleanups 数组中。
-##### 3、done 调用时参数为 err、ee、event、args，在 listener 中返回的 onevent 函数执行，并同时清空所有 event emitter 挂载的回调函数。
-##### 4、返回函数 thunk，挂载 cleanup 函数，调用时清空所有 event emitter 挂载的回调函数。
+- 1、stuff 是一个二维数组，是`[ee, ...event]`的数组形式，done 只会被调用一次。
+- 2、让 ee 监听相应的时间，并添加到 cleanups 数组中。
+- 3、done 调用时参数为 err、ee、event、args，在 listener 中返回的 onevent 函数执行，并同时清空所有 event emitter 挂载的回调函数。
+- 4、返回函数 thunk，挂载 cleanup 函数，调用时清空所有 event emitter 挂载的回调函数。
+
 ### 三、案例
 ```js
 var ee1 = new EventEmitter()

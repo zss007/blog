@@ -67,10 +67,11 @@ convert.back = function (mw) {
 }
 ```
 ### 二、分析
-##### 1、首先做类型判断，只能转换 Generator 函数。
-##### 2、convert 执行后返回 converted 函数，其接受 2.x 版本中间件参数 context & next，并赋值 _name 属性，执行完成后返回 promise。
-##### 3、converted 中先调用 createGenerator，返回一个迭代器，然后传入 mw 中，再次执行 mw 返回迭代器作为 co 模块的参数。
-##### 4、co 模块先调用 mw 返回的迭代器的 next 方法，然后继续执行直到执行到 yield next 方法，next 会被 co 模块再次调用，然后执行到下一中间件。
+- 1、首先做类型判断，只能转换 Generator 函数。
+- 2、convert 执行后返回 converted 函数，其接受 2.x 版本中间件参数 context & next，并赋值 _name 属性，执行完成后返回 promise。
+- 3、converted 中先调用 createGenerator，返回一个迭代器，然后传入 mw 中，再次执行 mw 返回迭代器作为 co 模块的参数。
+- 4、co 模块先调用 mw 返回的迭代器的 next 方法，然后继续执行直到执行到 yield next 方法，next 会被 co 模块再次调用，然后执行到下一中间件。
+
 ### 三、应用
 ```
 const Koa = require('koa') // koa v2.x

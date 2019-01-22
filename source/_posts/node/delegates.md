@@ -122,12 +122,13 @@ Delegator.prototype.fluent = function (name) {
 };
 ```
 ### 二、分析
-##### 1、Delegator 判断 this 是否是 Delegator 实例，如果不是返回初始化的 Delegator 实例对象，方便链式调用。
-##### 2、Delegator 原型上的 method 调用时，给`proto[name]`赋值，其调用时实际上执行的是`this[target][name]`，并通过 apply 绑定上下文。
-##### 3、Delegator 原型上的 getter 调用时，给 proto 添加 name 属性，调用时实际返回的`this[target][name]`。
-##### 4、Delegator 原型上的 setter 调用时，给 proto 添加 name 属性，调用时实际赋值的是`this[target][name]`。
-##### 5、Delegator 原型上的 access 调用时，其实是同时调用了 getter、setter 方法。
-##### 6、Delegator 原型上的 fluent 调用时，判断是否传入参数，如果无参，则返回`this[target][name]`，否则给`this[target][name]`赋值。
+- 1、Delegator 判断 this 是否是 Delegator 实例，如果不是返回初始化的 Delegator 实例对象，方便链式调用。
+- 2、Delegator 原型上的 method 调用时，给`proto[name]`赋值，其调用时实际上执行的是`this[target][name]`，并通过 apply 绑定上下文。
+- 3、Delegator 原型上的 getter 调用时，给 proto 添加 name 属性，调用时实际返回的`this[target][name]`。
+- 4、Delegator 原型上的 setter 调用时，给 proto 添加 name 属性，调用时实际赋值的是`this[target][name]`。
+- 5、Delegator 原型上的 access 调用时，其实是同时调用了 getter、setter 方法。
+- 6、Delegator 原型上的 fluent 调用时，判断是否传入参数，如果无参，则返回`this[target][name]`，否则给`this[target][name]`赋值。
+
 ### 三、案例
 ```js
 var delegate = require('delegates');

@@ -146,7 +146,7 @@ delegate(proto, 'request')
   .getter('ip');
 ```
 ### 二、分析
-##### 1、为方便起见许多上下文的访问器和方法使用 delegates 直接委托给它们的 ctx.request 或 ctx.response，不然的话它们是相同的。例如 ctx.type 和 ctx.length 委托给 response 对象，ctx.path 和 ctx.method 委托给 request。
-##### 2、绕过 Koa 的 response 处理是不被支持的，除非显式设置 ctx.respond = false，从而使用原生 res api：res.statusCode、res.writeHead()、res.write()、res.end()，代码实现于 application.js。
-##### 3、ctx.state 是推荐的命名空间，用于通过中间件传递信息。
-##### 4、ctx.throw 抛出根据参数自定义的错误对象。
+- 1、为方便起见许多上下文的访问器和方法使用 delegates 直接委托给它们的 ctx.request 或 ctx.response，不然的话它们是相同的。例如 ctx.type 和 ctx.length 委托给 response 对象，ctx.path 和 ctx.method 委托给 request。
+- 2、绕过 Koa 的 response 处理是不被支持的，除非显式设置 ctx.respond = false，从而使用原生 res api：res.statusCode、res.writeHead()、res.write()、res.end()，代码实现于 application.js。
+- 3、ctx.state 是推荐的命名空间，用于通过中间件传递信息。
+- 4、ctx.throw 抛出根据参数自定义的错误对象。

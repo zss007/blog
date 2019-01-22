@@ -187,10 +187,11 @@ function patchAssignSocket(res, callback) {
 }
 ```
 ### 二、分析
-##### 1、传入 msg，如果 msg 已经完成，则使用 setImmediate 或 process.nextTick 执行回调函数，否则执行 attachListener。
-##### 2、如果 msg 内部没有 __onFinished 属性及其 queue 属性，则重新初始化，并将回调函数添加到 queue 数组中。
-##### 3、createListener 返回一个回调函数，并在回调函数上挂载 queue 数组，回调函数执行时清空属性值并调用所有 queue 数组中的回调。
-##### 4、attachFinishedListener 在 msg 触发 end、finish 事件时执行 onFinish，清空挂载在 msg 上的监听函数，并执行 createListener 返回的回调函数。
+- 1、传入 msg，如果 msg 已经完成，则使用 setImmediate 或 process.nextTick 执行回调函数，否则执行 attachListener。
+- 2、如果 msg 内部没有 __onFinished 属性及其 queue 属性，则重新初始化，并将回调函数添加到 queue 数组中。
+- 3、createListener 返回一个回调函数，并在回调函数上挂载 queue 数组，回调函数执行时清空属性值并调用所有 queue 数组中的回调。
+- 4、attachFinishedListener 在 msg 触发 end、finish 事件时执行 onFinish，清空挂载在 msg 上的监听函数，并执行 createListener 返回的回调函数。
+
 ### 三、案例
 ```js
 // 监听 request

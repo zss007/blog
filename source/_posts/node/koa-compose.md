@@ -40,13 +40,14 @@ function compose (middleware) {
 }
 ```
 ### 二、分析
-##### 1、首先进行类型判断，middleware 参数必须是函数数组。
-##### 2、index 为上次调用 middleware 数组的索引值，dispatch 采用递归方法调用。
-##### 3、如果 i <= index，那么 next() 被调用多次，返回 Promise.reject。
-##### 4、如果 i === middleware.length，说明是最后一个中间件，则将 next 参数赋值给 fn，如果 next 不存在，返回 Promise.resolve，否则继续调用 next，将结果返回。
-##### 5、Promise.resolve(Promise.resolve(Promise.resolve('resolved'))).then(success, error) 执行 success，Promise.resolve(Promise.resolve(Promise.reject('rejected'))).then(success, error) 执行 error。
-##### 6、这就是洋葱模型的来由了：
+- 1、首先进行类型判断，middleware 参数必须是函数数组。
+- 2、index 为上次调用 middleware 数组的索引值，dispatch 采用递归方法调用。
+- 3、如果 i <= index，那么 next() 被调用多次，返回 Promise.reject。
+- 4、如果 i === middleware.length，说明是最后一个中间件，则将 next 参数赋值给 fn，如果 next 不存在，返回 Promise.resolve，否则继续调用 next，将结果返回。
+- 5、Promise.resolve(Promise.resolve(Promise.resolve('resolved'))).then(success, error) 执行 success，Promise.resolve(Promise.resolve(Promise.reject('rejected'))).then(success, error) 执行 error。
+- 6、这就是洋葱模型的来由了：
 <img src="/assets/koa/koa-diagram.png">
+
 ### 三、应用
 ```
 // test.js（将多个中间件合成为一个）

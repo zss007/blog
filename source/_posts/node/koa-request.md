@@ -355,7 +355,7 @@ module.exports = {
 ### 二、分析
 <img src="/assets/koa/url.jpg">
 这里主要讲下node 对 URL 的处理：一个是 Node.js 遗留的特有的 API，另一个则是通常使用在 web 浏览器中 实现了 WHATWG URL Standard 的 API。虽然 Node.js 遗留的特有的 API 并没有被弃用，但是保留的目的是用于向后兼容已有应用程序。因此新的应用程序请使用 WHATWG API。
-WHATWG 与Node.js 遗留的特有的 API 的比较如上。网址 'http://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash' 上方是由遗留的 url.parse() 返回的对象属性，下方的则是 WHATWG URL 对象的属性。
+WHATWG 与Node.js 遗留的特有的 API 的比较如上。网址`http://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash`上方是由遗留的 url.parse() 返回的对象属性，下方的则是 WHATWG URL 对象的属性。
 ```js
 // 利用 WHATWG API 解析一个 URL 字符串
 const { URL } = require('url');

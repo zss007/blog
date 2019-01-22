@@ -251,9 +251,10 @@ function toIdentifier (str) {
 }
 ```
 ### 二、分析
-##### 1、执行 populateConstructorExports 方法，遍历常用状态码，具体根据状态码执行 createClientErrorConstructor 或 createServerErrorConstructor，返回自定义错误对象，并赋值给 exports，即 createError。
-##### 2、导出 createError，根据传入自定义错误对象，允许不同组合：createError(400) | createError(400, 'name required') | createError(400, 'name required', { user: user }) | this.throw(400, new Error('invalid')) 等。
-##### 3、错误对象的属性 expose = true 时，application 的 onerror 回调对其不输出错误信息，context 的 onerror 回调让 res 发送错误对象的 message 属性，否则 context 发送状态码。
+- 1、执行 populateConstructorExports 方法，遍历常用状态码，具体根据状态码执行 createClientErrorConstructor 或 createServerErrorConstructor，返回自定义错误对象，并赋值给 exports，即 createError。
+- 2、导出 createError，根据传入自定义错误对象，允许不同组合：createError(400) | createError(400, 'name required') | createError(400, 'name required', { user: user }) | this.throw(400, new Error('invalid')) 等。
+- 3、错误对象的属性 expose = true 时，application 的 onerror 回调对其不输出错误信息，context 的 onerror 回调让 res 发送错误对象的 message 属性，否则 context 发送状态码。
+
 ### 三、拓展
 #### 1、调用栈的工作机制
 函数被调用时，就会被加入到调用栈顶部，执行结束之后，就会从调用栈顶部移除该函数，这种数据结构的关键在于后进先出，即大家所熟知的 LIFO。比如，当我们在函数 y 内部调用函数 x 的时候，调用栈从下往上的顺序就是 y -> x 。
