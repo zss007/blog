@@ -166,6 +166,46 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-node/event-loop" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-03-25 18:36:10" datetime="2018-03-25T10:36:10.000Z" itemprop="datePublished">2018-03-25</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/node/event-loop/">node 之 event-loop</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        我们都知道 JavaScript 是单线程运行，异步操作特别重要。只要用到引擎之外的功能，就需要跟外部交互，从而形成异步操作。Node 的异步语法比浏览器更复杂，因为它可以跟内核对话，不得不搞了一个专门的库 libuv 做这件事。这个库负责各种回调函数的执行时间，毕竟异步任务最后还是要回到主线程，一个个排队执行，这就是事件循环。
+    
+
+        <a href="/node/event-loop/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-es6/set&amp;map" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -517,46 +557,6 @@
     
 
         <a href="/es6/module-load/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-es6/module" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-01 21:04:42" datetime="2018-03-01T13:04:42.000Z" itemprop="datePublished">2018-03-01</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/es6/module/">es6 之 module</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        历史上，JavaScript 一直没有模块（module）体系，无法将一个大程序拆分成互相依赖的小文件，再用简单的方法拼装起来。在 ES6 之前，社区制定了一些模块加载方案，最主要的有 CommonJS 和 AMD 两种。前者用于服务器，后者用于浏览器。ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决方案。
-    
-
-        <a href="/es6/module/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
