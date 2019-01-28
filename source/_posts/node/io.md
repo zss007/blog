@@ -64,7 +64,7 @@ setTimeout(function () {
 由于事件循环自身的特点，定时器的精确度不够，而且创建定时器对象和迭代等操作较为浪费性能。实际上，process.nextTick() 方法的操作相对较为轻量。每次调用 process.nextTick() 方法，只会将回调函数放入队列中，在下一轮 Tick 时取出执行。
 - setImmediate()
 
-setImmediate() 方法与 process.nextTick() 方法十分类似，详情见 [node 之 event-loop](https://blog.master-ss.cn/node/event-loop)。
+setImmediate() 方法与 process.nextTick() 方法十分类似，详情见 [node 之 event-loop](/node/event-loop)。
 ### 四、浏览器与 Node 事件循环细微区别
 通过一个例子来说明两者区别：
 ```
