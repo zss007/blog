@@ -6,7 +6,7 @@ categories:
 ES6 扩展了字符串对象。
 <!--more-->
 ### 一、codePointAt()
-JavaScript 内部，字符以 UTF-16 的格式储存，每个字符固定为2个字节。对于那些需要4个字节储存的字符（Unicode 码点大于0xFFFF的字符），JavaScript 会认为它们是两个字符。ES6 提供了codePointAt方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点；对于那些两个字节储存的常规字符，它的返回结果与charCodeAt方法相同。
+JavaScript 内部，字符以 UTF-16 的格式储存，每个字符固定为 2 个字节。对于那些需要 4 个字节储存的字符（Unicode 码点大于0xFFFF的字符），JavaScript 会认为它们是两个字符。ES6 提供了codePointAt 方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点；对于那些两个字节储存的常规字符，它的返回结果与 charCodeAt 方法相同。
 ```
 // 汉字“𠮷”（注意，这个字不是“吉祥”的“吉”）的码点是0x20BB7，UTF-16 编码为0xD842 0xDFB7（十进制为55362 57271），需要4个字节储存。
 var s = "𠮷a";
@@ -48,9 +48,7 @@ is32Bit("𠮷") // true
 is32Bit("a") // false
 ```
 ### 二、String.fromCodePoint()
-ES5 提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别 32 位的 UTF-16 字符（Unicode 编号大于0xFFFF）。     
-ES6 提供了String.fromCodePoint方法，可以识别大于0xFFFF的字符，弥补了String.fromCharCode方法的不足。在作用上，正好与codePointAt方法相反。
-注意，fromCodePoint方法定义在String对象上，而codePointAt方法定义在字符串的实例对象上。
+ES5 提供 String.fromCharCode 方法，用于从码点返回对应字符，但是这个方法不能识别 32 位的 UTF-16 字符（Unicode 编号大于 0xFFFF）。ES6 提供了 String.fromCodePoint 方法，可以识别大于 0xFFFF 的字符，弥补了 String.fromCharCode 方法的不足。在作用上，正好与 codePointAt 方法相反。注意，fromCodePoint 方法定义在 String 对象上，而 codePointAt 方法定义在字符串的实例对象上。
 ```
 String.fromCharCode(0x20BB7)
 // "ஷ"，String.fromCharCode不能识别大于0xFFFF的码点，所以0x20BB7就发生了溢出，最高位2被舍弃了，最后返回码点U+0BB7对应的字符，而不是码点U+20BB7对应的字符。
@@ -61,7 +59,7 @@ String.fromCodePoint(0x78, 0x1f680, 0x79) === 'x\uD83D\uDE80y'
 // true，如果String.fromCodePoint方法有多个参数，则它们会被合并成一个字符串返回。
 ```
 ### 三、字符串的遍历器接口
-ES6 为字符串添加了遍历器接口，使得字符串可以被for...of循环遍历。
+ES6 为字符串添加了遍历器接口，使得字符串可以被 for...of 循环遍历。
 ```
 for (let codePoint of 'foo') {
   console.log(codePoint)
@@ -70,9 +68,9 @@ for (let codePoint of 'foo') {
 // "o"
 // "o"
       
-// 除了遍历字符串，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点
+// 除了遍历字符串，这个遍历器最大的优点是可以识别大于 0xFFFF 的码点，传统的 for 循环无法识别这样的码点
 let text = String.fromCodePoint(0x20BB7);
-// 字符串text只有一个字符，但是for循环会认为它包含两个字符（都不可打印）
+// 字符串 text 只有一个字符，但是 for 循环会认为它包含两个字符（都不可打印）
 for (let i = 0; i < text.length; i++) {
   console.log(text[i]);
 }
@@ -81,10 +79,10 @@ for (let i = 0; i < text.length; i++) {
 for (let i of text) {
   console.log(i);
 }
-// "𠮷"，而for...of循环会正确识别出这一个字符
+// "𠮷"，而 for...of 循环会正确识别出这一个字符
 ```
 ### 四、normalize()
-许多欧洲语言有语调符号和重音符号。为了表示它们，Unicode 提供了两种方法。一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。这两种表示方法，在视觉和语义上都等价，但是 JavaScript 不能识别。      
+许多欧洲语言有语调符号和重音符号。为了表示它们，Unicode 提供了两种方法。一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。另一种是提供合成符号（combining character），即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。这两种表示方法，在视觉和语义上都等价，但是 JavaScript 不能识别。
 ES6 提供字符串实例的normalize()方法，用来将字符的不同表示方法统一为同样的形式，这称为 Unicode 正规化。
 ```
 '\u01D1'==='\u004F\u030C' //false
@@ -94,7 +92,7 @@ ES6 提供字符串实例的normalize()方法，用来将字符的不同表示�
 '\u01D1'.normalize() === '\u004F\u030C'.normalize()
 // true
 ```
-### 五、includes(), startsWith(), endsWith()
+### 五、includes()、startsWith()、endsWith()
 传统上，JavaScript 只有 indexOf 方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6 又提供了三种新方法。   
 1、includes()：返回布尔值，表示是否找到了参数字符串。    
 2、startsWith()：返回布尔值，表示参数字符串是否在原字符串的头部。   
@@ -113,28 +111,28 @@ s.endsWith('Hello', 5) // true
 s.includes('Hello', 6) // false
 ```
 ### 六、repeat()
-repeat 方法返回一个新字符串，表示将原字符串重复 n 次。
+repeat 方法返回一个新字符串，表示将原字符串重复 n 次
 ```
 'x'.repeat(3) // "xxx"
 'hello'.repeat(2) // "hellohello"
 'na'.repeat(0) // ""
     
-// 参数如果是小数，会被取整。
+// 参数如果是小数，会被取整
 'na'.repeat(2.9) // "nana"
     
-// 如果 repeat 的参数是负数或者 Infinity，会报错。
+// 如果 repeat 的参数是负数或者 Infinity，会报错
 'na'.repeat(Infinity)
 // RangeError
 'na'.repeat(-1)
 // RangeError
     
-// 如果参数是 0 到-1 之间的小数，则等同于 0，这是因为会先进行取整运算。0 到-1 之间的小数，取整以后等于 -0，repeat 视同为 0。
+// 如果参数是 0 到-1 之间的小数，则等同于 0，这是因为会先进行取整运算。0 到-1 之间的小数，取整以后等于 -0，repeat 视同为 0
 'na'.repeat(-0.9) // ""
     
-// 参数 NaN 等同于 0。
+// 参数 NaN 等同于 0
 'na'.repeat(NaN) // ""
     
-// 如果 repeat 的参数是字符串，则会先转换成数字。
+// 如果 repeat 的参数是字符串，则会先转换成数字
 'na'.repeat('na') // ""
 'na'.repeat('3') // "nanana"
 ```
@@ -195,7 +193,7 @@ $('#list').html(`
 </ul>
 `.trim());
     
-// 模板字符串中嵌入变量，需要将变量名写在 ${} 之中。大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。
+// 模板字符串中嵌入变量，需要将变量名写在 ${} 之中。大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性
 let x = 1;
 let y = 2;
 `${x} + ${y} = ${x + y}`
@@ -213,7 +211,7 @@ function fn() {
 `foo ${fn()} bar`
 // foo Hello World bar
     
-// 如果大括号中的值不是字符串，将按照一般的规则转为字符串。比如，大括号中是一个对象，将默认调用对象的 toString 方法。如果模板字符串中的变量没有声明，将报错。
+// 如果大括号中的值不是字符串，将按照一般的规则转为字符串。比如，大括号中是一个对象，将默认调用对象的 toString 方法。如果模板字符串中的变量没有声明，将报错
 let msg = `Hello, ${place}`;
 // 报错，变量 place 没有声明
     

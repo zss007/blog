@@ -26,7 +26,7 @@ HTML 网页中，浏览器通过 `<script>` 标签加载 JavaScript 脚本。默
   // other code
 </script>
   
-// ES6 模块之中，顶层的 this 返回undefined，而不是指向 window 。也就是说，在模块顶层使用 this 关键字，是无意义的
+// ES6 模块之中，顶层的 this 返回 undefined，而不是指向 window。也就是说，在模块顶层使用 this 关键字，是无意义的
 import utils from 'https://example.com/js/utils.js';
 const x = 1;
 console.log(x === window.x); //false
@@ -37,12 +37,12 @@ const isNotModuleScript = this !== undefined;
 ```
 对于外部的模块脚本，有几点需要注意：  
 1.代码是在模块作用域之中运行，而不是在全局作用域运行。模块内部的顶层变量，外部不可见。  
-2.模块脚本自动采用严格模式，不管有没有声明use strict。   
-3.模块之中，可以使用import命令加载其他模块（.js后缀不可省略，需要提供绝对 URL 或相对 URL），也可以使用export命令输出对外接口。  
-4.模块之中，顶层的this关键字返回undefined，而不是指向window。也就是说，在模块顶层使用this关键字，是无意义的。 
+2.模块脚本自动采用严格模式，不管有没有声明 use strict。   
+3.模块之中，可以使用 import 命令加载其他模块（.js 后缀不可省略，需要提供绝对 URL 或相对 URL），也可以使用 export 命令输出对外接口。  
+4.模块之中，顶层的 this 关键字返回 undefined，而不是指向 window。也就是说，在模块顶层使用 this 关键字，是无意义的。 
 5.同一个模块如果加载多次，将只执行一次。 
 ### 二、ES6 模块与 CommonJS 模块的差异
-他们有两个重大差异：CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用；CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。第二个差异是因为 CommonJS 加载的是一个对象（即module.exports属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
+他们有两个重大差异：CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用；CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。第二个差异是因为 CommonJS 加载的是一个对象（即 module.exports 属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
 ```
 // lib.js
 var counter = 3;

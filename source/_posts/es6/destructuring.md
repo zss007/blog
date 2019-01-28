@@ -34,7 +34,7 @@ x // "a"
 y // undefined
 z // []
     
-// 如果解构不成功，变量的值就等于undefined
+// 如果解构不成功，变量的值就等于 undefined
 let [foo] = [];
 let [bar, foo] = [1];
     
@@ -81,7 +81,7 @@ let [x, y = 'b'] = ['a', undefined]; // x='a', y='b'
 // ES6 内部使用严格相等运算符（===），判断一个位置是否有值
 let [x = 1] = [undefined];
 x // 1
-// null不严格等于undefined
+// null 不严格等于 undefined
 let [x = 1] = [null];
 x // null
     
@@ -97,7 +97,7 @@ function f() {
   console.log('aaa');
 }
 let [x = f()] = [1];
-// 上面代码中，因为x能取到值，所以函数f根本不会执行。上面的代码其实等价于下面的代码。
+// 上面代码中，因为 x 能取到值，所以函数 f 根本不会执行，上面的代码其实等价于下面的代码
 let x;
 if ([1][0] === undefined) {
   x = f();
@@ -126,7 +126,7 @@ let { first: f, last: l } = obj;
 f // 'hello'
 l // 'world'
     
-// foo是匹配的模式，baz才是变量。真正被赋值的是变量baz，而不是模式foo
+// foo 是匹配的模式，baz 才是变量。真正被赋值的是变量 baz，而不是模式 foo
 let { foo: baz } = { foo: "aaa", bar: "bbb" };
 baz // "aaa"
 foo // error: foo is not defined
@@ -158,15 +158,15 @@ y // 5
 var { message: msg = 'Something went wrong' } = {};
 msg // "Something went wrong"
     
-// 默认值生效的条件是，对象的属性值严格等于undefined
+// 默认值生效的条件是，对象的属性值严格等于 undefined
 var {x = 3} = {x: undefined};
 x // 3
     
-// null与undefined不严格相等，所以是个有效的赋值，导致默认值3不会生效
+// null 与 undefined 不严格相等，所以是个有效的赋值，导致默认值 3 不会生效
 var {x = 3} = {x: null};
 x // null
     
-// 解构失败，变量的值等于undefined，如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错。
+// 解构失败，变量的值等于 undefined，如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错
 let {foo} = {bar: 'baz'};
 foo // undefined
     
@@ -182,7 +182,7 @@ let {0 : first, [arr.length - 1] : last} = arr;
 first // 1
 last // 3
     
-// 如果要将一个已经声明的变量用于解构赋值，必须非常小心。下例JavaScript 引擎会将{x}理解成一个代码块，从而发生语法错误
+// 如果要将一个已经声明的变量用于解构赋值，必须非常小心。下例 JavaScript 引擎会将 {x} 理解成一个代码块，从而发生语法错误
 // 错误的写法 SyntaxError: syntax error
 let x;
 {x} = {x: 1};
@@ -213,7 +213,7 @@ s === Number.prototype.toString // true
 let {toString: s} = true;
 s === Boolean.prototype.toString // true
     
-// 只要等号右边的值不是对象或数组，就先将其转为对象。由于undefined和null无法转为对象，所以对它们进行解构赋值，都会报错。
+// 只要等号右边的值不是对象或数组，就先将其转为对象。由于 undefined 和 null 无法转为对象，所以对它们进行解构赋值，都会报错
 let { prop: x } = undefined; // TypeError
 let { prop: y } = null; // TypeError
 ```
@@ -248,7 +248,7 @@ move({x: 3}); // [3, undefined]
 move({}); // [undefined, undefined]
 move(); // [0, 0]
     
-// undefined就会触发函数参数的默认值
+// undefined 就会触发函数参数的默认值
 [1, undefined, 3].map((x = 'yes') => x);
 // [ 1, 'yes', 3 ]
 ```
