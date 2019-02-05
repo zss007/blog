@@ -83,20 +83,21 @@ new fproxy(1, 2) // {value: 2}
 fproxy.prototype === Object.prototype // true
 fproxy.foo === "Hello, foo" // true
 ```
-#### 下面是 Proxy 支持的拦截操作一览，一共 13 种：
-##### 1.1、get(target, propKey, receiver)：拦截对象属性的读取，比如 proxy.foo 和 proxy['foo']。
-##### 1.2、set(target, propKey, value, receiver)：拦截对象属性的设置，比如 proxy.foo = v 或 proxy['foo'] = v，返回一个布尔值。
-##### 1.3、has(target, propKey)：拦截 propKey in proxy 的操作，返回一个布尔值。
-##### 1.4、deleteProperty(target, propKey)：拦截 delete proxy[propKey] 的操作，返回一个布尔值。
-##### 1.5、ownKeys(target)：拦截 Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in 循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而 Object.keys() 的返回结果仅包括目标对象自身的可遍历属性。
-##### 1.6、getOwnPropertyDescriptor(target, propKey)：拦截 Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。
-##### 1.7、defineProperty(target, propKey, propDesc)：拦截 Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。
-##### 1.8、preventExtensions(target)：拦截 Object.preventExtensions(proxy)，返回一个布尔值。
-##### 1.9、getPrototypeOf(target)：拦截 Object.getPrototypeOf(proxy)，返回一个对象。
-##### 1.10、isExtensible(target)：拦截 Object.isExtensible(proxy)，返回一个布尔值。
-##### 1.11、setPrototypeOf(target, proto)：拦截 Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
-##### 1.12、apply(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如 proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)。
-##### 1.13、construct(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如 new proxy(...args)。
+下面是 Proxy 支持的拦截操作一览，一共 13 种：
+- 1.1、get(target, propKey, receiver)：拦截对象属性的读取，比如 proxy.foo 和 proxy['foo']。
+- 1.2、set(target, propKey, value, receiver)：拦截对象属性的设置，比如 proxy.foo = v 或 proxy['foo'] = v，返回一个布尔值。
+- 1.3、has(target, propKey)：拦截 propKey in proxy 的操作，返回一个布尔值。
+- 1.4、deleteProperty(target, propKey)：拦截 delete proxy[propKey] 的操作，返回一个布尔值。
+- 1.5、ownKeys(target)：拦截 Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in 循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而 Object.keys() 的返回结果仅包括目标对象自身的可遍历属性。
+- 1.6、getOwnPropertyDescriptor(target, propKey)：拦截 Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。
+- 1.7、defineProperty(target, propKey, propDesc)：拦截 Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。
+- 1.8、preventExtensions(target)：拦截 Object.preventExtensions(proxy)，返回一个布尔值。
+- 1.9、getPrototypeOf(target)：拦截 Object.getPrototypeOf(proxy)，返回一个对象。
+- 1.10、isExtensible(target)：拦截 Object.isExtensible(proxy)，返回一个布尔值。
+- 1.11、setPrototypeOf(target, proto)：拦截 Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
+- 1.12、apply(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如 proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)。
+- 1.13、construct(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如 new proxy(...args)。
+
 ### 二、Proxy 实例的方法
 下面是上面这些拦截方法的详细介绍。
 #### 2.1、get()
