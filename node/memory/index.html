@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>node 之内存控制 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="随着 Node 的发展，JavaScript 已经实现了 CommonJS 的生态圈大一统的梦想，JavaScript 的应用场景早已不再局限在浏览器中。在那些短时间执行的场景，比如网页应用、命令行工具等，这类场景由于运行时间短，且运行在用户的机器上，即使内存使用过多或内存泄漏，也只会影响到终端用户。由于运行时间短，随着进程的退出，内存会释放，几乎没有内存管理的必要。但随着 Node 在服务器端的">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node 之内存控制">
+<meta property="og:url" content="http://blog.master-ss.cn/node/memory/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="随着 Node 的发展，JavaScript 已经实现了 CommonJS 的生态圈大一统的梦想，JavaScript 的应用场景早已不再局限在浏览器中。在那些短时间执行的场景，比如网页应用、命令行工具等，这类场景由于运行时间短，且运行在用户的机器上，即使内存使用过多或内存泄漏，也只会影响到终端用户。由于运行时间短，随着进程的退出，内存会释放，几乎没有内存管理的必要。但随着 Node 在服务器端的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-14T06:25:06.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node 之内存控制">
+<meta name="twitter:description" content="随着 Node 的发展，JavaScript 已经实现了 CommonJS 的生态圈大一统的梦想，JavaScript 的应用场景早已不再局限在浏览器中。在那些短时间执行的场景，比如网页应用、命令行工具等，这类场景由于运行时间短，且运行在用户的机器上，即使内存使用过多或内存泄漏，也只会影响到终端用户。由于运行时间短，随着进程的退出，内存会释放，几乎没有内存管理的必要。但随着 Node 在服务器端的">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://resume.master-ss.cn">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node 之内存控制</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node 之内存控制</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-14T03:10:17.662Z" itemprop="datePublished" class="page-time">
+  2019-02-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、V8-的垃圾回收机制与内存限制"><span class="post-toc-text">一、V8 的垃圾回收机制与内存限制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、Node-与-V8"><span class="post-toc-text">1.1、Node 与 V8</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、V8-的内存限制"><span class="post-toc-text">1.2、V8 的内存限制</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3、V8-的内存分代"><span class="post-toc-text">1.3、V8 的内存分代</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、内存指标"><span class="post-toc-text">二、内存指标</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、高效使用内存"><span class="post-toc-text">2.1、高效使用内存</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、查看内存使用情况"><span class="post-toc-text">2.2、查看内存使用情况</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3、查看系统的内存占用"><span class="post-toc-text">2.3、查看系统的内存占用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4、堆外内存"><span class="post-toc-text">2.4、堆外内存</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、内存泄漏"><span class="post-toc-text">三、内存泄漏</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1、慎将内存当做缓存"><span class="post-toc-text">3.1、慎将内存当做缓存</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2、关注队列状态"><span class="post-toc-text">3.2、关注队列状态</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、大内存应用"><span class="post-toc-text">四、大内存应用</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-node/memory" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node 之内存控制</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-14 11:10:17" datetime="2019-02-14T03:10:17.662Z" itemprop="datePublished">2019-02-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>随着 Node 的发展，JavaScript 已经实现了 CommonJS 的生态圈大一统的梦想，JavaScript 的应用场景早已不再局限在浏览器中。在那些短时间执行的场景，比如网页应用、命令行工具等，这类场景由于运行时间短，且运行在用户的机器上，即使内存使用过多或内存泄漏，也只会影响到终端用户。由于运行时间短，随着进程的退出，内存会释放，几乎没有内存管理的必要。但随着 Node 在服务器端的广泛应用，其他语言里存在着的问题在 JavaScript 中也暴露出来了。在服务器端，资源向来就寸土寸金，要为海量用户服务，就得使一切资源都要高效循环利用，本文将介绍在 Node 中如何合理高效地使用内存。<br><a id="more"></a></p>
+<h3 id="一、V8-的垃圾回收机制与内存限制"><a href="#一、V8-的垃圾回收机制与内存限制" class="headerlink" title="一、V8 的垃圾回收机制与内存限制"></a>一、V8 的垃圾回收机制与内存限制</h3><p>Node 极大地拓宽了 JavaScript 的应用场景，当主流应用场景从客户端延伸到服务器端之后，对于性能敏感的服务器端程序，内存管理的好坏、垃圾回收状况是否优良，都会对服务构成影响。而在 Node 中，这一切都与 Node 的 JavaScript 执行引擎 V8 息息相关。</p>
+<h4 id="1-1、Node-与-V8"><a href="#1-1、Node-与-V8" class="headerlink" title="1.1、Node 与 V8"></a>1.1、Node 与 V8</h4><p>Node 在发展历程中离不开 V8，所以在官方的主页介绍中就提到 Node 是一个构建在 Chrome 的 JavaScript 运行时上的平台。<br>关于 V8，它的来历与背景亦是大有来头。作为虚拟机，V8 的性能表现优异，这与它的领导者有莫大的渊源，Chrome 的成功也离不开它背后的天才——Lars Bak。在 Lars 的工作履历里，绝大部分都是与虚拟机相关的工作。在开发 V8 之前，他曾经在 Sun 公司工作，担任 HotSpot 团队的技术领导，主要致力于开发高性能的 Java 虚拟机。在这之前，他也曾为 Self、Smalltalk 语言开发过高性能虚拟机。这些无与伦比的经历让 V8 一出世就超越了当时所有的 JavaScript 虚拟机。</p>
+<h4 id="1-2、V8-的内存限制"><a href="#1-2、V8-的内存限制" class="headerlink" title="1.2、V8 的内存限制"></a>1.2、V8 的内存限制</h4><p>在一般的后端开发语言中，在基本的内存使用上没有什么限制，然而在 Node 中通过 JavaScript 使用内存时就会发现只能使用部分内存（64 位系统下约为 1.4 GB，32 位系统下约为 0.7 GB）。在这样的限制下，将会导致 Node 无法直接操作大内存对象，比如无法将一个 2 GB 的文件读入内存中进行字符串分析处理，即使物理内存有 32 GB。这样在单个 Node 进程的情况下，计算机的内存资源无法得到充足的使用。<br>造成这个问题的主要原因在于 Node 基于 V8 构建，所以在 Node 中使用的 JavaScript 对象基本上都是通过 V8 自己的方式来进行分配和管理的。<br>至于 V8 为何要限制堆的大小，表层原因为 V8 最初为浏览器而设计，不太可能遇到用大量内存的场景。对于网页来说，V8 的限制值已经绰绰有余。深层原因是 V8 的垃圾回收机制的限制。按官方的说法，以 1.5 GB 的垃圾回收堆内存为例，V8 做一次小的垃圾回收需要 50 毫秒以上，做一次非增量式的垃圾回收甚至要 1 秒以上。这是垃圾回收中引起 JavaScript 线程暂停执行的时间，在这样的时间花销下，应用的性能和响应能力都会直线下降。这样的情况不仅仅后端服务无法接受，前端浏览器也无法接受。因此，在当时的考虑下直接限制堆内存是一个好的选择。<br>当然，这个限制也不是不能打开，V8 依然提供了选项让我们使用更多的内存。Node 在启动时可以传递 –max-old-space-size 或–max-new-space-size 来调整内存限制的大小，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node --max-old-space-size=1700 test.js // 单位为MB </span><br><span class="line">// 或者</span><br><span class="line">node --max-new-space-size=1024 test.js // 单位为KB</span><br></pre></td></tr></table></figure></p>
+<p>上述参数在 V8 初始化时生效，一旦生效就不能再动态改变。如果遇到 Node 无法分配足够内存给 JavaScript 对象的情况，可以用这个办法来放宽 V8 默认的内存限制，避免在执行过程中稍微多用了一些内存就轻易崩溃。</p>
+<h4 id="1-3、V8-的内存分代"><a href="#1-3、V8-的内存分代" class="headerlink" title="1.3、V8 的内存分代"></a>1.3、V8 的内存分代</h4><p>在 V8 中，主要将内存分为新生代和老生代两代。新生代中的对象为存活时间较短的对象，老生代中的对象为存活时间较长或常驻内存的对象。<br>V8 堆的整体大小就是新生代所用内存空间加上老生代的内存空间。前面我们提及的 –max-old-space-size 命令行参数可以用于设置老生代内存空间的最大值，–max-new-space-size 命令行参数则用于设置新生代内存空间的大小的。比较遗憾的是，这两个最大值需要在启动时就指定。这意味着 V8 使用的内存没有办法根据使用情况自动扩充，当内存分配过程中超过极限值时，就会引起进程出错。</p>
+<h3 id="二、内存指标"><a href="#二、内存指标" class="headerlink" title="二、内存指标"></a>二、内存指标</h3><h4 id="2-1、高效使用内存"><a href="#2-1、高效使用内存" class="headerlink" title="2.1、高效使用内存"></a>2.1、高效使用内存</h4><p>在 V8 面前，开发者所要具备的责任是如何让垃圾回收机制更高效地工作。<br>在正常的 JavaScript 执行中，无法立即回收的内存有闭包和全局变量引用这两种情况。由于 V8 的内存限制，要十分小心此类变量是否无限制地增加，因为它会导致老生代中的对象增多。</p>
+<h4 id="2-2、查看内存使用情况"><a href="#2-2、查看内存使用情况" class="headerlink" title="2.2、查看内存使用情况"></a>2.2、查看内存使用情况</h4><p>process.memoryUsage() 可以查看内存使用情况。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br><span class="line">&gt; process.memoryUsage()</span><br><span class="line">&#123; rss: 21708800,</span><br><span class="line">  heapTotal: 7684096,</span><br><span class="line">  heapUsed: 4975704,</span><br><span class="line">  external: 8676 &#125;</span><br></pre></td></tr></table></figure></p>
+<p>rss 是 resident set size 的缩写，即进程的常驻内存部分。进程的内存总共有几部分，一部分是 rss，其余部分在交换区（swap）或者文件系统（filesystem）中。<br>除了 rss 外，heapTotal 和 heapUsed 对应的是 V8 的堆内存信息。heapTotal 是堆中总共申请的内存量，heapUsed 表示目前堆中使用中的内存量。这 3 个值的单位都是字节。为了更好地查看效果，我们格式化一下输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var showMem = function () &#123;</span><br><span class="line">    var mem = process.memoryUsage();</span><br><span class="line">    var format = function (bytes) &#123;</span><br><span class="line">        return (bytes / 1024 / 1024).toFixed(2) + &apos; MB&apos;;</span><br><span class="line">    &#125;;</span><br><span class="line">    console.log(&apos;Process: heapTotal &apos; + format(mem.heapTotal) + &apos; heapUsed &apos; + format(mem.heapUsed) + &apos; rss &apos; + format(mem.rss));</span><br><span class="line">    console.log(&apos;-----------------------------------------------------------&apos;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>同时，写一个方法用于不停地分配内存但不释放内存，相关代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var useMem = function () &#123;</span><br><span class="line">    var size = 20 * 1024 * 1024;</span><br><span class="line">    var arr = new Array(size);</span><br><span class="line">    for(var i = 0; i &lt; size; i++)&#123;</span><br><span class="line">        arr[i] = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    return arr</span><br><span class="line">&#125;;</span><br><span class="line">var total = [];</span><br><span class="line">for(var j = 0; j &lt; 15; j++)&#123; </span><br><span class="line">    showMem();</span><br><span class="line">    total.push(useMem());</span><br><span class="line">&#125;</span><br><span class="line">showMem();</span><br></pre></td></tr></table></figure></p>
+<p>将以上代码存为 outofmemory.js 并执行它，得到的输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Process: heapTotal 6.83 MB heapUsed 4.21 MB rss 20.14 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 166.84 MB heapUsed 164.25 MB rss 181.61 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 326.85 MB heapUsed 324.25 MB rss 341.66 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 486.86 MB heapUsed 484.26 MB rss 501.73 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 646.88 MB heapUsed 644.26 MB rss 661.78 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 806.89 MB heapUsed 804.26 MB rss 821.81 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 966.90 MB heapUsed 964.26 MB rss 981.82 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 1126.91 MB heapUsed 1124.27 MB rss 1141.84 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 1286.92 MB heapUsed 1284.27 MB rss 1301.86 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line"></span><br><span class="line">&lt;--- Last few GCs ---&gt;</span><br><span class="line"></span><br><span class="line">[8918:0x102802400]     1415 ms: Mark-sweep 1284.0 (1290.9) -&gt; 1283.9 (1290.9) MB, 130.2 / 0.0 ms  allocation failure GC in old space requested</span><br><span class="line">[8918:0x102802400]     1547 ms: Mark-sweep 1283.9 (1290.9) -&gt; 1283.9 (1287.9) MB, 131.9 / 0.0 ms  last resort GC in old space requested</span><br><span class="line">[8918:0x102802400]     1681 ms: Mark-sweep 1283.9 (1287.9) -&gt; 1283.9 (1287.9) MB, 133.5 / 0.0 ms  last resort GC in old space requested</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，每次调用 useMem 都导致了 3 个值的增长。在接近 1500 MB 的时候，无法继续分配内存，然后进程内存溢出了，连循环体都无法执行完成。</p>
+<h4 id="2-3、查看系统的内存占用"><a href="#2-3、查看系统的内存占用" class="headerlink" title="2.3、查看系统的内存占用"></a>2.3、查看系统的内存占用</h4><p>与 process.memoryUsage() 不同的是，os 模块中的 totalmem() 和 freemem() 这两个方法用于查看操作系统的内存使用情况，它们分别返回系统的总内存和闲置内存，以字节为单位。示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br><span class="line">&gt; os.totalmem()</span><br><span class="line">17179869184</span><br><span class="line">&gt; os.freemem()</span><br><span class="line">4527833088</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<p>从输出信息可以看到我的电脑的总内存为 16 GB，当前闲置内存大致为 4.2 GB。</p>
+<h4 id="2-4、堆外内存"><a href="#2-4、堆外内存" class="headerlink" title="2.4、堆外内存"></a>2.4、堆外内存</h4><p>通过 process.memoryUsage() 的结果可以看到，堆中的内存用量总是小于进程的常驻内存用量，这意味着 Node 中的内存使用并非都是通过 V8 进行分配的。我们将那些不是通过 V8 分配的内存称为堆外内存。<br>这里我们将前面的 useMem() 方法稍微改造一下，将 Array 变为 Buffer，将 size 变大，每一次构造 200 MB 的对象，相关代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var useMem = function () &#123;</span><br><span class="line">    var size = 200 * 1024 * 1024;</span><br><span class="line">    var buffer = new Buffer(size);</span><br><span class="line">    for (var i = 0; i &lt; size; i++) &#123;</span><br><span class="line">        buffer[i] = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    return buffer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>重新执行该代码，得到的输出结果如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Process: heapTotal 6.83 MB heapUsed 4.21 MB rss 19.86 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.83 MB heapUsed 4.25 MB rss 221.35 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.83 MB heapUsed 4.26 MB rss 421.52 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 9.33 MB heapUsed 3.98 MB rss 621.91 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 9.33 MB heapUsed 3.98 MB rss 821.91 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 9.33 MB heapUsed 3.98 MB rss 1021.92 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 9.33 MB heapUsed 3.95 MB rss 1222.19 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 9.33 MB heapUsed 3.95 MB rss 1422.21 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 9.33 MB heapUsed 3.95 MB rss 1622.21 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.95 MB rss 1822.21 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.95 MB rss 2021.24 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.96 MB rss 2221.24 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.92 MB rss 2421.28 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.93 MB rss 2620.31 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.93 MB rss 2820.31 MB</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">Process: heapTotal 6.33 MB heapUsed 3.92 MB rss 3020.34 MB</span><br><span class="line">-----------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>我们看到 15 次循环都完整执行，并且三个内存占用值与前一个示例完全不同。在改造后的输出结果中，heapTotal 与 heapUsed 的变化极小，唯一变化的是 rss 的值，并且该值已经远远超过 V8 的限制值。这其中的原因是 Buffer 对象不同于其他对象，它不经过 V8 的内存分配机制，所以也不会有堆内存的大小限制。<br>为何 Buffer 对象并非通过 V8 分配？这在于 Node 并不同于浏览器的应用场景。在浏览器中，JavaScript 直接处理字符串即可满足绝大多数的业务需求，而 Node 则需要处理网络流和文件 I/O 流，操作字符串远远不能满足传输的性能需求。<br>所以从上面的介绍可以得知，Node 的内存构成主要由通过 V8 进行分配的部分和 Node 自行分配的部分。受 V8 的垃圾回收限制的主要是 V8 的堆内存。</p>
+<h3 id="三、内存泄漏"><a href="#三、内存泄漏" class="headerlink" title="三、内存泄漏"></a>三、内存泄漏</h3><p>Node 对内存泄漏十分敏感，一旦线上应用有成千上万的流量，那怕是一个字节的内存泄漏也会造成堆积，垃圾回收过程中将会耗费更多时间进行对象扫描，应用响应缓慢，直到进程内存溢出，应用崩溃。<br>在 V8 的垃圾回收机制下，在通常的代码编写中，很少会出现内存泄漏的情况。但是内存泄漏通常产生于无意间，较难排查。尽管内存泄漏的情况不尽相同，但其实质只有一个，那就是应当回收的对象出现意外而没有被回收，变成了常驻在老生代中的对象。<br>通常，造成内存泄漏的原因有几个：缓存、队列消费不及时与作用域未释放。</p>
+<h4 id="3-1、慎将内存当做缓存"><a href="#3-1、慎将内存当做缓存" class="headerlink" title="3.1、慎将内存当做缓存"></a>3.1、慎将内存当做缓存</h4><p>缓存在应用中的作用举足轻重，可以十分有效地节省资源。因为它的访问效率要比 I/O 的效率高，一旦命中缓存，就可以节省一次 I/O 的时间。<br>但是在 Node 中，缓存并非物美价廉。一旦一个对象被当做缓存来使用，那就意味着它将会常驻在老生代中。缓存中存储的键越多，长期存活的对象也就越多，这将导致垃圾回收在进行扫描和整理时，对这些对象做无用功。<br>另一个问题在于，JavaScript 开发者通常喜欢用对象的键值对来缓存东西，但这与严格意义上的缓存又有着区别，严格意义的缓存有着完善的过期策略，而普通对象的键值对并没有。<br>直接将内存作为缓存的方案要十分慎重。除了限制缓存的大小外，另外要考虑的事情是，进程之间无法共享内存。如果在进程内使用缓存，这些缓存不可避免地有重复，对物理内存的使用是一种浪费。<br>如何使用大量缓存，目前比较好的解决方案是采用进程外的缓存，进程自身不存储状态。外部的缓存软件有着良好的缓存过期淘汰策略以及自有的内存管理，不影响 Node 进程的性能。它的好处多多，在 Node 中主要可以解决两个问题：将缓存转移到外部，减少常驻内存的对象的数量，让垃圾回收更高效；进程之间可以共享缓存。<br>目前，市面上较好的缓存有 Redis 和 Memcached。Node 模块的生态系统十分完善，这两个产品的客户端都有。</p>
+<h4 id="3-2、关注队列状态"><a href="#3-2、关注队列状态" class="headerlink" title="3.2、关注队列状态"></a>3.2、关注队列状态</h4><p>有的应用会收集日志，如果欠缺考虑，也许会采用数据库来记录日志。日志通常会是海量的，数据库构建在文件系统之上，写入效率远远低于文件直接写入，于是会形成数据库写入操作的堆积，而 JavaScript 中相关的作用域也不会得到释放，内存占用不会回落，从而出现内存泄漏。<br>遇到这种场景，表层的解决方案是换用消费速度更高的技术。在日志收集的案例中，换用文件写入日志的方式会更高效。深度的解决方案应该是监控队列的长度，一旦堆积，应当通过监控系统产生报警并通知相关人员。另一个解决方案是任意异步调用都应该包含超时机制，一旦在限定的时间内未完成响应，通过回调函数传递超时异常，使得任意异步调用的回调都具备可控的响应时间，给消费速度一个下限值。</p>
+<h3 id="四、大内存应用"><a href="#四、大内存应用" class="headerlink" title="四、大内存应用"></a>四、大内存应用</h3><p>在 Node 中，不可避免地还是会存在操作大文件的场景。由于 Node 的内存限制，操作大文件也需要小心，好在 Node 提供了 stream 模块用于处理大文件。<br>stream 模块是 Node 的原生模块，直接引用即可。stream 继承自 EventEmitter，具备基本的自定义事件功能，同时抽象出标准的事件和方法。它分可读和可写两种。Node 中的大多数模块都有 stream 的应用，比如 fs 的 createReadStream() 和 createWriteStream() 方法可以分别用于创建文件的可读流和可写流，process 模块中的 stdin 和 stdout 则分别是可读流和可写流的示例。<br>由于 V8 的内存限制，我们无法通过 fs.readFile() 和 fs.writeFile() 直接进行大文件的操作，而改用 fs.createReadStream() 和 fs.createWriteStream() 方法通过流的方式实现对大文件的操作。下面的代码展示了如何读取一个文件，然后将数据写入到另一个文件的过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var reader = fs.createReadStream(&apos;in.txt&apos;);</span><br><span class="line">var writer = fs.createWriteStream(&apos;out.txt&apos;);</span><br><span class="line">reader.on(&apos;data&apos;, function (chunk) &#123;</span><br><span class="line">    writer.write(chunk);</span><br><span class="line">&#125;);</span><br><span class="line">reader.on(&apos;end&apos;, function () &#123;</span><br><span class="line">    writer.end();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>由于读写模型固定，上述方法有更简洁的方式，具体如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var reader = fs.createReadStream(&apos;in.txt&apos;);</span><br><span class="line">var writer = fs.createWriteStream(&apos;out.txt&apos;);</span><br><span class="line">reader.pipe(writer);</span><br></pre></td></tr></table></figure></p>
+<p>可读流提供了管道方法 pipe()，封装了 data 事件和写入操作。通过流的方式，上述代码不会受到 V8 内存限制的影响，有效地提高了程序的健壮性。<br>如果不需要进行字符串层面的操作，则不需要借助 V8 来处理，可以尝试进行纯粹的 Buffer 操作，这不会受到 V8 堆内存的限制。但是这种大片使用内存的情况依然要小心，即使 V8 不限制堆内存的大小，物理内存依然有限制。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-02-14T06:25:06.375Z" itemprop="dateUpdated">2019-02-14 14:25:06</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/memory/" target="_blank" rel="external">http://blog.master-ss.cn/node/memory/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/memory/&title=《node 之内存控制》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/memory/&title=《node 之内存控制》 — 青松的博客&source=随着 Node 的发展，JavaScript 已经实现了 CommonJS 的生态圈大一统的梦想，JavaScript 的应用场景早已不再局限在浏览器中。..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/memory/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之内存控制》 — 青松的博客&url=http://blog.master-ss.cn/node/memory/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/memory/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/node/module/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">node 之 module</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/memory/&title=《node 之内存控制》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/memory/&title=《node 之内存控制》 — 青松的博客&source=随着 Node 的发展，JavaScript 已经实现了 CommonJS 的生态圈大一统的梦想，JavaScript 的应用场景早已不再局限在浏览器中。..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/memory/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之内存控制》 — 青松的博客&url=http://blog.master-ss.cn/node/memory/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/memory/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3ay2rEMAwF0Pn/n55CV4UhnivZESkcr4bQOMddCD38esXr/bs+f1/9zd8nn+9+Pj+8cHFxt7nv5br6cP5u/i+I9sHFxR3kVrdLAtkdwREXF/dp3DyErY93FShxcXH/L3eN6AUvXFzcZ3KT4idvgqx3SNolB2o1XFzcDe5OoXLq91B/FxcXd3sqkYekdWFTbY9efh0XF3eEu26GrguS6tClVyZFGRkuLu7N3Py1Xj51+PoFLi7uDdzqNYv9oNa70oGLizvJ3R+oVI+9cwxcXNwZbnVwkhdIvaN++QouLu44t5q+9OLlzhAXFxd3kttrYiYlSrUJ+0WFi4s7wk1KoGpzs1og5UETFxd3htsLZPmTnfboZfGDi4t7M7cajJq92FMXL3BxcUe41Qwob3mcHeLi4uI+jbsTeg5f+sTFxR3h9kYd1aFsfuxyXoaLi3sD911cSeLSa5REu+Hi4o5wq2Gll/r0mi+98IeLi3uKWw1e1dFpkgYVhru4uLiD3J2BSp7Q9ELn5W0yXFzcB3DzIqd67MKeuLi4D+YmXdjqKKXQ08XFxR3h9gafCaiXNl2icXFxR7g7pUi1QDrVUsHFxb2N+wNyoj2srBdrNAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
