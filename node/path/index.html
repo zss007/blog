@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>node 之文件路径 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="node 有好几种表达文件路径的方式，但是他们之间有细微的区别，很容易搞混，现在梳理一遍。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node 之文件路径">
+<meta property="og:url" content="http://blog.master-ss.cn/node/path/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="node 有好几种表达文件路径的方式，但是他们之间有细微的区别，很容易搞混，现在梳理一遍。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-20T08:42:34.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node 之文件路径">
+<meta name="twitter:description" content="node 有好几种表达文件路径的方式，但是他们之间有细微的区别，很容易搞混，现在梳理一遍。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://resume.master-ss.cn">
+                <i class="icon icon-lg icon-link"></i>
+                简历
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node 之文件路径</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node 之文件路径</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-20T07:58:36.239Z" itemprop="datePublished" class="page-time">
+  2019-02-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、文件路径"><span class="post-toc-text">一、文件路径</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、-dirname"><span class="post-toc-text">1.1、__dirname</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、-filename"><span class="post-toc-text">1.2、__filename</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3、process-cwd"><span class="post-toc-text">1.3、process.cwd()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4、-与"><span class="post-toc-text">1.4、./ 与 ../</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、综合实例"><span class="post-toc-text">二、综合实例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、总结"><span class="post-toc-text">三、总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-node/path" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node 之文件路径</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-20 15:58:36" datetime="2019-02-20T07:58:36.239Z" itemprop="datePublished">2019-02-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>node 有好几种表达文件路径的方式，但是他们之间有细微的区别，很容易搞混，现在梳理一遍。<br><a id="more"></a> </p>
+<h3 id="一、文件路径"><a href="#一、文件路径" class="headerlink" title="一、文件路径"></a>一、文件路径</h3><p>Node 中的文件路径大概有 <code>__dirname</code>, <code>__filename</code>, <code>process.cwd()</code>, <code>./</code> 或者 <code>../</code>，前三个都是绝对路径，为了便于比较，<code>./</code> 和 <code>../</code> 我们通过 <code>path.resolve(&#39;./&#39;)</code>来转换为绝对路径。</p>
+<h4 id="1-1、-dirname"><a href="#1-1、-dirname" class="headerlink" title="1.1、__dirname"></a>1.1、__dirname</h4><p>当前模块的目录名，与 <code>__filename</code> 的 <code>path.dirname()</code> 相同。<br>示例，从 /Users/songsong.zhang/study/es6test/path 运行 node example.js：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log(__dirname);</span><br><span class="line">// 打印: /Users/songsong.zhang/study/es6test/path</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">console.log(path.dirname(__filename));</span><br><span class="line">// 打印: /Users/songsong.zhang/study/es6test/path</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-2、-filename"><a href="#1-2、-filename" class="headerlink" title="1.2、__filename"></a>1.2、__filename</h4><p>当前模块的文件名，这是当前模块文件的已解析的绝对路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(__filename);</span><br><span class="line">// 打印: /Users/songsong.zhang/study/es6test/path/example.js</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-3、process-cwd"><a href="#1-3、process-cwd" class="headerlink" title="1.3、process.cwd()"></a>1.3、process.cwd()</h4><p>process.cwd() 方法返回 Node.js 进程的当前工作目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(`当前工作目录是: $&#123;process.cwd()&#125;`);</span><br><span class="line">// 打印: 当前工作目录是: /Users/songsong.zhang/study/es6test/path</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-4、-与"><a href="#1-4、-与" class="headerlink" title="1.4、./ 与 ../"></a>1.4、./ 与 ../</h4><p>我们通过 path.resolve() 方法将路径或路径片段的序列解析为绝对路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">console.log(path.resolve(&apos;./&apos;));</span><br><span class="line">// 打印: /Users/songsong.zhang/study/es6test/path</span><br><span class="line">console.log(path.resolve(&apos;../&apos;));</span><br><span class="line">// 打印: /Users/songsong.zhang/study/es6test</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、综合实例"><a href="#二、综合实例" class="headerlink" title="二、综合实例"></a>二、综合实例</h3><p>假如我们有这样的文件结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">path/</span><br><span class="line">    -lib/</span><br><span class="line">        -common.js</span><br><span class="line">    -model</span><br><span class="line">        -task.js</span><br></pre></td></tr></table></figure></p>
+<p>在 task.js 里编写如下的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">console.log(__dirname);</span><br><span class="line">console.log(__filename);</span><br><span class="line">console.log(process.cwd());</span><br><span class="line">console.log(path.resolve(&apos;./&apos;));</span><br></pre></td></tr></table></figure></p>
+<p>在 <code>model</code> 目录下运行 <code>node task.js</code> 得到的输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/Users/songsong.zhang/study/es6test/path/model</span><br><span class="line">/Users/songsong.zhang/study/es6test/path/model/task.js</span><br><span class="line">/Users/songsong.zhang/study/es6test/path/model</span><br><span class="line">/Users/songsong.zhang/study/es6test/path/model</span><br></pre></td></tr></table></figure></p>
+<p>然后在 <code>path</code> 目录下运行 <code>node model/task.js</code>，得到的输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/Users/songsong.zhang/study/es6test/path/model</span><br><span class="line">/Users/songsong.zhang/study/es6test/path/model/task.js</span><br><span class="line">/Users/songsong.zhang/study/es6test/path</span><br><span class="line">/Users/songsong.zhang/study/es6test/path</span><br></pre></td></tr></table></figure></p>
+<p>可以得出一些<strong>肤浅的结论</strong>了：</p>
+<ul>
+<li>__dirname: 总是返回被执行的 js 所在文件夹的绝对路径</li>
+<li>__filename: 总是返回被执行的 js 的绝对路径</li>
+<li>process.cwd(): 总是返回运行 node 命令时所在的文件夹的绝对路径</li>
+<li>./: 跟 process.cwd() 貌似一样</li>
+</ul>
+<p>但是在 <code>require(&#39;../lib/common&#39;)</code> 里一直都是各种相对路径写，也没见报什么错啊，我们再来个栗子吧，还是上面的结构，<code>model/task.js</code> 里的代码改成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">var common = require(&apos;../lib/common&apos;);</span><br><span class="line"></span><br><span class="line">fs.readFile(&apos;../lib/common.js&apos;, function (err, data) &#123;</span><br><span class="line">    if (err) return console.log(err);</span><br><span class="line">    console.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在 model 目录下运行 <code>node task.js</code>，一切 Ok，没有报错。然后在 path 目录下运行 <code>node model/task.js</code>，然后很果断滴报错了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123; Error: ENOENT: no such file or directory, open &apos;../lib/common.js&apos;</span><br><span class="line">  errno: -2,</span><br><span class="line">  code: &apos;ENOENT&apos;,</span><br><span class="line">  syscall: &apos;open&apos;,</span><br><span class="line">  path: &apos;../lib/common.js&apos; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么这下问题真的都是来了，按照上面的理论，在 path 下运行时，<code>../lib/common.js</code> 会被转成 <code>/Users/songsong.zhang/study/es6test/lib/common.js</code>，这个路径显然是不存在的，但是从运行结果可以看出 <code>require(&#39;../lib/common&#39;)</code> 是 OK 的，只是 readFile 时报错了。</p>
+<p>那么关于 <code>./</code> 正确的结论是：<br>在 <code>require()</code> 中使用是跟 <code>__dirname</code> 的效果相同，不会因为启动脚本的目录不一样而改变，在其他情况下跟 <code>process.cwd()</code> 效果相同，是相对于启动脚本所在目录的路径。</p>
+<h3 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h3><p>只有在 <code>require()</code> 时才使用相对路径 <code>(./, ../)</code> 的写法，其他地方一律使用绝对路径，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 当前目录下</span><br><span class="line">path.dirname(__filename) + &apos;/test.js&apos;;</span><br><span class="line">// 相邻目录下</span><br><span class="line">path.resolve(__dirname, &apos;../lib/common.js&apos;);</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-02-20T08:42:34.453Z" itemprop="dateUpdated">2019-02-20 16:42:34</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/path/" target="_blank" rel="external">http://blog.master-ss.cn/node/path/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/path/&title=《node 之文件路径》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/path/&title=《node 之文件路径》 — 青松的博客&source=node 有好几种表达文件路径的方式，但是他们之间有细微的区别，很容易搞混，现在梳理一遍。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/path/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之文件路径》 — 青松的博客&url=http://blog.master-ss.cn/node/path/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/path/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/node/memory/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">node 之内存控制</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/path/&title=《node 之文件路径》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/path/&title=《node 之文件路径》 — 青松的博客&source=node 有好几种表达文件路径的方式，但是他们之间有细微的区别，很容易搞混，现在梳理一遍。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/path/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之文件路径》 — 青松的博客&url=http://blog.master-ss.cn/node/path/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/path/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzklEQVR42u3aO47DMAwFwNz/0t42xVp+pD5wgFFlBI4wckFQJD+feF1fq/rO3b/Gu00tXFzcae41XON3kn3G7+QGXFzc89xxoLl7vgthd5Rk/wcbLi7uD3LHoSo5Hi4u7q9zk+tQck3CxcV9JzcPQ70CRx7alt3VcHFxJ7h5lXLf85b6Li4ubot7FVdSGE2C4NVauLi4Z7i9BCUn9oqkD41bXFzczdw8VCVDGKuuLg8hDBcXdzO3WsTMRyuq7ZNCioOLi7uZmzdEe43SmUD5z864uLhHuDOtlJliSp4SRXkZLi7uUm6epvQOs7ZVg4uLe4bb2yJn9UqoeSEGFxd3N7dXU6kGtfwADx8LFxd3G7da8qgmOos/By4u7hFufu3pXZAKMyDBIXFxcU9y84ZKXjbNhyrysiwuLu55bm9Ycxx0qolLocmKi4t7hNtLTfISyYIsDBcX9wj3Kq7q2ETShin3dnBxcTdzq+MR1Vbr2iPh4uKe5M6PXvXSmuQwUcEUFxd3G7c6mNVrsvYuP1EVBxcX9wXcXumkeukqVE1wcXFfwM2TksK41e64i4uLW+RWi6S90Y3k94ePhYuLe4SbJy7VtKYaIqv74OLibuD+AcXlIB60FZPhAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
