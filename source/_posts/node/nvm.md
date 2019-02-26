@@ -41,3 +41,16 @@ npm config set prefix /Users/songsong.zhang/npm-global
 export PATH=/Users/songsong.zhang/npm-global/bin:$PATH
 ```
 如果是 windows 的话，则需要配置环境变量。
+### 四、使用 .nvmrc 文件
+如果你的 node 版本与项目所需的版本不同，则可在项目根目录或其任意父级目录中创建 .nvmrc 文件，在文件中指定使用的 node 版本号，例如：
+```
+cat .nvmrc
+// 6.16.0
+
+nvm use
+// Found '/Users/songsong.zhang/study/es6test/.nvmrc' with version <6.16.0>
+// Now using node v6.16.0 (npm v3.10.10)
+
+node -v
+// v6.16.0
+```
