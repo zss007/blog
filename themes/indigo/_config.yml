@@ -25,9 +25,9 @@ menu:
   github:
     url: https://github.com/zss007
     target: _blank
-  link:
-    text: 简历
-    url: https://resume.master-ss.cn
+  # link:
+  #   text: 简历
+  #   url: https://resume.master-ss.cn
 
 # 你的头像url
 avatar: /img/avatar.png
