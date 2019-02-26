@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="青松的博客">
 <meta property="og:description" content="前不久有个旧项目需要低版本的 node 才能跑起来，但是新项目又需要新版本，还好有个工具叫 nvm 能够切换不同版本的 node。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-20T09:39:59.133Z">
+<meta property="og:updated_time" content="2019-02-26T03:04:41.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nvm 简介">
 <meta name="twitter:description" content="前不久有个旧项目需要低版本的 node 才能跑起来，但是新项目又需要新版本，还好有个工具叫 nvm 能够切换不同版本的 node。">
@@ -109,13 +109,6 @@
               </a>
             </li>
         
-            <li class="waves-block waves-effect">
-              <a href="https://resume.master-ss.cn">
-                <i class="icon icon-lg icon-link"></i>
-                简历
-              </a>
-            </li>
-        
       </ul>
     </div>
   </div>
@@ -174,7 +167,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、安装"><span class="post-toc-text">一、安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、mac-或-linux"><span class="post-toc-text">1.1、mac 或 linux</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、windows"><span class="post-toc-text">1.2、windows</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、基本命令"><span class="post-toc-text">二、基本命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、不同版本的-Nodejs-共享全局的-npm"><span class="post-toc-text">三、不同版本的 Nodejs 共享全局的 npm</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、安装"><span class="post-toc-text">一、安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、mac-或-linux"><span class="post-toc-text">1.1、mac 或 linux</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、windows"><span class="post-toc-text">1.2、windows</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、基本命令"><span class="post-toc-text">二、基本命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、不同版本的-Nodejs-共享全局的-npm"><span class="post-toc-text">三、不同版本的 Nodejs 共享全局的 npm</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、使用-nvmrc-文件"><span class="post-toc-text">四、使用 .nvmrc 文件</span></a></li></ol>
         </nav>
     </aside>
 
@@ -219,6 +212,7 @@
 <h3 id="三、不同版本的-Nodejs-共享全局的-npm"><a href="#三、不同版本的-Nodejs-共享全局的-npm" class="headerlink" title="三、不同版本的 Nodejs 共享全局的 npm"></a>三、不同版本的 Nodejs 共享全局的 npm</h3><p>用 nvm 管理 node 版本，会碰到这样一个问题：对于各个版本的全局 npm 模块，是各自独立的。因此，当你在 6.16.0 下全局安装了某个模块，然后切换到 8.14.1 之后又得重新安装。所以，解法就是 npm prefix：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 获取当前的 prefix</span><br><span class="line">npm config get prefix   // ~/.nvm/versions/node/v8.14.1</span><br><span class="line"></span><br><span class="line">// 将 prefix 设置到一个全局目录下，比如新建一个 /Users/songsong.zhang/npm-global, 这个文件不要放在需要 sudo 的文件夹下</span><br><span class="line">npm config set prefix /Users/songsong.zhang/npm-global</span><br></pre></td></tr></table></figure></p>
 <p>设置之后，再用 npm 安装全局模块时就会放在 npm-global 下，注意 npm/cnpm 的 prefix 是各自独立的，因此每个都需要设置一下。<br>然后呢，全局模块的可执行文件也会放在 npm-global/bin 目录下，想要执行这些命令的话，还需要添加一条 PATH，打开 .bashrc，末尾添加一行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/Users/songsong.zhang/npm-global/bin:$PATH</span><br></pre></td></tr></table></figure></p>
 <p>如果是 windows 的话，则需要配置环境变量。</p>
+<h3 id="四、使用-nvmrc-文件"><a href="#四、使用-nvmrc-文件" class="headerlink" title="四、使用 .nvmrc 文件"></a>四、使用 .nvmrc 文件</h3><p>如果你的 node 版本与项目所需的版本不同，则可在项目根目录或其任意父级目录中创建 .nvmrc 文件，在文件中指定使用的 node 版本号，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat .nvmrc</span><br><span class="line">// 6.16.0</span><br><span class="line"></span><br><span class="line">nvm use</span><br><span class="line">// Found &apos;/Users/songsong.zhang/study/es6test/.nvmrc&apos; with version &lt;6.16.0&gt;</span><br><span class="line">// Now using node v6.16.0 (npm v3.10.10)</span><br><span class="line"></span><br><span class="line">node -v</span><br><span class="line">// v6.16.0</span><br></pre></td></tr></table></figure></p>
 
         </div>
 
@@ -227,7 +221,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-02-20T09:39:59.133Z" itemprop="dateUpdated">2019-02-20 17:39:59</time>
+    最后更新时间：<time datetime="2019-02-26T03:04:41.357Z" itemprop="dateUpdated">2019-02-26 11:04:41</time>
 </span><br>
 
 
