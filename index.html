@@ -159,6 +159,46 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-node/process" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-02-28 10:14:58" datetime="2019-02-28T02:14:58.904Z" itemprop="datePublished">2019-02-28</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/node/process/">node 之进程管理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上下文的切换，可以很好地提高 CPU 的使用率，但是单进程单线程并非完美的结构。如何充分利用多核CPU服务器、如何保证进程的健壮性和稳定性，前者只是利用率不足的问题，后者对于实际产品化带来一定的顾虑，本文关于进程的介绍和讨论将会解决掉这两个问题。Node 自身还有一定的 I/O 线程存在，这些 I/O 线程由底层 libuv 处理，这部分线程对于 JavaScript 开发者而言是透明的，本文将围绕 JavaScript 部分展开，屏蔽底层细节的讨论。
+    
+
+        <a href="/node/process/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-node/nvm" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -510,46 +550,6 @@
     
 
         <a href="/essay/clipboard2/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-essay/clipboard1" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-01-10 14:10:00" datetime="2019-01-10T06:10:00.969Z" itemprop="datePublished">2019-01-10</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/essay/">essay</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/essay/clipboard1/">clipboard 之介绍</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        最近有用到粘贴复制功能，调用了clipboard.js库，对其原理很感兴趣。研读源码后开始总结，这篇主要是功能介绍。
-    
-
-        <a href="/essay/clipboard1/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>

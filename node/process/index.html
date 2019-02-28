@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>node 之进程管理 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上下文的切换，可以很好地提高 CPU 的使用率，但是单进程单线程并非完美的结构。如何充分利用多核CPU服务器、如何保证进程的健壮性和稳定性，前者只是利用率不足的问题，后者对于实际产品化带来一定的顾虑，本文关于进程的介绍和讨论将会解决掉这两个问题。N">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node 之进程管理">
+<meta property="og:url" content="http://blog.master-ss.cn/node/process/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上下文的切换，可以很好地提高 CPU 的使用率，但是单进程单线程并非完美的结构。如何充分利用多核CPU服务器、如何保证进程的健壮性和稳定性，前者只是利用率不足的问题，后者对于实际产品化带来一定的顾虑，本文关于进程的介绍和讨论将会解决掉这两个问题。N">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/node/process.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/node/process2.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/node/process3.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/node/process4.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/node/process5.png">
+<meta property="og:updated_time" content="2019-02-28T08:13:00.531Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node 之进程管理">
+<meta name="twitter:description" content="JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上下文的切换，可以很好地提高 CPU 的使用率，但是单进程单线程并非完美的结构。如何充分利用多核CPU服务器、如何保证进程的健壮性和稳定性，前者只是利用率不足的问题，后者对于实际产品化带来一定的顾虑，本文关于进程的介绍和讨论将会解决掉这两个问题。N">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/node/process.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node 之进程管理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node 之进程管理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-28T02:14:58.904Z" itemprop="datePublished" class="page-time">
+  2019-02-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、服务模型变迁"><span class="post-toc-text">一、服务模型变迁</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、同步"><span class="post-toc-text">1.1、同步</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、复制进程"><span class="post-toc-text">1.2、复制进程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3、多线程"><span class="post-toc-text">1.3、多线程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4、事件驱动"><span class="post-toc-text">1.4、事件驱动</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、多进程架构"><span class="post-toc-text">二、多进程架构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、创建子进程"><span class="post-toc-text">2.1、创建子进程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、进程间通信"><span class="post-toc-text">2.2、进程间通信</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3、进程间通信原理"><span class="post-toc-text">2.3、进程间通信原理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4、句柄传递"><span class="post-toc-text">2.4、句柄传递</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-5、句柄发送与还原"><span class="post-toc-text">2.5、句柄发送与还原</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4、端口共同监听"><span class="post-toc-text">2.4、端口共同监听</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、集群稳定之路"><span class="post-toc-text">三、集群稳定之路</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1、进程事件"><span class="post-toc-text">3.1、进程事件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2、自动重启"><span class="post-toc-text">3.2、自动重启</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3、自杀信号"><span class="post-toc-text">3.3、自杀信号</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-4、限量重启"><span class="post-toc-text">3.4、限量重启</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-5、负载均衡"><span class="post-toc-text">3.5、负载均衡</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-6、状态共享"><span class="post-toc-text">3.6、状态共享</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、Cluster-模块"><span class="post-toc-text">四、Cluster 模块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1、Cluster-工作原理"><span class="post-toc-text">4.1、Cluster 工作原理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2、Cluster事件"><span class="post-toc-text">4.2、Cluster事件</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-node/process" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node 之进程管理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-28 10:14:58" datetime="2019-02-28T02:14:58.904Z" itemprop="datePublished">2019-02-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/node/">node</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上下文的切换，可以很好地提高 CPU 的使用率，但是单进程单线程并非完美的结构。如何充分利用多核CPU服务器、如何保证进程的健壮性和稳定性，前者只是利用率不足的问题，后者对于实际产品化带来一定的顾虑，本文关于进程的介绍和讨论将会解决掉这两个问题。<br>Node 自身还有一定的 I/O 线程存在，这些 I/O 线程由底层 libuv 处理，这部分线程对于 JavaScript 开发者而言是透明的，本文将围绕 JavaScript 部分展开，屏蔽底层细节的讨论。<br><a id="more"></a> </p>
+<h3 id="一、服务模型变迁"><a href="#一、服务模型变迁" class="headerlink" title="一、服务模型变迁"></a>一、服务模型变迁</h3><p>Web 服务器的架构已经历了几次变迁，服务器处理客户端请求的并发量，就是每个里程碑的见证。</p>
+<h4 id="1-1、同步"><a href="#1-1、同步" class="headerlink" title="1.1、同步"></a>1.1、同步</h4><p>最早的服务器，其执行模型是同步的，它的服务模式是一次只为一个请求服务，它的处理能力相当低下，假设每次响应服务耗用的时间稳定为 N 秒，这类服务的 QPS 为 1/N。</p>
+<h4 id="1-2、复制进程"><a href="#1-2、复制进程" class="headerlink" title="1.2、复制进程"></a>1.2、复制进程</h4><p>为了解决同步架构的并发问题，一个简单的改进是通过进程的复制同时服务更多的请求和用户。并把预复制（prefork）被引入服务模型中，即预先复制一定数量的进程，同时将进程复用，避免进程创建、销毁带来的开销。但是这个模型并不具备伸缩性，一旦并发请求过高，内存使用随着进程数的增长将会被耗尽，假设进程数上限为 M，那这类服务的 QPS 为 M/N。</p>
+<h4 id="1-3、多线程"><a href="#1-3、多线程" class="headerlink" title="1.3、多线程"></a>1.3、多线程</h4><p>为了解决进程复制中的浪费问题，多线程被引入服务模型，让一个线程服务一个请求。线程相对进程的开销要小许多，并且线程之间可以共享数据，内存浪费的问题可以得到解决，并且利用线程池可以减少创建和销毁线程的开销。但是当线程数量过多时，时间将会被耗用在上下文切换中。所以在大并发量时，多线程结构还是无法做到强大的伸缩性，假设线程所占用的资源为进程的 1/L，受资源上限的影响，它的 QPS 则为 M * L/N。</p>
+<h4 id="1-4、事件驱动"><a href="#1-4、事件驱动" class="headerlink" title="1.4、事件驱动"></a>1.4、事件驱动</h4><p>Apache 就是采用多线程/多进程模型实现的，当并发增长到上万时，内存耗用的问题将会暴露出来。为了解决高并发问题，基于事件驱动的服务模型出现了，像 Node 与 Nginx 均是基于事件驱动的方式实现的，采用单线程避免了不必要的内存开销和上下文切换开销。<br>基于事件的服务模型存在的问题即是开始时提及的两个问题：CPU 的利用率和进程的健壮性。由于所有处理都在单线程上进行，影响事件驱动服务模型性能的点在于 CPU 的计算能力，它的上限决定这类服务模型的性能上限，可伸缩性远比前两者高。</p>
+<h3 id="二、多进程架构"><a href="#二、多进程架构" class="headerlink" title="二、多进程架构"></a>二、多进程架构</h3><p>理想状态下每个进程各自利用一个 CPU，以此实现多核 CPU 的利用。Node 提供了 child_process 模块，并且也提供了 child_process.fork() 函数供我们实现进程的复制。通过 fork() 复制的进程都是一个独立的进程，这个进程中有着独立而全新的 V8 实例。它需要至少 30 毫秒的启动时间和至少 10MB 的内存。尽管 Node 提供了 fork() 供我们复制进程使每个 CPU 内核都使用上，但是依然要切记 fork() 进程是昂贵的。好在 Node 通过事件驱动的方式在单线程上解决了大并发的问题，这里启动多个进程只是为了充分将 CPU 资源利用起来。</p>
+<h4 id="2-1、创建子进程"><a href="#2-1、创建子进程" class="headerlink" title="2.1、创建子进程"></a>2.1、创建子进程</h4><p>child_process 模块给予 Node 可以随意创建子进程（child_process）的能力。它提供了4个方法用于创建子进程。</p>
+<ul>
+<li>spawn()：启动一个子进程来执行命令；</li>
+<li>exec()：启动一个子进程来执行命令，有回调函数获知子进程的状况；</li>
+<li>execFile()：启动一个子进程来执行可执行文件；</li>
+<li>fork()：与 spawn() 类似，不同点在于它创建 Node 的子进程只需指定要执行的 JavaScript 文件模块即可。</li>
+</ul>
+<p>以一个寻常命令为例，node worker.js 分别用上述 4 种方法实现，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var cp = require(&apos;child_process&apos;);</span><br><span class="line">cp.spawn(&apos;node&apos;, [&apos;worker.js&apos;]);</span><br><span class="line">cp.exec(&apos;node worker.js&apos;, function (err, stdout, stderr) &#123;</span><br><span class="line">// some code</span><br><span class="line">&#125;);</span><br><span class="line">cp.execFile(&apos;worker.js&apos;, function (err, stdout, stderr) &#123;</span><br><span class="line">    // some code</span><br><span class="line">&#125;);</span><br><span class="line">cp.fork(&apos;./worker.js&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>以上4个方法在创建子进程之后均会返回子进程对象。它们的差别可以通过表9-1查看：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">回调/异常</th>
+<th style="text-align:center">进程类型</th>
+<th style="text-align:center">执行类型</th>
+<th style="text-align:center">可设置超时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">spawn()</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">任意</td>
+<td style="text-align:center">命令</td>
+<td style="text-align:center">N</td>
+</tr>
+<tr>
+<td style="text-align:center">exec()</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">任意</td>
+<td style="text-align:center">命令</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">execFile()</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">任意</td>
+<td style="text-align:center">可执行文件</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">fork()</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">Node</td>
+<td style="text-align:center">JavaScript文件</td>
+<td style="text-align:center">N</td>
+</tr>
+</tbody>
+</table>
+<p>这里的可执行文件是指可以直接执行的文件，如果是 JavaScript 文件通过 execFile() 运行，它的首行内容必须添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br></pre></td></tr></table></figure></p>
+<p>尽管4种创建子进程的方式有些差别，但事实上后面 3 种方法都是 spawn() 的延伸应用。</p>
+<h4 id="2-2、进程间通信"><a href="#2-2、进程间通信" class="headerlink" title="2.2、进程间通信"></a>2.2、进程间通信</h4><p>在前端浏览器中，JavaScript 主线程与 UI 渲染共用同一个线程。执行 JavaScript 的时候 UI 渲染是停滞的，渲染 UI 时，JavaScript 是停滞的，两者互相阻塞。长时间执行 JavaScript 将会造成 UI 停顿不响应。为了解决这个问题，HTML5 提出了 WebWorker API。WebWorker 允许创建工作线程并在后台运行，使得一些阻塞较为严重的计算不影响主线程上的 UI 渲染。<br>而 Node 在 Master-Worker 模式中，要实现主进程管理和调度工作进程的功能，需要主进程和工作进程之间的通信。对于 child_process 模块，创建好了子进程，然后与父子进程间通信是十分容易的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// parent.js</span><br><span class="line">var cp = require(&apos;child_process&apos;);</span><br><span class="line">var n = cp.fork(__dirname + &apos;/sub.js&apos;);</span><br><span class="line">n.on(&apos;message&apos;, function (m) &#123;</span><br><span class="line">    console.log(&apos;PARENT got message:&apos;, m);</span><br><span class="line">&#125;);</span><br><span class="line">n.send(&#123; hello: &apos;world&apos; &#125;);</span><br><span class="line">// sub.js</span><br><span class="line">process.on(&apos;message&apos;, function (m) &#123;</span><br><span class="line">    console.log(&apos;CHILD got message:&apos;, m);</span><br><span class="line">&#125;);</span><br><span class="line">process.send(&#123;foo: &apos;bar&apos;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>通过 fork() 或者其他 API，创建子进程之后，为了实现父子进程之间的通信，父进程与子进程之间将会创建 IPC 通道。通过 IPC 通道，父子进程之间才能通过 message 和 send() 传递消息。注意，process.send 用来给父进程发送消息，只有子进程才存在。</p>
+<h4 id="2-3、进程间通信原理"><a href="#2-3、进程间通信原理" class="headerlink" title="2.3、进程间通信原理"></a>2.3、进程间通信原理</h4><p>IPC 的全称是 Inter-Process Communication，即进程间通信。进程间通信的目的是为了让不同的进程能够互相访问资源并进行协调工作。实现进程间通信的技术有很多，如命名管道、匿名管道、socket、信号量、共享内存、消息队列、Domain Socket 等。Node 中实现 IPC 通道的是管道（pipe）技术。但此管道非彼管道，在 Node 中管道是个抽象层面的称呼，具体细节实现由 libuv 提供，在 Windows 下由命名管道（named pipe）实现，*nix 系统则采用 Unix Domain Socket 实现。表现在应用层上的进程间通信只有简单的 message 事件和 send() 方法，接口十分简洁和消息化，如下为 IPC 创建和实现的示意图。<br><img src="/assets/node/process.png"><br>父进程在实际创建子进程之前，会创建 IPC 通道并监听它，然后才真正创建出子进程，并通过环境变量（NODE_CHANNEL_FD）告诉子进程这个 IPC 通道的文件描述符。子进程在启动的过程中，根据文件描述符去连接这个已存在的 IPC 通道，从而完成父子进程之间的连接，如下为创建 IPC 管道的步骤示意图。<br><img src="/assets/node/process2.png"><br>建立连接之后的父子进程就可以自由地通信了。由于 IPC 通道是用命名管道或 Domain Socket 创建的，它们与网络 socket 的行为比较类似，属于双向通信。不同的是它们在系统内核中就完成了进程间的通信，而不用经过实际的网络层，非常高效。在 Node 中，IPC 通道被抽象为 Stream 对象，在调用 send() 时发送数据（类似于 write()），接收到的消息会通过 message 事件（类似于 data）触发给应用层。<br>注意，只有启动的子进程是 Node 进程时，子进程才会根据环境变量去连接 IPC 通道，对于其他类型的子进程则无法实现进程间通信，除非其他进程也按约定去连接这个已经创建好的 IPC 通道。</p>
+<h4 id="2-4、句柄传递"><a href="#2-4、句柄传递" class="headerlink" title="2.4、句柄传递"></a>2.4、句柄传递</h4><p>建立好进程之间的 IPC 后，将启动的服务器分别监听各自的端口么，如果让服务都监听到相同的端口，将会有什么样的结果？示例如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// master.js</span><br><span class="line">var http = require(&apos;http&apos;);</span><br><span class="line">http.createServer(function (req, res) &#123;</span><br><span class="line">    res.writeHead(200, &#123; &apos;Content-Type&apos;: &apos;text/plain&apos; &#125;);</span><br><span class="line">    res.end(&apos;Hello World\n&apos;);</span><br><span class="line">&#125;).listen(8888, &apos;127.0.0.1&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>再次启动 master.js 文件，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">events.js:183</span><br><span class="line">      throw er; // Unhandled &apos;error&apos; event</span><br><span class="line">      ^</span><br><span class="line"></span><br><span class="line">Error: listen EADDRINUSE 127.0.0.1:8888</span><br></pre></td></tr></table></figure></p>
+<p>这时只有一个工作进程能够监听到该端口上，其余的进程在监听的过程中都抛出了 EADDRINUSE 异常，这是端口被占用的情况，新的进程不能继续监听该端口了。这个问题破坏了我们将多个进程监听同一个端口的想法。要解决这个问题，通常的做法是让每个进程监听不同的端口，其中主进程监听主端口（如 80），主进程对外接收所有的网络请求，再将这些请求分别代理到不同的端口的进程上，如下图所示。<br><img src="/assets/node/process3.png"><br>通过代理，可以避免端口不能重复监听的问题，甚至可以在代理进程上做适当的负载均衡，使得每个子进程可以较为均衡地执行任务。由于进程每接收到一个连接，将会用掉一个文件描述符，因此代理方案中客户端连接到代理进程，代理进程连接到工作进程的过程需要用掉两个文件描述符。操作系统的文件描述符是有限的，代理方案浪费掉一倍数量的文件描述符的做法影响了系统的扩展能力。<br>为了解决上述这样的问题，Node 在版本 v0.5.9 引入了进程间发送句柄的功能。send() 方法除了能通过 IPC 发送数据外，还能发送句柄，第二个可选参数就是句柄，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">child.send(message, [sendHandle])</span><br></pre></td></tr></table></figure></p>
+<p>那什么是句柄？句柄是一种可以用来标识资源的引用，它的内部包含了指向对象的文件描述符。比如句柄可以用来标识一个服务器端 socket 对象、一个客户端 socket 对象、一个 UDP 套接字、一个管道等。<br>发送句柄意味着什么？在前一个问题中，我们可以去掉代理这种方案，使主进程接收到 socket 请求后，将这个 socket 直接发送给工作进程，而不是重新与工作进程之间建立新的 socket 连接来转发数据。文件描述符浪费的问题可以通过这样的方式轻松解决。来看看我们的示例代码。<br>主进程代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var cp = require(&apos;child_process&apos;);</span><br><span class="line">var child1 = cp.fork(&apos;child.js&apos;);</span><br><span class="line">var child2 = cp.fork(&apos;child.js&apos;);</span><br><span class="line"></span><br><span class="line">// Open up the server object and send the handle</span><br><span class="line">var server = require(&apos;net&apos;).createServer();</span><br><span class="line">server.on(&apos;connection&apos;, function (socket) &#123;</span><br><span class="line">    socket.end(&apos;handled by parent\n&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(8001, function () &#123;</span><br><span class="line">    child1.send(&apos;server&apos;, server);</span><br><span class="line">    child2.send(&apos;server&apos;, server);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>子进程代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">process.on(&apos;message&apos;, function (m, server) &#123;</span><br><span class="line">    if (m === &apos;server&apos;) &#123;</span><br><span class="line">        server.on(&apos;connection&apos;, function (socket) &#123;</span><br><span class="line">            socket.end(&apos;handled by child, pid is &apos; + process.pid + &apos;\n&apos;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这个示例中直接将一个 TCP 服务器发送给了子进程。这是看起来不可思议的事情，我们先来测试一番，看看效果如何，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 先启动服务器</span><br><span class="line">$ node parent.js</span><br></pre></td></tr></table></figure></p>
+<p>然后新开一个命令行窗口，用上 curl 工具，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ curl &quot;http://127.0.0.1:8001&quot;</span><br><span class="line">handled by child, pid is 27418</span><br><span class="line">$ curl &quot;http://127.0.0.1:8001&quot;</span><br><span class="line">handled by child, pid is 27419</span><br><span class="line">$ curl &quot;http://127.0.0.1:8001&quot;</span><br><span class="line">handled by child, pid is 27419</span><br><span class="line">$ curl &quot;http://127.0.0.1:8001&quot;</span><br><span class="line">handled by parent</span><br></pre></td></tr></table></figure></p>
+<p>命令行中的响应结果也是很不可思议的，这里子进程和父进程都有可能处理我们客户端发起的请求。这是在 TCP 层面上完成的事情，我们尝试将其转化到 HTTP 层面来试试。对于主进程而言，我们甚至想要它更轻量一点，那么是否将服务器句柄发送给子进程之后，就可以关掉服务器的监听，让子进程来处理请求呢？<br>对主进程进行改动，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// parent.js</span><br><span class="line">var cp = require(&apos;child_process&apos;);</span><br><span class="line">var child1 = cp.fork(&apos;child.js&apos;);</span><br><span class="line">var child2 = cp.fork(&apos;child.js&apos;);</span><br><span class="line"></span><br><span class="line">// Open up the server object and send the handle</span><br><span class="line">var server = require(&apos;net&apos;).createServer();</span><br><span class="line"></span><br><span class="line">server.listen(8001, function () &#123;</span><br><span class="line">    child1.send(&apos;server&apos;, server);</span><br><span class="line">    child2.send(&apos;server&apos;, server);</span><br><span class="line"></span><br><span class="line">    server.close();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>然后对子进程进行改动，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var http = require(&apos;http&apos;);</span><br><span class="line"></span><br><span class="line">var server = http.createServer(function (req, res) &#123;</span><br><span class="line">    res.writeHead(200, &#123; &apos;Content-Type&apos;: &apos;text/plain&apos; &#125;);</span><br><span class="line">    res.end(&apos;handled by child, pid is &apos; + process.pid + &apos;\n&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.on(&apos;message&apos;, function (m, tcp) &#123;</span><br><span class="line">    if (m === &apos;server&apos;) &#123;</span><br><span class="line">        tcp.on(&apos;connection&apos;, function (socket) &#123;</span><br><span class="line">            server.emit(&apos;connection&apos;, socket);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>重新启动 parent.js 后，再次测试，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl &quot;http://127.0.0.1:8001&quot;</span><br><span class="line">handled by child, pid is 27882</span><br><span class="line">$ curl &quot;http://127.0.0.1:8001&quot;</span><br><span class="line">handled by child, pid is 27883</span><br></pre></td></tr></table></figure></p>
+<p>这样一来，所有的请求都是由子进程处理了。整个过程中，服务的过程发生了一次改变，如下图所示。<br><img src="/assets/node/process4.png"><br>主进程发送完句柄并关闭监听之后，成为了如下图所示的结构。<br><img src="/assets/node/process5.png"><br>我们神奇地发现，多个子进程可以同时监听相同端口，再没有 EADDRINUSE 异常发生了。</p>
+<h4 id="2-5、句柄发送与还原"><a href="#2-5、句柄发送与还原" class="headerlink" title="2.5、句柄发送与还原"></a>2.5、句柄发送与还原</h4><p>上文介绍的虽然是句柄发送，但是仔细看看，句柄发送跟我们直接将服务器对象发送给子进程有没有差别？它是否真的将服务器对象发送给了子进程？为什么它可以发送到多个子进程中？发送给子进程为什么父进程中还存在这个对象？<br>目前子进程对象 send() 方法可以发送的句柄类型包括如下几种。</p>
+<ul>
+<li>net.Socket。TCP 套接字。</li>
+<li>net.Server。TCP 服务器，任意建立在 TCP 服务上的应用层服务都可以享受到它带来的好处。</li>
+<li>net.Native。C++ 层面的 TCP 套接字或 IPC 管道。</li>
+<li>dgram.Socket。UDP 套接字。</li>
+<li>dgram.Native。C++ 层面的 UDP 套接字。</li>
+</ul>
+<p>send() 方法在将消息发送到 IPC 管道前，将消息组装成两个对象，一个参数是 handle，另一个是 message。message 参数如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    cmd: &apos;NODE_HANDLE&apos;, type: &apos;net.Server&apos;, msg: message</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>发送到 IPC 管道中的实际上是我们要发送的句柄文件描述符，文件描述符实际上是一个整数值。这个 message 对象在写入到 IPC 管道时也会通过 JSON.stringify() 进行序列化。所以最终发送到 IPC 通道中的信息都是字符串，send() 方法能发送消息和句柄并不意味着它能发送任意对象。<br>连接了 IPC 通道的子进程可以读取到父进程发来的消息，将字符串通过 JSON.parse() 解析还原为对象后，才触发 message 事件将消息体传递给应用层使用。在这个过程中，消息对象还要被进行过滤处理，message.cmd 的值如果以 NODE_ 为前缀，它将响应一个内部事件 internalMessage。如果 message.cmd 值为 NODE_HANDLE，它将取出 message.type 值和得到的文件描述符一起还原出一个对应的对象。<br>以发送的 TCP 服务器句柄为例，子进程收到消息后的还原过程如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function(message, handle, emit) &#123;</span><br><span class="line">    var self = this;</span><br><span class="line">    var server = new net.Server();</span><br><span class="line">    server.listen(handle, function () &#123;</span><br><span class="line">        emit(server);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中，子进程根据 message.type 创建对应 TCP 服务器对象，然后监听到文件描述符上。由于底层细节不被应用层感知，所以在子进程中，开发者会有一种服务器就是从父进程中直接传递过来的错觉。值得注意的是，Node 进程之间只有消息传递，不会真正地传递对象，这种错觉是抽象封装的结果。<br>目前 Node 只支持上述提到的几种句柄，并非任意类型的句柄都能在进程之间传递，除非它有完整的发送和还原的过程。</p>
+<h4 id="2-4、端口共同监听"><a href="#2-4、端口共同监听" class="headerlink" title="2.4、端口共同监听"></a>2.4、端口共同监听</h4><p>在了解了句柄传递背后的原理后，我们继续探究为何通过发送句柄后，多个进程可以监听到相同的端口而不引起 EADDRINUSE 异常。其答案也很简单，我们独立启动的进程中，TCP 服务器端 socket 套接字的文件描述符并不相同，导致监听到相同的端口时会抛出异常。<br>Node 底层对每个端口监听都设置了 SO_REUSEADDR 选项，这个选项的涵义是不同进程可以就相同的网卡和端口进行监听，这个服务器端套接字可以被不同的进程复用，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setsockopt(tcp-&gt;io_watcher.fd, SOL_SOCKET, SO_REUSEADDR, &amp;on, sizeof(on))</span><br></pre></td></tr></table></figure></p>
+<p>由于独立启动的进程互相之间并不知道文件描述符，所以监听相同端口时就会失败。但对于 send() 发送的句柄还原出来的服务而言，它们的文件描述符是相同的，所以监听相同端口不会引起异常。<br>多个应用监听相同端口时，文件描述符同一时间只能被某个进程所用。换言之就是网络请求向服务器端发送时，只有一个幸运的进程能够抢到连接，也就是说只有它能为这个请求进行服务。这些进程服务是抢占式的。</p>
+<h3 id="三、集群稳定之路"><a href="#三、集群稳定之路" class="headerlink" title="三、集群稳定之路"></a>三、集群稳定之路</h3><p>搭建好了集群，充分利用了多核 CPU 资源，似乎就可以迎接客户端大量的请求了。但是我们还有一些细节需要考虑，性能问题、多个工作进程的存活状态管理、工作进程的平滑重启、配置或者静态数据的动态重新载入、其他细节。<br>虽然我们创建了很多工作进程，但每个工作进程依然是在单线程上执行的，它的稳定性还不能得到完全的保障。我们需要建立起一个健全的机制来保障 Node 应用的健壮性。</p>
+<h4 id="3-1、进程事件"><a href="#3-1、进程事件" class="headerlink" title="3.1、进程事件"></a>3.1、进程事件</h4><p>再次回归到子进程对象上，除了引人关注的 send() 方法和 message 事件外，子进程还有些什么呢？首先除了 message 事件外，Node 还有如下这些事件。</p>
+<ul>
+<li>error：当子进程无法被复制创建、无法被杀死、无法发送消息时会触发该事件。</li>
+<li>exit：子进程退出时触发该事件，子进程如果是正常退出，这个事件的第一个参数为退出码，否则为 null。如果进程是通过 kill() 方法被杀死的，会得到第二个参数，它表示杀死进程时的信号。</li>
+<li>close：在子进程的标准输入输出流中止时触发该事件，参数与 exit 相同。</li>
+<li>disconnect：在父进程或子进程中调用 disconnect() 方法时触发该事件，在调用该方法时将关闭监听 IPC 通道。</li>
+</ul>
+<p>上述这些事件是父进程能监听到的与子进程相关的事件。除了 send() 外，还能通过 kill() 方法给子进程发送消息。kill() 方法并不能真正地将通过 IPC 相连的子进程杀死，它只是给子进程发送了一个系统信号。默认情况下，父进程将通过 kill() 方法给子进程发送一个 SIGTERM 信号。它与进程默认的 kill() 方法类似，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 子进程</span><br><span class="line">child.kill([signal]);</span><br><span class="line">// 当前进程</span><br><span class="line">process.kill(pid, [signal]);</span><br></pre></td></tr></table></figure></p>
+<p>它们一个发给子进程，一个发给目标进程。在 POSIX 标准中，有一套完备的信号系统，在命令行中执行 kill -l 可以看到详细的信号列表，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kill -l</span><br><span class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL</span><br><span class="line"> 5) SIGTRAP	 6) SIGABRT	 7) SIGEMT	 8) SIGFPE</span><br><span class="line"> 9) SIGKILL	10) SIGBUS	11) SIGSEGV	12) SIGSYS</span><br><span class="line">13) SIGPIPE	14) SIGALRM	15) SIGTERM	16) SIGURG</span><br><span class="line">17) SIGSTOP	18) SIGTSTP	19) SIGCONT	20) SIGCHLD</span><br><span class="line">21) SIGTTIN	22) SIGTTOU	23) SIGIO	24) SIGXCPU</span><br><span class="line">25) SIGXFSZ	26) SIGVTALRM	27) SIGPROF	28) SIGWINCH</span><br><span class="line">29) SIGINFO	30) SIGUSR1	31) SIGUSR2</span><br></pre></td></tr></table></figure></p>
+<p>Node 提供了这些信号对应的信号事件，每个进程都可以监听这些信号事件。这些信号事件是用来通知进程的，每个信号事件有不同的含义，进程在收到响应信号时，应当做出约定的行为，如SIGTERM是软件终止信号，进程收到该信号时应当退出。示例代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">process.on(&apos;SIGTERM&apos;, function () &#123;</span><br><span class="line">    console.log(&apos;Got a SIGTERM, exiting...&apos;);</span><br><span class="line">    process.exit(1);</span><br><span class="line">&#125;);</span><br><span class="line">console.log(&apos;server running with PID:&apos;, process.pid);</span><br><span class="line">process.kill(process.pid, &apos;SIGTERM&apos;);</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-2、自动重启"><a href="#3-2、自动重启" class="headerlink" title="3.2、自动重启"></a>3.2、自动重启</h4><p>有了父子进程之间的相关事件之后，就可以在这些关系之间创建出需要的机制了。至少能够通过监听子进程的 exit 事件来获知其退出的信息，在主进程上要加入一些子进程管理的机制，比如重新启动一个工作进程来继续服务。<br>实现代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// master.js</span><br><span class="line">var fork = require(&apos;child_process&apos;).fork;</span><br><span class="line">var cpus = require(&apos;os&apos;).cpus();</span><br><span class="line">var server = require(&apos;net&apos;).createServer();</span><br><span class="line">server.listen(1337);</span><br><span class="line">var workers = &#123;&#125;;</span><br><span class="line">var createWorker = function () &#123;</span><br><span class="line">    var worker = fork(__dirname + &apos;/worker.js&apos;);</span><br><span class="line">    // 退出时重新启动新的进程</span><br><span class="line">    worker.on(&apos;exit&apos;, function () &#123;</span><br><span class="line">        console.log(&apos;Worker &apos; + worker.pid + &apos; exited.&apos;);</span><br><span class="line">        delete workers[worker.pid];</span><br><span class="line">        createWorker();</span><br><span class="line">    &#125;);</span><br><span class="line">    // 句柄转发</span><br><span class="line">    worker.send(&apos;server&apos;, server);</span><br><span class="line">    workers[worker.pid] = worker;</span><br><span class="line">    console.log(&apos;Create worker. pid: &apos; + worker.pid);</span><br><span class="line">&#125;;</span><br><span class="line">for (var i = 0; i &lt; cpus.length; i++) &#123;</span><br><span class="line">    createWorker();</span><br><span class="line">&#125;</span><br><span class="line">// 进程自己退出时，让所有工作进程退出 </span><br><span class="line">process.on(&apos;exit&apos;, function () &#123;</span><br><span class="line">    for (var pid in workers) &#123;</span><br><span class="line">        workers[pid].kill();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>测试一下上面的代码，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ node master.js</span><br><span class="line">Create worker. pid: 28939</span><br><span class="line">Create worker. pid: 28940</span><br><span class="line">Create worker. pid: 28941</span><br><span class="line">Create worker. pid: 28942</span><br><span class="line">Create worker. pid: 28943</span><br><span class="line">Create worker. pid: 28944</span><br><span class="line">Create worker. pid: 28945</span><br><span class="line">Create worker. pid: 28946</span><br></pre></td></tr></table></figure></p>
+<p>通过 kill 命令杀死某个进程试试，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kill 28939</span><br></pre></td></tr></table></figure></p>
+<p>结果是 28939 进程退出后，自动启动了一个新的工作进程 28959，总体进程数量并没有发生改变，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Worker 28939 exited.</span><br><span class="line">Create worker. pid: 28959</span><br></pre></td></tr></table></figure></p>
+<p>在这个场景中我们主动杀死了一个进程，在实际业务中，可能有隐藏的 bug 导致工作进程退出，那么我们需要仔细地处理这种异常，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// worker.js </span><br><span class="line">var http = require(&apos;http&apos;);</span><br><span class="line">var server = http.createServer(function (req, res) &#123;</span><br><span class="line">    res.writeHead(200, &#123; &apos;Content-Type&apos;: &apos;text/plain&apos; &#125;);</span><br><span class="line">    res.end(&apos;handled by child, pid is &apos; + process.pid + &apos;\n&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">var worker;</span><br><span class="line">process.on(&apos;message&apos;, function (m, tcp) &#123;</span><br><span class="line">    if (m === &apos;server&apos;) &#123;</span><br><span class="line">        worker = tcp;</span><br><span class="line">        worker.on(&apos;connection&apos;, function (socket) &#123;</span><br><span class="line">            server.emit(&apos;connection&apos;, socket);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">process.on(&apos;uncaughtException&apos;, function () &#123;</span><br><span class="line">    // 停止接收新的连接  </span><br><span class="line">    worker.close(function () &#123;</span><br><span class="line">        // 所有已有连接断开后，退出进程  </span><br><span class="line">        process.exit(1);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>上述代码的处理流程是，一旦有未捕获的异常出现，工作进程就会立即停止接收新的连接；当所有连接断开后，退出进程。主进程在侦听到工作进程的 exit 后，将会立即启动新的进程服务，以此保证整个集群中总是有进程在为用户服务的。</p>
+<h4 id="3-3、自杀信号"><a href="#3-3、自杀信号" class="headerlink" title="3.3、自杀信号"></a>3.3、自杀信号</h4><p>当然上述代码存在的问题是要等到已有的所有连接断开后进程才退出，在极端的情况下，所有工作进程都停止接收新的连接，全处在等待退出的状态。但在等到进程完全退出才重启的过程中，所有新来的请求可能存在没有工作进程为新用户服务的情景，这会丢掉大部分请求。<br>为此需要改进这个过程，不能等到工作进程退出后才重启新的工作进程。当然也不能暴力退出进程，因为这样会导致已连接的用户直接断开。于是在退出的流程中增加一个自杀（suicide）信号。工作进程在得知要退出时，向主进程发送一个自杀信号，然后才停止接收新的连接，当所有连接断开后才退出。主进程在接收到自杀信号后，立即创建新的工作进程服务。代码改动如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// worker.js </span><br><span class="line">process.on(&apos;uncaughtException&apos;, function (err) &#123;</span><br><span class="line">    process.send(&#123; act: &apos;suicide&apos; &#125;);</span><br><span class="line">    // 停止接收新的连接   </span><br><span class="line">    worker.close(function () &#123;</span><br><span class="line">        // 所有已有连接断开后，退出进程 </span><br><span class="line">        process.exit(1);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>主进程将重启工作进程的任务，从 exit 事件的处理函数中转移到 message 事件的处理函数中，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var createWorker = function () &#123;</span><br><span class="line">    var worker = fork(__dirname + &apos;/worker.js&apos;);</span><br><span class="line">    // 启动新的进程   </span><br><span class="line">    worker.on(&apos;message&apos;, function (message) &#123;</span><br><span class="line">        if (message.act === &apos;suicide&apos;) &#123;</span><br><span class="line">            createWorker();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    worker.on(&apos;exit&apos;, function () &#123;</span><br><span class="line">        console.log(&apos;Worker &apos; + worker.pid + &apos; exited.&apos;);</span><br><span class="line">        delete workers[worker.pid];</span><br><span class="line">    &#125;);</span><br><span class="line">    worker.send(&apos;server&apos;, server);</span><br><span class="line">    workers[worker.pid] = worker;</span><br><span class="line">    console.log(&apos;Create worker. pid: &apos; + worker.pid);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>为了模拟未捕获的异常，我们将工作进程的处理代码改为抛出异常，一旦有用户请求，就会有一个可怜的工作进程退出，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var server = http.createServer(function (req, res) &#123;</span><br><span class="line">    res.writeHead(200, &#123; &apos;Content-Type&apos;: &apos;text/plain&apos; &#125;);</span><br><span class="line">    res.end(&apos;handled by child, pid is &apos; + process.pid + &apos;\n&apos;);</span><br><span class="line">    throw new Error(&apos;throw exception&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>然后启动所有进程，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ node master.js</span><br><span class="line">Create worker. pid: 29428</span><br><span class="line">Create worker. pid: 29429</span><br><span class="line">Create worker. pid: 29430</span><br><span class="line">Create worker. pid: 29431</span><br><span class="line">Create worker. pid: 29432</span><br><span class="line">Create worker. pid: 29433</span><br><span class="line">Create worker. pid: 29434</span><br><span class="line">Create worker. pid: 29435</span><br></pre></td></tr></table></figure></p>
+<p>用curl工具测试效果，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://127.0.0.1:8001</span><br><span class="line">handled by child, pid is 29433</span><br></pre></td></tr></table></figure></p>
+<p>再回头看重启信息，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Create worker. pid: 29472</span><br><span class="line">Worker 29462 exited.</span><br></pre></td></tr></table></figure></p>
+<p>与前一种方案相比，创建新工作进程在前，退出异常进程在后。在这个可怜的异常进程退出之前，总是有新的工作进程来替上它的岗位。至此我们完成了进程的平滑重启，一旦有异常出现，主进程会创建新的工作进程来为用户服务，旧的进程一旦处理完已有连接就自动断开。整个过程使得我们的应用的稳定性和健壮性大大提高。<br>这里存在问题的是有可能我们的连接是长连接，不是 HTTP 服务的这种短连接，等待长连接断开可能需要较久的时间。为此为已有连接的断开设置一个超时时间是必要的，在限定时间里强制退出的设置如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">process.on(&apos;uncaughtException&apos;, function (err) &#123;</span><br><span class="line">    process.send(&#123; act: &apos;suicide&apos; &#125;);</span><br><span class="line">    // 停止接收新的连接</span><br><span class="line">    worker.close(function () &#123;</span><br><span class="line">        // 所有已有连接断开后，退出进程   </span><br><span class="line">        process.exit(1);</span><br><span class="line">    &#125;);</span><br><span class="line">    // 5秒后退出进程 </span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">        process.exit(1);</span><br><span class="line">    &#125;, 5000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>进程中如果出现未能捕获的异常，就意味着有那么一段代码在健壮性上是不合格的。为此退出进程前，通过日志记录下问题所在是必须要做的事情，它可以帮我们很好地定位和追踪代码异常出现的位置，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">process.on(&apos;uncaughtException&apos;, function (err) &#123;</span><br><span class="line">    // 记录日志  </span><br><span class="line">    logger.error(err);</span><br><span class="line">    // 发送自杀信号   </span><br><span class="line">    process.send(&#123; act: &apos;suicide&apos; &#125;);</span><br><span class="line">    // 停止接收新的连接  </span><br><span class="line">    worker.close(function () &#123;</span><br><span class="line">        // 所有已有连接断开后，退出进程    </span><br><span class="line">        process.exit(1);</span><br><span class="line">    &#125;);</span><br><span class="line">    // 5秒后退出进程 </span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">        process.exit(1);</span><br><span class="line">    &#125;, 5000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-4、限量重启"><a href="#3-4、限量重启" class="headerlink" title="3.4、限量重启"></a>3.4、限量重启</h4><p>通过自杀信号告知主进程可以使得新连接总是有进程服务，但是依然还是有极端的情况。工作进程不能无限制地被重启，如果启动的过程中就发生了错误，或者启动后接到连接就收到错误，会导致工作进程被频繁重启，这种频繁重启不属于我们捕捉未知异常的情况，因为这种短时间内频繁重启已经不符合预期的设置，极有可能是程序编写的错误。<br>为了消除这种无意义的重启，在满足一定规则的限制下，不应当反复重启。比如在单位时间内规定只能重启多少次，超过限制就触发 giveup 事件，告知放弃重启工作进程这个重要事件。<br>为了完成限量重启的统计，我们引入一个队列来做标记，在每次重启工作进程之间进行打点并判断重启是否太过频繁，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// 重启次数 </span><br><span class="line">var limit = 10;</span><br><span class="line">// 时间单位 </span><br><span class="line">var during = 60000;</span><br><span class="line">var restart = [];</span><br><span class="line">var isTooFrequently = function () &#123;</span><br><span class="line">    // 记录重启时间   </span><br><span class="line">    var time = Date.now();</span><br><span class="line">    var length = restart.push(time);</span><br><span class="line">    if (length &gt; limit) &#123;</span><br><span class="line">        // 取出最后 10 个记录     </span><br><span class="line">        restart = restart.slice(limit * -1);</span><br><span class="line">    &#125;</span><br><span class="line">    // 最后一次重启到前 10 次重启之间的时间间隔  </span><br><span class="line">    return restart.length &gt;= limit &amp;&amp; restart[restart.length - 1] - restart[0] &lt; during;</span><br><span class="line">&#125;;</span><br><span class="line">var workers = &#123;&#125;;</span><br><span class="line">var createWorker = function () &#123;</span><br><span class="line">    // 检查是否太过频繁  </span><br><span class="line">    if (isTooFrequently()) &#123;</span><br><span class="line">        // 触发 giveup 事件后，不再重启  </span><br><span class="line">        process.emit(&apos;giveup&apos;, length, during);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    var worker = fork(__dirname + &apos;/worker.js&apos;);</span><br><span class="line">    worker.on(&apos;exit&apos;, function () &#123;</span><br><span class="line">        console.log(&apos;Worker &apos; + worker.pid + &apos; exited.&apos;);</span><br><span class="line">        delete workers[worker.pid];</span><br><span class="line">    &#125;);</span><br><span class="line">    // 重新启动新的进程   </span><br><span class="line">    worker.on(&apos;message&apos;, function (message) &#123;</span><br><span class="line">        if (message.act === &apos;suicide&apos;) &#123;</span><br><span class="line">            createWorker();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    // 句柄转发   </span><br><span class="line">    worker.send(&apos;server&apos;, server);</span><br><span class="line">    workers[worker.pid] = worker;</span><br><span class="line">    console.log(&apos;Create worker. pid: &apos; + worker.pid);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>giveup 事件是比 uncaughtException 更严重的异常事件。uncaughtException 只代表集群中某个工作进程退出，在整体性保证下，不会出现用户得不到服务的情况，但是这个 giveup 事件则表示集群中没有任何进程服务了，十分危险。为了健壮性考虑，我们应在 giveup 事件中添加重要日志，并让监控系统监视到这个严重错误，进而报警等。</p>
+<h4 id="3-5、负载均衡"><a href="#3-5、负载均衡" class="headerlink" title="3.5、负载均衡"></a>3.5、负载均衡</h4><p>在多进程之间监听相同的端口，使得用户请求能够分散到多个进程上进行处理，这带来的好处是可以将 CPU 资源都调用起来。这犹如饭店将客人的点单分发给多个厨师进行餐点制作，这种保证多个处理单元工作量公平的策略叫负载均衡。<br>Node 默认提供的机制是采用操作系统的抢占式策略。所谓的抢占式就是在一堆工作进程中，闲着的进程对到来的请求进行争抢，谁抢到谁服务。<br>一般而言，这种抢占式策略对大家是公平的，各个进程可以根据自己的繁忙度来进行抢占。但是对于 Node 而言，需要分清的是它的繁忙是由 CPU、I/O 两个部分构成的，影响抢占的是 CPU 的繁忙度。对不同的业务，可能存在 I/O 繁忙，而 CPU 较为空闲的情况，这可能造成某个进程能够抢到较多请求，形成负载不均衡的情况。<br>为此 Node 在 v0.11 中提供了一种新的策略使得负载均衡更合理，这种新的策略叫 Round-Robin，又叫轮叫调度。轮叫调度的工作方式是由主进程接受连接，将其依次分发给工作进程。分发的策略是在 N 个工作进程中，每次选择第 i = (i + 1) mod n 个进程来发送连接。在 cluster 模块中启用它的方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 启用 Round-Robin  </span><br><span class="line">cluster.schedulingPolicy = cluster.SCHED_RR</span><br><span class="line">// 不启用 Round-Robin</span><br><span class="line">cluster.schedulingPolicy = cluster.SCHED_NONE</span><br></pre></td></tr></table></figure></p>
+<p>或者在环境变量中设置 NODE_CLUSTER_SCHED_POLICY 的值，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export NODE_CLUSTER_SCHED_POLICY = rr </span><br><span class="line">export NODE_CLUSTER_SCHED_POLICY = none</span><br></pre></td></tr></table></figure></p>
+<p>Round-Robin 非常简单，可以避免 CPU 和 I/O 繁忙差异导致的负载不均衡。Round-Robin 策略也可以通过代理服务器来实现，但是它会导致服务器上消耗的文件描述符是平常方式的两倍。</p>
+<h4 id="3-6、状态共享"><a href="#3-6、状态共享" class="headerlink" title="3.6、状态共享"></a>3.6、状态共享</h4><p>在 Node 进程中不宜存放太多数据，因为它会加重垃圾回收的负担，进而影响性能。同时，Node 也不允许在多个进程之间共享数据。但在实际的业务中，往往需要共享一些数据，譬如配置数据，这在多个进程中应当是一致的。为此，在不允许共享数据的情况下，我们需要一种方案和机制来实现数据在多个进程之间的共享。</p>
+<ul>
+<li>第三方数据存储<br>解决数据共享最直接、简单的方式就是通过第三方来进行数据存储，比如将数据存放到数据库、磁盘文件、缓存服务（如Redis）中，所有工作进程启动时将其读取进内存中。但这种方式存在的问题是如果数据发生改变，还需要一种机制通知到各个子进程，使得它们的内部状态也得到更新。<br>实现状态同步的机制有两种，一种是各个子进程去向第三方进行定时轮询。<br>定时轮询带来的问题是轮询时间不能过密，如果子进程过多，会形成并发处理，如果数据没有发生改变，这些轮询会没有意义，白白增加查询状态的开销。如果轮询时间过长，数据发生改变时，不能及时更新到子进程中，会有一定的延迟。</li>
+<li>主动通知<br>一种改进的方式是当数据发生更新时，主动通知子进程。当然，即使是主动通知，也需要一种机制来及时获取数据的改变。这个过程仍然不能脱离轮询，但我们可以减少轮询的进程数量，我们将这种用来发送通知和查询状态是否更改的进程叫做通知进程。为了不混合业务逻辑，可以将这个进程设计为只进行轮询和通知，不处理任何业务逻辑。<br>这种推送机制如果按进程间信号传递，在跨多台服务器时会无效，是故可以考虑采用 TCP 或 UDP 的方案。进程在启动时从通知服务处除了读取第一次数据外，还将进程信息注册到通知服务处。一旦通过轮询发现有数据更新后，根据注册信息，将更新后的数据发送给工作进程。由于不涉及太多进程去向同一地方进行状态查询，状态响应处的压力不至于太过巨大，单一的通知服务轮询带来的压力并不大，所以可以将轮询时间调整得较短，一旦发现更新，就能实时地推送到各个子进程中。</li>
+</ul>
+<h3 id="四、Cluster-模块"><a href="#四、Cluster-模块" class="headerlink" title="四、Cluster 模块"></a>四、Cluster 模块</h3><p>Node v0.8 时直接引入了 cluster 模块，用以解决多核 CPU 的利用率问题，同时也提供了较完善的 API，用以处理进程的健壮性问题，cluster 实现创建 Node 进程集群也是很轻松的事情，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// cluster.js</span><br><span class="line">var cluster = require(&apos;cluster&apos;);</span><br><span class="line">cluster.setupMaster(&#123;</span><br><span class="line">    exec: &quot;./worker.js&quot;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var cpus = require(&apos;os&apos;).cpus(), works = [];</span><br><span class="line">for (var i = 0; i &lt; cpus.length; i++) &#123;</span><br><span class="line">    works[i] = cluster.fork();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行 node cluster.js 将会得到与前文创建子进程集群的效果相同。就官方的文档而言，它更喜欢如下的形式作为示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var cluster = require(&apos;cluster&apos;);</span><br><span class="line">var http = require(&apos;http&apos;);</span><br><span class="line">var numCPUs = require(&apos;os&apos;).cpus().length;</span><br><span class="line">if (cluster.isMaster) &#123;</span><br><span class="line">    // Fork workers  </span><br><span class="line">    for (var i = 0; i &lt; numCPUs; i++) &#123;</span><br><span class="line">        cluster.fork();</span><br><span class="line">    &#125;</span><br><span class="line">    cluster.on(&apos;exit&apos;, function (worker, code, signal) &#123;</span><br><span class="line">        console.log(&apos;worker &apos; + worker.process.pid + &apos; died&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    // Workers can share any TCP connection  </span><br><span class="line">    // In this case its a HTTP server   </span><br><span class="line">    http.createServer(function (req, res) &#123;</span><br><span class="line">        res.writeHead(200);</span><br><span class="line">        res.end(&quot;hello world\n&quot;);</span><br><span class="line">    &#125;).listen(8000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在进程中判断是主进程还是工作进程，主要取决于环境变量中是否有 NODE_UNIQUE_ID，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cluster.isWorker = (&apos;NODE_UNIQUE_ID&apos; in process.env);</span><br><span class="line">cluster.isMaster = (cluster.isWorker === false);</span><br></pre></td></tr></table></figure></p>
+<p>但是官方示例中忽而判断 cluster.isMaster、忽而判断 cluster.isWorker，对于代码的可读性十分差。建议用 cluster.setupMaster() 这个 API，将主进程和工作进程从代码上完全剥离，如同 send() 方法看起来直接将服务器从主进程发送到子进程那样神奇，剥离代码之后，甚至都感觉不到主进程中有任何服务器相关的代码。<br>通过 cluster.setupMaster() 创建子进程而不是使用 cluster.fork()，程序结构不再凌乱，逻辑分明，代码的可读性和可维护性较好。</p>
+<h4 id="4-1、Cluster-工作原理"><a href="#4-1、Cluster-工作原理" class="headerlink" title="4.1、Cluster 工作原理"></a>4.1、Cluster 工作原理</h4><p>事实上 cluster 模块就是 child_process 和 net 模块的组合应用。cluster 启动时，会在内部启动 TCP 服务器，在 cluster.fork() 子进程时，将这个 TCP 服务器端 socket 的文件描述符发送给工作进程。如果进程是通过 cluster.fork() 复制出来的，那么它的环境变量里就存在 NODE_UNIQUE_ID，如果工作进程中存在 listen() 侦听网络端口的调用，它将拿到该文件描述符，通过 SO_REUSEADDR 端口重用，从而实现多个子进程共享端口。对于普通方式启动的进程，则不存在文件描述符传递共享等事情。<br>在 cluster 内部隐式创建 TCP 服务器的方式对使用者来说十分透明，但也正是这种方式使得它无法如直接使用 child_process 那样灵活。在 cluster 模块应用中，一个主进程只能管理一组工作进程。<br>对于自行通过 child_process 来操作时，则可以更灵活地控制工作进程，甚至控制多组工作进程。其原因在于自行通过 child_process 操作子进程时，可以隐式地创建多个 TCP 服务器，使得子进程可以共享多个的服务器端 socket。</p>
+<h4 id="4-2、Cluster事件"><a href="#4-2、Cluster事件" class="headerlink" title="4.2、Cluster事件"></a>4.2、Cluster事件</h4><p>对于健壮性处理，cluster 模块也暴露了相当多的事件。</p>
+<ul>
+<li>fork：复制一个工作进程后触发该事件。</li>
+<li>online：复制好一个工作进程后，工作进程主动发送一条 online 消息给主进程，主进程收到消息后，触发该事件。</li>
+<li>listening：工作进程中调用 listen() 后，发送一条 listening 消息给主进程，主进程收到消息后，触发该事件。</li>
+<li>disconnect：主进程和工作进程之间 IPC 通道断开后会触发该事件。</li>
+<li>exit：有工作进程退出时触发该事件。</li>
+<li>setup：cluster.setupMaster() 执行后触发该事件。</li>
+</ul>
+<p>这些事件大多跟 child_process 模块的事件相关，在进程间消息传递的基础上完成的封装。这些事件对于增强应用的健壮性已经足够了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-02-28T08:13:00.531Z" itemprop="dateUpdated">2019-02-28 16:13:00</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/node/process/" target="_blank" rel="external">http://blog.master-ss.cn/node/process/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/process/&title=《node 之进程管理》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/process/&title=《node 之进程管理》 — 青松的博客&source=JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/process/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之进程管理》 — 青松的博客&url=http://blog.master-ss.cn/node/process/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/process/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/node/nvm/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">nvm 简介</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/node/process/&title=《node 之进程管理》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/node/process/&title=《node 之进程管理》 — 青松的博客&source=JavaScript 运行在单个进程的单个线程上，它带来的好处是：程序状态是单一的，在没有多线程的情况下没有锁、线程同步问题，操作系统在调度时也因为较少上..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/node/process/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node 之进程管理》 — 青松的博客&url=http://blog.master-ss.cn/node/process/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/node/process/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByklEQVR42u3aS27DMAxFUe9/0y7QUYGg8n2kxKTF1SgwFOcoA0L8XBde9/d6ffJzrXeuv7V5yZUrt829l+t1z/rJb+j1X0AMcuXKnefy1633dLgkgMqVK/fTuGt6eki5cuX+J266pxP45MqV+14uSX54eOLFkYO5mly5chvctGB64vPB+q5cuXJD7h2u9IpDQmHw63Llyh3hpu3SFBqkNMuoddW6u3Llyi1xO6VSXkLlCVI8AyJXrtxj3PXVpP98W3lFrly5I1z+Ut4cJUGqdgy5cuVOcvvJTJpKpU2Uh86wXLlyt3LJ5YYPV9W6IaTYevFNcuXKbXP75RISgDoDXggtV67crVzSTE0LGekTLpErV+4kl3whLa32y6MPyY9cuXKPcXnrlA9p8QPEcyJy5cod4abJSXqANJw9HE+uXLnj3FqptDakVXyDXLlyR7j8IsJ7trU0qXZhkitX7gnuHS4eBHmbhCRdcuXKneSmYWVbpMS9X7ly5b6LWxukSCc70lAYD2HIlSv3ADe9mhBKP/mRK1fu53N56sKDHQ9ncuXK/Svc+ekIuXLlTnLT5IdT0qD2cCWSK1fuCLeWitQaq/wvaNHlypVb534BbpMU46R7BJIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
