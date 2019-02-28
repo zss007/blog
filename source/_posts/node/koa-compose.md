@@ -46,7 +46,7 @@ function compose (middleware) {
 - 4、如果 i === middleware.length，说明是最后一个中间件，则将 next 参数赋值给 fn，如果 next 不存在，返回 Promise.resolve，否则继续调用 next，将结果返回。
 - 5、Promise.resolve(Promise.resolve(Promise.resolve('resolved'))).then(success, error) 执行 success，Promise.resolve(Promise.resolve(Promise.reject('rejected'))).then(success, error) 执行 error。
 - 6、这就是洋葱模型的来由了：
-<img src="/assets/koa/koa-diagram.png">
+<img src="/assets/node/koa-diagram.png">
 
 ### 三、应用
 ```
