@@ -44,6 +44,7 @@ local_port = 7001
 custom_domains = xx.xx.cn
 ```
 其中 server_addr 为公用服务器 ip 地址，server_port 与服务端 bind_port 一致，local_port 为内网 web 服务的端口号，custom_domains 为所绑定的公网服务器域名，一级、二级域名都可以。
+保存然后启动服务`./frps -c ./frps.ini`。
 #### 2.4、nginx 请求代理
 目前还需要在域名下带端口号才能够访问，而很多对接的第三方服务不允许域名下带端口号，所以用 nginx 做下代理工作。
 推荐新增二级域名，然后配置 nginx
