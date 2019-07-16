@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>paypal 之网站集成 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="项目要求，Web 网站需要实现 paypal 收款，废话不说，直接切入正题。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="paypal 之网站集成">
+<meta property="og:url" content="http://blog.master-ss.cn/project/paypal/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="项目要求，Web 网站需要实现 paypal 收款，废话不说，直接切入正题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-16T02:13:24.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="paypal 之网站集成">
+<meta name="twitter:description" content="项目要求，Web 网站需要实现 paypal 收款，废话不说，直接切入正题。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">paypal 之网站集成</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">paypal 之网站集成</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-16T01:36:54.277Z" itemprop="datePublished" class="page-time">
+  2019-07-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/project/">project</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、准备"><span class="post-toc-text">一、准备</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、注册账号"><span class="post-toc-text">1.1、注册账号</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、调解中心"><span class="post-toc-text">1.2、调解中心</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3、沙箱测试"><span class="post-toc-text">1.3、沙箱测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、代码开发"><span class="post-toc-text">二、代码开发</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、form-表单"><span class="post-toc-text">2.1、form 表单</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、提交支付"><span class="post-toc-text">2.2、提交支付</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-project/paypal" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">paypal 之网站集成</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-16 09:36:54" datetime="2019-07-16T01:36:54.277Z" itemprop="datePublished">2019-07-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/project/">project</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>项目要求，Web 网站需要实现 paypal 收款，废话不说，直接切入正题。<br><a id="more"></a> </p>
+<h3 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h3><h4 id="1-1、注册账号"><a href="#1-1、注册账号" class="headerlink" title="1.1、注册账号"></a>1.1、注册账号</h4><p>在 paypal <a href="https://www.paypal.com" target="_blank" rel="noopener">官网</a>注册一个账号，注意要账户类型要选择企业账户，其他信息如实填写好。注意 paypal 是支持接入个体工商户的，亲测有效。</p>
+<h4 id="1-2、调解中心"><a href="#1-2、调解中心" class="headerlink" title="1.2、调解中心"></a>1.2、调解中心</h4><p>注册成功并完善资料后，账号登录要前往<code>调解中心</code>点击<code>前往账户限制</code>按钮，（完善账号信息，否则正式对接接口的时候，表单提交直接报错！！这是一个坑！！），需要提交以下文件：中国大陆居民身份证（正反面）和营业执照照片；这个审核过程一般 1 天左右的时间就可以完成。当然还需要邮箱验证等，这些都比较简单立刻能够操作完成。</p>
+<h4 id="1-3、沙箱测试"><a href="#1-3、沙箱测试" class="headerlink" title="1.3、沙箱测试"></a>1.3、沙箱测试</h4><p>当账户注册成功以后，paypal 会分配给开发者账号两个沙箱测试账号（一个买家账号和一个商家账号）。去 paypal <a href="https://developer.paypal.com/developer/accounts" target="_blank" rel="noopener">开发者账号管理端</a>查看，用上面刚刚注册的账号密码即可。<br>系统自动分配两个 Country 值为 C2（代表中国区）的账号，但是千万不要同时拿着这两个账号来进行沙箱收付款测试，因为国内政策原因， paypal 规定中国地区和中国地区的账户之间无法实现付款，所以新建一个沙箱测试账号，买家的余额随便填，但是买家和商家的地区一定要选择不一样。</p>
+<h3 id="二、代码开发"><a href="#二、代码开发" class="headerlink" title="二、代码开发"></a>二、代码开发</h3><h4 id="2-1、form-表单"><a href="#2-1、form-表单" class="headerlink" title="2.1、form 表单"></a>2.1、form 表单</h4><p>其实代码很简单，就一段 Html Form 表单。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://www.paypal.com/cgi-bin/webscr 生产地址 --&gt;</span><br><span class="line">&lt;!-- https://www.sandbox.paypal.com/cgi-bin/webscr  沙箱测试地址 --&gt;</span><br><span class="line">&lt;form action=&quot;https://www.paypal.com/cgi-bin/webscr&quot; method=&quot;post&quot; target=&quot;_blank&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;cmd&quot; value=&quot;_xclick&quot;&gt;  &lt;!-- name=&quot;cmd&quot;这个参数比较重要，_xclick表示立即支付，还有_s_xclick加密按钮等 --&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;business&quot; value=&quot;商家账号&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;item_name&quot; value=&quot;产品名称&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;item_number&quot; value=&quot;产品编号&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;amount&quot; value=&quot;金额&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;currency_code&quot; value=&quot;USD&quot;&gt;  &lt;!-- 币种 --&gt;</span><br><span class="line">  &lt;input type=&apos;hidden&apos; name=&apos;return&apos; value=&quot;支付成功后网页跳转地址&quot;&gt;</span><br><span class="line">  &lt;input type=&apos;hidden&apos; name=&apos;notify_url&apos; value=&quot;异步通知交易信息地址&quot;&gt;</span><br><span class="line">  &lt;input type=&apos;hidden&apos; name=&apos;invoice&apos; value=&quot;发票编码&quot;&gt;  &lt;!-- 注意：不能提交两次一样的发票编码 --&gt;</span><br><span class="line">  &lt;input type=&apos;hidden&apos; name=&apos;charset&apos; value=&apos;utf-8&apos;&gt;  &lt;!-- 字符集 --&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;no_shipping&quot; value=&quot;1&quot;&gt;  &lt;!-- 不要求客户提供收货地址 --&gt;</span><br><span class="line">  &lt;input type=&quot;hidden&quot; name=&quot;no_note&quot; value=&quot;1&quot;&gt;  &lt;!-- 付款说明 --&gt;</span><br><span class="line">  &lt;input type=&apos;hidden&apos; name=&apos;rm&apos; value=&apos;1&apos;&gt;  &lt;!-- 付款完成后的返回URL的行为 --&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p>
+<p>下面列举些付款变量列表：</p>
+<ul>
+<li>cmd: _xclick 表示立即购买；_xclick_subscription 表示订阅；_cart 表示购物车；s_x-click 表示加密按钮</li>
+<li>return: 指完成付款后客户的浏览器返回到的 URL。如果省略，则您的买家将被带到 paypal 网站</li>
+<li>notify_url: 用于接受 paypal 发送的关于即时付款通知的交易信息的 URL，必须是有效的 URL</li>
+<li>no_shipping: 买家的送货地址，省略或设为 0 则提示客户输入收货地址，1 则不要求客户提供收货地址，2 则客户必须提供收货地址</li>
+<li>no_note: 为付款加入说明，如果省略或设为 0，则会提示您的客户输入说明，如果设为 1，则不会提示您的客户输入说明</li>
+<li>rm: 付款完成后的返回 URL 的行为，只有在 return 变量被设置后才能生效。如果省略或为 0，则 GET 方法用于没有启用即时付款通知的所有购物车交易，而 POST 方法用于所有其他交易；如果为 1 并设置了return，则客户的浏览器由 GET 方法返回至返回 URL，并且不提交任何交易变量；如果为 2 并设置了 return，则客户的浏览器由 POST 方法返回至返回 URL，同时将所有可用交易变量发送至该 URL</li>
+</ul>
+<p>更多详情查看<a href="http://www.fyhqy.com/post-150.html" target="_blank" rel="noopener">paypal付款按钮变量列表</a>或官方文档。</p>
+<h4 id="2-2、提交支付"><a href="#2-2、提交支付" class="headerlink" title="2.2、提交支付"></a>2.2、提交支付</h4><p>表单代码一提交，就链接到了 paypal 的支付界面，然后输入买家账号、密码就能完成支付；等支付成功以后，paypay 会把支付信息回调给notify_url 提供的接口地址（paypal 如果回调失败，最多回调三次）。<br>等沙箱测试通过以后 ，就直接切换成生产地址就好；这里不得不赞美一下paypal的沙箱搞的真不错，几乎和生产可以同步。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-07-16T02:13:24.809Z" itemprop="dateUpdated">2019-07-16 10:13:24</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/project/paypal/" target="_blank" rel="external">http://blog.master-ss.cn/project/paypal/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/project/paypal/&title=《paypal 之网站集成》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/project/paypal/&title=《paypal 之网站集成》 — 青松的博客&source=项目要求，Web 网站需要实现 paypal 收款，废话不说，直接切入正题。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/project/paypal/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《paypal 之网站集成》 — 青松的博客&url=http://blog.master-ss.cn/project/paypal/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/project/paypal/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/project/frp/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">frp 之内网穿透</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/project/paypal/&title=《paypal 之网站集成》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/project/paypal/&title=《paypal 之网站集成》 — 青松的博客&source=项目要求，Web 网站需要实现 paypal 收款，废话不说，直接切入正题。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/project/paypal/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《paypal 之网站集成》 — 青松的博客&url=http://blog.master-ss.cn/project/paypal/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/project/paypal/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwklEQVR42u3azaqDQAwGUN//pdvthVLnS6YT5HJcSbF6dBHyd13x8bo9/l5zf/55z+vEgYuLu83NKfeIz2uSZ+UGXFzcee59oMkD0z0iuf/ChouL+3huQkn+hYuL+z+4SYKSJDq4uLhP5uYtjzw85cQjtRouLu4GN+9Snjs/0t/FxcVtcV/FI09Z8t8LT8fFxR3h5gElT3qqzZHqc3Fxcee5vVFrXgL1Mpmo3sLFxR3hVsPTzvikmeLg4uKOcKuNjDzw7f+Oi4s7w91ZnuiNS6uj2a9dHFxc3GPcPPnYWdWqpk2Ll8fFxT3MTRYm8jBUpZRfFRcXd5Dba3bki1x5yFsEVlxc3BFutQjZ2Y/qtUcXxQ8uLu4It7c+1QtzvQUOXFzcSW6ejiQN1jxtKqdZuLi449z9hYx8MJMEweZMGBcX96fc6o2qr9RMa6rfEhcXd4Pba3DkS1oJK78eFxd3hpsf1QZoXghV17lwcXFnuPuDkHxYUk2bCkNWXFzcA9y82dFrZxyp1XBxcR/DTW6at0jycgsXF/f53KQo6jVPF58GFxd3kFtdpeotYfRWOnBxcee5ecO0OhTpnfdKJlxc3B9x34ZQuWiQlKSiAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
