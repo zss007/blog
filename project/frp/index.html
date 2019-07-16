@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="青松的博客">
 <meta property="og:description" content="刚搞定内网穿透，成就感爆棚，之前一直都是用别人的服务，现在终于自己搞定了。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-11T10:46:31.448Z">
+<meta property="og:updated_time" content="2019-07-16T02:59:39.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="frp 之内网穿透">
 <meta name="twitter:description" content="刚搞定内网穿透，成就感爆棚，之前一直都是用别人的服务，现在终于自己搞定了。">
@@ -207,7 +207,7 @@
 <h4 id="2-2、服务端启动"><a href="#2-2、服务端启动" class="headerlink" title="2.2、服务端启动"></a>2.2、服务端启动</h4><p>新建目录<code>mkdir -p /usr/local/frp</code>，上传<code>frp_xxx_linux_amd64.tar.gz</code>至服务器该目录下，解压<code>tar -zxvf  frp_xxx_linux_amd64.tar.gz</code>，进入解压目录<code>cd frp_xxx_linux_amd64</code>，移除<code>frpc</code>文件夹、frpc.ini、frpc_full.ini。<br>然后进行配置，<code>vi ./frps.ini</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 3000</span><br></pre></td></tr></table></figure></p>
 <p>其中<code>bind_port</code>端口用来和客户端进行通信，<code>vhost_http_port</code>为服务端<code>http</code>服务端口。<br>保存然后启动服务<code>./frps -c ./frps.ini</code>，这是前台启动，后台启动命令为<code>nohup ./frps -c ./frps.ini &gt;/dev/null 2&gt;&amp;1 &amp;</code><br>如果需要关闭这个进程，则获取进程<code>ps -ef|grep frps</code>，然后关闭<code>kill -9 pid</code>。</p>
 <h4 id="2-3、客户端启动"><a href="#2-3、客户端启动" class="headerlink" title="2.3、客户端启动"></a>2.3、客户端启动</h4><p>首先解压<code>frp_xxx_darwin_amd64.tar.gz</code>或<code>frp_xxx_windows_amd64.zip</code>，然后删除<code>frps</code>文件夹、frps.ini、frps_full.ini。<br>再进行配置，<code>vi ./frpc.ini</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xx.xx.xx.xx</span><br><span class="line">server_port = 7000</span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line">type = http</span><br><span class="line">local_port = 7001</span><br><span class="line">custom_domains = xx.xx.cn</span><br></pre></td></tr></table></figure></p>
-<p>其中 server_addr 为公用服务器 ip 地址，server_port 与服务端 bind_port 一致，local_port 为内网 web 服务的端口号，custom_domains 为所绑定的公网服务器域名，一级、二级域名都可以。<br>保存然后启动服务<code>./frps -c ./frps.ini</code>。</p>
+<p>其中 server_addr 为公用服务器 ip 地址，server_port 与服务端 bind_port 一致，local_port 为内网 web 服务的端口号，custom_domains 为所绑定的公网服务器域名，一级、二级域名都可以。<br>保存然后启动服务<code>./frpc -c ./frpc.ini</code>。</p>
 <h4 id="2-4、nginx-请求代理"><a href="#2-4、nginx-请求代理" class="headerlink" title="2.4、nginx 请求代理"></a>2.4、nginx 请求代理</h4><p>目前还需要在域名下带端口号才能够访问，而很多对接的第三方服务不允许域名下带端口号，所以用 nginx 做下代理工作。<br>推荐新增二级域名，然后配置 nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">upstream frps &#123;</span><br><span class="line">  server 127.0.0.1:3000;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name frps.xx.xx;</span><br><span class="line">  </span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Nginx-Proxy true;</span><br><span class="line">   </span><br><span class="line">    proxy_pass http://127.0.0.1:3000; </span><br><span class="line">    proxy_redirect off;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>重启 nginx 后便能够使用该二级域名访问本地服务了！！！</p>
 
@@ -218,7 +218,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-07-11T10:46:31.448Z" itemprop="dateUpdated">2019-07-11 18:46:31</time>
+    最后更新时间：<time datetime="2019-07-16T02:59:39.728Z" itemprop="dateUpdated">2019-07-16 10:59:39</time>
 </span><br>
 
 
