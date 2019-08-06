@@ -1,7 +1,7 @@
 ---
 title: frp 之内网穿透
 categories:
-- project
+- tools
 ---
 刚搞定内网穿透，成就感爆棚，之前一直都是用[别人的服务](http://www.ngrok.cc/)，现在终于自己搞定了。
 <!--more--> 
