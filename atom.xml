@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.master-ss.cn/"/>
-  <updated>2019-07-16T02:13:24.809Z</updated>
+  <updated>2019-08-06T08:48:46.191Z</updated>
   <id>http://blog.master-ss.cn/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ps 之去背景&amp;文字变色</title>
+    <link href="http://blog.master-ss.cn/tools/ps1/"/>
+    <id>http://blog.master-ss.cn/tools/ps1/</id>
+    <published>2019-08-06T07:41:59.827Z</published>
+    <updated>2019-08-06T08:48:46.191Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps CC 2017。<br><a id="more"></a></p><h3 id="一、去背景"><a href="#一、去背景" class="headerlink" title="一、去背景"></a>一、去背景</h3><p>选择“魔术橡皮檫工具”，选中需要去除的背景，即能让背景透明。<br><img src="/assets/tools/ps/rubber.png"></p><p>如果需要去除的背景和其他区域连在一起，可使用套索工具将需要去除的区域圈起来，然后再使用“魔术橡皮檫工具”去除背景。<br><img src="/assets/tools/ps/lasso.png"></p><h3 id="二、文字变色"><a href="#二、文字变色" class="headerlink" title="二、文字变色"></a>二、文字变色</h3><p>选择“魔棒工具”，勾选“消除锯齿”，不勾选“连续”，然后选中文本。<br><img src="/assets/tools/ps/wand.png"></p><p>如果部分文本不需要变色，可选中“矩形选框工具”，然后选择“从选区减去”，然后圈中不变色的文本。<br><img src="/assets/tools/ps/remove.png"></p><p>选择“编辑”，然后给选中文本进行颜色填充或者进行描边。<br><img src="/assets/tools/ps/fill.png"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps CC 2017。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.master-ss.cn/categories/tools/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>paypal 之网站集成</title>
@@ -38,10 +58,10 @@
   
   <entry>
     <title>frp 之内网穿透</title>
-    <link href="http://blog.master-ss.cn/project/frp/"/>
-    <id>http://blog.master-ss.cn/project/frp/</id>
+    <link href="http://blog.master-ss.cn/tools/frp/"/>
+    <id>http://blog.master-ss.cn/tools/frp/</id>
     <published>2019-07-11T09:41:18.264Z</published>
-    <updated>2019-07-16T02:59:39.728Z</updated>
+    <updated>2019-08-06T07:41:41.141Z</updated>
     
     <content type="html"><![CDATA[<p>刚搞定内网穿透，成就感爆棚，之前一直都是用<a href="http://www.ngrok.cc/" target="_blank" rel="noopener">别人的服务</a>，现在终于自己搞定了。<br><a id="more"></a> </p><h3 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h3><h4 id="1-1、优点"><a href="#1-1、优点" class="headerlink" title="1.1、优点"></a>1.1、优点</h4><ul><li>在不部署的情况下就能够演示网站</li><li>在移动设备上查看本地代码运行效果</li><li>使用固定域名地址来映射本地效果</li><li>方便开发对接第三方服务应用，比如微信公众号等</li></ul><h4 id="1-2、准备"><a href="#1-2、准备" class="headerlink" title="1.2、准备"></a>1.2、准备</h4><ul><li>公网服务器 1 台，需备案</li><li>内网电脑</li></ul><h3 id="二、实现流程"><a href="#二、实现流程" class="headerlink" title="二、实现流程"></a>二、实现流程</h3><h4 id="2-1、下载-frp"><a href="#2-1、下载-frp" class="headerlink" title="2.1、下载 frp"></a>2.1、下载 frp</h4><p>下载地址是 <a href="https://github.com/fatedier/frp/releases" target="_blank" rel="noopener">https://github.com/fatedier/frp/releases</a> ，分别下载<code>frp_xxx_linux_amd64.tar.gz</code>和 <code>frp_xxx_darwin_amd64.tar.gz</code>。xxx 是版本号，推荐最新版本。因为本人使用 mac 电脑，如果是 windows 系统，则需下载<code>frp_xxx_windows_amd64.zip</code>。</p><h4 id="2-2、服务端启动"><a href="#2-2、服务端启动" class="headerlink" title="2.2、服务端启动"></a>2.2、服务端启动</h4><p>新建目录<code>mkdir -p /usr/local/frp</code>，上传<code>frp_xxx_linux_amd64.tar.gz</code>至服务器该目录下，解压<code>tar -zxvf  frp_xxx_linux_amd64.tar.gz</code>，进入解压目录<code>cd frp_xxx_linux_amd64</code>，移除<code>frpc</code>文件夹、frpc.ini、frpc_full.ini。<br>然后进行配置，<code>vi ./frps.ini</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 3000</span><br></pre></td></tr></table></figure></p><p>其中<code>bind_port</code>端口用来和客户端进行通信，<code>vhost_http_port</code>为服务端<code>http</code>服务端口。<br>保存然后启动服务<code>./frps -c ./frps.ini</code>，这是前台启动，后台启动命令为<code>nohup ./frps -c ./frps.ini &gt;/dev/null 2&gt;&amp;1 &amp;</code><br>如果需要关闭这个进程，则获取进程<code>ps -ef|grep frps</code>，然后关闭<code>kill -9 pid</code>。</p><h4 id="2-3、客户端启动"><a href="#2-3、客户端启动" class="headerlink" title="2.3、客户端启动"></a>2.3、客户端启动</h4><p>首先解压<code>frp_xxx_darwin_amd64.tar.gz</code>或<code>frp_xxx_windows_amd64.zip</code>，然后删除<code>frps</code>文件夹、frps.ini、frps_full.ini。<br>再进行配置，<code>vi ./frpc.ini</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xx.xx.xx.xx</span><br><span class="line">server_port = 7000</span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line">type = http</span><br><span class="line">local_port = 7001</span><br><span class="line">custom_domains = xx.xx.cn</span><br></pre></td></tr></table></figure></p><p>其中 server_addr 为公用服务器 ip 地址，server_port 与服务端 bind_port 一致，local_port 为内网 web 服务的端口号，custom_domains 为所绑定的公网服务器域名，一级、二级域名都可以。<br>保存然后启动服务<code>./frpc -c ./frpc.ini</code>。</p><h4 id="2-4、nginx-请求代理"><a href="#2-4、nginx-请求代理" class="headerlink" title="2.4、nginx 请求代理"></a>2.4、nginx 请求代理</h4><p>目前还需要在域名下带端口号才能够访问，而很多对接的第三方服务不允许域名下带端口号，所以用 nginx 做下代理工作。<br>推荐新增二级域名，然后配置 nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">upstream frps &#123;</span><br><span class="line">  server 127.0.0.1:3000;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name frps.xx.xx;</span><br><span class="line">  </span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Nginx-Proxy true;</span><br><span class="line">   </span><br><span class="line">    proxy_pass http://127.0.0.1:3000; </span><br><span class="line">    proxy_redirect off;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>重启 nginx 后便能够使用该二级域名访问本地服务了！！！</p>]]></content>
     
@@ -51,7 +71,7 @@
     
     </summary>
     
-      <category term="project" scheme="http://blog.master-ss.cn/categories/project/"/>
+      <category term="tools" scheme="http://blog.master-ss.cn/categories/tools/"/>
     
     
   </entry>
@@ -392,26 +412,6 @@
     </summary>
     
       <category term="essay" scheme="http://blog.master-ss.cn/categories/essay/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>js 之类型转换</title>
-    <link href="http://blog.master-ss.cn/js/type/"/>
-    <id>http://blog.master-ss.cn/js/type/</id>
-    <published>2018-10-13T03:13:41.000Z</published>
-    <updated>2018-10-13T03:26:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>JS 基础常考内容，一定要融会贯通。<br><a id="more"></a></p><h3 id="一、数据类型"><a href="#一、数据类型" class="headerlink" title="一、数据类型"></a>一、数据类型</h3><p>JS 中有 7 中数据类型：<br>原始数据类型： Null、Boolean、String、Number、Symbol、Undefined<br>复合数据类型： Object</p><h3 id="二、显式类型转换"><a href="#二、显式类型转换" class="headerlink" title="二、显式类型转换"></a>二、显式类型转换</h3><p>先说明下面几个函数：<br>valueOf(): 将该对象原始值返回<br>toString(): 将该对象原始值以字符串返回</p><ul><li><p>Number 转换</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 基本数据转换</span><br><span class="line">Number(1) // 数字： 数字 -&gt; 数字</span><br><span class="line">Number(&apos;123&apos;) // 字符串： 纯数字 -&gt; 数字，不是纯数字 -&gt; NaN，空字符串 -&gt; 0</span><br><span class="line">Number(true) // 布尔值： true -&gt; 1，false -&gt; 0</span><br><span class="line">Number(undefined) // NaN</span><br><span class="line">Number(null) // 0</span><br><span class="line">// 复合类型数据转换</span><br><span class="line">// 先调用 valueOf，如果输出为基本类型，则调用 Number，如果为复合类型，继续调用 toString，如果还不是基本数据类型就报错，如果是则调用 Number</span><br></pre></td></tr></table></figure></li><li><p>String 转换</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// String() 很简单，就是将这些基本类型都变成字符串：</span><br><span class="line">// 123 -&gt; &apos;123&apos;</span><br><span class="line">// true -&gt; &apos;true&apos;</span><br><span class="line">// undefined -&gt; &apos;undefined&apos;</span><br><span class="line">// null -&gt; &apos;null&apos;</span><br><span class="line">// 复合类型转换</span><br><span class="line">// 先调用 toString，如果输出为基本类型，则调用 String，如果为复合类型，继续调用 valueOf，如果还不是基本数据类型就报错，如果是则调用 String</span><br></pre></td></tr></table></figure></li><li><p>Boolean 转换<br>+0、-0、undefined、null、’’、NaN -&gt; false，其余都为 true</p></li></ul><h3 id="三、显式类型转换"><a href="#三、显式类型转换" class="headerlink" title="三、显式类型转换"></a>三、显式类型转换</h3><ul><li>四则运算</li><li>判断语句</li><li>Native 调用: 比如说 console.log()、alert()</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Boolean()</span><br><span class="line">![]  // false</span><br><span class="line">!![] // true</span><br><span class="line">!&#123;&#125;  // false</span><br><span class="line">!!&#123;&#125; // true</span><br><span class="line">[]+[] // &quot;&quot;，调用 String 处理 []</span><br><span class="line">[]+1 // &quot;1&quot;，调用 String 处理 []</span><br><span class="line">&#123;&#125;+&#123;&#125; // &quot;[object Object][object Object]&quot;，这里 chrome 和 firefox 解释不同</span><br><span class="line">&#123;&#125;+[] // 0，这里 &#123;&#125; 被当前代码块，不做任何处理，然后调用 Number 处理 []</span><br><span class="line">[]+&#123;&#125; // &quot;[object Object]&quot;，调用 String 处理 [] 和 &#123;&#125;</span><br><span class="line">1+&#123;&#125; // &quot;1[object Object]&quot;，调用 &#123;&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;JS 基础常考内容，一定要融会贯通。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="js" scheme="http://blog.master-ss.cn/categories/js/"/>
     
     
   </entry>
