@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>vuex 之初始化 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vuex 之初始化">
+<meta property="og:url" content="http://blog.master-ss.cn/source/vuex/vuex-init/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-06T07:21:25.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vuex 之初始化">
+<meta name="twitter:description" content="最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vuex 之初始化</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">vuex 之初始化</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-09-30T02:33:00.000Z" itemprop="datePublished" class="page-time">
+  2018-09-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/source/">source</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、入口"><span class="post-toc-text">一、入口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、Vue-use-Vuex"><span class="post-toc-text">二、Vue.use(Vuex)</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-source/vuex/vuex-init" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vuex 之初始化</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-09-30 10:33:00" datetime="2018-09-30T02:33:00.000Z" itemprop="datePublished">2018-09-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/source/">source</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。<br><a id="more"></a></p>
+<h3 id="一、入口"><a href="#一、入口" class="headerlink" title="一、入口"></a>一、入口</h3><p>访问 <a href="https://github.com/vuejs/vuex" target="_blank" rel="noopener">https://github.com/vuejs/vuex</a> ，然后 clone 下工程。拿到项目后，我们先来看下 package.json。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;vuex&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;3.0.1&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;state management for Vue.js&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;dist/vuex.common.js&quot;,</span><br><span class="line">  &quot;module&quot;: &quot;dist/vuex.esm.js&quot;,</span><br><span class="line">  &quot;unpkg&quot;: &quot;dist/vuex.js&quot;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们重点观察入口文件 “dist/vuex.common.js”、”dist/vuex.esm.js”、”dist/vuex.js”，分别用于 node、es6、browser 环境。注意这些文件都是编译后的文件，而不是源代码。这个时候我们来看 configs.js 部分代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">const configs = &#123;</span><br><span class="line">  umdDev: &#123;</span><br><span class="line">    input: resolve(&apos;src/index.js&apos;),</span><br><span class="line">    file: resolve(&apos;dist/vuex.js&apos;),</span><br><span class="line">    format: &apos;umd&apos;,</span><br><span class="line">    env: &apos;development&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  umdProd: &#123;</span><br><span class="line">    input: resolve(&apos;src/index.js&apos;),</span><br><span class="line">    file: resolve(&apos;dist/vuex.min.js&apos;),</span><br><span class="line">    format: &apos;umd&apos;,</span><br><span class="line">    env: &apos;production&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  commonjs: &#123;</span><br><span class="line">    input: resolve(&apos;src/index.js&apos;),</span><br><span class="line">    file: resolve(&apos;dist/vuex.common.js&apos;),</span><br><span class="line">    format: &apos;cjs&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  esm: &#123;</span><br><span class="line">    input: resolve(&apos;src/index.esm.js&apos;),</span><br><span class="line">    file: resolve(&apos;dist/vuex.esm.js&apos;),</span><br><span class="line">    format: &apos;es&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>可以能清晰的看到配置文件中，不同配置分别对应不同环境，但是入口文件都是 ‘src/index.js’ 或 ‘src/index.esm.js’，我们就从 ‘src/index.js’ 开始。</p>
+<h3 id="二、Vue-use-Vuex"><a href="#二、Vue-use-Vuex" class="headerlink" title="二、Vue.use(Vuex)"></a>二、Vue.use(Vuex)</h3><p>相信用过 vuex 的人对 ‘Vue.use(Vuex)’ 这段代码非常熟悉，我们就不绕圈子了，直接说明下他的作用。先来到 vue 的源码片段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Vue.use = function (plugin: Function | Object) &#123;</span><br><span class="line">  const installedPlugins = (this._installedPlugins || (this._installedPlugins = []))</span><br><span class="line">  if (installedPlugins.indexOf(plugin) &gt; -1) &#123;</span><br><span class="line">    return this</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // additional parameters</span><br><span class="line">  const args = toArray(arguments, 1)</span><br><span class="line">  args.unshift(this)</span><br><span class="line">  if (typeof plugin.install === &apos;function&apos;) &#123;</span><br><span class="line">    plugin.install.apply(plugin, args)</span><br><span class="line">  &#125; else if (typeof plugin === &apos;function&apos;) &#123;</span><br><span class="line">    plugin.apply(null, args)</span><br><span class="line">  &#125;</span><br><span class="line">  installedPlugins.push(plugin)</span><br><span class="line">  return this</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到在 vue 源码中先获取 _installedPlugins 变量，然后判断是否已经存在。后面是获取 Vue.use 方法其他参数，然后如果存在 install 方法的话，调用 install 方法，并传入其他参数，如果不存在 install，则直接调用 plugin。</p>
+<p>那么我们现在回到 Vuex 源码中，来看下 ‘src/index.js’ 代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Store, install &#125; from &apos;./store&apos;</span><br><span class="line">import &#123; mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers &#125; from &apos;./helpers&apos;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  Store,</span><br><span class="line">  install,</span><br><span class="line">  version: &apos;__VERSION__&apos;,</span><br><span class="line">  mapState,</span><br><span class="line">  mapMutations,</span><br><span class="line">  mapGetters,</span><br><span class="line">  mapActions,</span><br><span class="line">  createNamespacedHelpers</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以发现 install 方法存在于 ‘src/store.js’ 中，我们来看下 install 方法实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import applyMixin from &apos;./mixin&apos;</span><br><span class="line">...</span><br><span class="line">export function install (_Vue) &#123;</span><br><span class="line">  // 保证反复调用只执行一次</span><br><span class="line">  if (Vue &amp;&amp; _Vue === Vue) &#123;</span><br><span class="line">    if (process.env.NODE_ENV !== &apos;production&apos;) &#123;</span><br><span class="line">      console.error(</span><br><span class="line">        &apos;[vuex] already installed. Vue.use(Vuex) should be called only once.&apos;</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">    return</span><br><span class="line">  &#125;</span><br><span class="line">  Vue = _Vue</span><br><span class="line">  applyMixin(Vue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们发现传入参数 _Vue 被赋值给 Vue 变量，这样我们就能够在插件中使用 Vue 而不用 import 了。你可能好奇 _Vue 什么时候被传入的，可以往上翻一下 <code>args.unshift(this)</code> 这里将 this 也就是 Vue 放入 args 中，然后在 <code>plugin.install.apply(plugin, args)</code> 中传入。</p>
+<p>我们继续往下看，来到 ‘src/mixin.js’ 中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">export default function (Vue) &#123;</span><br><span class="line">  const version = Number(Vue.version.split(&apos;.&apos;)[0])</span><br><span class="line"></span><br><span class="line">  if (version &gt;= 2) &#123;</span><br><span class="line">    // 全局混入 beforeCreate 钩子函数</span><br><span class="line">    Vue.mixin(&#123; beforeCreate: vuexInit &#125;)</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    // override init and inject vuex init procedure</span><br><span class="line">    // for 1.x backwards compatibility.</span><br><span class="line">    const _init = Vue.prototype._init</span><br><span class="line">    Vue.prototype._init = function (options = &#123;&#125;) &#123;</span><br><span class="line">      options.init = options.init</span><br><span class="line">        ? [vuexInit].concat(options.init)</span><br><span class="line">        : vuexInit</span><br><span class="line">      _init.call(this, options)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，我们在 mixin.js 中主要就是注入 before 钩子函数。如果 vue 版本 &gt;=2 的话，就全局混入 beforeCreate 钩子函数，1.x 的版本我们就不研究了。</p>
+<p>然后我们来看 vuexInit 函数，看下在 beforeCreate 的时候到底做啥了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Vuex init hook, injected into each instances init hooks list.</span><br><span class="line"> * 给 Vue 的实例注入一个 $store 的属性</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">function vuexInit () &#123;</span><br><span class="line">  const options = this.$options</span><br><span class="line">  // 把 options.store 保存在所有组件的 this.$store 中</span><br><span class="line">  if (options.store) &#123;</span><br><span class="line">    this.$store = typeof options.store === &apos;function&apos;</span><br><span class="line">      ? options.store()</span><br><span class="line">      : options.store</span><br><span class="line">  &#125; else if (options.parent &amp;&amp; options.parent.$store) &#123; // 如果 $options 没有 store，则向其 parent 向上查找并赋值</span><br><span class="line">    this.$store = options.parent.$store</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，我们通过 options.store 获取 vuex 的实例对象，并赋值给 this.$store。而且注意，如果是子组件，我们则在父组件上找，将父组件上的 $store 赋值给子组件。这样我们所有的 vue 组件实例就都能够通过 this.$store 拿到 vuex 的实例对象，而且他们是共享的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-06T07:21:25.255Z" itemprop="dateUpdated">2019-08-06 15:21:25</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/source/vuex/vuex-init/" target="_blank" rel="external">http://blog.master-ss.cn/source/vuex/vuex-init/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/source/vuex/vuex-init/&title=《vuex 之初始化》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/source/vuex/vuex-init/&title=《vuex 之初始化》 — 青松的博客&source=最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/source/vuex/vuex-init/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vuex 之初始化》 — 青松的博客&url=http://blog.master-ss.cn/source/vuex/vuex-init/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/source/vuex/vuex-init/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/source/vuex/vuex.util/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">vuex 之工具函数</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/essay/eth/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">blockchain 之 eth 钱包实战</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/source/vuex/vuex-init/&title=《vuex 之初始化》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/source/vuex/vuex-init/&title=《vuex 之初始化》 — 青松的博客&source=最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/source/vuex/vuex-init/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vuex 之初始化》 — 青松的博客&url=http://blog.master-ss.cn/source/vuex/vuex-init/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/source/vuex/vuex-init/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3a0W6DMAwF0P3/T7PXTRXga5dNTU6eKtYSHyZZwfbXV3kdP1blyuv1s7td3/PNCwMD42MZx+W63iD91eQOZ9/BwMDYh3GWwc4+X4dYCa6egq9jw8DAwKiHODk+VvbFwMDASBn1LesvqP+QcDEwMD6KkR7m6lWvevpOkzsGBsY+jHpwf//5kf4GBgbGRzGOcFWaBJOwjtbCwMBYm1HfplfoT6/04sHAwNiBkb6Ipld6Z7z53TAwMNZgTEr8adD1tmW9SfDrhIuBgbENI20S1A98veJdiY2BgbElo1cyu94yPfYFRT0MDIylGfWD4PVN00GKyffjp4iBgbEEo57m0pRafwHuDX6dfgcDA2MhxiTV9pJ1b1Dj5rFiYGBsxkhD7418pe2Hm9gwMDCWZkyKZWmJP90xbTZgYGDswJi3J9MEPSnMld7FMTAwlmCMhrFa7YEnBs4wMDD2YdSLXL1CfxpuPQYMDIy1GT1ML0XGY15P/08wMDAWYkwKc/U7x+n19a8YGBgbMOqvnb2x1EprszcchoGBsQ8jPd5VhiHSY+Kk1YqBgbEq4whX2gZIk+z1wzpN4hgYGEsz0jTXHCptpeN5KRADA2MlRj3JpoWwdx0xSzFgYGBswJgnvl7Q6VHv5pyLgYGB8UCrsvfbm2ELDAwMjFajMX3RTZumGBgYOzDmzYB0kGJyfMTAwNiNMZrUGBTg0t5FpQCHgYGxHOMbdEydO708OjkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

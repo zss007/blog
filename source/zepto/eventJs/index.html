@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>zepto 之 event.js | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="event.js 主要用于提供注册自定义事件和手动触发事件等功能。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zepto 之 event.js">
+<meta property="og:url" content="http://blog.master-ss.cn/source/zepto/eventJs/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="event.js 主要用于提供注册自定义事件和手动触发事件等功能。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-06T07:21:57.442Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zepto 之 event.js">
+<meta name="twitter:description" content="event.js 主要用于提供注册自定义事件和手动触发事件等功能。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">zepto 之 event.js</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">zepto 之 event.js</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-09T15:35:57.000Z" itemprop="datePublished" class="page-time">
+  2017-07-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/source/">source</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码分析"><span class="post-toc-text">二、源码分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Event"><span class="post-toc-text">$.Event</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#fn-on"><span class="post-toc-text">$.fn.on</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#fn-off"><span class="post-toc-text">$.fn.off</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#fn-trigger"><span class="post-toc-text">$.fn.trigger</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#handlers"><span class="post-toc-text">handlers</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-source/zepto/eventJs" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">zepto 之 event.js</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-09 23:35:57" datetime="2017-07-09T15:35:57.000Z" itemprop="datePublished">2017-07-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/source/">source</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>event.js 主要用于提供注册自定义事件和手动触发事件等功能。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br></pre></td><td class="code"><pre><span class="line">//event事件(事件处理)</span><br><span class="line">(function ($) &#123;</span><br><span class="line">    var _zid = 1, undefined,</span><br><span class="line">        slice = Array.prototype.slice,</span><br><span class="line">        isFunction = $.isFunction,</span><br><span class="line">        isString = function (obj) &#123;</span><br><span class="line">            return typeof obj == &apos;string&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        handlers = &#123;&#125;,//_zid: events    事件缓存池</span><br><span class="line">        specialEvents = &#123;&#125;,</span><br><span class="line">        //是否支持即将获取焦点时触发函数 onfocusin 事件类似于 onfocus 事件。 主要的区别是 onfocus 事件不支持冒泡。</span><br><span class="line">        focusinSupported = &apos;onfocusin&apos; in window,</span><br><span class="line">        focus = &#123;focus: &apos;focusin&apos;, blur: &apos;focusout&apos;&#125;,</span><br><span class="line">        //mouseenter、mouseleave不冒泡</span><br><span class="line">        hover = &#123;mouseenter: &apos;mouseover&apos;, mouseleave: &apos;mouseout&apos;&#125;;</span><br><span class="line"></span><br><span class="line">    //此处标准浏览器，click、mousedown、mouseup、mousemove抛出的就是MouseEvents，应该也是对低版本IE等某些浏览器的修正</span><br><span class="line">    specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = &apos;MouseEvents&apos;;</span><br><span class="line"></span><br><span class="line">    //取元素标识符，没有设置一个返回</span><br><span class="line">    function zid(element) &#123;</span><br><span class="line">        return element._zid || (element._zid = _zid++)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //根据形参条件 查找元素上事件响应函数集合</span><br><span class="line">    function findHandlers(element, event, fn, selector) &#123;</span><br><span class="line">        event = parse(event);</span><br><span class="line">        if (event.ns) var matcher = matcherFor(event.ns);</span><br><span class="line">        /**</span><br><span class="line">         * 若有event.e ,则判断事件类型是否相同，否则直接走下一步</span><br><span class="line">         * 若有event.e,则判断事件命名空间是否相同 RegExp.prototype.test = function(String) &#123;&#125;;</span><br><span class="line">         * zid(handler.fn)返回handler.fn的标识，没有加一个，判断fn标识符是否相同</span><br><span class="line">         * 若有selector 则判断selector是否相同</span><br><span class="line">         * */</span><br><span class="line">        return (handlers[zid(element)] || []).filter(function (handler) &#123;</span><br><span class="line">            return handler</span><br><span class="line">                &amp;&amp; (!event.e || handler.e == event.e)</span><br><span class="line">                &amp;&amp; (!event.ns || matcher.test(handler.ns))</span><br><span class="line">                &amp;&amp; (!fn || zid(handler.fn) === zid(fn))</span><br><span class="line">                &amp;&amp; (!selector || handler.sel == selector)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 解析事件类型 parse(&quot;click.zhutao.xiaoyu&quot;); =&gt; Object &#123;e: &quot;click&quot;, ns: &quot;xiaoyu zhutao&quot;&#125;</span><br><span class="line">     * slice取从索引为1之后的所有项，sort对数组进行排序，join(&quot; &quot;)将数组变为字符串，中间插入空格</span><br><span class="line">     * */</span><br><span class="line">    function parse(event) &#123;</span><br><span class="line">        var parts = (&apos;&apos; + event).split(&apos;.&apos;);</span><br><span class="line">        return &#123;e: parts[0], ns: parts.slice(1).sort().join(&apos; &apos;)&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //生成命名空间的正则对象 matcherFor(&quot;xiaoyu zhutao&quot;); =&gt; /(?:^| )xiaoyu.* ?zhutao(?: |$)/</span><br><span class="line">    function matcherFor(ns) &#123;</span><br><span class="line">        return new RegExp(&apos;(?:^| )&apos; + ns.replace(&apos; &apos;, &apos; .* ?&apos;) + &apos;(?: |$)&apos;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //addEventListener 的第三个参数，true - 事件句柄在捕获阶段执行，false - 默认,事件句柄在冒泡阶段执行</span><br><span class="line">    function eventCapture(handler, captureSetting) &#123;</span><br><span class="line">        return handler.del &amp;&amp;</span><br><span class="line">            (!focusinSupported &amp;&amp; (handler.e in focus)) || !!captureSetting</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //修正事件类型 focus-&gt;focusIn blur-&gt;focusOut mouseenter-&gt;mouseover  mouseleave-&gt;mouseout</span><br><span class="line">    function realEvent(type) &#123;</span><br><span class="line">        return hover[type] || (focusinSupported &amp;&amp; focus[type]) || type</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //增加事件底层方法; add(element, event, callback, data, selector, delegator || autoRemove)</span><br><span class="line">    function add(element, events, fn, data, selector, delegator, capture) &#123;</span><br><span class="line">        var id = zid(element), set = (handlers[id] || (handlers[id] = []));</span><br><span class="line">        events.split(/\s/).forEach(function (event) &#123;</span><br><span class="line">            if (event == &apos;ready&apos;) return $(document).ready(fn);</span><br><span class="line">            var handler = parse(event);</span><br><span class="line">            handler.fn = fn;</span><br><span class="line">            handler.sel = selector;</span><br><span class="line">            //如果事件是mouseenter, mouseleave，模拟mouseover mouseout事件处理</span><br><span class="line">            if (handler.e in hover) fn = function (e) &#123;</span><br><span class="line">                /**</span><br><span class="line">                 * relatedTarget 事件属性返回与事件的目标节点相关的节点。</span><br><span class="line">                 * 对于 mouseover 事件来说，该属性是鼠标指针移到目标节点上时所离开的那个节点。</span><br><span class="line">                 * 对于 mouseout 事件来说，该属性是离开目标时，鼠标指针进入的节点。</span><br><span class="line">                 * 对于其他类型的事件来说，这个属性没有用。</span><br><span class="line">                 * */</span><br><span class="line">                var related = e.relatedTarget;</span><br><span class="line">                //当related不在事件对象event内   表示事件已触发完成，不是在move过程中，需要执行响应函数</span><br><span class="line">                if (!related || (related !== this &amp;&amp; !$.contains(this, related)))</span><br><span class="line">                    return handler.fn.apply(this, arguments)</span><br><span class="line">            &#125;;</span><br><span class="line">            handler.del = delegator;</span><br><span class="line">            var callback = delegator || fn;</span><br><span class="line">            handler.proxy = function (e) &#123;</span><br><span class="line">                e = compatible(e);</span><br><span class="line">                //如果某个监听函数执行了event.stopImmediatePropagation()方法,则除了该事件的冒泡行为被阻止之外(event.stopPropagation方法的作用),该元素绑定的后序事件的监听函数的执行也将被阻止.</span><br><span class="line">                if (e.isImmediatePropagationStopped()) return;</span><br><span class="line">                e.data = data;</span><br><span class="line">                //执行回调函数，context：element，arguments：event,e._args(默认是undefind，trigger()时传递的参数）</span><br><span class="line">                var result = callback.apply(element, e._args == undefined ? [e] : [e].concat(e._args));</span><br><span class="line">                //当事件响应函数返回false时，阻止浏览器默认操作和冒泡</span><br><span class="line">                if (result === false) e.preventDefault(), e.stopPropagation();</span><br><span class="line">                return result</span><br><span class="line">            &#125;;</span><br><span class="line">            //设置事件响应函数的索引,删除事件时，根据它来删除  delete handlers[id][handler.i]</span><br><span class="line">            handler.i = set.length;</span><br><span class="line">            set.push(handler);</span><br><span class="line">            if (&apos;addEventListener&apos; in element)</span><br><span class="line">                element.addEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //删除事件,对应add</span><br><span class="line">    function remove(element, events, fn, selector, capture) &#123;</span><br><span class="line">        var id = zid(element);</span><br><span class="line">        (events || &apos;&apos;).split(/\s/).forEach(function (event) &#123;</span><br><span class="line">            findHandlers(element, event, fn, selector).forEach(function (handler) &#123;</span><br><span class="line">                // delete删除掉数组中的元素后，会把该下标出的值置为undefined,数组的长度不会变</span><br><span class="line">                delete handlers[id][handler.i]</span><br><span class="line">                if (&apos;removeEventListener&apos; in element)</span><br><span class="line">                    element.removeEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //此处不清楚要干嘛，将事件两个核心底层方法封装到event对象里，方便做Zepto插件事件扩展吧</span><br><span class="line">    $.event = &#123;add: add, remove: remove&#125;;</span><br><span class="line"></span><br><span class="line">    //接受一个函数，然后返回一个新函数，并且这个新函数始终保持了特定的上下文(context)语境，新函数中this指向context参数</span><br><span class="line">    $.proxy = function (fn, context) &#123;</span><br><span class="line">        //如果传了第3个参数，取到第3个参数以后（包含第3个参数）所有的参数数组</span><br><span class="line">        var args = (2 in arguments) &amp;&amp; slice.call(arguments, 2);</span><br><span class="line">        if (isFunction(fn)) &#123;</span><br><span class="line">            //args.concat(slice.call(arguments))将代理函数的参数与$.proxy的第三个及后面可选参数合并</span><br><span class="line">            var proxyFn = function () &#123;</span><br><span class="line">                return fn.apply(context, args ? args.concat(slice.call(arguments)) : arguments)</span><br><span class="line">            &#125;;</span><br><span class="line">            //标记函数</span><br><span class="line">            proxyFn._zid = zid(fn);</span><br><span class="line">            return proxyFn</span><br><span class="line">        &#125; else if (isString(context)) &#123; //另外一种形式，原始的function是从上下文(context)对象的特定属性读取</span><br><span class="line">            if (args) &#123;</span><br><span class="line">                args.unshift(fn[context], fn);</span><br><span class="line">                return $.proxy.apply(null, args)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return $.proxy(fn[context], fn)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            throw new TypeError(&quot;expected function&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    $.fn.bind = function (event, data, callback) &#123;</span><br><span class="line">        return this.on(event, data, callback)</span><br><span class="line">    &#125;;</span><br><span class="line">    $.fn.unbind = function (event, callback) &#123;</span><br><span class="line">        return this.off(event, callback)</span><br><span class="line">    &#125;;</span><br><span class="line">    //添加一个处理事件到元素，当第一次执行事件以后，该事件将自动解除绑定，保证处理函数在每个元素上最多执行一次。</span><br><span class="line">    $.fn.one = function (event, selector, data, callback) &#123;</span><br><span class="line">        return this.on(event, selector, data, callback, 1)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    var returnTrue = function () &#123;</span><br><span class="line">            return true</span><br><span class="line">        &#125;,</span><br><span class="line">        returnFalse = function () &#123;</span><br><span class="line">            return false</span><br><span class="line">        &#125;,</span><br><span class="line">        ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$|webkitMovement[XY]$)/,</span><br><span class="line">        eventMethods = &#123;</span><br><span class="line">            preventDefault: &apos;isDefaultPrevented&apos;,</span><br><span class="line">            stopImmediatePropagation: &apos;isImmediatePropagationStopped&apos;,</span><br><span class="line">            stopPropagation: &apos;isPropagationStopped&apos;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 修正event对象</span><br><span class="line">     * @param event   代理的event对象|原生event对象</span><br><span class="line">     * @param source  原生event对象</span><br><span class="line">     * @returns &#123;*&#125;</span><br><span class="line">     */</span><br><span class="line">    function compatible(event, source) &#123;</span><br><span class="line">        if (source || !event.isDefaultPrevented) &#123;</span><br><span class="line">            source || (source = event);</span><br><span class="line">            /**</span><br><span class="line">             * 遍历，给事件添加isDefaultPrevented、isImmediatePropagationStopped、isPropagationStopped方法</span><br><span class="line">             * isDefaultPrevented:如果preventDefault()被该事件的实例调用，那么返回true。这可作为跨平台的替代原生的defaultPrevented属性，如果defaultPrevented缺失或在某些浏览器下不可靠的时候。</span><br><span class="line">             * isImmediatePropagationStopped:如果stopImmediatePropagation()被该事件的实例调用，那么返回true。Zepto在不支持该原生方法的浏览器中实现它，（例如老版本的Android）。</span><br><span class="line">             * isPropagationStopped:如果stopPropagation()被该事件的实例调用，那么返回true。</span><br><span class="line">             **/</span><br><span class="line">            $.each(eventMethods, function (name, predicate) &#123;</span><br><span class="line">                var sourceMethod = source[name];</span><br><span class="line">                event[name] = function () &#123;</span><br><span class="line">                    this[predicate] = returnTrue;</span><br><span class="line">                    return sourceMethod &amp;&amp; sourceMethod.apply(source, arguments)</span><br><span class="line">                &#125;;</span><br><span class="line">                event[predicate] = returnFalse</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            event.timeStamp || (event.timeStamp = Date.now());</span><br><span class="line">            //如果浏览器支持defaultPrevented DOM3 EVENT提出的能否取消默认行为</span><br><span class="line">            //source.defaultPrevented:判断默认事件是否已被阻止,与preventDefault()相对应,这是对各种情况的兼容</span><br><span class="line">            if (source.defaultPrevented !== undefined ? source.defaultPrevented :</span><br><span class="line">                    &apos;returnValue&apos; in source ? source.returnValue === false :</span><br><span class="line">                        source.getPreventDefault &amp;&amp; source.getPreventDefault())</span><br><span class="line">                event.isDefaultPrevented = returnTrue</span><br><span class="line">        &#125;</span><br><span class="line">        //返回修正对象</span><br><span class="line">        return event</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //新建一个对象 封装event，创建代理对象</span><br><span class="line">    function createProxy(event) &#123;</span><br><span class="line">        var key, proxy = &#123;originalEvent: event&#125;;</span><br><span class="line">        //复制event属性至proxy，ignoreProperties里包含的属性除外</span><br><span class="line">        for (key in event)</span><br><span class="line">            if (!ignoreProperties.test(key) &amp;&amp; event[key] !== undefined) proxy[key] = event[key];</span><br><span class="line"></span><br><span class="line">        return compatible(proxy, event)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $.fn.delegate = function (selector, event, callback) &#123;</span><br><span class="line">        return this.on(event, selector, callback)</span><br><span class="line">    &#125;;</span><br><span class="line">    $.fn.undelegate = function (selector, event, callback) &#123;</span><br><span class="line">        return this.off(event, selector, callback)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //冒泡到document.body绑定事件</span><br><span class="line">    $.fn.live = function (event, callback) &#123;</span><br><span class="line">        $(document.body).delegate(this.selector, event, callback);</span><br><span class="line">        return this</span><br><span class="line">    &#125;;</span><br><span class="line">    //在doument.body解绑事件</span><br><span class="line">    $.fn.die = function (event, callback) &#123;</span><br><span class="line">        $(document.body).undelegate(this.selector, event, callback);</span><br><span class="line">        return this</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 多个事件可以通过空格的字符串方式添加，或者以事件类型为键、以函数为值的对象方式。</span><br><span class="line">     * 如果给定css选择器，当事件在匹配该选择器的元素上发起时，事件才会被触发</span><br><span class="line">     * 如果给定data参数，这个值将在事件处理程序执行期间被作为有用的 event.data 属性</span><br><span class="line">     * */</span><br><span class="line">    $.fn.on = function (event, selector, data, callback, one) &#123;</span><br><span class="line">        var autoRemove, delegator, $this = this;</span><br><span class="line">        //event是对象&#123; type: handler, type2: handler2, ... &#125;</span><br><span class="line">        if (event &amp;&amp; !isString(event)) &#123;</span><br><span class="line">            $.each(event, function (type, fn) &#123;</span><br><span class="line">                $this.on(type, selector, data, fn, one)</span><br><span class="line">            &#125;);</span><br><span class="line">            return $this</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //校验调整函数参数</span><br><span class="line">        if (!isString(selector) &amp;&amp; !isFunction(callback) &amp;&amp; callback !== false)</span><br><span class="line">            callback = data, data = selector, selector = undefined;</span><br><span class="line">        if (callback === undefined || data === false)</span><br><span class="line">            callback = data, data = undefined;</span><br><span class="line"></span><br><span class="line">        //如果false在回调函数的位置上作为参数传递给这个方法，它相当于传递一个函数，这个函数直接返回false。</span><br><span class="line">        if (callback === false) callback = returnFalse;</span><br><span class="line"></span><br><span class="line">        return $this.each(function (_, element) &#123;</span><br><span class="line">            if (one) autoRemove = function (e) &#123;</span><br><span class="line">                remove(element, e.type, callback);</span><br><span class="line">                return callback.apply(this, arguments)</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            if (selector) delegator = function (e) &#123;</span><br><span class="line">                //closest 从元素本身开始，逐级向上级元素匹配，并返回最先匹配selector的元素。如果给定context节点参数，那么只匹配该节点的后代元素。</span><br><span class="line">                var evt, match = $(e.target).closest(selector, element).get(0)</span><br><span class="line">                //其实还是在父元素上进行监听，只不过如果事件触发的元素不是匹配的话，不调用函数回调</span><br><span class="line">                if (match &amp;&amp; match !== element) &#123;</span><br><span class="line">                    evt = $.extend(createProxy(e), &#123;currentTarget: match, liveFired: element&#125;)</span><br><span class="line">                    return (autoRemove || callback).apply(match, [evt].concat(slice.call(arguments, 1)))</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            add(element, event, callback, data, selector, delegator || autoRemove)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;;</span><br><span class="line">    $.fn.off = function (event, selector, callback) &#123;</span><br><span class="line">        var $this = this;</span><br><span class="line">        if (event &amp;&amp; !isString(event)) &#123;</span><br><span class="line">            $.each(event, function (type, fn) &#123;</span><br><span class="line">                $this.off(type, selector, fn)</span><br><span class="line">            &#125;);</span><br><span class="line">            return $this</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!isString(selector) &amp;&amp; !isFunction(callback) &amp;&amp; callback !== false)</span><br><span class="line">            callback = selector, selector = undefined;</span><br><span class="line"></span><br><span class="line">        if (callback === false) callback = returnFalse;</span><br><span class="line"></span><br><span class="line">        return $this.each(function () &#123;</span><br><span class="line">            remove(this, event, callback, selector)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //在对象集合的元素上触发指定的事件。事件可以是一个字符串类型，也可以是一个 通过$.Event 定义的事件对象。如果给定args参数，它会作为参数传递给事件函数。</span><br><span class="line">    $.fn.trigger = function (event, args) &#123;</span><br><span class="line">        event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event);</span><br><span class="line">        event._args = args;</span><br><span class="line">        return this.each(function () &#123;</span><br><span class="line">            // handle focus(), blur() by calling them directly</span><br><span class="line">            if (event.type in focus &amp;&amp; typeof this[event.type] == &quot;function&quot;) this[event.type]();</span><br><span class="line">            // items in the collection might not be DOM elements</span><br><span class="line">            else if (&apos;dispatchEvent&apos; in this) this.dispatchEvent(event);</span><br><span class="line">            //可能不是dom元素上触发指定事件</span><br><span class="line">            else $(this).triggerHandler(event, args)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    // triggers event handlers on current element just as if an event occurred,</span><br><span class="line">    // doesn&apos;t trigger an actual event, doesn&apos;t bubble</span><br><span class="line">    $.fn.triggerHandler = function (event, args) &#123;</span><br><span class="line">        var e, result;</span><br><span class="line">        this.each(function (i, element) &#123;</span><br><span class="line">            e = createProxy(isString(event) ? $.Event(event) : event);</span><br><span class="line">            e._args = args;</span><br><span class="line">            e.target = element;</span><br><span class="line">            //找到此元素上此事件类型上的事件响应函数集，遍历，触发</span><br><span class="line">            $.each(findHandlers(element, event.type || event), function (i, handler) &#123;</span><br><span class="line">                //调用 handler.proxy执行事件</span><br><span class="line">                result = handler.proxy(e);</span><br><span class="line">                //如果event调用了immediatePropagationStopped()，终止后续事件的响应</span><br><span class="line">                if (e.isImmediatePropagationStopped()) return false</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;);</span><br><span class="line">        return result</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //给常用事件生成便捷方法</span><br><span class="line">    (&apos;focusin focusout focus blur load resize scroll unload click dblclick &apos; +</span><br><span class="line">    &apos;mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave &apos; +</span><br><span class="line">    &apos;change select keydown keypress keyup error&apos;).split(&apos; &apos;).forEach(function (event) &#123;</span><br><span class="line">        //有callback回调，是绑定事件，否则，触发事件</span><br><span class="line">        $.fn[event] = function (callback) &#123;</span><br><span class="line">            return (0 in arguments) ?</span><br><span class="line">                this.bind(event, callback) :</span><br><span class="line">                this.trigger(event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //创建Event对象</span><br><span class="line">    $.Event = function (type, props) &#123;</span><br><span class="line">        //当type是个对象时 保证type为对象的属性字符串，props为对象</span><br><span class="line">        if (!isString(type)) props = type, type = props.type;</span><br><span class="line">        //创建自定义事件，如果是click,mousedown,mouseup mousemove创建为MouseEvent对象,bubbles设为冒泡</span><br><span class="line">        var event = document.createEvent(specialEvents[type] || &apos;Events&apos;), bubbles = true;</span><br><span class="line">        //bubbles = !!props[name]冒泡判断；event[name] = props[name] props属性扩展到event对象上</span><br><span class="line">        if (props) for (var name in props) (name == &apos;bubbles&apos;) ? (bubbles = !!props[name]) : (event[name] = props[name])</span><br><span class="line">        //初始化event对象，type为事件名称，如click，bubbles为是否冒泡，第三个参数表示是否可以用preventDefault方法来取消默认操作</span><br><span class="line">        event.initEvent(type, bubbles, true);</span><br><span class="line">        return compatible(event)</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)(Zepto);</span><br></pre></td></tr></table></figure>
+<h3 id="二、源码分析"><a href="#二、源码分析" class="headerlink" title="二、源码分析"></a>二、源码分析</h3><h4 id="Event"><a href="#Event" class="headerlink" title="$.Event"></a>$.Event</h4><p>注册自定义事件核心流程:<br>1、document.createEvent(type) 创建一个新的自定义事件<br>2、event.initEvent(type, bubbles, cancelable) 初始化自定义事件<br>3、compatible(event) 给事件添加 isDefaultPrevented、isImmediatePropagationStopped、isPropagationStopped 方法</p>
+<h4 id="fn-on"><a href="#fn-on" class="headerlink" title="$.fn.on"></a>$.fn.on</h4><p>on 方法主要调用原生的 target.addEventListener(type, listener[, useCapture]); 方法。<br>1、$.fn.one 方法是在 on 方法的回调函数中调用 remove 方法移除事件监听<br>2、如果 on 方法中有选择器，虽然是必须在子元素上点击才有效果，但是事件监听其实还是在父元素上，只不过在回调函数中设置了如果不是匹配的子元素触发不进行操作</p>
+<h4 id="fn-off"><a href="#fn-off" class="headerlink" title="$.fn.off"></a>$.fn.off</h4><p>off 方法主要调用原生 target.removeEventListener(type, listener[, useCapture]); 方法，与 $.fn.on 相对</p>
+<h4 id="fn-trigger"><a href="#fn-trigger" class="headerlink" title="$.fn.trigger"></a>$.fn.trigger</h4><p>trigger 方法判断元素如果是 dom 元素触发的，则调用原生 target.dispatchEvent(event) 方法；如果不是 dom 元素上触发的，那么直接手动调用回调函数。</p>
+<h4 id="handlers"><a href="#handlers" class="headerlink" title="handlers"></a>handlers</h4><p>事件缓存池，用于移除或者触发监听函数找到相应的回调函数，然后进行相应操作。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-06T07:21:57.442Z" itemprop="dateUpdated">2019-08-06 15:21:57</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/source/zepto/eventJs/" target="_blank" rel="external">http://blog.master-ss.cn/source/zepto/eventJs/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/source/zepto/eventJs/&title=《zepto 之 event.js》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/source/zepto/eventJs/&title=《zepto 之 event.js》 — 青松的博客&source=event.js 主要用于提供注册自定义事件和手动触发事件等功能。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/source/zepto/eventJs/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zepto 之 event.js》 — 青松的博客&url=http://blog.master-ss.cn/source/zepto/eventJs/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/source/zepto/eventJs/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/source/zepto/dataJs/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">zepto 之 data.js</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/source/zepto/formJs/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">zepto 之 form.js</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/source/zepto/eventJs/&title=《zepto 之 event.js》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/source/zepto/eventJs/&title=《zepto 之 event.js》 — 青松的博客&source=event.js 主要用于提供注册自定义事件和手动触发事件等功能。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/source/zepto/eventJs/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zepto 之 event.js》 — 青松的博客&url=http://blog.master-ss.cn/source/zepto/eventJs/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/source/zepto/eventJs/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQW7DMAwF0dz/0i7QbWtlPqkUNTVeGYFr62nBkiJfL3xd39fP+7tn+HvWv2y+ZMiQ8VjGtbzuniF/e4cnb+BrkyFDxjmMNDh2wug6fBeDuwwZMmQAUvpLei9DhgwZNcaatC5H09AsQ4YMGbwE5ekgeZ4kjptrcRkyZDyQ0WkMfPr+j/obMmTI+MeMK7xIQOTfqq3hl/fIkCFjNIN8gBSQvKzt/2cIMlwZMmSMY/AlpgNhnVZosKEyZMgYzUiP7EmSt2sIIx3UkCFDxjwGP/xKk7+0OcrTzdvyVYYMGQcwarB+QpmWu28CrgwZMsYx+mVnJwWstSL4qmTIkHECgxzf86C5Kx1s1eIyZMh4IIMUpbWdSDeCbEEwMyJDhoxBjFozstZtqI1iFItYGTJkDGLUQi0PnbuSzjdFrAwZMg5gbDiCbwRo0jYoDlvIkCFjBIMUk2kRWzvzS0c94ppYhgwZgxhpMZkOVaxJG8Y4ZMiQMZSRimspXSdxJId0MmTImMrgC02TQvKeNKy3GgMyZMgYwUiTs08c9NeGw2TIkDGbwduQNWqtndDZDhkyZMxjXOFF2pnpyFf/6E2GDBmzGWmY4wklXzRvZ6bHeTJkyJjESFuM6bL4pnTAMmTIOIFBPsZTtNoQRlrEBvW3DBkyjmHURih4O6FVMMuQIUMGHr/oN0H5NsmQIeM0Bi9i0yf5QV7rgE+GDBmjGbXGAF9QLbnspKcyZMgYxPgChZbMUuXiGJkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

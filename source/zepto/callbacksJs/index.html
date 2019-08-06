@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>zepto 之 callbacks.js | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zepto 之 callbacks.js">
+<meta property="og:url" content="http://blog.master-ss.cn/source/zepto/callbacksJs/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-06T07:22:10.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zepto 之 callbacks.js">
+<meta name="twitter:description" content="callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/vuex">
+                <i class="icon icon-lg icon-vimeo"></i>
+                Vuex
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/zepto">
+                <i class="icon icon-lg icon-anchor"></i>
+                Zepto
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">zepto 之 callbacks.js</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">zepto 之 callbacks.js</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-27T09:40:41.000Z" itemprop="datePublished" class="page-time">
+  2017-07-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/source/">source</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、源码"><span class="post-toc-text">一、源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码解析"><span class="post-toc-text">二、源码解析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、Option-once"><span class="post-toc-text">1、Option once</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、Option-memory"><span class="post-toc-text">2、Option memory</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、数组移除"><span class="post-toc-text">3、数组移除</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-source/zepto/callbacksJs" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">zepto 之 callbacks.js</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-27 17:40:41" datetime="2017-07-27T09:40:41.000Z" itemprop="datePublished">2017-07-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/source/">source</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。<br><a id="more"></a></p>
+<h3 id="一、源码"><a href="#一、源码" class="headerlink" title="一、源码"></a>一、源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line">//为&quot;deferred&quot;模块提供 $.Callbacks。</span><br><span class="line">(function ($) &#123;</span><br><span class="line">    // Create a collection of callbacks to be fired in a sequence, with configurable behaviour</span><br><span class="line">    // Option flags:</span><br><span class="line">    //   - once: 回调只能触发一次</span><br><span class="line">    //   - memory: 记住最近的上下文和参数，如果memory为true则添加的时候会执行一次</span><br><span class="line">    //   - stopOnFalse: 当某个回调函数返回false时中断执行</span><br><span class="line">    //   - unique: 一个回调函数只能被添加一次</span><br><span class="line">    $.Callbacks = function (options) &#123;</span><br><span class="line">        options = $.extend(&#123;&#125;, options);</span><br><span class="line"></span><br><span class="line">        var memory, // 记录上一次触发回调函数列表时的参数，之后添加的函数都用这参数立即执行</span><br><span class="line">            fired,  // 是否回调过标志量</span><br><span class="line">            firing,  // 回调函数列表是否正在执行中</span><br><span class="line">            firingStart, // 开始回调函数的下标</span><br><span class="line">            firingLength, // 回调函数列表长度</span><br><span class="line">            firingIndex, // 回调列表索引值</span><br><span class="line">            list = [], // 回调数据源:回调列表</span><br><span class="line">            stack = !options.once &amp;&amp; [], //回调只能触发一次的时候，stack永远为false；多次触发永远为数组</span><br><span class="line">            //触发回调底层函数</span><br><span class="line">            fire = function (data) &#123;</span><br><span class="line">                memory = options.memory &amp;&amp; data;</span><br><span class="line">                fired = true;</span><br><span class="line">                firingIndex = firingStart || 0;</span><br><span class="line">                firingStart = 0;</span><br><span class="line">                firingLength = list.length;</span><br><span class="line">                firing = true;</span><br><span class="line">                //遍历回调列表，全部回调函数都执行，参数是传递过来的data</span><br><span class="line">                for (; list &amp;&amp; firingIndex &lt; firingLength; ++firingIndex) &#123;</span><br><span class="line">                    //如果 list[ firingIndex ] 为false，且stopOnFalse（中断）模式，则中断回掉执行，设置memory为false</span><br><span class="line">                    if (list[firingIndex].apply(data[0], data[1]) === false &amp;&amp; options.stopOnFalse) &#123;</span><br><span class="line">                        memory = false;</span><br><span class="line">                        break</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                //回调执行完毕</span><br><span class="line">                firing = false;</span><br><span class="line">                if (list) &#123;</span><br><span class="line">                    //stack里还缓存有未执行的回调，则执行stack里的回调</span><br><span class="line">                    if (stack) stack.length &amp;&amp; fire(stack.shift());</span><br><span class="line">                    //如果只执行一次而且memory为true(类型转换),那么清空回调函数(不禁用是因为设置了memory，add执行时会调用)</span><br><span class="line">                    else if (memory) list.length = 0;</span><br><span class="line">                    //如果只执行一次而且memory为false(类型转换),那么禁用回调函数</span><br><span class="line">                    else Callbacks.disable();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            Callbacks = &#123;</span><br><span class="line">                //添加回调函数</span><br><span class="line">                add: function () &#123;</span><br><span class="line">                    if (list) &#123;</span><br><span class="line">                        var start = list.length,</span><br><span class="line">                            add = function (args) &#123;</span><br><span class="line">                                $.each(args, function (_, arg) &#123;</span><br><span class="line">                                    if (typeof arg === &quot;function&quot;) &#123;</span><br><span class="line">                                        //非unique，或者是unique，但回调列表未添加过</span><br><span class="line">                                        if (!options.unique || !Callbacks.has(arg)) list.push(arg)</span><br><span class="line">                                    &#125;</span><br><span class="line">                                    //是数组/伪数组，添加，重新遍历</span><br><span class="line">                                    else if (arg &amp;&amp; arg.length &amp;&amp; typeof arg !== &apos;string&apos;) add(arg)</span><br><span class="line">                                &#125;)</span><br><span class="line">                            &#125;;</span><br><span class="line">                        //添加进列表</span><br><span class="line">                        add(arguments);</span><br><span class="line">                        //如果列表正在执行中，修正长度，使得新添加的回调也可以执行</span><br><span class="line">                        if (firing) firingLength = list.length;</span><br><span class="line">                        else if (memory) &#123;</span><br><span class="line">                            //memory 模式下，修正开始下标</span><br><span class="line">                            firingStart = start;</span><br><span class="line">                            //立即执行所有回调</span><br><span class="line">                            fire(memory)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    return this</span><br><span class="line">                &#125;,</span><br><span class="line">                //从回调列表里删除一个或一组回调函数</span><br><span class="line">                remove: function () &#123;</span><br><span class="line">                    if (list) &#123;</span><br><span class="line">                        $.each(arguments, function (_, arg) &#123;</span><br><span class="line">                            var index;</span><br><span class="line">                            while ((index = $.inArray(arg, list, index)) &gt; -1) &#123;</span><br><span class="line">                                list.splice(index, 1);</span><br><span class="line">                                // Handle firing indexes</span><br><span class="line">                                if (firing) &#123;</span><br><span class="line">                                    //避免回调列表溢出</span><br><span class="line">                                    if (index &lt;= firingLength) --firingLength;</span><br><span class="line">                                    //如果移除的函数已经执行过了，则将迭代下标减一，否则会漏掉回调函数没执行</span><br><span class="line">                                    if (index &lt;= firingIndex) --firingIndex</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;</span><br><span class="line">                    return this</span><br><span class="line">                &#125;,</span><br><span class="line">                //检查指定的回调函数是否在回调列表中；如果参数为空，则方法用来表明是否存在回调函数</span><br><span class="line">                has: function (fn) &#123;</span><br><span class="line">                    return !!(list &amp;&amp; (fn ? $.inArray(fn, list) &gt; -1 : list.length))</span><br><span class="line">                &#125;,</span><br><span class="line">                //清空回调函数</span><br><span class="line">                empty: function () &#123;</span><br><span class="line">                    firingLength = list.length = 0;</span><br><span class="line">                    return this</span><br><span class="line">                &#125;,</span><br><span class="line">                //禁用回调函数</span><br><span class="line">                disable: function () &#123;</span><br><span class="line">                    list = stack = memory = undefined;</span><br><span class="line">                    return this</span><br><span class="line">                &#125;,</span><br><span class="line">                //是否禁用了回调函数</span><br><span class="line">                disabled: function () &#123;</span><br><span class="line">                    return !list</span><br><span class="line">                &#125;,</span><br><span class="line">                //锁定回调函数</span><br><span class="line">                lock: function () &#123;</span><br><span class="line">                    stack = undefined;</span><br><span class="line">                    //非memory模式下，禁用列表</span><br><span class="line">                    if (!memory) Callbacks.disable();</span><br><span class="line">                    return this</span><br><span class="line">                &#125;,</span><br><span class="line">                //是否是锁定的(一次性调用的时，为true)</span><br><span class="line">                locked: function () &#123;</span><br><span class="line">                    return !stack</span><br><span class="line">                &#125;,</span><br><span class="line">                //用上下文、参数执行列表中的所有回调函数</span><br><span class="line">                fireWith: function (context, args) &#123;</span><br><span class="line">                    //如果调用过一次了fired被设置为true，如果设置once为true的话(可类型转换)，则不执行回调函数</span><br><span class="line">                    if (list &amp;&amp; (!fired || stack)) &#123;</span><br><span class="line">                        args = args || [];</span><br><span class="line">                        args = [context, args.slice ? args.slice() : args];</span><br><span class="line">                        //正在回调中,存入stack</span><br><span class="line">                        if (firing) stack.push(args);</span><br><span class="line">                        //否则立即回调,外层fire函数</span><br><span class="line">                        else fire(args);</span><br><span class="line">                    &#125;</span><br><span class="line">                    return this</span><br><span class="line">                &#125;,</span><br><span class="line">                //执行回调</span><br><span class="line">                fire: function () &#123;</span><br><span class="line">                    return Callbacks.fireWith(this, arguments)</span><br><span class="line">                &#125;,</span><br><span class="line">                //回调列表是否被回调过</span><br><span class="line">                fired: function () &#123;</span><br><span class="line">                    return !!fired</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">        return Callbacks</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(Zepto);</span><br></pre></td></tr></table></figure>
+<h3 id="二、源码解析"><a href="#二、源码解析" class="headerlink" title="二、源码解析"></a>二、源码解析</h3><h4 id="1、Option-once"><a href="#1、Option-once" class="headerlink" title="1、Option once"></a>1、Option once</h4><p>设置一个标志量为 fired，第一次调用 fire 方法时设置为 true，下次再次调用时判断 stack(由 once 值决定)决定是否执行回调列表函数；</p>
+<h4 id="2、Option-memory"><a href="#2、Option-memory" class="headerlink" title="2、Option memory"></a>2、Option memory</h4><p>记住上次 fire 的回调参数，下次 add 时判断 memory 值，如果为 true(类型转换)则将 add 方法参数里面的回调函数执行一次，参数为 memory；</p>
+<h4 id="3、数组移除"><a href="#3、数组移除" class="headerlink" title="3、数组移除"></a>3、数组移除</h4><p>使用 $.inArray(arg, list, index)) 判断是否存在数组中，并且记录索引值；如果出现了，则移除并从当前记住索引值开始继续判断。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-06T07:22:10.974Z" itemprop="dateUpdated">2019-08-06 15:22:10</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/source/zepto/callbacksJs/" target="_blank" rel="external">http://blog.master-ss.cn/source/zepto/callbacksJs/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/source/zepto/callbacksJs/&title=《zepto 之 callbacks.js》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/source/zepto/callbacksJs/&title=《zepto 之 callbacks.js》 — 青松的博客&source=callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/source/zepto/callbacksJs/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zepto 之 callbacks.js》 — 青松的博客&url=http://blog.master-ss.cn/source/zepto/callbacksJs/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/source/zepto/callbacksJs/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/source/zepto/deferredJs/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">zepto 之 deferred.js</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/source/zepto/ajaxJs/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">zepto 之 ajax.js</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/source/zepto/callbacksJs/&title=《zepto 之 callbacks.js》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/source/zepto/callbacksJs/&title=《zepto 之 callbacks.js》 — 青松的博客&source=callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/source/zepto/callbacksJs/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zepto 之 callbacks.js》 — 青松的博客&url=http://blog.master-ss.cn/source/zepto/callbacksJs/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/source/zepto/callbacksJs/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aUY7CMAxFUfa/6c4CgHCfnY5U5/arQmnIKZKxnbxe+LreLjJyPebb/frZ1iVDhozHMq7ltR7zvpT1csmc6RgZMmScw0jDIlkumXn9FJ9BhgwZMki6tp6nE6ZlyJAhoxZweWK3LnFJ+ihDhgwZ6YI6BS1JCm+vxWXIkPFABu+6///9LfsbMmTIeBTjCi/S4ieJYNqw+7EqGTJkjGakrbSgpAQzdAKuDBkyzmF0WmO1AphvZPIALUOGjNmMXVuM60YYb9ul6/nwm8iQIWMcI91Q5IEyDdzofZPfQYYMGeMYvBBN22TkE/KNaTktQ4aMeYza0YdOoy19WehohQwZMkYz+AGLXVuV/GV1grIMGTKmMkiQ5eG4EzR5uStDhowzGbUjF/1P0kZbsRaXIUPGwxlpy4zf76o64ylkyJAxiJEmhWnw5ZsErWafDBkyRjP2LpSPITPc8o8hQ4aMxzJIUz49fkqSy1oRK0OGjDMZe1M6vgnKQzwqkmXIkDGUkW5D3tHQr6WbX4+xypAhYyijlg7y4188GeUzb8tqZciQ8RBGrX1W28jstNK+ImXIkDGUcYVXWtySUrY2z4+kUIYMGYMYu/YEybMEUCuqZciQcQIjbfHz8bXQue10mwwZMsYxOse87kgf04JZhgwZMmqHLWovpVimypAhQ0a4SbAOteRZHrhlyJBxDqPfrOdfSZ7i7T8ZMmScwOiUjnxBvHDtzyBDhoxBjD+SsHRyiTJaRQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
