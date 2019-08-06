@@ -16,12 +16,9 @@ menu:
   bandcamp:
     text: Node
     url: /categories/node
-  vimeo:
-    text: Vuex
-    url: /categories/vuex
   anchor:
-    text: Zepto
-    url: /categories/zepto
+    text: Source
+    url: /categories/source
   github:
     url: https://github.com/zss007
     target: _blank
