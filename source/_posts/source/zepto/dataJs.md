@@ -1,7 +1,7 @@
 ---
 title: zepto 之 data.js
 categories:
-- zepto
+- source
 ---
 一个全面的 data() 方法，能够在内存中存储任意对象。
 <!--more-->

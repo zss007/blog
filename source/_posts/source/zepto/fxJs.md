@@ -1,7 +1,7 @@
 ---
 title: zepto 之 fx.js
 categories:
-- zepto
+- source
 ---
 zepto 的 fx 模块，封装了 CSS 的过渡和动画。
 <!--more-->

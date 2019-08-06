@@ -1,7 +1,7 @@
 ---
 title: zpeto 之核心代码一
 categories:
-- zepto
+- source
 ---
 这篇主要研究 zepto 核心模块的结构和一些工具方法。
 <!--more-->

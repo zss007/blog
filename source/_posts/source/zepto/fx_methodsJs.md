@@ -1,7 +1,7 @@
 ---
 title: zepto 之 fx_methods.js
 categories:
-- zepto
+- source
 ---
 依赖 fx.js，主要是针对 show，hide，fadeIn，fadeOut 等方法的封装。
 <!--more-->

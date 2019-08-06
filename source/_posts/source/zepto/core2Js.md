@@ -1,7 +1,7 @@
 ---
 title: zpeto 之核心代码二
 categories:
-- zepto
+- source
 ---
 这篇研究 zepto 核心代码的实例方法。
 <!--more-->

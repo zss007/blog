@@ -1,7 +1,7 @@
 ---
 title: vuex 之模块初始化
 categories:
-- vuex
+- source
 ---
 现在我们来看下 vuex 的模块初始化。
 <!--more-->

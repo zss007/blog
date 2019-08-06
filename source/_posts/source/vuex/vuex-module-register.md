@@ -1,7 +1,7 @@
 ---
 title: vuex 之模块注册
 categories:
-- vuex
+- source
 ---
 看完初始化和工具方法后，我们来看下 vuex 的模块注册。
 <!--more-->

@@ -1,7 +1,7 @@
 ---
 title: vuex 之工具函数
 categories:
-- vuex
+- source
 ---
 我们按照先易后难的原则，先把容易看懂的部分研究完，这节我们来看 'src/util.js'。
 <!--more-->

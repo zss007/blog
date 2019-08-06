@@ -1,7 +1,7 @@
 ---
 title: zepto 之 ajax.js
 categories:
-- zepto
+- source
 ---
 `$.ajax`是 zepto 发送请求的核心方法，`$.get`,`$.post`,`$.jsonp`都是封装了`$.ajax`方法。`$.ajax`将 jsonp 与异步请求的代码格式统一起来，内部主要是先处理url、数据和请求头部，然后新建 XMLHttpRequest 对象发送请求。
 <!--more-->

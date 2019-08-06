@@ -1,7 +1,7 @@
 ---
 title: zepto 之 deferred.js
 categories:
-- zepto
+- source
 ---
 zepto 的 deferred 模块，实现了 promise，可使 ajax 请求摆脱回调地狱，使用链式调用。
 <!--more-->

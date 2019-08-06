@@ -1,7 +1,7 @@
 ---
 title: vuex 之初始化
 categories:
-- vuex
+- source
 ---
 最近终于挤出一段时间把 vuex 源码看完了，现在开始总结一波，先从初始化开始逐行分析。
 <!--more-->

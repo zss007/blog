@@ -1,7 +1,7 @@
 ---
 title: zepto 之 touch.js
 categories:
-- zepto
+- source
 ---
 touch.js 主要提供滑动(swipe)与点击(tap：模拟 click)的事件封装，针对手机常用浏览器(touchstart,touchmove,touchend)和 IE10(msPointDown) 的触摸事件兼容处理以及手势的事件处理。
 <!--more-->

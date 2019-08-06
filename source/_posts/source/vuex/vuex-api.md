@@ -1,7 +1,7 @@
 ---
 title: vuex 之 api
 categories:
-- vuex
+- source
 ---
 看完 vuex 的构造器，相信大家对 vuex 的原理都有了个基础的认识，现在我们来看下 vuex 对外暴露的 api
 <!--more-->

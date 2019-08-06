@@ -1,7 +1,7 @@
 ---
 title: zepto 之 callbacks.js
 categories:
-- zepto
+- source
 ---
 callbacks 用来管理回调函数，也作为 deferred 延迟对象的基础部分。
 <!--more-->

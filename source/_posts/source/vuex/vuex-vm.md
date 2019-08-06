@@ -1,7 +1,7 @@
 ---
 title: vuex 之初始化 store._vm
 categories:
-- vuex
+- source
 ---
 模块初始化看完后，我们继续来看初始化 store._vm
 <!--more-->

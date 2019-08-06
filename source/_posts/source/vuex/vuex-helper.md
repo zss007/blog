@@ -1,7 +1,7 @@
 ---
 title: vuex 之辅助方法
 categories:
-- vuex
+- source
 ---
 看完 vuex 的 api 后，我们来到最后一节 vuex 的辅助方法。
 <!--more-->

@@ -1,7 +1,7 @@
 ---
 title: zepto 之 event.js
 categories:
-- zepto
+- source
 ---
 event.js 主要用于提供注册自定义事件和手动触发事件等功能。
 <!--more-->

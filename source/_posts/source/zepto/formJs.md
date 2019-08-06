@@ -1,7 +1,7 @@
 ---
 title: zepto 之 form.js
 categories:
-- zepto
+- source
 ---
 研究总结下之前用过的 zepto 类库，先从表单模块源码开始。
 <!--more-->
