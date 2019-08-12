@@ -14,31 +14,31 @@
     
     
     
-    <title>ps 之去背景&amp;文字变色 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <title>ps 之替换文字 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps CC 2017。">
+    <meta name="description" content="主要介绍如何替换图片上的文字。">
 <meta name="keywords" content="分享、总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ps 之去背景&amp;文字变色">
-<meta property="og:url" content="http://blog.master-ss.cn/tools/ps1/index.html">
+<meta property="og:title" content="ps 之替换文字">
+<meta property="og:url" content="http://blog.master-ss.cn/tools/ps2/index.html">
 <meta property="og:site_name" content="青松的博客">
-<meta property="og:description" content="作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps CC 2017。">
+<meta property="og:description" content="主要介绍如何替换图片上的文字。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/rubber.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/lasso.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/wand.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/remove.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/fill.png">
-<meta property="og:updated_time" content="2019-08-06T08:48:46.191Z">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/select.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/clear.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/text.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/edit.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/adjust.png">
+<meta property="og:updated_time" content="2019-08-12T02:38:04.964Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ps 之去背景&amp;文字变色">
-<meta name="twitter:description" content="作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps CC 2017。">
-<meta name="twitter:image" content="http://blog.master-ss.cn/assets/tools/ps/rubber.png">
+<meta name="twitter:title" content="ps 之替换文字">
+<meta name="twitter:description" content="主要介绍如何替换图片上的文字。">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/tools/ps/select.png">
     
         <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
     
@@ -119,7 +119,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">ps 之去背景&amp;文字变色</div>
+        <div class="flex-col header-title ellipsis">ps 之替换文字</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -141,11 +141,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">ps 之去背景&amp;文字变色</h1>
+        <h1 class="title">ps 之替换文字</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-08-06T07:41:59.827Z" itemprop="datePublished" class="page-time">
-  2019-08-06
+                <time datetime="2019-08-12T02:28:09.606Z" itemprop="datePublished" class="page-time">
+  2019-08-12
 </time>
 
 
@@ -166,17 +166,17 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、去背景"><span class="post-toc-text">一、去背景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、文字变色"><span class="post-toc-text">二、文字变色</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、清除原图文字"><span class="post-toc-text">一、清除原图文字</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、填写文字"><span class="post-toc-text">二、填写文字</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-tools/ps1" class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-tools/ps2" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">ps 之去背景&文字变色</h1>
+        <h1 class="post-card-title">ps 之替换文字</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-08-06 15:41:59" datetime="2019-08-06T07:41:59.827Z" itemprop="datePublished">2019-08-06</time>
+            <time class="post-time" title="2019-08-12 10:28:09" datetime="2019-08-12T02:28:09.606Z" itemprop="datePublished">2019-08-12</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
@@ -191,12 +191,12 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps CC 2017。<br><a id="more"></a></p>
-<h3 id="一、去背景"><a href="#一、去背景" class="headerlink" title="一、去背景"></a>一、去背景</h3><p>选择“魔术橡皮檫工具”，选中需要去除的背景，即能让背景透明。<br><img src="/assets/tools/ps/rubber.png"></p>
-<p>如果需要去除的背景和其他区域连在一起，可使用套索工具将需要去除的区域圈起来，然后再使用“魔术橡皮檫工具”去除背景。<br><img src="/assets/tools/ps/lasso.png"></p>
-<h3 id="二、文字变色"><a href="#二、文字变色" class="headerlink" title="二、文字变色"></a>二、文字变色</h3><p>选择“魔棒工具”，勾选“消除锯齿”，不勾选“连续”，然后选中文本。<br><img src="/assets/tools/ps/wand.png"></p>
-<p>如果部分文本不需要变色，可选中“矩形选框工具”，然后选择“从选区减去”，然后圈中不变色的文本。<br><img src="/assets/tools/ps/remove.png"></p>
-<p>选择“编辑”，然后给选中文本进行颜色填充或者进行描边。<br><img src="/assets/tools/ps/fill.png"></p>
+            <p>主要介绍如何替换图片上的文字。<br><a id="more"></a></p>
+<h3 id="一、清除原图文字"><a href="#一、清除原图文字" class="headerlink" title="一、清除原图文字"></a>一、清除原图文字</h3><p>选中需清除区域。<br><img src="/assets/tools/ps/select.png"></p>
+<p>清除选中区域。<br><img src="/assets/tools/ps/clear.png"></p>
+<h3 id="二、填写文字"><a href="#二、填写文字" class="headerlink" title="二、填写文字"></a>二、填写文字</h3><p>选择文字工具。<br><img src="/assets/tools/ps/text.png"></p>
+<p>编写需填写的内容。<br><img src="/assets/tools/ps/edit.png"></p>
+<p>调整字体、大小和位置等。<br><img src="/assets/tools/ps/adjust.png"></p>
 
         </div>
 
@@ -205,12 +205,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-08-06T08:48:46.191Z" itemprop="dateUpdated">2019-08-06 16:48:46</time>
+    最后更新时间：<time datetime="2019-08-12T02:38:04.964Z" itemprop="dateUpdated">2019-08-12 10:38:04</time>
 </span><br>
 
 
         
-        本文地址：<a href="/tools/ps1/" target="_blank" rel="external">http://blog.master-ss.cn/tools/ps1/</a>
+        本文地址：<a href="/tools/ps2/" target="_blank" rel="external">http://blog.master-ss.cn/tools/ps2/</a>
         
     </div>
     
@@ -239,7 +239,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/ps1/&title=《ps 之去背景&文字变色》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -249,22 +249,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/ps1/&title=《ps 之去背景&文字变色》 — 青松的博客&source=作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&source=主要介绍如何替换图片上的文字。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/ps1/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/ps2/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ps 之去背景&文字变色》 — 青松的博客&url=http://blog.master-ss.cn/tools/ps1/&via=http://blog.master-ss.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ps 之替换文字》 — 青松的博客&url=http://blog.master-ss.cn/tools/ps2/&via=http://blog.master-ss.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/ps1/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/ps2/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -284,21 +284,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/tools/ps2/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">ps 之替换文字</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/project/paypal/" id="post-next" class="post-nav-link">
+      <a href="/tools/ps1/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">paypal 之网站集成</h4>
+        <h4 class="title">ps 之去背景&amp;文字变色</h4>
       </a>
     </div>
   
@@ -420,7 +413,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/ps1/&title=《ps 之去背景&文字变色》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -430,22 +423,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/ps1/&title=《ps 之去背景&文字变色》 — 青松的博客&source=作为一个前端，不可避免的需要处理一些图片，而 ps 作为专业处理图片的软件能非常方便的帮我们处理很多事情，现在记录一些用过的小技巧，这里使用的版本是 ps..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&source=主要介绍如何替换图片上的文字。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/ps1/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/ps2/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ps 之去背景&文字变色》 — 青松的博客&url=http://blog.master-ss.cn/tools/ps1/&via=http://blog.master-ss.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ps 之替换文字》 — 青松的博客&url=http://blog.master-ss.cn/tools/ps2/&via=http://blog.master-ss.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/ps1/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/ps2/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -456,7 +449,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABv0lEQVR42u3aQWoDMQwF0N7/0il0lVAm+ZJsdwrPqzAwzpuNkb789RWvx8/6/fv5yfO6ejd5vmDh4uKOuY+3K986+YyrPRMDLi7ueW5yeFWPnoRYPuxwcXFvxu3VHsnH4+Li/l/u2mIFFxf3/twE1HueRy2LezVcXNwBdxKYrvp9KN/FxcUdTyUm4ekkTr38d1xc3CPc9xtVA9Aet7wzLi7uEW61EdrduhR2wMXF3cCdX6jKI9ReXPLyBBcX9zi3emFiEqNUR7YfKixcXNwN3LwFyscteeOUHKYvBxkuLu5mbm9Ykn9kTm92abi4uNu4edtTLYySo20078XFxd3AHRUZrcIlKYku38LFxT3C7R0uveubvWsZuLi457l5IVKNPyZDl+bkBxcXdxE3vzzRu145GcdG8x9cXNwN3GrAMU8tRkNZXFzcg9x8KDJpjXoLFxf3r7jVwqV3S2rBh+Hi4h7h9gaxvRFsdc/8H3FxcXdw5wFHEqZUgxJcXNw7cJODpkfptU8fRim4uLi34e6ISMq1GC4u7o25+RWN6vH3wYaLi3uQu7aNmVzIWBaL4OLiDri9wHSezjZjEVxc3L3cb5j6LuUrEFVEAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzElEQVR42u3aS27DMAwFQN//0um2QGD7UZRZFxitgsCxRlkQ/Og44vX5tb6/+V7fvz175/HEwsXFbXOTja9B1++5fqZ6eFxc3EnudaBJgs7Z80mAKwQ7XFzcV3KT8HQWqq4TJlxc3P/LrdYpeSmFi4v7Nm4ehjoJUBLattVquLi4DW41JD3x+ZH+Li4u7hL3U1zVEctasXS6Oy4u7gi3k6Akwe6JxAgXF3eSm5cl1fDUv1/RqqJwcXEb3OoBOo2PalvkJu7i4uKOcPMQVt0+efNN0MTFxR3hJuXN2vZ5A+W6WMLFxZ3k9ocfa8dbG9Xg4uJOcvuNj4SSt1BPv8HFxR3hVpsX+SWtvHCqNmVwcXGf5u6CdkaweVmFi4s7w10LPbvo+fWLcocGFxd3Kze5MpVDq2OSqL+Li4s7zs0HJJ0EKCl7Cm1TXFzcx7jVLKI/ZC2kNZ0rm7i4uEXup7jyjXNWfgxcXNwZbr7WLmNVBzCd8IeLi7uXmwevJAHqlzo3/ysuLu4gNxmLVoulamIUNVxwcXFfye20WatFV6GuwsXF/VNuf1CaHGZz3MXFxV3i5k3S/jPVIS4uLu48N2+YdoYiSeDrlEy4uLibuD+DEpCfft190gAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
