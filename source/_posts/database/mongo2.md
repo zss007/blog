@@ -102,7 +102,7 @@ deleteOne 删除单文档，deleteMany 删除多文档
 - 执行 js 文件
 load('filePath.js')
 
-### 四、操作符
+### 四、更新操作符
 - $set
 db.collection.updateOne({a: b}, {$set: {c: d}})
 更新单条数据，c 的值将被更新为 d，updateMany 更新所有匹配到的数据
@@ -140,10 +140,6 @@ db.movieDetails.updateMany({
   }
 })
 ```
-
-- $exists
-db.records.find( { a: { $exists: true } } )
-查找某个字段是否存在
 
 - $rename
 db.students.updateMany( {}, { $rename: { "nmae": "name" } } )
