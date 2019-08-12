@@ -3,7 +3,7 @@ title: mongodb 之查询操作符
 categories:
 - database
 ---
-
+介绍 mongodb 查询时常用的操作符。
 <!--more--> 
 ### 一、比较操作符
 - $in
