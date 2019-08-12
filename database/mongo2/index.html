@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>mongodb 基础 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="mongodb shell 安装和基础操作。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb 基础">
+<meta property="og:url" content="http://blog.master-ss.cn/database/mongo2/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="mongodb shell 安装和基础操作。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-12T09:18:33.741Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongodb 基础">
+<meta name="twitter:description" content="mongodb shell 安装和基础操作。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">mongodb 基础</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">mongodb 基础</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-12T07:06:43.723Z" itemprop="datePublished" class="page-time">
+  2019-08-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、安装"><span class="post-toc-text">一、安装</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、更新"><span class="post-toc-text">二、更新</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、基础命令"><span class="post-toc-text">三、基础命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、操作符"><span class="post-toc-text">四、操作符</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-database/mongo2" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">mongodb 基础</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-12 15:06:43" datetime="2019-08-12T07:06:43.723Z" itemprop="datePublished">2019-08-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>mongodb shell 安装和基础操作。<br><a id="more"></a> </p>
+<h3 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h3><ul>
+<li><p>安装 homebrew<br><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></p>
+</li>
+<li><p>安装 mongodb<br>brew install mongodb</p>
+</li>
+<li><p>开机自启动<br>brew services start mongodb</p>
+</li>
+</ul>
+<h3 id="二、更新"><a href="#二、更新" class="headerlink" title="二、更新"></a>二、更新</h3><ul>
+<li><p>更新 homebrew<br>brew update</p>
+</li>
+<li><p>更新 mongodb<br>brew upgrade mongodb</p>
+</li>
+<li><p>查询 mongodb 相关软件<br>brew search mongodb</p>
+</li>
+<li><p>查询 mongodb 相关信息<br>brew info mongodb</p>
+</li>
+<li><p>卸载 mongodb<br>brew uninstall mongodb</p>
+</li>
+</ul>
+<h3 id="三、基础命令"><a href="#三、基础命令" class="headerlink" title="三、基础命令"></a>三、基础命令</h3><ul>
+<li><p>进入命令行<br>mongo</p>
+</li>
+<li><p>连接远程数据库<br>mongo “mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/test?replicaSet=Cluster0-shard-0” –authenticationDatabase admin –ssl –username m001-student –password m001-mongodb-basics</p>
+</li>
+<li><p>退出命令行<br>quit()</p>
+</li>
+<li><p>查看数据库列表<br>show databases</p>
+</li>
+<li><p>查看当前数据库<br>db</p>
+</li>
+<li><p>删除当前数据库<br>db.dropDatabase()</p>
+</li>
+<li><p>不切换当前数据库访问其他的数据库<br>db.getSiblingDB(‘name’)</p>
+</li>
+<li><p>删除集合<br>db.collection.drop()</p>
+</li>
+<li><p>查看集合数据数量<br>db.collection.count()</p>
+</li>
+<li><p>插入单条数据<br>db.collection.insertOne(doc)</p>
+</li>
+<li><p>批量插入<br>db.collection.insertMany([doc…], { “ordered”: false })<br>ordered 为 false 即遇到出错继续执行插入操作，默认为 true，遇错停止</p>
+</li>
+<li><p>数据查询<br>db.collection.find({a: b, “c.d”: e, “f.0”: g, h: [i, j]}).pretty()<br>查询同时满足多个条件的数据；<br>pretty() 格式化输出；<br>如果 “a” 对应的值是数组类型，则查找文档中 “a” 数组含有 b 元素；<br>“c.d” 是嵌套文档；<br>查找文档中 “f” 数组第一个是 g 元素；<br>查找文档中 “h” 数组含 [i, j] 且数组元素顺序固定；</p>
+</li>
+<li><p>查询下一页<br>it<br>命令行查找默认显示20条数据，如果查看更多输入 it（iterate）遍历下个20条数据</p>
+</li>
+<li><p>格式化输出字段<br>db.collection.find({a: b}, {c: 1})<br>查找默认显示全部字段，如果 project 特别指定返回某些字段，如 c: 1，则显示 c 和 _id，其他字段隐藏，_id 需明确指定（_id : 0）不返回才不会显示；如果设定一些字段为 0，则隐藏这些字段，其他字段显示</p>
+</li>
+<li><p>替换某条数据<br>updateOne 是更新文档中某个字段，replaceOne 则是替换整个文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let filter = &#123;title: &quot;House, M.D., Season Four: New Beginnings&quot;&#125;</span><br><span class="line">let doc = db.movieDetails.findOne(filter);</span><br><span class="line">doc.poster;</span><br><span class="line">doc.poster = &quot;https://www.imdb.com/title/tt1329164/mediaviewer/rm2619416576&quot;;</span><br><span class="line">doc.genres;</span><br><span class="line">doc.genres.push(&quot;TV Series&quot;);</span><br><span class="line">db.movieDetails.replaceOne(filter, doc);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除某条数据<br>db.orders.deleteOne( { “_id” : ObjectId(“563237a41a4d68582c2509da”) } )<br>deleteOne 删除单文档，deleteMany 删除多文档</p>
+</li>
+<li><p>执行 js 文件<br>load(‘filePath.js’)</p>
+</li>
+</ul>
+<h3 id="四、操作符"><a href="#四、操作符" class="headerlink" title="四、操作符"></a>四、操作符</h3><ul>
+<li><p>$set<br>db.collection.updateOne({a: b}, {$set: {c: d}})<br>更新单条数据，c 的值将被更新为 d，updateMany 更新所有匹配到的数据</p>
+</li>
+<li><p>$push &amp; $each<br>$push 将元素添加到数组中；$each 遍历数组，添加到 reviews 数组中；upsert 选项为若没有查询到匹配的文档，则插入该文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">db.movieDetails.updateOne(&#123;</span><br><span class="line">  title: &quot;The Martian&quot;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  $push: &#123;</span><br><span class="line">    reviews: &#123;</span><br><span class="line">      $each: [&#123;</span><br><span class="line">         rating: 0.5,</span><br><span class="line">         reviewer: &quot;Yabo A.&quot;</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">         rating: 5,</span><br><span class="line">         reviewer: &quot;Kristina Z.&quot;</span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  upsert: true</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$unset<br>清空键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.movieDetails.updateMany(&#123;</span><br><span class="line">  rated: null</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  $unset: &#123;</span><br><span class="line">    rated: &quot;&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$exists<br>db.records.find( { a: { $exists: true } } )<br>查找某个字段是否存在</p>
+</li>
+<li><p>$rename<br>db.students.updateMany( {}, { $rename: { “nmae”: “name” } } )<br>更新字段名</p>
+</li>
+<li><p>$inc<br>$inc 字段增加值，接受正负数，如果字段不存在则为设置值，如果值为 null 则报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.products.update(</span><br><span class="line">   &#123; sku: &quot;abc123&quot; &#125;,</span><br><span class="line">   &#123; $inc: &#123; quantity: -2, &quot;metrics.orders&quot;: 1 &#125; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$addToSet<br>添加值到数组中，含去重，即相同元素不添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.inventory.update(</span><br><span class="line">   &#123; _id: 2 &#125;,</span><br><span class="line">   &#123; $addToSet: &#123; tags: &#123; $each: [ &quot;camera&quot;, &quot;electronics&quot;, &quot;accessories&quot; ] &#125; &#125; &#125;</span><br><span class="line"> )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$pop<br>从数组中移除第一个或最后一个元素，其中 -1 为第一个，1 为最后一个<br>db.students.update( { _id: 1 }, { $pop: { scores: -1 } } )</p>
+</li>
+<li><p>$pull<br>从数组中移除满足条件的元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.stores.update(</span><br><span class="line">    &#123; &#125;,</span><br><span class="line">    &#123; $pull: &#123; fruits: &#123; $in: [ &quot;apples&quot;, &quot;oranges&quot; ] &#125;, vegetables: &quot;carrots&quot; &#125; &#125;,</span><br><span class="line">    &#123; multi: true &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$pullAll<br>从数组中移除匹配到的值<br>db.survey.update( { _id: 1 }, { $pullAll: { scores: [ 0, 5 ] } } )</p>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-12T09:18:33.741Z" itemprop="dateUpdated">2019-08-12 17:18:33</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/database/mongo2/" target="_blank" rel="external">http://blog.master-ss.cn/database/mongo2/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo2/&title=《mongodb 基础》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo2/&title=《mongodb 基础》 — 青松的博客&source=mongodb shell 安装和基础操作。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 基础》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo2/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/database/mongo1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">mongodb 之 Compass</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo2/&title=《mongodb 基础》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo2/&title=《mongodb 基础》 — 青松的博客&source=mongodb shell 安装和基础操作。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 基础》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo2/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3ay26FMAwFQP7/p+m2VXXhOCYulSYrhBAZWFjx4zjidf5ayZPf73x68tixcHFx29zzciWIfOPk/Te/BhcXd5B7HWjy4JV8av5+XFzc/8LtH3RaxyBcXNxXcq+33J4g4eLiDnKTY0p1s7XQ9liuhouL2+Dm5Yx911vqu7i4uEvcs7jWtr8+HhV2x8XFHeF2Diid+619cXFxx7lrzdRqObU16oGLi7uZm5RE+22Vflnkx4kMFxd3hFtNb6rHl7zpcuPBxcUd4UZNzSBRqVKug1eSROHi4k5yOx+wNoqxpd2Ci4vb4OZBpwrNqzJ5sMPFxZ3hdpoieYmkWlKJkh9cXNxt3Py80ymILJZHP8VdXFzczdy1Jkc+dJU/U0i9cHFxB7n9cme1nFpNnHBxcee51+lNkqjkbZK1t+Hi4s5z+yMU+WevNW9wcXFnuGdx9cew8hCJi4v7V9zqEMZagaP6wa3BLFxc3Ie4eUujWtrYkVbh4uJOcvOkqNoy2Zir4eLivoZbTXWSIJWXV3Bxcd/JzdseaynTzZAHLi7uIDdvi1YbJ/k7o5+Fi4s7ws0LpvloRed6LWXCxcV9iPsFIRJxsMDbjQUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

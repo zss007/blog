@@ -14,31 +14,32 @@
     
     
     
-    <title>ps 之替换文字 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <title>mongodb 之 Compass | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="主要介绍如何替换图片上的文字。">
+    <meta name="description" content="对 mongodb 做一个系统性的研究和总结，先从可视化工具 MongoDB Compass 开始。">
 <meta name="keywords" content="分享、总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ps 之替换文字">
-<meta property="og:url" content="http://blog.master-ss.cn/tools/ps2/index.html">
+<meta property="og:title" content="mongodb 之 Compass">
+<meta property="og:url" content="http://blog.master-ss.cn/database/mongo1/index.html">
 <meta property="og:site_name" content="青松的博客">
-<meta property="og:description" content="主要介绍如何替换图片上的文字。">
+<meta property="og:description" content="对 mongodb 做一个系统性的研究和总结，先从可视化工具 MongoDB Compass 开始。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/select.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/clear.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/text.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/edit.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/ps/adjust.png">
-<meta property="og:updated_time" content="2019-08-12T02:38:04.964Z">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/database/mongo/compass-login.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/database/mongo/database.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/database/mongo/collection.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/database/mongo/schema.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/database/mongo/search.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/database/mongo/search.png">
+<meta property="og:updated_time" content="2019-08-12T07:01:40.718Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ps 之替换文字">
-<meta name="twitter:description" content="主要介绍如何替换图片上的文字。">
-<meta name="twitter:image" content="http://blog.master-ss.cn/assets/tools/ps/select.png">
+<meta name="twitter:title" content="mongodb 之 Compass">
+<meta name="twitter:description" content="对 mongodb 做一个系统性的研究和总结，先从可视化工具 MongoDB Compass 开始。">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/database/mongo/compass-login.png">
     
         <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
     
@@ -119,7 +120,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">ps 之替换文字</div>
+        <div class="flex-col header-title ellipsis">mongodb 之 Compass</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -141,15 +142,15 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">ps 之替换文字</h1>
+        <h1 class="title">mongodb 之 Compass</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-08-12T02:28:09.606Z" itemprop="datePublished" class="page-time">
+                <time datetime="2019-08-12T02:55:49.838Z" itemprop="datePublished" class="page-time">
   2019-08-12
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
 
             
         </h5>
@@ -166,20 +167,20 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、清除原图文字"><span class="post-toc-text">一、清除原图文字</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、填写文字"><span class="post-toc-text">二、填写文字</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、下载"><span class="post-toc-text">一、下载</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、简介"><span class="post-toc-text">1.1、简介</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、连接"><span class="post-toc-text">1.2、连接</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、分析"><span class="post-toc-text">二、分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、查看集合"><span class="post-toc-text">2.1、查看集合</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、分析结构"><span class="post-toc-text">2.2、分析结构</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-条件查询"><span class="post-toc-text">2.3 条件查询</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-tools/ps2" class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-database/mongo1" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">ps 之替换文字</h1>
+        <h1 class="post-card-title">mongodb 之 Compass</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-08-12 10:28:09" datetime="2019-08-12T02:28:09.606Z" itemprop="datePublished">2019-08-12</time>
+            <time class="post-time" title="2019-08-12 10:55:49" datetime="2019-08-12T02:55:49.838Z" itemprop="datePublished">2019-08-12</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
 
 
 
@@ -191,12 +192,14 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>主要介绍如何替换图片上的文字。<br><a id="more"></a></p>
-<h3 id="一、清除原图文字"><a href="#一、清除原图文字" class="headerlink" title="一、清除原图文字"></a>一、清除原图文字</h3><p>选中需清除区域。<br><img src="/assets/tools/ps/select.png"></p>
-<p>清除选中区域。<br><img src="/assets/tools/ps/clear.png"></p>
-<h3 id="二、填写文字"><a href="#二、填写文字" class="headerlink" title="二、填写文字"></a>二、填写文字</h3><p>选择文字工具。<br><img src="/assets/tools/ps/text.png"></p>
-<p>编写需填写的内容。<br><img src="/assets/tools/ps/edit.png"></p>
-<p>调整字体、大小和位置等。<br><img src="/assets/tools/ps/adjust.png"></p>
+            <p>对 mongodb 做一个系统性的研究和总结，先从可视化工具 MongoDB Compass 开始。<br><a id="more"></a> </p>
+<h3 id="一、下载"><a href="#一、下载" class="headerlink" title="一、下载"></a>一、下载</h3><h4 id="1-1、简介"><a href="#1-1、简介" class="headerlink" title="1.1、简介"></a>1.1、简介</h4><p>MongoDB Compass 是官方数据库可视化工具，下载地址是 <a href="https://www.mongodb.com/download-center/compass" target="_blank" rel="noopener">https://www.mongodb.com/download-center/compass</a> 。</p>
+<h4 id="1-2、连接"><a href="#1-2、连接" class="headerlink" title="1.2、连接"></a>1.2、连接</h4><p>输入数据库和用户信息，连接数据库。<br><img src="/assets/database/mongo/compass-login.png"></p>
+<p>连接成功后即可显示数据库信息。<br><img src="/assets/database/mongo/database.png"></p>
+<h3 id="二、分析"><a href="#二、分析" class="headerlink" title="二、分析"></a>二、分析</h3><h4 id="2-1、查看集合"><a href="#2-1、查看集合" class="headerlink" title="2.1、查看集合"></a>2.1、查看集合</h4><p>选择查看的集合，点击即可查看<br><img src="/assets/database/mongo/collection.png"></p>
+<h4 id="2-2、分析结构"><a href="#2-2、分析结构" class="headerlink" title="2.2、分析结构"></a>2.2、分析结构</h4><p>可点击切换到 Schema，查看分析其结构，或者查看索引等。<br><img src="/assets/database/mongo/schema.png"></p>
+<h4 id="2-3-条件查询"><a href="#2-3-条件查询" class="headerlink" title="2.3 条件查询"></a>2.3 条件查询</h4><p>用户可自主输入搜索条件或者在 Schema 中点击，即可获取搜索条件。<br><img src="/assets/database/mongo/search.png"></p>
+<p>用户甚至可以使用 shift + 拖拽 的方式进行地理位置区域查询。<br><img src="/assets/database/mongo/search.png"></p>
 
         </div>
 
@@ -205,12 +208,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-08-12T02:38:04.964Z" itemprop="dateUpdated">2019-08-12 10:38:04</time>
+    最后更新时间：<time datetime="2019-08-12T07:01:40.718Z" itemprop="dateUpdated">2019-08-12 15:01:40</time>
 </span><br>
 
 
         
-        本文地址：<a href="/tools/ps2/" target="_blank" rel="external">http://blog.master-ss.cn/tools/ps2/</a>
+        本文地址：<a href="/database/mongo1/" target="_blank" rel="external">http://blog.master-ss.cn/database/mongo1/</a>
         
     </div>
     
@@ -239,7 +242,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo1/&title=《mongodb 之 Compass》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -249,22 +252,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&source=主要介绍如何替换图片上的文字。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo1/&title=《mongodb 之 Compass》 — 青松的博客&source=对 mongodb 做一个系统性的研究和总结，先从可视化工具 MongoDB Compass 开始。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/ps2/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo1/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ps 之替换文字》 — 青松的博客&url=http://blog.master-ss.cn/tools/ps2/&via=http://blog.master-ss.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 之 Compass》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo1/&via=http://blog.master-ss.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/ps2/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo1/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -287,18 +290,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/database/mongo1/" id="post-prev" class="post-nav-link">
+      <a href="/database/mongo2/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">mongodb 之 Compass</h4>
+        <h4 class="title">mongodb 基础</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/tools/ps1/" id="post-next" class="post-nav-link">
+      <a href="/tools/ps2/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">ps 之去背景&amp;文字变色</h4>
+        <h4 class="title">ps 之替换文字</h4>
       </a>
     </div>
   
@@ -420,7 +423,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo1/&title=《mongodb 之 Compass》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -430,22 +433,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/tools/ps2/&title=《ps 之替换文字》 — 青松的博客&source=主要介绍如何替换图片上的文字。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo1/&title=《mongodb 之 Compass》 — 青松的博客&source=对 mongodb 做一个系统性的研究和总结，先从可视化工具 MongoDB Compass 开始。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/tools/ps2/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo1/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ps 之替换文字》 — 青松的博客&url=http://blog.master-ss.cn/tools/ps2/&via=http://blog.master-ss.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 之 Compass》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo1/&via=http://blog.master-ss.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/tools/ps2/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo1/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -456,7 +459,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzElEQVR42u3aS27DMAwFQN//0um2QGD7UZRZFxitgsCxRlkQ/Og44vX5tb6/+V7fvz175/HEwsXFbXOTja9B1++5fqZ6eFxc3EnudaBJgs7Z80mAKwQ7XFzcV3KT8HQWqq4TJlxc3P/LrdYpeSmFi4v7Nm4ehjoJUBLattVquLi4DW41JD3x+ZH+Li4u7hL3U1zVEctasXS6Oy4u7gi3k6Akwe6JxAgXF3eSm5cl1fDUv1/RqqJwcXEb3OoBOo2PalvkJu7i4uKOcPMQVt0+efNN0MTFxR3hJuXN2vZ5A+W6WMLFxZ3k9ocfa8dbG9Xg4uJOcvuNj4SSt1BPv8HFxR3hVpsX+SWtvHCqNmVwcXGf5u6CdkaweVmFi4s7w10LPbvo+fWLcocGFxd3Kze5MpVDq2OSqL+Li4s7zs0HJJ0EKCl7Cm1TXFzcx7jVLKI/ZC2kNZ0rm7i4uEXup7jyjXNWfgxcXNwZbr7WLmNVBzCd8IeLi7uXmwevJAHqlzo3/ysuLu4gNxmLVoulamIUNVxwcXFfye20WatFV6GuwsXF/VNuf1CaHGZz3MXFxV3i5k3S/jPVIS4uLu48N2+YdoYiSeDrlEy4uLibuD+DEpCfft190gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3awa7CIBAF0P7/T2vyVm+heIcBrMlhZZoGTl3cwAzXFY/H3xj//v9k/M74+YKBi4vb5j6GYxU3mXNswMXFPc9NwqsaT53PfvscFxf3ZtzqMkls4eLi/jo32dwk9FvkLi4ubsBNDj/jhcefl/8dy85quLi4De6qgmnn9xfqu7i4uFNdiSRQ8vfH8RetjouLe4Q7d4wZL5ZEYadQgouLu5ubLJAHU37sqe5kcHFxT3LzSKo2P/ImSjlYcXFxN3OTiapT9wupb9/ExcU9yJ0LqSTykuNNIUBxcXGPcKvLzBGroRmFHS4u7jZufsGiesUqn63V6cXFxd3GrR5gqgehTpy9KIvg4uJu5s41WdfurXBxce/GnSuFVJcZb3oKRVtcXNwj3E7DIz+65BewooIpLi7uZm6nzJE3S+Y+CRcX97vcJLyqh5m8mFKokeLi4h7k5iMB7SidXHmm4uLitrmddmx+vFk1Jy4u7klutaxZ3dx0npfTFxcXdym3Wug8E3C4uLj353YKo/nFzQ8z4+Li3pI71zrNr198sOHi4h7k9huoc1eyypsnXFzcI9xqwTR/Pte47VzjwMXFbXOfEioP9uOWmVkAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

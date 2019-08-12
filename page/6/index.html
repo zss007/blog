@@ -152,6 +152,86 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-es6/proxy" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-04-22 22:12:03" datetime="2018-04-22T14:12:03.000Z" itemprop="datePublished">2018-04-22</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/es6/proxy/">es6 之 Proxy</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        Proxy 用于修改某些操作的默认行为，等同于在语言层面做出修改，所以属于一种“元编程”（meta programming），即对编程语言进行编程。Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。Proxy 这个词的原意是代理，用在这里表示由它来“代理”某些操作，可以译为“代理器”。
+    
+
+        <a href="/es6/proxy/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-tools/source-map" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-04-01 22:24:22" datetime="2018-04-01T14:24:22.000Z" itemprop="datePublished">2018-04-01</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tools/">tools</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/tools/source-map/">tools 之 source-map</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。
+    
+
+        <a href="/tools/source-map/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-es6/decorator" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -463,86 +543,6 @@
     
 
         <a href="/es6/async/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-es6/generator" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-07 14:39:41" datetime="2018-03-07T06:39:41.000Z" itemprop="datePublished">2018-03-07</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/es6/generator/">es6 之 Generator</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。Generator 函数有多种理解角度，首先可以理解成 Generator 函数是一个状态机，封装了多个内部状态。执行 Generator 函数会返回一个遍历器对象，也就是说，Generator 函数除了状态机，还是一个遍历器对象生成函数。返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态。它有两个特征。一是，function 关键字与函数名之间有一个星号；二是，函数体内部使用 yield 表达式，定义不同的内部状态（yield 在英语里的意思就是 “产出”）。遍历器对象的 next 方法的运行逻辑：1、遇到 yield 表达式就暂停执行后面的操作，并将紧跟在 yield 后面的那个表达式的值，作为返回的对象的 value 属性值；2、下一次调用 next 方法时，再继续往下执行，直到遇到下一个 yield 表达式；3、如果没有再遇到新的 yield 表达式，就一直运行到函数结束，直到 return 语句为止，并将 return 语句后面的表达式的值作为返回的对象的 value 属性值；4、如果该函数没有 return 语句，则返回的对象的 value 属性值为 undefined。
-    
-
-        <a href="/es6/generator/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-es6/iterator" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-06 16:21:12" datetime="2018-03-06T08:21:12.000Z" itemprop="datePublished">2018-03-06</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/es6/">es6</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/es6/iterator/">es6 之 Iterator</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        JavaScript 有四种表示 “集合” 数据集合：Array、Object、Map 以及 Set，用户可以组合使用它们，定义自己的数据结构，比如数组的成员是Map，Map 的成员是对象。这样就需要一种统一的接口机制，来处理所有不同的数据结构。遍历器（Iterator）就是这样一种机制，它是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。
-    
-
-        <a href="/es6/iterator/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
