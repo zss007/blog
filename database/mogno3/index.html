@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>mongodb 之查询操作符 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="一、比较操作符 $in包含在数组中db.movieDetails.find({rated: {$in: [“G”, “PG”, “PG-13”]}}, {_id: 0, title: 1, rated: 1}).pretty()  $gte &amp;amp; $lt$gte 大于等于（greater than or equal to）；$lt 小于（less than）db.movieDetails">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb 之查询操作符">
+<meta property="og:url" content="http://blog.master-ss.cn/database/mogno3/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="一、比较操作符 $in包含在数组中db.movieDetails.find({rated: {$in: [“G”, “PG”, “PG-13”]}}, {_id: 0, title: 1, rated: 1}).pretty()  $gte &amp;amp; $lt$gte 大于等于（greater than or equal to）；$lt 小于（less than）db.movieDetails">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-12T14:11:00.169Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongodb 之查询操作符">
+<meta name="twitter:description" content="一、比较操作符 $in包含在数组中db.movieDetails.find({rated: {$in: [“G”, “PG”, “PG-13”]}}, {_id: 0, title: 1, rated: 1}).pretty()  $gte &amp;amp; $lt$gte 大于等于（greater than or equal to）；$lt 小于（less than）db.movieDetails">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">mongodb 之查询操作符</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">mongodb 之查询操作符</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-12T10:03:01.520Z" itemprop="datePublished" class="page-time">
+  2019-08-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、比较操作符"><span class="post-toc-text">一、比较操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、元素操作符"><span class="post-toc-text">二、元素操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、逻辑操作符"><span class="post-toc-text">三、逻辑操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、数组操作符"><span class="post-toc-text">四、数组操作符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、评估操作符"><span class="post-toc-text">五、评估操作符</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-database/mogno3" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">mongodb 之查询操作符</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-12 18:03:01" datetime="2019-08-12T10:03:01.520Z" itemprop="datePublished">2019-08-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <a id="more"></a> 
+<h3 id="一、比较操作符"><a href="#一、比较操作符" class="headerlink" title="一、比较操作符"></a>一、比较操作符</h3><ul>
+<li><p>$in<br>包含在数组中<br>db.movieDetails.find({rated: {$in: [“G”, “PG”, “PG-13”]}}, {_id: 0, title: 1, rated: 1}).pretty()</p>
+</li>
+<li><p>$gte &amp; $lt<br>$gte 大于等于（greater than or equal to）；$lt 小于（less than）<br>db.movieDetails.find({runtime: {$gte: 90, $lt: 120}}, {_id: 0, title: 1, runtime: 1})</p>
+</li>
+<li><p>$ne<br>不等于，包括完全不包含这个字段的情况<br>db.movieDetails.find({rated: {$ne: “UNRATED”}}, {_id: 0, title: 1, rated: 1})</p>
+</li>
+</ul>
+<h3 id="二、元素操作符"><a href="#二、元素操作符" class="headerlink" title="二、元素操作符"></a>二、元素操作符</h3><ul>
+<li><p>$exists<br>查找某个字段是否存在<br>db.moviesDetails.find({mpaaRating: {$exists: true}})<br>null 会查找值为 null 或不存在该字段的文档<br>db.movieDetails.find({mpaaRating: null})</p>
+</li>
+<li><p>$type<br>查看符合类型的文档<br>db.movies.find({viewerRating: {$type: “int”}}).pretty()</p>
+</li>
+</ul>
+<h3 id="三、逻辑操作符"><a href="#三、逻辑操作符" class="headerlink" title="三、逻辑操作符"></a>三、逻辑操作符</h3><ul>
+<li><p>$or<br>查看满足单个条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.movieDetails.find(&#123;$or: [&#123;&quot;tomato.meter&quot;: &#123;$gt: 95&#125;&#125;,                               </span><br><span class="line">                            &#123;&quot;metacritic&quot;: &#123;$gt: 88&#125;&#125;]&#125;,</span><br><span class="line">                     &#123;_id: 0, title: 1, &quot;tomato.meter&quot;: 1, &quot;metacritic&quot;: 1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$and<br>查看同时满足多个条件，一般情况不需要，跟默认查询情况效果相同。但是可应用于多个条件限制在同一个字段上时，默认查询情况不能用重复的 key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.movieDetails.find(&#123;$and: [&#123;&quot;metacritic&quot;: &#123;$ne: null&#125;&#125;,</span><br><span class="line">                             &#123;&quot;metacritic&quot;: &#123;$exists: true&#125;&#125;]&#125;,</span><br><span class="line">                          &#123;_id: 0, title: 1, &quot;metacritic&quot;: 1&#125;)</span><br><span class="line"></span><br><span class="line">// 能很好的查询值为 null 的情况，因为查询 null 包括值为 null 和键值对不存在的情况</span><br><span class="line">db.movieDetails.find(&#123;$and: [&#123;&quot;metacritic&quot;: null&#125;,</span><br><span class="line">                             &#123;&quot;metacritic&quot;: &#123;$exists: true&#125;&#125;]&#125;,</span><br><span class="line">                     &#123;_id: 0, title: 1, &quot;metacritic&quot;: 1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="四、数组操作符"><a href="#四、数组操作符" class="headerlink" title="四、数组操作符"></a>四、数组操作符</h3><ul>
+<li><p>$all<br>数组中的所有元素均出现文档值中，被包含关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.movieDetails.find(&#123;genres: &#123;$all: [&quot;Comedy&quot;, &quot;Crime&quot;, &quot;Drama&quot;]&#125;&#125;, </span><br><span class="line">                     &#123;_id: 0, title: 1, genres: 1&#125;).pretty()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$size<br>查询符合指定长度数组的文档<br>db.movieDetails.find({countries: {$size: 1}}).pretty()</p>
+</li>
+<li><p>$elemMatch<br>遍历对象数组或二维数组中至少有一个对象或数组符合的文档；如果不使用 $elemMatch，则完全遍历，不考虑对象或数组为整体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 二维数组 --&gt;</span><br><span class="line">&#123; _id: 1, results: [ 82, 85, 88 ] &#125;</span><br><span class="line">&#123; _id: 2, results: [ 75, 88, 89 ] &#125;</span><br><span class="line">&lt;!-- 数据查询 --&gt;</span><br><span class="line">db.scores.find(</span><br><span class="line">   &#123; results: &#123; $elemMatch: &#123; $gte: 80, $lt: 85 &#125; &#125; &#125;</span><br><span class="line">)</span><br><span class="line">&lt;!-- 返回结果：因为 82 既大于等于 80 又小于 85 --&gt;</span><br><span class="line">&#123; &quot;_id&quot; : 1, &quot;results&quot; : [ 82, 85, 88 ] &#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- 对象数组 --&gt;</span><br><span class="line">boxOffice: [ &#123; &quot;country&quot;: &quot;USA&quot;, &quot;revenue&quot;: 228.4 &#125;,</span><br><span class="line">             &#123; &quot;country&quot;: &quot;Australia&quot;, &quot;revenue&quot;: 19.6 &#125;,</span><br><span class="line">             &#123; &quot;country&quot;: &quot;UK&quot;, &quot;revenue&quot;: 33.9 &#125;,</span><br><span class="line">             &#123; &quot;country&quot;: &quot;Germany&quot;, &quot;revenue&quot;: 16.2 &#125;,</span><br><span class="line">             &#123; &quot;country&quot;: &quot;France&quot;, &quot;revenue&quot;: 19.8 &#125; ]</span><br><span class="line">db.movieDetails.find(&#123;boxOffice: &#123;$elemMatch: &#123;&quot;country&quot;: &quot;Germany&quot;, &quot;revenue&quot;: &#123;$gt: 16&#125;&#125;&#125;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="五、评估操作符"><a href="#五、评估操作符" class="headerlink" title="五、评估操作符"></a>五、评估操作符</h3><ul>
+<li><p>$regex<br>正则表达式匹配文档<br>db.movieDetails.find({“awards.text”: {$regex: /^Won.* /}}, {_id: 0, title: 1, “awards.text”: 1}).pretty()</p>
+</li>
+<li><p>$text<br>文本搜索匹配文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  $text:</span><br><span class="line">    &#123;</span><br><span class="line">      $search: &lt;string&gt;,</span><br><span class="line">      $language: &lt;string&gt;,</span><br><span class="line">      $caseSensitive: &lt;boolean&gt;,</span><br><span class="line">      $diacriticSensitive: &lt;boolean&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.articles.find( &#123; $text: &#123; $search: &quot;coffee&quot; &#125; &#125; )</span><br><span class="line">&lt;!-- 查询包含 bake、coffee、cake 的语句，甚至这些词的动词格式 --&gt;</span><br><span class="line">db.articles.find( &#123; $text: &#123; $search: &quot;bake coffee cake&quot; &#125; &#125; )</span><br><span class="line">&lt;!-- 查询确切 coffee shop 字符串 --&gt;</span><br><span class="line">db.articles.find( &#123; $text: &#123; $search: &quot;\&quot;coffee shop\&quot;&quot; &#125; &#125; )</span><br><span class="line">&lt;!-- 查询包含 bake，不包含 shop 的语句，甚至这些词的动词格式 --&gt;</span><br><span class="line">db.articles.find( &#123; $text: &#123; $search: &quot;coffee -shop&quot; &#125; &#125; )</span><br><span class="line">&lt;!-- $language 用来表达特定语言下的动词格式，标识为 none 为不识别动词 --&gt;</span><br><span class="line">&lt;!-- $caseSensitive 是否大小写敏感 --&gt;</span><br><span class="line">db.articles.find( &#123; $text: &#123; $search: &quot;Coffee&quot;, $caseSensitive: true &#125; &#125; )</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-12T14:11:00.169Z" itemprop="dateUpdated">2019-08-12 22:11:00</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/database/mogno3/" target="_blank" rel="external">http://blog.master-ss.cn/database/mogno3/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mogno3/&title=《mongodb 之查询操作符》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mogno3/&title=《mongodb 之查询操作符》 — 青松的博客&source=知识分享 & 总结" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mogno3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 之查询操作符》 — 青松的博客&url=http://blog.master-ss.cn/database/mogno3/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mogno3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/database/mongo2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">mongodb 基础</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mogno3/&title=《mongodb 之查询操作符》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mogno3/&title=《mongodb 之查询操作符》 — 青松的博客&source=知识分享 & 总结" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mogno3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 之查询操作符》 — 青松的博客&url=http://blog.master-ss.cn/database/mogno3/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mogno3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxUlEQVR42u3aQW7EIAwF0Ln/pdNNF5Wq0m8baEd6rEbJJHmwsIzx6xWP58tIrny//tM7XycGLi7umPssR87tfSs34OLi3ueuA001YCUTawY7XFzcf8mdpETJXVxc3Pflrp9aTw8XF/dduMnmp4erhrZtezVcXNwBN09Zzv0+Ut/FxcVtcZ/iWKc7Sfmj993PN+Di4l7h5gGlmnBMiqS/vAcXF/cwdxJidk0sP4jFxcW9w03QvULn3rJIYY1xcXE3cfNQkpdNJ82d5UXBxcXdyq3OIw9t1abPKHTi4uJe4eYfriYi1YPS8nELLi7uYe6aOG/UyA9akiXDxcU9zc2DVxJ68n82iy+4uLhXuOuNTV4oSRKUeaqEi4t7kzuBVoun1YPYzeuKi4vb4ubly16ZNQ985b0aLi7uAe7ewNTLs6LlwMXFvcjtNVflByejtKZwGxcXd8p9iqMXpCaTxMXFvc/NR2/bk3CrRRZcXNw73GpTRfX4JG/miO7i4uJe5PbaJiZNV5v3ari4uH/Kzbc0ybP55HFxcf8/N093qu0X64CIi4t7k9s7Fk0SmrzwGi0WLi7uFW5eMJ1vfqpllFF9FxcXt8P9ANuScbAdCEQ3AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
