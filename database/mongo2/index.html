@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="青松的博客">
 <meta property="og:description" content="mongodb shell 安装和基础操作。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-12T13:36:16.997Z">
+<meta property="og:updated_time" content="2019-08-15T08:24:28.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb 基础">
 <meta name="twitter:description" content="mongodb shell 安装和基础操作。">
@@ -215,6 +215,8 @@
 </li>
 <li><p>查看数据库列表<br>show databases</p>
 </li>
+<li><p>使用数据库、创建数据库<br>use databases</p>
+</li>
 <li><p>查看当前数据库<br>db</p>
 </li>
 <li><p>删除当前数据库<br>db.dropDatabase()</p>
@@ -233,7 +235,12 @@
 </li>
 <li><p>查询下一页<br>it<br>命令行查找默认显示20条数据，如果查看更多输入 it（iterate）遍历下个20条数据</p>
 </li>
+<li><p>分页查询<br>sort: 1 升序；-1 降序<br>skip: 查询 5 条之后的数据<br>limit: 总计返回 10 条件数据<br>db.userInfo.find().sort({age: -1}).skip(5).limit(10)</p>
+</li>
 <li><p>格式化输出字段<br>db.collection.find({a: b}, {c: 1})<br>查找默认显示全部字段，如果 project 特别指定返回某些字段，如 c: 1，则显示 c 和 _id，其他字段隐藏，_id 需明确指定（_id : 0）不返回才不会显示；如果设定一些字段为 0，则隐藏这些字段，其他字段显示</p>
+</li>
+<li><p>查找集合中某个字段所有不同的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 数据对象 --&gt;</span><br><span class="line">&#123; &quot;_id&quot;: 1, &quot;dept&quot;: &quot;A&quot;, &quot;item&quot;: &#123; &quot;sku&quot;: &quot;111&quot;, &quot;color&quot;: &quot;red&quot; &#125;, &quot;sizes&quot;: [ &quot;S&quot;, &quot;M&quot; ] &#125;</span><br><span class="line">&#123; &quot;_id&quot;: 2, &quot;dept&quot;: &quot;A&quot;, &quot;item&quot;: &#123; &quot;sku&quot;: &quot;111&quot;, &quot;color&quot;: &quot;blue&quot; &#125;, &quot;sizes&quot;: [ &quot;M&quot;, &quot;L&quot; ] &#125;</span><br><span class="line">&#123; &quot;_id&quot;: 3, &quot;dept&quot;: &quot;B&quot;, &quot;item&quot;: &#123; &quot;sku&quot;: &quot;222&quot;, &quot;color&quot;: &quot;blue&quot; &#125;, &quot;sizes&quot;: &quot;S&quot; &#125;</span><br><span class="line">&#123; &quot;_id&quot;: 4, &quot;dept&quot;: &quot;A&quot;, &quot;item&quot;: &#123; &quot;sku&quot;: &quot;333&quot;, &quot;color&quot;: &quot;black&quot; &#125;, &quot;sizes&quot;: [ &quot;S&quot; ] &#125;</span><br><span class="line">&lt;!-- 字段返回 --&gt;</span><br><span class="line">db.inventory.distinct( &quot;dept&quot; )</span><br><span class="line">[ &quot;A&quot;, &quot;B&quot; ]</span><br><span class="line">&lt;!-- 嵌套字段返回 --&gt;</span><br><span class="line">db.inventory.distinct( &quot;item.sku&quot; )</span><br><span class="line">[ &quot;111&quot;, &quot;222&quot;, &quot;333&quot; ]</span><br><span class="line">&lt;!-- 数组返回 --&gt;</span><br><span class="line">db.inventory.distinct( &quot;sizes&quot; )</span><br><span class="line">[ &quot;M&quot;, &quot;S&quot;, &quot;L&quot; ]</span><br><span class="line">&lt;!-- 加查询条件 --&gt;</span><br><span class="line">db.inventory.distinct( &quot;item.sku&quot;, &#123; dept: &quot;A&quot; &#125; )</span><br><span class="line">[ &quot;111&quot;, &quot;333&quot; ]</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>替换某条数据<br>updateOne 是更新文档中某个字段，replaceOne 则是替换整个文档</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let filter = &#123;title: &quot;House, M.D., Season Four: New Beginnings&quot;&#125;</span><br><span class="line">let doc = db.movieDetails.findOne(filter);</span><br><span class="line">doc.poster;</span><br><span class="line">doc.poster = &quot;https://www.imdb.com/title/tt1329164/mediaviewer/rm2619416576&quot;;</span><br><span class="line">doc.genres;</span><br><span class="line">doc.genres.push(&quot;TV Series&quot;);</span><br><span class="line">db.movieDetails.replaceOne(filter, doc);</span><br></pre></td></tr></table></figure>
@@ -276,7 +283,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-08-12T13:36:16.997Z" itemprop="dateUpdated">2019-08-12 21:36:16</time>
+    最后更新时间：<time datetime="2019-08-15T08:24:28.865Z" itemprop="dateUpdated">2019-08-15 16:24:28</time>
 </span><br>
 
 
@@ -358,7 +365,7 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/database/mogno3/" id="post-prev" class="post-nav-link">
+      <a href="/database/mongo3/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
         <h4 class="title">mongodb 之查询操作符</h4>
       </a>
