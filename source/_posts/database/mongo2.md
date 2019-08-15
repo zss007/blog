@@ -44,6 +44,9 @@ quit()
 - 查看数据库列表
 show databases
 
+- 使用数据库、创建数据库
+use databases
+
 - 查看当前数据库
 db
 
@@ -79,9 +82,36 @@ pretty() 格式化输出；
 it
 命令行查找默认显示20条数据，如果查看更多输入 it（iterate）遍历下个20条数据
 
+- 分页查询
+sort: 1 升序；-1 降序
+skip: 查询 5 条之后的数据
+limit: 总计返回 10 条件数据
+db.userInfo.find().sort({age: -1}).skip(5).limit(10)
+
 - 格式化输出字段
 db.collection.find({a: b}, {c: 1})
 查找默认显示全部字段，如果 project 特别指定返回某些字段，如 c: 1，则显示 c 和 _id，其他字段隐藏，_id 需明确指定（_id : 0）不返回才不会显示；如果设定一些字段为 0，则隐藏这些字段，其他字段显示
+
+- 查找集合中某个字段所有不同的值
+```
+<!-- 数据对象 -->
+{ "_id": 1, "dept": "A", "item": { "sku": "111", "color": "red" }, "sizes": [ "S", "M" ] }
+{ "_id": 2, "dept": "A", "item": { "sku": "111", "color": "blue" }, "sizes": [ "M", "L" ] }
+{ "_id": 3, "dept": "B", "item": { "sku": "222", "color": "blue" }, "sizes": "S" }
+{ "_id": 4, "dept": "A", "item": { "sku": "333", "color": "black" }, "sizes": [ "S" ] }
+<!-- 字段返回 -->
+db.inventory.distinct( "dept" )
+[ "A", "B" ]
+<!-- 嵌套字段返回 -->
+db.inventory.distinct( "item.sku" )
+[ "111", "222", "333" ]
+<!-- 数组返回 -->
+db.inventory.distinct( "sizes" )
+[ "M", "S", "L" ]
+<!-- 加查询条件 -->
+db.inventory.distinct( "item.sku", { dept: "A" } )
+[ "111", "333" ]
+```
 
 - 替换某条数据
 updateOne 是更新文档中某个字段，replaceOne 则是替换整个文档
