@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="青松的博客">
 <meta property="og:description" content="npm 是 nodeJs 的包管理器，使 JavaScript 开发人员可以轻松地共享和重用代码，并且可以轻松更新您共享的代码。NodeJs 自带 npm，所以下载安装 NodeJs 即可。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-28T07:47:36.717Z">
+<meta property="og:updated_time" content="2019-09-15T01:59:37.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="node 之 npm">
 <meta name="twitter:description" content="npm 是 nodeJs 的包管理器，使 JavaScript 开发人员可以轻松地共享和重用代码，并且可以轻松更新您共享的代码。NodeJs 自带 npm，所以下载安装 NodeJs 即可。">
@@ -186,7 +186,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>npm 是 nodeJs 的包管理器，使 JavaScript 开发人员可以轻松地共享和重用代码，并且可以轻松更新您共享的代码。NodeJs 自带 npm，所以下载安装 NodeJs 即可。<br><a id="more"></a></p>
-<h3 id="一、安装-npm-包"><a href="#一、安装-npm-包" class="headerlink" title="一、安装 npm 包"></a>一、安装 npm 包</h3><p>安装依赖包是 NPM 最常见的用法，执行安装命令后，NPM 会在当前目录下创建 node_modules 目录，然后在node_modules 目录下创建包目录，接着将包解压到这个目录下。<br>安装好依赖包后，直接在代码中调用 require(‘xxx’) 即可引入该包。require() 方法在做路径分析的时候会通过模块路径查找到 xxx 所在的位置。模块引入和包的安装这两个步骤是相辅相承的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 本地安装</span><br><span class="line">npm install &lt;package_name&gt;</span><br><span class="line">// 全局安装</span><br><span class="line">npm install &lt;package_name&gt; -g</span><br><span class="line">// 添加依赖性</span><br><span class="line">npm install &lt;package_name&gt; --save</span><br><span class="line">npm install &lt;package_name&gt; --save-dev</span><br></pre></td></tr></table></figure></p>
+<h3 id="一、安装-npm-包"><a href="#一、安装-npm-包" class="headerlink" title="一、安装 npm 包"></a>一、安装 npm 包</h3><p>安装依赖包是 NPM 最常见的用法，执行安装命令后，NPM 会在当前目录下创建 node_modules 目录，然后在node_modules 目录下创建包目录，接着将包解压到这个目录下。<br>安装好依赖包后，直接在代码中调用 require(‘xxx’) 即可引入该包。require() 方法在做路径分析的时候会通过模块路径查找到 xxx 所在的位置。模块引入和包的安装这两个步骤是相辅相承的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 本地安装，不会修改 package.json</span><br><span class="line">npm install &lt;package_name&gt;</span><br><span class="line">// 全局安装</span><br><span class="line">npm install &lt;package_name&gt; -g</span><br><span class="line">// 添加依赖性</span><br><span class="line">npm install &lt;package_name&gt; --save</span><br><span class="line">npm install &lt;package_name&gt; --save-dev</span><br></pre></td></tr></table></figure></p>
 <p>有两种方法来安装 npm 包：本地或全局。您可以根据要使用的软件包选择要使用的安装类型：本地安装即类似 Node.js 的 require，在自己项目中安装然后引入使用；全局安装会将 npm 包下载安装到 node 安装文件夹中，然后作为命令行工具来使用。<br>添加依赖性也有两种方法 <em>–save</em> 和 <em>–save-dev</em>，分别添加到 package.json 的 <em>dependencies</em> (发布之后还依赖的东西) 和 <em>devDependencies</em> (开发时候依赖的东西)，具体使用哪个，取决于如何使用这种依赖性。比如，你写 ES6 代码，如果你想编译成 ES5 发布那么 babel 就是 devDependencies。如果你用了 jQuery，由于发布之后还是依赖 jQuery，所以是 dependencies。</p>
 <ul>
 <li>从本地安装。对于一些没有发布到 NPM 上的包，或是因为网络原因导致无法直接安装的包，可以通过将包下载到本地，然后以本地安装。本地安装只需为 NPM 指明 package.json 文件所在的位置即可：它可以是一个包含 package.json 的存档文件，也可以是一个 URL 地址，也可以是一个目录下有 package.json 文件的目录位置。具体参数如下：</li>
@@ -241,7 +241,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-01-28T07:47:36.717Z" itemprop="dateUpdated">2019-01-28 15:47:36</time>
+    最后更新时间：<time datetime="2019-09-15T01:59:37.321Z" itemprop="dateUpdated">2019-09-15 09:59:37</time>
 </span><br>
 
 
