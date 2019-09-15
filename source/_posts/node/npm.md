@@ -9,7 +9,7 @@ npm 是 nodeJs 的包管理器，使 JavaScript 开发人员可以轻松地共�
 安装依赖包是 NPM 最常见的用法，执行安装命令后，NPM 会在当前目录下创建 node_modules 目录，然后在node_modules 目录下创建包目录，接着将包解压到这个目录下。
 安装好依赖包后，直接在代码中调用 require('xxx') 即可引入该包。require() 方法在做路径分析的时候会通过模块路径查找到 xxx 所在的位置。模块引入和包的安装这两个步骤是相辅相承的。
 ```
-// 本地安装，不会修改 package.json
+// 本地安装，旧版不会修改 package.json，新版等同于 --save
 npm install <package_name>
 // 全局安装
 npm install <package_name> -g
