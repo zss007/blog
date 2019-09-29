@@ -1,7 +1,7 @@
 ---
 title: clipboard 之介绍
 categories:
-- essay
+- source
 ---
 最近有用到粘贴复制功能，调用了[clipboard.js](https://github.com/zenorocha/clipboard.js)库，对其原理很感兴趣。研读源码后开始总结，这篇主要是功能介绍。
 <!--more-->
