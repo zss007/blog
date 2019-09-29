@@ -1,7 +1,7 @@
 ---
 title: hexo 之博客建站
 categories:
-- essay 
+- project 
 ---
 主要总结分享下我用 [hexo](https://hexo.io/zh-cn/docs/) 建站的过程。
 <!--more-->

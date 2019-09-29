@@ -19,6 +19,9 @@ menu:
   anchor:
     text: Source
     url: /categories/source
+  product-hunt:
+    text: Project
+    url: /categories/project
   github:
     url: https://github.com/zss007
     target: _blank

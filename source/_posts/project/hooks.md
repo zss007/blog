@@ -1,7 +1,7 @@
 ---
 title: cordova 之 hooks
 categories:
-- essay
+- project
 ---
 hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，分别在工程的 config.xml、插件的 plugin.xml 和 hooks 文件夹，这里介绍的是第三个地方。任何一门编程语言都能够写 hooks，但是考虑到跨平台运行（即需要不同语言的运行环境），推荐使用 Node.js。
 <!--more-->
@@ -9,7 +9,7 @@ hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许�
 hooks 应用场景一：修改应用配置信息，我们在应用开发中，引入的插件可能有冲突之类的问题，这个时候原生开发人员会让我们在添加平台加一些配置信息。也就是说我们每次添加平台后都需要手动去改平台中代码，不太方便，程序员就要尽可能的懒起来，这个时候就可以用上 hooks 了；
 hooks 应用场景二：环境切换，我们的 Cordova 工程经常有开发、uat、生产等不同环境。对应不同的环境，我们有不同的接口地址、不同的插件 API keys，甚至不同的应用图标和 Splash。对于不同接口地址、不同的应用图标和 Splash等，我们可以使用自定义 gulp 任务实现，但是对于插件中的接口地址、API keys 不太好做处理。
 ### 二、Cordova 支持的 hooks 类型
-<img src="/assets/cordova/hooks-type.png">
+<img src="/assets/essay/hooks-type.png">
 
 ### 三、hooks 执行顺序
 根据以上表格可以推导出不同类型 hooks 执行顺序，以 cordova platform add 和 cordova build 为例：
