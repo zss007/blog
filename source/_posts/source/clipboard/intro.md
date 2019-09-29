@@ -103,5 +103,5 @@ clipboard.destroy();
 ```
 ### 六、浏览器支持
 这个库依赖于 [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) 和 [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) 的 API。前者 [兼容所有的浏览器](http://caniuse.com/#search=selection)，后者兼容以下浏览器。
-<img src="/assets/essay/clipboard.png" alt="通用的占位符缩略图">
+<img src="/assets/source/clipboard.png" alt="通用的占位符缩略图">
 好消息是，如果你需要支持旧浏览器，clipboard.js 可以优雅降级。你所要做的就是在`success`事件触发时提示用户“已复制！”，`error`事件触发时提示用户“按 Ctrl+C 复制文字”（此时用户要复制的文字已经选择了）。你也可以通过运行`Clipboard.isSupported()`来检查浏览器是否支持 clipboard.js，如果不支持，你可以隐藏复制/剪切按钮。
