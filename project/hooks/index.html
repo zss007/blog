@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>cordova 之 hooks | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，分别在工程的 config.xml、插件的 plugin.xml 和 hooks 文件夹，这里介绍的是第三个地方。任何一门编程语言都能够写 hooks，但是考虑到跨平台运行（即需要不同语言的运行环境），推荐使用 Node.js。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cordova 之 hooks">
+<meta property="og:url" content="http://blog.master-ss.cn/project/hooks/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，分别在工程的 config.xml、插件的 plugin.xml 和 hooks 文件夹，这里介绍的是第三个地方。任何一门编程语言都能够写 hooks，但是考虑到跨平台运行（即需要不同语言的运行环境），推荐使用 Node.js。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/essay/hooks-type.png">
+<meta property="og:updated_time" content="2019-09-29T09:20:41.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cordova 之 hooks">
+<meta name="twitter:description" content="hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，分别在工程的 config.xml、插件的 plugin.xml 和 hooks 文件夹，这里介绍的是第三个地方。任何一门编程语言都能够写 hooks，但是考虑到跨平台运行（即需要不同语言的运行环境），推荐使用 Node.js。">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/essay/hooks-type.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">cordova 之 hooks</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">cordova 之 hooks</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-17T07:33:41.000Z" itemprop="datePublished" class="page-time">
+  2017-03-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/project/">project</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、hooks-应用场景"><span class="post-toc-text">一、hooks 应用场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、Cordova-支持的-hooks-类型"><span class="post-toc-text">二、Cordova 支持的 hooks 类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、hooks-执行顺序"><span class="post-toc-text">三、hooks 执行顺序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、应用实例"><span class="post-toc-text">四、应用实例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1、以我现在正在开发的-xxx-项目为例，添加平台后修改平台内配置信息（cordova-platform-add）"><span class="post-toc-text">4.1、以我现在正在开发的 xxx 项目为例，添加平台后修改平台内配置信息（cordova platform add）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2、修改插件配置信息（这里修改-xxx-插件-API-KEY-为例）"><span class="post-toc-text">4.2、修改插件配置信息（这里修改 xxx 插件 API_KEY 为例）</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-project/hooks" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">cordova 之 hooks</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-03-17 15:33:41" datetime="2017-03-17T07:33:41.000Z" itemprop="datePublished">2017-03-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/project/">project</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，分别在工程的 config.xml、插件的 plugin.xml 和 hooks 文件夹，这里介绍的是第三个地方。任何一门编程语言都能够写 hooks，但是考虑到跨平台运行（即需要不同语言的运行环境），推荐使用 Node.js。<br><a id="more"></a></p>
+<h3 id="一、hooks-应用场景"><a href="#一、hooks-应用场景" class="headerlink" title="一、hooks 应用场景"></a>一、hooks 应用场景</h3><p>hooks 应用场景一：修改应用配置信息，我们在应用开发中，引入的插件可能有冲突之类的问题，这个时候原生开发人员会让我们在添加平台加一些配置信息。也就是说我们每次添加平台后都需要手动去改平台中代码，不太方便，程序员就要尽可能的懒起来，这个时候就可以用上 hooks 了；<br>hooks 应用场景二：环境切换，我们的 Cordova 工程经常有开发、uat、生产等不同环境。对应不同的环境，我们有不同的接口地址、不同的插件 API keys，甚至不同的应用图标和 Splash。对于不同接口地址、不同的应用图标和 Splash等，我们可以使用自定义 gulp 任务实现，但是对于插件中的接口地址、API keys 不太好做处理。</p>
+<h3 id="二、Cordova-支持的-hooks-类型"><a href="#二、Cordova-支持的-hooks-类型" class="headerlink" title="二、Cordova 支持的 hooks 类型"></a>二、Cordova 支持的 hooks 类型</h3><p><img src="/assets/essay/hooks-type.png"></p>
+<h3 id="三、hooks-执行顺序"><a href="#三、hooks-执行顺序" class="headerlink" title="三、hooks 执行顺序"></a>三、hooks 执行顺序</h3><p>根据以上表格可以推导出不同类型 hooks 执行顺序，以 cordova platform add 和 cordova build 为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cordova platform add：</span><br><span class="line">    before_platform_add</span><br><span class="line">    before_prepare</span><br><span class="line">    after_prepare</span><br><span class="line">    before_plugin_install</span><br><span class="line">    after_plugin_install</span><br><span class="line">    after_platform_add</span><br><span class="line">    </span><br><span class="line">cordova build：</span><br><span class="line">    before_build</span><br><span class="line">    before_prepare</span><br><span class="line">    after_prepare</span><br><span class="line">    before_compile</span><br><span class="line">    after_compile</span><br><span class="line">    after_build</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、应用实例"><a href="#四、应用实例" class="headerlink" title="四、应用实例"></a>四、应用实例</h3><h4 id="4-1、以我现在正在开发的-xxx-项目为例，添加平台后修改平台内配置信息（cordova-platform-add）"><a href="#4-1、以我现在正在开发的-xxx-项目为例，添加平台后修改平台内配置信息（cordova-platform-add）" class="headerlink" title="4.1、以我现在正在开发的 xxx 项目为例，添加平台后修改平台内配置信息（cordova platform add）"></a>4.1、以我现在正在开发的 xxx 项目为例，添加平台后修改平台内配置信息（cordova platform add）</h4><p>1、在应用根目录下新建 hooks 文件夹（如果先前有可删除），在 hooks 文件夹内新建 after_platform_add 文件夹，内新建一个 js 文件，命名随意；<br>2、读写平台中的 AndroidManifest.xml 文件，修改配置信息；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">一、解决方法数越界       </span><br><span class="line">1. build.gradle 配置</span><br><span class="line">defaultConfig&#123;</span><br><span class="line">	multiDexEnabled true</span><br><span class="line">&#125;  </span><br><span class="line">2. dependencies&#123;</span><br><span class="line">	compile &quot;com.android.support:multidex:1.0.0&quot;</span><br><span class="line">&#125;</span><br><span class="line">3. AndroidManifest.xml 中 Application 添加属性</span><br><span class="line">android:name=&quot;android.support.multidex.MultiDexApplication&quot;</span><br><span class="line">    </span><br><span class="line">二、解决条码扫描插件最低版本冲突 </span><br><span class="line">1. AndroidManifest.xml 中 Manifest 添加属性  </span><br><span class="line">xmlns:tools=&quot;http://schemas.android.com/tools&quot;     </span><br><span class="line">2. Manifest 中添加节点</span><br><span class="line">&lt;uses-sdk android:minSdkVersion=&quot;16&quot; tools:overrideLibrary=&quot;org.xwalk.core&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>3、Android 打包配置需求如上；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line">var rootdir = process.argv[2];</span><br><span class="line"></span><br><span class="line">//正则表达式替换文本</span><br><span class="line">function replace_string_in_file(filename, to_replace, replace_with) &#123;</span><br><span class="line">  var data = fs.readFileSync(filename, &apos;utf8&apos;);</span><br><span class="line">  var result = data.replace(to_replace, replace_with);</span><br><span class="line">  fs.writeFileSync(filename, result, &apos;utf8&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (rootdir) &#123;</span><br><span class="line">  //获取平台信息数组</span><br><span class="line">  var platforms = (process.env.CORDOVA_PLATFORMS ? process.env.CORDOVA_PLATFORMS.split(&apos;,&apos;) : []);</span><br><span class="line">  for (var x = 0; x &lt; platforms.length; x += 1) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      var platform = platforms[x].trim().toLowerCase();</span><br><span class="line">      //如果是android平台</span><br><span class="line">      if (platform === &apos;android&apos;) &#123;</span><br><span class="line">        //替换平台内AndroidManifest.xml文件内容</span><br><span class="line">        var fullfilename = path.join(rootdir, ‘platforms/android/AndroidManifest.xml&apos;);</span><br><span class="line">        //判断AndroidManifest.xml文件是否存在</span><br><span class="line">        if (fs.existsSync(fullfilename)) &#123;</span><br><span class="line">          replace_string_in_file(fullfilename, &quot;&lt;manifest&quot;, &apos;&lt;manifest xmlns:tools=&quot;http://schemas.android.com/tools&quot;&apos;);</span><br><span class="line">          replace_string_in_file(fullfilename, &quot;&lt;supports-screens&quot;, &apos;&lt;uses-sdk android:minSdkVersion=&quot;16&quot; tools:overrideLibrary=&quot;org.xwalk.core&quot; /&gt;&lt;supports-screens&apos;);</span><br><span class="line">          replace_string_in_file(fullfilename, &quot;&lt;application&quot;, &apos;&lt;application android:name=&quot;android.support.multidex.MultiDexApplication&quot;&apos;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          console.log(&quot;missing: &quot; + fullfilename);</span><br><span class="line">        &#125;</span><br><span class="line">        //替换build.gradle文件内容</span><br><span class="line">        var fullfilename2 = path.join(rootdir, &apos;platforms/android/build.gradle&apos;);</span><br><span class="line">        if (fs.existsSync(fullfilename2)) &#123;</span><br><span class="line">          replace_string_in_file(fullfilename2, /defaultConfig\s*\&#123;/gi, &apos;defaultConfig &#123;\n multiDexEnabled true&apos;);</span><br><span class="line">          replace_string_in_file(fullfilename2, /&#125;\s*dependencies\s*\&#123;/gi, &apos;&#125;\n dependencies &#123;\n compile &quot;com.android.support:multidex:1.0.0&quot;&apos;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          console.log(&quot;missing: &quot; + fullfilename2);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">      process.stdout.write(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>4、附上 hooks 源代码(xxx/after_platform_add/xxx.js)。</p>
+<h4 id="4-2、修改插件配置信息（这里修改-xxx-插件-API-KEY-为例）"><a href="#4-2、修改插件配置信息（这里修改-xxx-插件-API-KEY-为例）" class="headerlink" title="4.2、修改插件配置信息（这里修改 xxx 插件 API_KEY 为例）"></a>4.2、修改插件配置信息（这里修改 xxx 插件 API_KEY 为例）</h4><p>1、在应用根目录下新建 hooks 文件夹（如果先前有可删除），在 hooks 文件夹内新建 before_build 和 before_compile 文件夹，内分别新建一个 js 文件，命令随意；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、修改 android 平台内 AndroidManifest.xml，配置 RONG_CLOUD_APP_KEY（&lt;meta-data android:name=“RONG_CLOUD_APP_KEY&quot; android:value=&quot;&quot; /&gt;）</span><br><span class="line">2、修改 ios 平台的 plist文件，配置参数（&lt;config-file target=&quot;*LBXIMConfig.plist&quot;  parent=&quot;RongCloudKey&quot;&gt;&lt;string&gt;$RONGCLOUD_KEY&lt;/string&gt;&lt;/config-file&gt;）</span><br></pre></td></tr></table></figure></p>
+<p>2、需求如上（需在原生开发人员配合下修改，由原生开发人员提出修改需求）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line">var rootdir = process.argv[2];</span><br><span class="line"></span><br><span class="line">function replace_string_in_file(filename, to_replace, replace_with) &#123;</span><br><span class="line">  var data = fs.readFileSync(filename, &apos;utf8&apos;);</span><br><span class="line">  var result = data.replace(data.match(to_replace)[0], replace_with);</span><br><span class="line">  fs.writeFileSync(filename, result, &apos;utf8&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (rootdir) &#123;</span><br><span class="line">  // go through each of the platform directories that have been prepared</span><br><span class="line">  var platforms = (process.env.CORDOVA_PLATFORMS ? process.env.CORDOVA_PLATFORMS.split(&apos;,&apos;) : []);</span><br><span class="line">  for (var x = 0; x &lt; platforms.length; x += 1) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      var platform = platforms[x].trim().toLowerCase();</span><br><span class="line">      if (platform === &apos;android&apos;) &#123;</span><br><span class="line">      //替换AndroidManifest.xml文件内容，删除RONG_CLOUD_APP_KEY</span><br><span class="line">        var fullfilename = path.join(rootdir, &apos;platforms/android/AndroidManifest.xml&apos;);</span><br><span class="line">        replace_string_in_file(fullfilename, &apos;&lt;meta-data\.\*android:name=&quot;RONG_CLOUD_APP_KEY&quot;\.\*\/&gt;&apos;, &apos;&apos;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">      process.stdout.write(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3、考虑到 android 在 prepare中 会添加 <meta-data android:name="RONG_CLOUD_APP_KEY" android:value=""> 到AndroidManifest.xml 中，所以在 before_build 文件夹中写如下代码，删除相应配置信息，代码如上(xxx/before_build/xxx.js)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line">var rootdir = process.argv[2];</span><br><span class="line">function replace_string_in_file(filename, to_replace, replace_with) &#123;</span><br><span class="line">  var data = fs.readFileSync(filename, &apos;utf8&apos;);</span><br><span class="line">  var result = data.replace(data.match(to_replace)[0], replace_with);</span><br><span class="line">  fs.writeFileSync(filename, result, &apos;utf8&apos;);</span><br><span class="line">&#125;</span><br><span class="line">//获取应用名（因为在ios平台中plist配置文件在应用名文件夹目录下）</span><br><span class="line">function get_data_in_configxmlfile(filename, to_replace) &#123;</span><br><span class="line">  var data = fs.readFileSync(filename, &apos;utf8&apos;);</span><br><span class="line">  return data.match(to_replace)[1];</span><br><span class="line">&#125;</span><br><span class="line">//替代plist文件内的配置信息</span><br><span class="line">function replace_data_in_plistfile(filename, to_replace, replace_with) &#123;</span><br><span class="line">  var configPlist = fs.readFileSync(filename, &apos;utf8&apos;);</span><br><span class="line"></span><br><span class="line">  var result = configPlist.replace(to_replace, replace_with);</span><br><span class="line">  fs.writeFileSync(filename, result, &apos;utf8&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (rootdir) &#123;</span><br><span class="line">  // go through each of the platform directories that have been prepared</span><br><span class="line">  var platforms = (process.env.CORDOVA_PLATFORMS ? process.env.CORDOVA_PLATFORMS.split(&apos;,&apos;) : []);</span><br><span class="line">  var ourConfigFile = path.join(rootdir, &quot;app/config/config.json&quot;);</span><br><span class="line">  if (fs.existsSync(ourConfigFile)) &#123;</span><br><span class="line">    var configObj = JSON.parse(fs.readFileSync(ourConfigFile, &apos;utf8&apos;));</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    console.log(&quot;app/config/config.json not exist!!!&quot;);</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  for (var x = 0; x &lt; platforms.length; x += 1) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      var platform = platforms[x].trim().toLowerCase();</span><br><span class="line">      if (platform === &apos;android&apos;) &#123;</span><br><span class="line">     //替换AndroidManifest.xml文件内容，配置RONG_CLOUD_APP_KEY</span><br><span class="line">        var fullfilename = path.join(rootdir, &apos;platforms/android/AndroidManifest.xml&apos;);</span><br><span class="line">        replace_string_in_file(fullfilename, &apos;android:name=&quot;RONG_CLOUD_APP_KEY&quot;\.\*\/&gt;&apos;,</span><br><span class="line">          &apos;android:name=&quot;RONG_CLOUD_APP_KEY&quot; android:value=&quot;&apos; + configObj[&quot;baseConfig&quot;][&quot;RONG_CLOUD_APP_KEY&quot;] + &apos;&quot; /&gt;&apos;);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        //添加config.xml，读取文件内的应用名</span><br><span class="line">        var ourIosConfigFile = path.join(rootdir, &quot;config.xml&quot;);</span><br><span class="line">        //获取应用名</span><br><span class="line">        var appName = get_data_in_configxmlfile(ourIosConfigFile, &quot;&lt;name&gt;(\.\*)&lt;\/name&gt;&quot;);</span><br><span class="line">        //修改im配置plist文件</span><br><span class="line">        var imConfigFile = &apos;platforms/ios/&apos; + appName + &apos;/Resources/LBXIMConfig.plist&apos;;</span><br><span class="line">        if (fs.existsSync(imConfigFile)&#123;</span><br><span class="line">	replace_data_in_plistfile(imConfigFile, /&lt;key&gt;RongCloudKey&lt;\/key&gt;\s*&lt;string&gt;\s*\S*&lt;\/string&gt;/gi, &apos;&lt;key&gt;RongCloudKey&lt;/key&gt;\n\t&lt;string&gt;&apos; + configObj[&quot;baseConfig&quot;][&quot;RONG_CLOUD_APP_KEY&quot;] + &apos;&lt;\/string&gt;&apos;);</span><br><span class="line">        &#125; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch (e) &#123;</span><br><span class="line">      process.stdout.write(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></meta-data></p>
+<p>4、在平台编译之前加上参数。读取配置文件（自定义）内的 RONG_CLOUD_APP_KEY，把参数信息写入平台内部的配置文件中（xxx/before_compile/xxx.js）。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-09-29T09:20:41.636Z" itemprop="dateUpdated">2019-09-29 17:20:41</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/project/hooks/" target="_blank" rel="external">http://blog.master-ss.cn/project/hooks/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/project/hooks/&title=《cordova 之 hooks》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/project/hooks/&title=《cordova 之 hooks》 — 青松的博客&source=hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/project/hooks/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《cordova 之 hooks》 — 青松的博客&url=http://blog.master-ss.cn/project/hooks/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/project/hooks/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/source/zepto/formJs/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">zepto 之 form.js</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/tools/bower/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tools 之 bower</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/project/hooks/&title=《cordova 之 hooks》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/project/hooks/&title=《cordova 之 hooks》 — 青松的博客&source=hooks 是一些在 Cordova 执行命令时运行的特殊脚本，能够允许你拓展 Cordova 命令来适应你自己的需求。官方推荐三个地方定义 hooks，..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/project/hooks/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《cordova 之 hooks》 — 青松的博客&url=http://blog.master-ss.cn/project/hooks/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/project/hooks/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAB0UlEQVR42u3awa7CMAwEQP7/p3kSJySgrO009EmTUyVKO71Yydq3W7zuj/V8/bxe73y9//iZixcuLu6Yez9cCfcT+vjzkme++SRcXNyN3Lx45SUpIZaLHS4u7sW41V+TsoWLi/vfufkG5Zj+g7qLi4vb4iaHn97qRS0Lzmq4uLgDbi8wXXt9er6Li4u7qCuxKjxNDkjR23Fxcbdwk8gjeUEvVO0FJbi4uGdze63QSdOlt5PBxcX9FbdadKobl/xjPr4dFxd3C3dtqzX/vKTMfbkTFxf3NG4ecOQFKH9CPvr5pu7i4uKexq02OwtZS6umRu1VXFzcLdxqVJr8mhepZb1fXFzcLdxJCzYfv0i2NYtrMC4u7uETJpuVHr06loGLi3tNbrX5Ohmz+LIZwsXF3cLNS9IkEs13W4XAFBcX9zRuXqSSKHMSgkSlDRcXdyN3Ep4uaIfkTRdcXNyN3Gokmkcb1WBllMTg4uIu4k6ar/O+TTVMwcXF3cntDWAdH5CqB5tCvIKLi7uRm49iTIpRvvX5ku/i4uJehjsf1KgenN78CxcX95Lc3iBFdYwDFxf3Ctx8tCKn9A4/y2IRXFzcAXcSmOYtmbyVkkeuuLi4J3D/AGO2vlV1DnNxAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

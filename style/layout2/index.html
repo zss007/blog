@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>style 之页面布局二 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="style 之页面布局二">
+<meta property="og:url" content="http://blog.master-ss.cn/style/layout2/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-29T09:24:16.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="style 之页面布局二">
+<meta name="twitter:description" content="上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">style 之页面布局二</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">style 之页面布局二</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-13T01:43:17.000Z" itemprop="datePublished" class="page-time">
+  2018-10-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/style/">style</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、场景"><span class="post-toc-text">一、场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、绝对定位布局"><span class="post-toc-text">二、绝对定位布局</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、flex-布局"><span class="post-toc-text">三、flex 布局</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、table-布局"><span class="post-toc-text">四、table 布局</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、grid-布局"><span class="post-toc-text">五、grid 布局</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-style/layout2" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">style 之页面布局二</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-10-13 09:43:17" datetime="2018-10-13T01:43:17.000Z" itemprop="datePublished">2018-10-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/style/">style</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。<br><a id="more"></a></p>
+<h3 id="一、场景"><a href="#一、场景" class="headerlink" title="一、场景"></a>一、场景</h3><p>三栏布局：要求：上下高度固定，中间自适应。先设置初始化样式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> * &#123;</span><br><span class="line">    padding: 0;</span><br><span class="line">    margin: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">html,</span><br><span class="line">body,</span><br><span class="line">section &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">section &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    margin-left: 15px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.container div &#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、绝对定位布局"><a href="#二、绝对定位布局" class="headerlink" title="二、绝对定位布局"></a>二、绝对定位布局</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 绝对定位解决方案 --&gt;</span><br><span class="line">&lt;section class=&quot;container absolute&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .absolute &#123;</span><br><span class="line">            position: relative;</span><br><span class="line">            width: 200px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .absolute div &#123;</span><br><span class="line">            position: absolute;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .absolute .top &#123;</span><br><span class="line">            top: 0;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: aquamarine;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .absolute .bottom &#123;</span><br><span class="line">            bottom: 0;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: azure;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .absolute .middle &#123;</span><br><span class="line">            overflow: scroll;</span><br><span class="line">            top: 100px;</span><br><span class="line">            bottom: 100px;</span><br><span class="line">            background: beige;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;middle&quot;&gt;</span><br><span class="line">        &lt;h1&gt;绝对定位解决方案&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;简单快捷，可拓展性差&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="三、flex-布局"><a href="#三、flex-布局" class="headerlink" title="三、flex 布局"></a>三、flex 布局</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- flex 解决方案 --&gt;</span><br><span class="line">&lt;section class=&quot;container flex&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .flex &#123;</span><br><span class="line">            display: flex;</span><br><span class="line">            flex-direction: column;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .flex .top &#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: aquamarine;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .flex .bottom &#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: azure;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .flex .middle &#123;</span><br><span class="line">            flex: 1;</span><br><span class="line">            overflow: scroll;</span><br><span class="line">            background: beige;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;middle&quot;&gt;</span><br><span class="line">        &lt;h1&gt;flex解决方案&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;简单快捷，兼容性差&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="四、table-布局"><a href="#四、table-布局" class="headerlink" title="四、table 布局"></a>四、table 布局</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- table 解决方案 --&gt;</span><br><span class="line">&lt;section class=&quot;container table&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .table &#123;</span><br><span class="line">            display: table;</span><br><span class="line">            width: 200px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .table div &#123;</span><br><span class="line">            display: table-row;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .table .top &#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: aquamarine;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .table .middle &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            overflow: scroll;</span><br><span class="line">            height: 100%;</span><br><span class="line">            background: beige;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .table .bottom &#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: azure;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;&amp;nbsp;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;middle&quot;&gt;</span><br><span class="line">        &lt;h1&gt;table 解决方案&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;兼容性非常好，但是不太推荐&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;&amp;nbsp;&lt;/div&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="五、grid-布局"><a href="#五、grid-布局" class="headerlink" title="五、grid 布局"></a>五、grid 布局</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- grid 解决方案 --&gt;</span><br><span class="line">&lt;section class=&quot;container grid&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .grid &#123;</span><br><span class="line">            display: grid;</span><br><span class="line">            grid-template-columns: 200px;</span><br><span class="line">            grid-template-rows: 100px auto 100px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid .top &#123;</span><br><span class="line">            background: aquamarine;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid .bottom &#123;</span><br><span class="line">            background: azure;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid .middle &#123;</span><br><span class="line">            overflow: scroll;</span><br><span class="line">            background: beige;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;middle&quot;&gt;</span><br><span class="line">        &lt;h1&gt;grid 解决方案&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;功能强大，兼容性不好&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-09-29T09:24:16.988Z" itemprop="dateUpdated">2019-09-29 17:24:16</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/style/layout2/" target="_blank" rel="external">http://blog.master-ss.cn/style/layout2/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/style/layout2/&title=《style 之页面布局二》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/style/layout2/&title=《style 之页面布局二》 — 青松的博客&source=上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/style/layout2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《style 之页面布局二》 — 青松的博客&url=http://blog.master-ss.cn/style/layout2/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/style/layout2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/style/boxer/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">style 之盒模型及 BFC</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/style/layout/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">style 之页面布局一</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/style/layout2/&title=《style 之页面布局二》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/style/layout2/&title=《style 之页面布局二》 — 青松的博客&source=上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/style/layout2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《style 之页面布局二》 — 青松的博客&url=http://blog.master-ss.cn/style/layout2/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/style/layout2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3awWoFIQwF0Pf/Pz2Frh6UcW6MyhSOq4eV8dhFMImfTzyu3/H9+3v8XTn312UDFxe3zb2GI1lztz7ZJTfg4uKe5ybBa0yphr/xN2/ncXFxX8Ydz4znx2twcXH/O3ccyPKAhYuL+35udZskjalemxbnari4uA3uXMF07e/t9V1cXNxFXYlOaEtSnfK+uLi4R7idJKcTsPLr0UOuhouLu42bg5KP5gWOBY8zcHFxN3OT5ken3ZLPRypcXNzj3CTJqRZAk72SgiwuLu5u7lyISS4ic+2WqCCCi4u7mZuHleph1j7vwMXFPcnNn02MQ1U+Uy21RE0UXFzcpdxqcOlfU6qBcjK04eLiNrh522PuCVenPPoQd3FxcQ9yO48h5h5tFP5NuLi4R7jVZmo1Qao2cQt3MVxc3G3c/vOIvE07FxBvm6y4uLjbuKvuD+U0phj4cHFxT3Kv4thRQCl8HxcX9wi3E1aSg+WPNSdfjuDi4m7j5ht3nlZUA9lDHxgXF/cINw9ec0WQueTnNpDh4uK+jNs5RvV4uLi47+dW13RYC644uLi4B5OfpAhSZRUOg4uLe4S7qmDab5n0UyZcXNw29wfI15WMSXA+wgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
