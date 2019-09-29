@@ -1,7 +1,7 @@
 ---
-title: css 之 Sass 入门二
+title: style 之 Sass 入门二
 categories:
-- css
+- style
 ---
 继续研究 sass 的运算、控制命令、函数、@ 规范等。
 <!--more-->

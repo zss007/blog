@@ -1,7 +1,7 @@
 ---
-title: css 之页面布局二
+title: style 之页面布局二
 categories:
-- css
+- style
 ---
 上节主要讲到水平三栏布局，这节主要探讨垂直三栏布局。
 <!--more-->

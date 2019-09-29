@@ -1,7 +1,7 @@
 ---
-title: css 之 H5 终端适配
+title: style 之 H5 终端适配
 categories:
-- css 
+- style 
 ---
 这节主要是研究手淘团队的适配方案 amfe-flexible，及[源码](https://github.com/amfe/lib-flexible)解析。
 <!--more-->

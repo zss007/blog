@@ -1,7 +1,7 @@
 ---
-title: css 之页面布局一
+title: style 之页面布局一
 categories:
-- css
+- style
 ---
 页面布局主要考察 HTML 以及 CSS 的功底，对页面布局的把控能力。
 <!--more-->

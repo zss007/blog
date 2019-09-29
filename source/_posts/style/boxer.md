@@ -1,7 +1,7 @@
 ---
-title: css 之盒模型及 BFC
+title: style 之盒模型及 BFC
 categories:
-- css
+- style
 ---
 CSS 盒模型是 CSS 的基石，非常重要的一块内容。
 <!--more-->
