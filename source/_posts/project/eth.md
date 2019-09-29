@@ -1,7 +1,7 @@
 ---
 title: blockchain 之 eth 钱包实战
 categories:
-- essay
+- project
 ---
 这章介绍 eth（以太坊）区块链钱包实战。
 <!--more-->

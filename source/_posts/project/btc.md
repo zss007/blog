@@ -1,7 +1,7 @@
 ---
 title: blockchain 之比特币钱包实战
 categories:
-- essay
+- project
 ---
 最近几个月都在搞区块链，是时候总结一波了，这章介绍比特币区块链钱包实战。
 <!--more-->

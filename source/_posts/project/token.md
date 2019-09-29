@@ -1,7 +1,7 @@
 ---
 title: blockchain 之 eth 发币、映射、钱包
 categories:
-- essay
+- project
 ---
 这章介绍以太坊发币，映射 eos 公链和钱包开发价值。
 <!--more-->

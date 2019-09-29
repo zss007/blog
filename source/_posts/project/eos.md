@@ -1,7 +1,7 @@
 ---
 title: blockchain 之 eos 钱包实战
 categories:
-- essay
+- project
 ---
 这章介绍 eos（Enterprise Operation System）区块链钱包实战。
 <!--more-->
