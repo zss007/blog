@@ -7,8 +7,8 @@ categories:
 <!--more-->
 ### 一、什么是 Source Map
 Source Map 提供了一个映射压缩文件到原文件初始位置的方法。这就意味着，使用浏览器或者其他软件可以轻松调试文件，即使是在资源文件以及被压缩后。Chrome 和 Firefox 开发工具都已经内置支持 Source Map 了。当代码出错的时候，调试工具将直接显示原文件代码，而不是压缩后的，给开发者带来了很大方便。
-<img src="/assets/tools/chrome-tools.png">
-<img src="/assets/tools/firefox-tools.png">
+<img src="/assets/tools/sourcemap/chrome-tools.png">
+<img src="/assets/tools/sourcemap/firefox-tools.png">
 ### 二、Source Map 如何生效
 只要在转换后的代码尾部，加上一行就可以启用 Source Map 了，map 文件可以放在网络上，也可以放在本地文件系统。
 ```
