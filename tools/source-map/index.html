@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="青松的博客">
 <meta property="og:description" content="一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/chrome-tools.png">
-<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/firefox-tools.png">
-<meta property="og:updated_time" content="2018-04-19T07:25:43.000Z">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/sourcemap/chrome-tools.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/tools/sourcemap/firefox-tools.png">
+<meta property="og:updated_time" content="2019-10-13T13:14:33.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tools 之 source-map">
 <meta name="twitter:description" content="一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。">
-<meta name="twitter:image" content="http://blog.master-ss.cn/assets/tools/chrome-tools.png">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/tools/sourcemap/chrome-tools.png">
     
         <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
     
@@ -196,7 +196,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>一个最简单的优化网站方法就是合并、压缩 JS 和 CSS 文件。但是如果需要在这些压缩后的文件中进行调试，这个时候实际运行的代码不同于开发代码，debug 会变得很困难，这就是 Source Map 想要解决的问题。<br><a id="more"></a></p>
-<h3 id="一、什么是-Source-Map"><a href="#一、什么是-Source-Map" class="headerlink" title="一、什么是 Source Map"></a>一、什么是 Source Map</h3><p>Source Map 提供了一个映射压缩文件到原文件初始位置的方法。这就意味着，使用浏览器或者其他软件可以轻松调试文件，即使是在资源文件以及被压缩后。Chrome 和 Firefox 开发工具都已经内置支持 Source Map 了。当代码出错的时候，调试工具将直接显示原文件代码，而不是压缩后的，给开发者带来了很大方便。<br><img src="/assets/tools/chrome-tools.png"><br><img src="/assets/tools/firefox-tools.png"></p>
+<h3 id="一、什么是-Source-Map"><a href="#一、什么是-Source-Map" class="headerlink" title="一、什么是 Source Map"></a>一、什么是 Source Map</h3><p>Source Map 提供了一个映射压缩文件到原文件初始位置的方法。这就意味着，使用浏览器或者其他软件可以轻松调试文件，即使是在资源文件以及被压缩后。Chrome 和 Firefox 开发工具都已经内置支持 Source Map 了。当代码出错的时候，调试工具将直接显示原文件代码，而不是压缩后的，给开发者带来了很大方便。<br><img src="/assets/tools/sourcemap/chrome-tools.png"><br><img src="/assets/tools/sourcemap/firefox-tools.png"></p>
 <h3 id="二、Source-Map-如何生效"><a href="#二、Source-Map-如何生效" class="headerlink" title="二、Source Map 如何生效"></a>二、Source Map 如何生效</h3><p>只要在转换后的代码尾部，加上一行就可以启用 Source Map 了，map 文件可以放在网络上，也可以放在本地文件系统。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//@ sourceMappingURL=/path/to/file.js.map</span><br></pre></td></tr></table></figure></p>
 <p>可以使用 UglifyJS 等工具生成 Source Map。</p>
 <h3 id="三、Source-Map-原理"><a href="#三、Source-Map-原理" class="headerlink" title="三、Source Map 原理"></a>三、Source Map 原理</h3><h5 id="3-1-打开-Source-map-文件，它大概是这个样子："><a href="#3-1-打开-Source-map-文件，它大概是这个样子：" class="headerlink" title="3.1 打开 Source map 文件，它大概是这个样子："></a>3.1 打开 Source map 文件，它大概是这个样子：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">　 version : 3,</span><br><span class="line"> 　file: &quot;out.js&quot;,</span><br><span class="line"> 　sourceRoot : &quot;&quot;,</span><br><span class="line"> 　sources: [&quot;foo.js&quot;, &quot;bar.js&quot;],</span><br><span class="line"> 　names: [&quot;src&quot;, &quot;maps&quot;, &quot;are&quot;, &quot;fun&quot;],</span><br><span class="line"> 　mappings: &quot;AAgBC,SAAQ,CAAEA&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -213,7 +213,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-19T07:25:43.000Z" itemprop="dateUpdated">2018-04-19 15:25:43</time>
+    最后更新时间：<time datetime="2019-10-13T13:14:33.266Z" itemprop="dateUpdated">2019-10-13 21:14:33</time>
 </span><br>
 
 
