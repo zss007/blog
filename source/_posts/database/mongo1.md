@@ -28,4 +28,4 @@ MongoDB Compass 是官方数据库可视化工具，下载地址是 https://www.
 <img src="/assets/database/mongo/search.png">
 
 用户甚至可以使用 shift + 拖拽 的方式进行地理位置区域查询。
-<img src="/assets/database/mongo/search.png">
+<img src="/assets/database/mongo/search-geo.png">

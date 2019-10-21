@@ -160,7 +160,7 @@ db.movieDetails.updateOne({
 ```
 
 - $unset
-清空键值对
+删除相应字段
 ```
 db.movieDetails.updateMany({
   rated: null
