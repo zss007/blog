@@ -1,9 +1,9 @@
 ---
-title: mongodb 聚合查询核心
+title: mongodb 聚合查询组合信息
 categories:
 - database
 ---
-mongodb aggregation 核心。
+mongodb aggregation 组合信息操作符
 <!--more--> 
 
 ### 一、$group
