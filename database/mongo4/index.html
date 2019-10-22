@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>mongodb 聚合查询基础 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="mongodb aggregation 基础。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb 聚合查询基础">
+<meta property="og:url" content="http://blog.master-ss.cn/database/mongo4/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="mongodb aggregation 基础。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-21T14:24:32.844Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongodb 聚合查询基础">
+<meta name="twitter:description" content="mongodb aggregation 基础。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">mongodb 聚合查询基础</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">mongodb 聚合查询基础</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-21T09:53:04.749Z" itemprop="datePublished" class="page-time">
+  2019-10-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、基础知识"><span class="post-toc-text">一、基础知识</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、基础命令"><span class="post-toc-text">二、基础命令</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-database/mongo4" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">mongodb 聚合查询基础</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-21 17:53:04" datetime="2019-10-21T09:53:04.749Z" itemprop="datePublished">2019-10-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>mongodb aggregation 基础。<br><a id="more"></a> </p>
+<h3 id="一、基础知识"><a href="#一、基础知识" class="headerlink" title="一、基础知识"></a>一、基础知识</h3><ul>
+<li><p>远程连接<br>mongo “mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/test?replicaSet=Cluster0-shard-0” -authenticationDatabase admin -ssl -username m001-student -password m001-mongodb-basics</p>
+</li>
+<li><p>导出<br>mongodump -u m121 -p aggregations -h “Cluster0-shard-0/cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017” –db aggregations –authenticationDatabase admin –ssl -o /Users/songsong.zhang/Desktop/mongo</p>
+</li>
+<li><p>导入<br>mongorestore –db aggregations /Users/songsong.zhang/Desktop/mongo/aggregations</p>
+</li>
+<li><p>管道通信<br>$match &gt; $project &gt; $group<br>$match: 用来过滤文档查询<br>$project: 用来格式化输出<br>$group: 用来数组分组</p>
+</li>
+</ul>
+<h3 id="二、基础命令"><a href="#二、基础命令" class="headerlink" title="二、基础命令"></a>二、基础命令</h3><ul>
+<li><p>$match<br>$match 使用 Mongodb 查询语句，应尽可能在前面被调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">db.solarSystem.aggregate([&#123;</span><br><span class="line">  &quot;$match&quot;: &#123; &quot;type&quot;: &#123; &quot;$ne&quot;: &quot;Star&quot;&#125; &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  &quot;$count&quot;: &quot;planets&quot;</span><br><span class="line">&#125;]);</span><br><span class="line"></span><br><span class="line">应用实例：</span><br><span class="line">在下一个电影之夜帮助 MongoDB 挑选电影，可能的电影必须满足以下条件：</span><br><span class="line">imdb.rating 至少为 7；</span><br><span class="line">genres 不包含 &quot;Crime&quot; 或 &quot;Horror&quot;；</span><br><span class="line">rated 为 &quot;PG&quot; 或 &quot;G&quot;；</span><br><span class="line">languages 包含 &quot;English&quot; 和 &quot;Japanese&quot;；</span><br><span class="line">具体管道通信代码如下：</span><br><span class="line">var pipeline = [</span><br><span class="line">  &#123;</span><br><span class="line">    $match: &#123;</span><br><span class="line">      &quot;imdb.rating&quot;: &#123; $gte: 7 &#125;,</span><br><span class="line">      genres: &#123; $nin: [ &quot;Crime&quot;, &quot;Horror&quot; ] &#125; ,</span><br><span class="line">      rated: &#123; $in: [&quot;PG&quot;, &quot;G&quot; ] &#125;,</span><br><span class="line">      languages: &#123; $all: [ &quot;English&quot;, &quot;Japanese&quot; ] &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$project<br>一旦表明某个字段显式返回，则所有返回的字段均需要显式表明，_id 除外；<br>不仅仅可以移除和返回字段，而且可以添加新字段；<br>在聚合管道中可多次使用；<br>可使用已存在字段重新分配新值或创建新字段；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">db.solarSystem.aggregate([&#123;</span><br><span class="line">	&quot;$project&quot;: &#123;</span><br><span class="line">		&quot;_id&quot;: 0,</span><br><span class="line">		&quot;name&quot;: 1,</span><br><span class="line">		&quot;myWeight&quot;: &#123;</span><br><span class="line">			&quot;$multiply&quot;: [&#123;</span><br><span class="line">				&quot;$divide&quot;: [&quot;$gravity.value&quot;, 9.8]</span><br><span class="line">			&#125;, 86]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;]);</span><br><span class="line"></span><br><span class="line">应用实例：</span><br><span class="line">我们的电影数据集包含许多不同的文档，其中一些具有比其他更复杂的标题。如果我们想分析集合以查找仅由一个单词组成的电影标题，则可以获取数据集中的所有电影并在客户端应用程序中进行一些处理，但是 aggregation 允许我们在数据库中处理！</span><br><span class="line">查找标题由一个单词组成的电影数量，比如，&quot;Cinderella&quot; 和 &quot;3-25&quot; 应该算在内，而 &quot;Cast Away&quot; 则不算。</span><br><span class="line">db.movies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    $match: &#123;</span><br><span class="line">      title: &#123;</span><br><span class="line">        $type: &quot;string&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    $project: &#123;</span><br><span class="line">      title: &#123; $split: [&quot;$title&quot;, &quot; &quot;] &#125;,</span><br><span class="line">      _id: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    $match: &#123;</span><br><span class="line">      title: &#123; $size: 1 &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]).itcount()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$addFields<br>为查询结果添加字段，如果已存在则覆盖原字段。$project 有同样的效果，但是通常用于显示或移除字段。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">db.solarSystem.aggregate([</span><br><span class="line">&#123;&quot;$project&quot;: &#123;</span><br><span class="line">    &quot;_id&quot;: 0,</span><br><span class="line">    &quot;name&quot;: 1,</span><br><span class="line">    &quot;gravity&quot;: 1,</span><br><span class="line">    &quot;mass&quot;: 1,</span><br><span class="line">    &quot;radius&quot;: 1,</span><br><span class="line">    &quot;sma&quot;: 1&#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;&quot;$addFields&quot;: &#123;</span><br><span class="line">    &quot;gravity&quot;: &quot;$gravity.value&quot;,</span><br><span class="line">    &quot;mass&quot;: &quot;$mass.value&quot;,</span><br><span class="line">    &quot;radius&quot;: &quot;$radius.value&quot;,</span><br><span class="line">    &quot;sma&quot;: &quot;$sma.value&quot;</span><br><span class="line">&#125;&#125;]);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指针类<br>$limit、$skip、$count、$sort</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">db.solarSystem.aggregate([&#123;</span><br><span class="line">  &quot;$match&quot;: &#123;</span><br><span class="line">    &quot;type&quot;: &quot;Terrestrial planet&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  &quot;$count&quot;: &quot;terrestrial planets&quot;</span><br><span class="line">&#125;]).pretty();</span><br><span class="line"></span><br><span class="line">使用实例：</span><br><span class="line">MongoDB安排了另一个电影之夜。这次，我们对员工进行了投票，以找出他们最喜欢的女演员或演员，并获得了这些结果：</span><br><span class="line">favorites = [</span><br><span class="line">  &quot;Sandra Bullock&quot;,</span><br><span class="line">  &quot;Tom Hanks&quot;,</span><br><span class="line">  &quot;Julia Roberts&quot;,</span><br><span class="line">  &quot;Kevin Spacey&quot;,</span><br><span class="line">  &quot;George Clooney&quot;</span><br><span class="line">]</span><br><span class="line">对于在 USA 发行的 Tomatos.viewer.rating 大于或等于 3 的电影，请计算一个名为 num_favs 的新字段，该字段表示在该电影的 cast 字段中出现多少个 favorites。对 num_favs，tomatos.viewer.rating 和 title 进行降序排序，结果中第 25 部电影的标题是什么？</span><br><span class="line">聚合查询如下：</span><br><span class="line">db.movies.aggregate([&#123;</span><br><span class="line">  &quot;$match&quot;: &#123;</span><br><span class="line">    &quot;tomatoes.viewer.rating&quot;: &#123; &quot;$gte&quot;: 3 &#125;,</span><br><span class="line">    &quot;countries&quot;: &quot;USA&quot;,</span><br><span class="line">    &quot;cast&quot;: &#123;</span><br><span class="line">      &quot;$in&quot;: favorites</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  &quot;$project&quot;: &#123;</span><br><span class="line">    &quot;_id&quot;: -1,</span><br><span class="line">    &quot;title&quot;: 1,</span><br><span class="line">    &quot;tomatoes.viewer.rating&quot;: 1,</span><br><span class="line">    &quot;num_favs&quot;: &#123;</span><br><span class="line">      &quot;$size&quot;: &#123;</span><br><span class="line">        &quot;$setIntersection&quot;: [</span><br><span class="line">          &quot;$cast&quot;,</span><br><span class="line">          favorites</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  &quot;$sort&quot;: &#123;</span><br><span class="line">    &quot;num_favs&quot;: -1,</span><br><span class="line">    &quot;tomatoes.viewer.rating&quot;: -1,</span><br><span class="line">    &quot;title&quot;: -1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  &quot;$skip&quot;: 24</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  &quot;$limit&quot;: 1</span><br><span class="line">&#125;])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>综合实例<br>计算每部可选语言是英语的电影的平均评分，而且 imdb.rating 至少为 1，imdb.votes 至少为 1，并且该电影于 1990 年或之后发行。需要重新规范化 imdb.votes，公式如下：<br>scaled_votes = 1 + 9 * ((x - x_min) / (x_max - x_min))<br>x_max = 1521105<br>x_min = 5<br>x = imdb.votes<br>normalized_rating = average(scaled_votes, imdb.rating)<br>哪部电影的 normalized_rating 最低？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">聚合查询如下：</span><br><span class="line">db.movies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    $match: &#123;</span><br><span class="line">      year: &#123; $gte: 1990 &#125;,</span><br><span class="line">      languages: &#123; $in: [&quot;English&quot;] &#125;,</span><br><span class="line">      &quot;imdb.votes&quot;: &#123; $gte: 1 &#125;,</span><br><span class="line">      &quot;imdb.rating&quot;: &#123; $gte: 1 &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    $project: &#123;</span><br><span class="line">      _id: 0,</span><br><span class="line">      title: 1,</span><br><span class="line">      &quot;imdb.rating&quot;: 1,</span><br><span class="line">      &quot;imdb.votes&quot;: 1,</span><br><span class="line">      normalized_rating: &#123;</span><br><span class="line">        $avg: [</span><br><span class="line">          &quot;$imdb.rating&quot;,</span><br><span class="line">          &#123;</span><br><span class="line">            $add: [</span><br><span class="line">              1,</span><br><span class="line">              &#123;</span><br><span class="line">                $multiply: [</span><br><span class="line">                  9,</span><br><span class="line">                  &#123;</span><br><span class="line">                    $divide: [</span><br><span class="line">                      &#123; $subtract: [&quot;$imdb.votes&quot;, 5] &#125;,</span><br><span class="line">                      &#123; $subtract: [1521105, 5] &#125;</span><br><span class="line">                    ]</span><br><span class="line">                  &#125;</span><br><span class="line">                ]</span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; $sort: &#123; normalized_rating: 1 &#125; &#125;,</span><br><span class="line">  &#123; $limit: 1 &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-10-21T14:24:32.844Z" itemprop="dateUpdated">2019-10-21 22:24:32</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/database/mongo4/" target="_blank" rel="external">http://blog.master-ss.cn/database/mongo4/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo4/&title=《mongodb 聚合查询基础》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo4/&title=《mongodb 聚合查询基础》 — 青松的博客&source=mongodb aggregation 基础。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 聚合查询基础》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo4/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/database/mongo5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">mongodb 聚合查询组合信息</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/tools/chrome/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">chrome 调试小技巧</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo4/&title=《mongodb 聚合查询基础》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo4/&title=《mongodb 聚合查询基础》 — 青松的博客&source=mongodb aggregation 基础。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 聚合查询基础》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo4/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABv0lEQVR42u3aS47CQAwFQO5/6cyWDeHZ7m4yUvUKoRAqWVj+vV7xud7O+zfzK187Di4u7ph73Z57RPUvk/t/ugYXF/c89z7Q5PT8wZrBDhcX959wq4nOKA3CxcV9JDcPZ6tKKVxc3F9xkzSlF9SqoW1ZrYaLizvg5u2MfZ+39HdxcXFb3Kt47h8gT1Ou1sHFxT3DzQNKkvrcJzS9QIaLi3ue2ytFkgA3ybaiEIaLi3ucOw9ka9siXwIZLi7uBm4vJOVD03zo8uWl4OLiHuEm7dHe0CVZz1qWMOHi4m7gVoucCXoyqsHFxT3J7TU6q6OUHXfGxcXdzZ20Pqug5NVE0RcXF3cDNyk/JssWo/bopyErLi7uZm7e+Jjsd8xDZHmJExcXd8zNWxL5EsZk6FLYI8PFxT3C7Q1B8yQmL3s+PgYuLu5BbnX4Uf3toSwMFxd3zL2Kp/oAvbBVfje4uLhLufnJm6STwe0k/OHi4q7l5iONXptjspaBi4v7W+6qcWlvNFuu1XBxcR/GTYqcyUgmWrnAxcV9JHeS4lRLqVGKg4uLO+DmY9GcWL1n9LJwcXGPcPOG6WTRatJkwcXFPcj9AzDfkJ+99X/WAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

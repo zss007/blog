@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>mongodb 聚合查询之多维分组 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="mongodb aggregation 分组操作符">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb 聚合查询之多维分组">
+<meta property="og:url" content="http://blog.master-ss.cn/database/mongo6/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="mongodb aggregation 分组操作符">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-22T08:39:04.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongodb 聚合查询之多维分组">
+<meta name="twitter:description" content="mongodb aggregation 分组操作符">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">mongodb 聚合查询之多维分组</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">mongodb 聚合查询之多维分组</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-22T07:40:21.960Z" itemprop="datePublished" class="page-time">
+  2019-10-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、-sortByCount"><span class="post-toc-text">一、$sortByCount</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、-bucket"><span class="post-toc-text">二、$bucket</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、-bucketAuto"><span class="post-toc-text">三、$bucketAuto</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、-facet"><span class="post-toc-text">四、$facet</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-database/mongo6" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">mongodb 聚合查询之多维分组</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-22 15:40:21" datetime="2019-10-22T07:40:21.960Z" itemprop="datePublished">2019-10-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/database/">database</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>mongodb aggregation 分组操作符<br><a id="more"></a> </p>
+<h3 id="一、-sortByCount"><a href="#一、-sortByCount" class="headerlink" title="一、$sortByCount"></a>一、$sortByCount</h3><p>$sortByCount 等效于 $group + $sort<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">db.movies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$group&quot;: &#123;</span><br><span class="line">      &quot;_id&quot;: &quot;$imdb.rating&quot;,</span><br><span class="line">      &quot;count&quot;: &#123; &quot;$sum&quot;: 1 &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$sort&quot;: &#123; &quot;count&quot;: -1 &#125;</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br><span class="line">&lt;!-- 等同于 --&gt;</span><br><span class="line">db.movies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$sortByCount&quot;: &quot;$imdb.rating&quot;</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、-bucket"><a href="#二、-bucket" class="headerlink" title="二、$bucket"></a>二、$bucket</h3><p>根据边界分段分组，boundaries 表示分段边界数组，default 表示不在边界内显示字段，默认显示 count，使用 output 可以自定义输出字段。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">db.companies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$match&quot;: &#123;&quot;founded_year&quot;: &#123;&quot;$gt&quot;: 1980&#125;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$bucket&quot;: &#123;</span><br><span class="line">      &quot;groupBy&quot;: &quot;$number_of_employees&quot;,</span><br><span class="line">      &quot;boundaries&quot;: [ 0, 20, 50, 100, 500, 1000, Infinity  ],</span><br><span class="line">      &quot;default&quot;: &quot;Other&quot;,</span><br><span class="line">      &quot;output&quot;: &#123;</span><br><span class="line">        &quot;total&quot;: &#123;&quot;$sum&quot;:1&#125;,</span><br><span class="line">        &quot;average&quot;: &#123;&quot;$avg&quot;: &quot;$number_of_employees&quot; &#125;,</span><br><span class="line">        &quot;categories&quot;: &#123;&quot;$addToSet&quot;: &quot;$category_code&quot;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、-bucketAuto"><a href="#三、-bucketAuto" class="headerlink" title="三、$bucketAuto"></a>三、$bucketAuto</h3><p>自动分段分组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">db.movies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$match&quot;: &#123; &quot;imdb.rating&quot;: &#123; &quot;$gte&quot;: 0 &#125; &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;$bucketAuto&quot;: &#123;</span><br><span class="line">      &quot;groupBy&quot;: &quot;$imdb.rating&quot;,</span><br><span class="line">      &quot;buckets&quot;: 4,</span><br><span class="line">      &quot;output&quot;: &#123;</span><br><span class="line">        &quot;average_per_bucket&quot;: &#123; &quot;$avg&quot;: &quot;$imdb.rating&quot; &#125;,</span><br><span class="line">        &quot;count&quot;: &#123; &quot;$sum&quot;: 1 &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、-facet"><a href="#四、-facet" class="headerlink" title="四、$facet"></a>四、$facet</h3><p>将 $bucket、$bucketAuto、$sortByCount 等聚合到同一阶段，每个键都是输出字段，不能包含 $facet、$out、$geoNear、$indexStats 和 $collStats。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">db.companies.aggregate( [</span><br><span class="line">  &#123; &quot;$match&quot;: &#123; &quot;$text&quot;: &#123;&quot;$search&quot;: &quot;Databases&quot;&#125; &#125; &#125;,</span><br><span class="line">  &#123; &quot;$facet&quot;: &#123;</span><br><span class="line">    &quot;Categories&quot;: [&#123;&quot;$sortByCount&quot;: &quot;$category_code&quot;&#125;],</span><br><span class="line">    &quot;Employees&quot;: [</span><br><span class="line">      &#123; &quot;$match&quot;: &#123;&quot;founded_year&quot;: &#123;&quot;$gt&quot;: 1980&#125;&#125;&#125;,</span><br><span class="line">      &#123;&quot;$bucket&quot;: &#123;</span><br><span class="line">        &quot;groupBy&quot;: &quot;$number_of_employees&quot;,</span><br><span class="line">        &quot;boundaries&quot;: [ 0, 20, 50, 100, 500, 1000, Infinity  ],</span><br><span class="line">        &quot;default&quot;: &quot;Other&quot;</span><br><span class="line">      &#125;&#125;],</span><br><span class="line">    &quot;Founded&quot;: [</span><br><span class="line">      &#123; &quot;$match&quot;: &#123;&quot;offices.city&quot;: &quot;New York&quot; &#125;&#125;,</span><br><span class="line">      &#123;&quot;$bucketAuto&quot;: &#123;</span><br><span class="line">        &quot;groupBy&quot;: &quot;$founded_year&quot;,</span><br><span class="line">        &quot;buckets&quot;: 5   &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;&#125;]).pretty()</span><br><span class="line"></span><br><span class="line">&lt;!-- 应用实例 --&gt;</span><br><span class="line">同时在 imdb.rating 和 metacritic 字段上排前十的有多少部电影？</span><br><span class="line">&lt;!-- 聚合查询 --&gt;</span><br><span class="line">db.movies.aggregate([</span><br><span class="line">  &#123;</span><br><span class="line">    $match: &#123;</span><br><span class="line">      metacritic: &#123; $gte: 0 &#125;,</span><br><span class="line">      &quot;imdb.rating&quot;: &#123; $gte: 0 &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    $project: &#123;</span><br><span class="line">      _id: 0,</span><br><span class="line">      metacritic: 1,</span><br><span class="line">      imdb: 1,</span><br><span class="line">      title: 1</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    $facet: &#123;</span><br><span class="line">      top_metacritic: [</span><br><span class="line">        &#123;</span><br><span class="line">          $sort: &#123;</span><br><span class="line">            metacritic: -1,</span><br><span class="line">            title: 1</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          $limit: 10</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          $project: &#123;</span><br><span class="line">            title: 1</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      top_imdb: [</span><br><span class="line">        &#123;</span><br><span class="line">          $sort: &#123;</span><br><span class="line">            &quot;imdb.rating&quot;: -1,</span><br><span class="line">            title: 1</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          $limit: 10</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          $project: &#123;</span><br><span class="line">            title: 1</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    $project: &#123;</span><br><span class="line">      movies_in_both: &#123;</span><br><span class="line">        $setIntersection: [&quot;$top_metacritic&quot;, &quot;$top_imdb&quot;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-10-22T08:39:04.992Z" itemprop="dateUpdated">2019-10-22 16:39:04</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/database/mongo6/" target="_blank" rel="external">http://blog.master-ss.cn/database/mongo6/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo6/&title=《mongodb 聚合查询之多维分组》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo6/&title=《mongodb 聚合查询之多维分组》 — 青松的博客&source=mongodb aggregation 分组操作符" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo6/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 聚合查询之多维分组》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo6/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo6/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/database/mongo5/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">mongodb 聚合查询组合信息</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/database/mongo6/&title=《mongodb 聚合查询之多维分组》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/database/mongo6/&title=《mongodb 聚合查询之多维分组》 — 青松的博客&source=mongodb aggregation 分组操作符" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/database/mongo6/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mongodb 聚合查询之多维分组》 — 青松的博客&url=http://blog.master-ss.cn/database/mongo6/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/database/mongo6/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3aS27DMAwFwNz/0u62QBrlkbQEoxitgtiQx1oQ/Pj1itf1Yf2++n7n+9X3PV87Fi4u7ph7LVeCyB+c7P/pHlxc3PPcdaBZb53/n+z/xYaLi/tI7hqXBz5cXNz/xF3f/zE1iV8GFxf3Odxe46NX9iR73lCr4eLiDrj5w/b93tLfxcXFbXGv4lonH3macrUWLi7uGW4eUNYJR9IW6QUyXFzc89xku2qJMipa1sUVLi7uEW4yHE3Kod1tkT/OGBcXdzM3CWTVsUc1IDYPDhcXdwO3OhbNM40k9cmbL7i4uCe51ZnFpEyaj2pwcXHPcPOkZHIGd702Li7uGW6zZRk3TyfxpxB9cXFxN3BHfZTBJ1nNwQwuLu5B7jxg5VGzVxTh4uKe5/YGqNVmazJqLX9HhouLe5BbHX5U76w+FxcX9wncJGDlzc1RWlNNcXBxcQfcq7jyUmcStsqzX1xc3Fu5+Zp8OFUdsfTCHy4u7r3cfKSRv1ivFRtdxcXFPcitjk7zkml7rYaLi/sAbl5K5Q3ZvNzCxcV9Mjd5QK9k+hIicXFxD3LzsWgVmu8ZHRYuLu4RbrXZkYxSJr97JRMuLu5N3B9daeIxkyJ71AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
