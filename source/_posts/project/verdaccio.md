@@ -20,7 +20,7 @@ npm install -g verdaccio --unsafe-perm=true --allow-root
 安装依赖包添加权限是因为直接安装会导致某些权限上的问题，哪怕是用 root 权限去执行
 ### 二、修改配置
 #### 2.1、修改配置文件
-配置文件路径：/root/.config/verdaccio/config.yaml（PS：使用系统为 CentOS 7.5）
+配置文件路径：~/.config/verdaccio/config.yaml（PS：使用系统为 CentOS 7.5）
 将 `auth: htpasswd:` 下的 max_users 改为 -1，让用户不能通过 npm adduser 注册账户
 #### 2.2、手动添加账号
 生成 md5 的 htpasswd 密码，有[密码生成的网站](http://www.htaccesstools.com/htpasswd-generator/)
@@ -28,7 +28,7 @@ npm install -g verdaccio --unsafe-perm=true --allow-root
 ```
 username:$apr1$809o3o2I$.pN83j6srvreYZA4NL8GF0
 ```
-在`/root/.config/verdaccio`下创建或编辑文件 htpasswd
+在`~/.config/verdaccio`下创建或编辑文件 htpasswd
 写入上面字符串，每个用户占一行，现在就可以通过上面的用户名和密码访问了
 ### 三、启动服务
 使用 pm2 管理 verdaccio，如果没有安装 pm2，需安装一下：
