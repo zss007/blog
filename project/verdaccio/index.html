@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>搭建npm私有库 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="最近使用 verdaccio 搭建了一个 npm 私有库，verdaccio 特点如下：  私有包托管在内部服务器中 项目中即可使用公用仓库上的公共包，也可使用内部服务器上的私有包 下载的时候公共包走公共仓库，私有包走内部服务器的私有仓库 只缓存下载过的包，而不是全部同步  具体搭建过程如下。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建npm私有库">
+<meta property="og:url" content="http://blog.master-ss.cn/project/verdaccio/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="最近使用 verdaccio 搭建了一个 npm 私有库，verdaccio 特点如下：  私有包托管在内部服务器中 项目中即可使用公用仓库上的公共包，也可使用内部服务器上的私有包 下载的时候公共包走公共仓库，私有包走内部服务器的私有仓库 只缓存下载过的包，而不是全部同步  具体搭建过程如下。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-27T02:20:59.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建npm私有库">
+<meta name="twitter:description" content="最近使用 verdaccio 搭建了一个 npm 私有库，verdaccio 特点如下：  私有包托管在内部服务器中 项目中即可使用公用仓库上的公共包，也可使用内部服务器上的私有包 下载的时候公共包走公共仓库，私有包走内部服务器的私有仓库 只缓存下载过的包，而不是全部同步  具体搭建过程如下。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搭建npm私有库</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搭建npm私有库</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-27T01:29:03.040Z" itemprop="datePublished" class="page-time">
+  2019-10-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/project/">project</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、安装"><span class="post-toc-text">一、安装</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、修改配置"><span class="post-toc-text">二、修改配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、修改配置文件"><span class="post-toc-text">2.1、修改配置文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、手动添加账号"><span class="post-toc-text">2.2、手动添加账号</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、启动服务"><span class="post-toc-text">三、启动服务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、配置-nginx-反向代理"><span class="post-toc-text">四、配置 nginx 反向代理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、使用"><span class="post-toc-text">五、使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1、nrm-切换镜像源"><span class="post-toc-text">5.1、nrm 切换镜像源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2、发布包"><span class="post-toc-text">5.2、发布包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-3、安装包"><span class="post-toc-text">5.3、安装包</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-project/verdaccio" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搭建npm私有库</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-27 09:29:03" datetime="2019-10-27T01:29:03.040Z" itemprop="datePublished">2019-10-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/project/">project</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近使用 verdaccio 搭建了一个 npm 私有库，verdaccio 特点如下：</p>
+<ul>
+<li>私有包托管在内部服务器中</li>
+<li>项目中即可使用公用仓库上的公共包，也可使用内部服务器上的私有包</li>
+<li>下载的时候公共包走公共仓库，私有包走内部服务器的私有仓库</li>
+<li>只缓存下载过的包，而不是全部同步</li>
+</ul>
+<p>具体搭建过程如下。<br><a id="more"></a> </p>
+<h3 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h3><p>verdaccio 官网地址 <a href="https://verdaccio.org/zh-CN" target="_blank" rel="noopener">https://verdaccio.org/zh-CN</a><br>安装依赖包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g verdaccio --unsafe-perm=true --allow-root</span><br></pre></td></tr></table></figure></p>
+<p>安装依赖包添加权限是因为直接安装会导致某些权限上的问题，哪怕是用 root 权限去执行</p>
+<h3 id="二、修改配置"><a href="#二、修改配置" class="headerlink" title="二、修改配置"></a>二、修改配置</h3><h4 id="2-1、修改配置文件"><a href="#2-1、修改配置文件" class="headerlink" title="2.1、修改配置文件"></a>2.1、修改配置文件</h4><p>配置文件路径：/root/.config/verdaccio/config.yaml（PS：使用系统为 CentOS 7.5）<br>将 <code>auth: htpasswd:</code> 下的 max_users 改为 -1，让用户不能通过 npm adduser 注册账户</p>
+<h4 id="2-2、手动添加账号"><a href="#2-2、手动添加账号" class="headerlink" title="2.2、手动添加账号"></a>2.2、手动添加账号</h4><p>生成 md5 的 htpasswd 密码，有<a href="http://www.htaccesstools.com/htpasswd-generator/" target="_blank" rel="noopener">密码生成的网站</a><br>会生成以下格式的用户名和密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username:$apr1$809o3o2I$.pN83j6srvreYZA4NL8GF0</span><br></pre></td></tr></table></figure></p>
+<p>在<code>/root/.config/verdaccio</code>下创建或编辑文件 htpasswd<br>写入上面字符串，每个用户占一行，现在就可以通过上面的用户名和密码访问了</p>
+<h3 id="三、启动服务"><a href="#三、启动服务" class="headerlink" title="三、启动服务"></a>三、启动服务</h3><p>使用 pm2 管理 verdaccio，如果没有安装 pm2，需安装一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 安装 pm2 全局包 --&gt;</span><br><span class="line">npm install pm2 -g</span><br><span class="line"></span><br><span class="line">&lt;!-- 使用 pm2 启动 verdaccio 服务 --&gt;</span><br><span class="line">pm2 start/stop verdaccio</span><br><span class="line"></span><br><span class="line">&lt;!-- 查看进程启动情况 --&gt;</span><br><span class="line">pm2 ls</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、配置-nginx-反向代理"><a href="#四、配置-nginx-反向代理" class="headerlink" title="四、配置 nginx 反向代理"></a>四、配置 nginx 反向代理</h3><p>由于 verdaccio 默认是启动在 4873 端口，方便起见，配置 nginx 反向代理到该端口<br>如果需要查看 verdaccio 的端口号，可以用 <code>pm2 ls</code> 查看到 verdaccio 的 pid，然后使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -nap | grep &lt;pid&gt;</span><br></pre></td></tr></table></figure></p>
+<p>查看占用的端口号。<br>然后我们去配置域名解析，然后配置 nginx，配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name npm.master-ss.cn;</span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass              http://127.0.0.1:4873/;</span><br><span class="line">    proxy_set_header        Host $host;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后使用 <code>nginx -s reload</code> 重启 nginx 服务器，等域名解析生效后就能直接访问了。</p>
+<h3 id="五、使用"><a href="#五、使用" class="headerlink" title="五、使用"></a>五、使用</h3><h4 id="5-1、nrm-切换镜像源"><a href="#5-1、nrm-切换镜像源" class="headerlink" title="5.1、nrm 切换镜像源"></a>5.1、nrm 切换镜像源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 全局安装 nrm --&gt;</span><br><span class="line">npm install -g nrm</span><br><span class="line"></span><br><span class="line">&lt;!-- 增加源 --&gt;</span><br><span class="line">nrm add masterss http://npm.master-ss.cn/</span><br><span class="line"></span><br><span class="line">&lt;!-- 查看可选的源 --&gt;</span><br><span class="line">nrm ls</span><br><span class="line"></span><br><span class="line">&lt;!-- 切换源 --&gt;</span><br><span class="line">nrm use masterss</span><br></pre></td></tr></table></figure>
+<h4 id="5-2、发布包"><a href="#5-2、发布包" class="headerlink" title="5.2、发布包"></a>5.2、发布包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 登录 --&gt;</span><br><span class="line">npm login</span><br><span class="line"></span><br><span class="line">&lt;!-- 发布 --&gt;</span><br><span class="line">npm publish</span><br><span class="line"></span><br><span class="line">&lt;!-- 卸载发布 --&gt;</span><br><span class="line">npm unpublish</span><br></pre></td></tr></table></figure>
+<h4 id="5-3、安装包"><a href="#5-3、安装包" class="headerlink" title="5.3、安装包"></a>5.3、安装包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 方法一：使用 --registry 添加 --&gt;</span><br><span class="line">npm install --save xxx --registry=http://npm.master-ss.cn/</span><br><span class="line"></span><br><span class="line">&lt;!-- 方法二：使用 nrm 切换源 --&gt;</span><br><span class="line">nrm use masterss</span><br><span class="line">npm install --save xxx</span><br></pre></td></tr></table></figure>
+<p>推荐在项目初始化的时候使用方法一，因为使用方法二切换到私有源安装的时候会比较慢。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-10-27T02:20:59.443Z" itemprop="dateUpdated">2019-10-27 10:20:59</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/project/verdaccio/" target="_blank" rel="external">http://blog.master-ss.cn/project/verdaccio/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/project/verdaccio/&title=《搭建npm私有库》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/project/verdaccio/&title=《搭建npm私有库》 — 青松的博客&source=最近使用 verdaccio 搭建了一个 npm 私有库，verdaccio 特点如下：
+
+私有包托管在内部服务器中
+项目中即可使用公用仓库上的公共包，也..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/project/verdaccio/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建npm私有库》 — 青松的博客&url=http://blog.master-ss.cn/project/verdaccio/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/project/verdaccio/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/database/mongo7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">mongodb 聚合查询综合实例</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/project/verdaccio/&title=《搭建npm私有库》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/project/verdaccio/&title=《搭建npm私有库》 — 青松的博客&source=最近使用 verdaccio 搭建了一个 npm 私有库，verdaccio 特点如下：
+
+私有包托管在内部服务器中
+项目中即可使用公用仓库上的公共包，也..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/project/verdaccio/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建npm私有库》 — 青松的博客&url=http://blog.master-ss.cn/project/verdaccio/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/project/verdaccio/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3ay26EQAwF0fz/T5PtSBFQ1yaJsIvViPDow8Lxo7++8HF8HJ9nfv71+sqze8/e8vAhQ4aM1zKOy6PGIHfxT3B9jQwZMvYwziIYuYa/nmP42mTIkCGjFl77IViGDBky+gGXB0dSoP7b/w0ZMmS8isGTOf47vYs38mTIkLGNwbvuf//7V+YbMmTIeBXjCI/rYNpf1lE6ZMiQMZvBX0Oaa2mJGxSopCSWIUPGaAYPozxxTO/qr0GGDBmzGeQ20tCvfaZ0RHq6KhkyZAxl1Fr8fMsFL1bT9LHYC5QhQ8YLGekIMz1Pyl2eON7AZMiQsYzR2TBRGyGk4V6GDBl7GHzQWAu1vCfWGabKkCFjNoOXqbWmGNokAZp3ZG0yZMiYzUgbYbVCtBOa42JYhgwZ4xi8lUZCZ7pcDrhpusmQIWMoI03F+gkcCaNp0ilDhowNjFop22+W1UKtDBkytjF4iVirjMnT+BtROS1DhoyhjDQI1pr1fPdHESlDhoxlDJ4OPjVaIM+8OS9Dhow1DL6dgqeST20Ui+elMmTIGMqopYy8BE3TxLjRJkOGjHGMWkM/GC6CpZCAfvNpZMiQMZrRCXNpsZqWwf2wLkOGjEmMdEtWWu7yllwr4MqQIWMBoxP4eLCuFczoaTJkyJARbmBNh6NpIljsGsqQIWMxgz+tNjBAo00ZMmQsYKTN+s4AgBeujw0yZciQ8XIGLx07o8S0fZamlTJkyBjK+AbZxbJQAklfsQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
