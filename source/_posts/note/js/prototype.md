@@ -6,17 +6,17 @@ categories:
 JavaScript 的原型有好好的研究过，现在重新捡起来整理下。
 <!--more-->
 ### 一、创建对象
-##### 1.1、对面字向量 | new Object
+#### 1.1、对面字向量 | new Object
 ```
 var o1 = {name:'o1'}
 var o11 = new Object({name:'o11'})
 ```
-##### 1.2、new 创建
+#### 1.2、new 创建
 ```
 var M = function(){this.name='o2'}
 var o2 = new M()
 ```
-##### 1.3、Object.create()
+#### 1.3、Object.create()
 ```
 var P = {name:'o3'}
 var o3 = Object.create(P)
@@ -39,7 +39,7 @@ a.__proto__.__proto__.__proto__ === null  // true
 // 等同于 
 Object.prototype.__proto__ === null  // true
 ```
-<img src="/assets/js/proto1.png">
+<img src="/assets/note/js/proto1.png">
 除了使用`__proto__`方法访问对象的原型，还可以通过 Object.getPrototypeOf 方法来获取对象的原型，以及通过
 Object.setPrototypeOf 方法来重写对象的原型。值得注意的是，按照语言的标准，`__proto__`属性只有浏览器才能部署，其他环境可以没有这个属性，而且前后的两根下划线表示它本地是一个内部属性，不应该对使用者暴露。因此，应该尽量少用这个属性，而是用 Object.getPrototypeOf 和 Object.setPrototypeOf，进行原型对象的读写操作。这里用`__proto__`属性来描述对象中的原型，是因为这样来的更加形象，而且容易理解。
 ### 三、prototype
@@ -62,7 +62,7 @@ Foo.prototype.constructor === Foo; // true
 a.constructor === Foo; // true
 a.constructor === Foo.prototype.constructor; // true
 ```
-<img src="/assets/js/proto2.png">
+<img src="/assets/note/js/proto2.png">
 ### 四、原型链
 原型链作为实现继承的主要方法，其基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法。假如我们让原型对象等于另一个类型的实例，此时的原型对象将包含一个指向另一个原型的指针，如此就构造了原型链的基本概念。
 “原型链”的作用在于，当读取对象的某个属性时，JavaScript 引擎先寻找对象本身的属性，如果找不到，就到它的原型去找，如果还是找不到，就到原型的原型去找。以此类推，如果直到最顶层的 Object.prototype 还是找不到，则返回 undefined。
@@ -82,7 +82,7 @@ Bar.prototype.isPrototypeOf(b) // true
 Object.prototype.isPrototypeOf(Bar) // true
 ```
 要注意，实例 b 的原型是 Bar.prototype 而不是 Bar。
-<img src="/assets/js/proto3.png">
+<img src="/assets/note/js/proto3.png">
 从上图中，能看到一个有趣的地方。`Function.prototype.__proto__`指向了 Object.prototype，这说明Function.prototype 是一个 Object 实例，那么应当是先有的 Object 再有 Function。但是`Object.prototype.constructor.__proto__`又指向了 Function.prototype。这样看来，没有 Function，Object 也不能创建实例。 这就产生了一种类「先有鸡还是先有蛋」的经典问题，到底是先有的 Object 还是先有的 Function 呢？ 
 ### 六、Object.create
 ```
