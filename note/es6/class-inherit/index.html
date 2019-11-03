@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>es6 之 class 继承 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 之 class 继承">
+<meta property="og:url" content="http://blog.master-ss.cn/note/es6/class-inherit/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-03T02:28:45.717Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 之 class 继承">
+<meta name="twitter:description" content="Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">es6 之 class 继承</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">es6 之 class 继承</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-12T03:17:19.000Z" itemprop="datePublished" class="page-time">
+  2018-03-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、简介"><span class="post-toc-text">一、简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、Object-getPrototypeOf-amp-super-关键字"><span class="post-toc-text">二、Object.getPrototypeOf() &amp; super 关键字</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、类的-prototype-属性-amp-proto-属性"><span class="post-toc-text">三、类的 prototype 属性 &amp; __proto__属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、原生构造函数的继承"><span class="post-toc-text">四、原生构造函数的继承</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、Mixin-模式的实现"><span class="post-toc-text">五、Mixin 模式的实现</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/es6/class-inherit" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">es6 之 class 继承</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-12 11:17:19" datetime="2018-03-12T03:17:19.000Z" itemprop="datePublished">2018-03-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。<br><a id="more"></a></p>
+<h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">// 通过 extends 关键字继承了 Point 类的所有属性和方法。但是由于没有部署任何代码，所以这两个类完全一样，等于复制了一个 Point 类</span><br><span class="line">class Point &#123;</span><br><span class="line">&#125;</span><br><span class="line">class ColorPoint extends Point &#123;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// constructor 方法和 toString 方法之中，都出现了 super 关键字，它在这里表示父类的构造函数，用来新建父类的 this 对象</span><br><span class="line">class ColorPoint extends Point &#123;</span><br><span class="line">  constructor(x, y, color) &#123;</span><br><span class="line">    super(x, y); // 调用父类的 constructor(x, y)</span><br><span class="line">    this.color = color;</span><br><span class="line">  &#125;</span><br><span class="line">  toString() &#123;</span><br><span class="line">    return this.color + &apos; &apos; + super.toString(); // 调用父类的 toString()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 子类必须在 constructor 方法中调用 super 方法，否则新建实例时会报错</span><br><span class="line">class Point &#123; /* ... */ &#125;</span><br><span class="line">class ColorPoint extends Point &#123;</span><br><span class="line">  constructor() &#123; // 子类没有自己的 this 对象，而是继承父类的 this 对象，然后对其进行加工</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let cp = new ColorPoint(); // ReferenceError，如果不调用 super 方法，子类就得不到 this 对象</span><br><span class="line">// ES5 的继承，实质是先创造子类的实例对象 this，然后再将父类的方法添加到 this上面（Parent.apply(this)）。ES6 的继承机制完全不同，实质</span><br><span class="line">// 是先创造父类的实例对象 this（所以必须先调用 super 方法），然后再用子类的构造函数修改 this。</span><br><span class="line">  </span><br><span class="line">// 如果子类没有定义 constructor 方法，这个方法会被默认添加</span><br><span class="line">class ColorPoint extends Point &#123;</span><br><span class="line">&#125;</span><br><span class="line">class ColorPoint extends Point &#123;  // 等同于（不管有没有显式定义，任何一个子类都有 constructor 方法）</span><br><span class="line">  constructor(...args) &#123;</span><br><span class="line">    super(...args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 在子类的构造函数中，只有调用 super 之后，才可以使用 this 关键字，否则会报错</span><br><span class="line">class Point &#123;</span><br><span class="line">  constructor(x, y) &#123;</span><br><span class="line">    this.x = x;</span><br><span class="line">    this.y = y;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class ColorPoint extends Point &#123;</span><br><span class="line">  constructor(x, y, color) &#123;</span><br><span class="line">    this.color = color; // ReferenceError</span><br><span class="line">    super(x, y);  // 子类实例的构建，是基于对父类实例加工，只有 super 方法才能返回父类实例</span><br><span class="line">    this.color = color; // 正确</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 生成子类实例（与 ES5 的行为完全一致）</span><br><span class="line">let cp = new ColorPoint(25, 8, &apos;green&apos;);</span><br><span class="line">cp instanceof ColorPoint // true</span><br><span class="line">cp instanceof Point // true</span><br><span class="line">  </span><br><span class="line">// 父类的静态方法也会被子类继承</span><br><span class="line">class A &#123;</span><br><span class="line">  static hello() &#123;  // hello() 是 A 类的静态方法，B 继承 A，也继承了 A 的静态方法</span><br><span class="line">    console.log(&apos;hello world&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">&#125;</span><br><span class="line">B.hello()  // hello world</span><br></pre></td></tr></table></figure>
+<h3 id="二、Object-getPrototypeOf-amp-super-关键字"><a href="#二、Object-getPrototypeOf-amp-super-关键字" class="headerlink" title="二、Object.getPrototypeOf() &amp; super 关键字"></a>二、Object.getPrototypeOf() &amp; super 关键字</h3><p>Object.getPrototypeOf 方法可以用来从子类上获取父类。因此，可以使用这个方法判断，一个类是否继承了另一个类。<br>super 这个关键字，既可以当作函数使用，也可以当作对象使用。在这两种情况下，它的用法完全不同。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line">// 从子类上获取父类</span><br><span class="line">Object.getPrototypeOf(ColorPoint) === Point // true</span><br><span class="line">  </span><br><span class="line">// super 作为函数调用时，代表父类的构造函数（super 虽然代表了父类的构造函数，但是返回的是子类的实例，即 super 内部的 this 指的是子类）</span><br><span class="line">class A &#123;&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123; // ES6 要求，子类的构造函数必须执行一次 super 函数</span><br><span class="line">    super();  // super() 在这里相当于 A.prototype.constructor.call(this)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// new.target 指向当前正在执行的函数（在 super() 执行时，它指向的是子类 B 的构造函数，而不是父类 A 的构造函数）</span><br><span class="line">class A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    console.log(new.target.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">new A() // A</span><br><span class="line">new B() // B</span><br><span class="line">  </span><br><span class="line">// 作为函数时，super() 只能用在子类的构造函数之中，用在其他地方就会报错</span><br><span class="line">class A &#123;&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  m() &#123;</span><br><span class="line">    super(); // 报错</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// super 作为对象时，在普通方法中指向父类的原型对象</span><br><span class="line">class A &#123;</span><br><span class="line">  p() &#123;</span><br><span class="line">    return 2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    console.log(super.p()); // 2，将 super 当作一个对象使用。这时，super 在普通方法之中，指向 A.prototype，所以 super.p() 就相当于 A.prototype.p()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = new B();</span><br><span class="line">  </span><br><span class="line">// 由于 super 指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过 super 调用的</span><br><span class="line">class A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.p = 2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  get m() &#123;</span><br><span class="line">    return super.p; // p 是父类 A 实例的属性，super.p 就引用不到它</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = new B();</span><br><span class="line">b.m // undefined</span><br><span class="line">  </span><br><span class="line">// 如果属性定义在父类的原型对象上，super 就可以取到</span><br><span class="line">class A &#123;&#125;</span><br><span class="line">A.prototype.x = 2;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    console.log(super.x) // 2，属性 x 是定义在 A.prototype 上面的，所以 super.x 可以取到它的值</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = new B();</span><br><span class="line">  </span><br><span class="line">// ES6 规定，通过 super 调用父类的方法时，方法内部的 this 指向子类</span><br><span class="line">class A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.x = 1;</span><br><span class="line">  &#125;</span><br><span class="line">  print() &#123;</span><br><span class="line">    console.log(this.x);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.x = 2;</span><br><span class="line">  &#125;</span><br><span class="line">  m() &#123;</span><br><span class="line">    super.print();  // 实际上执行的是 super.print.call(this)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = new B();</span><br><span class="line">b.m() // 2</span><br><span class="line">  </span><br><span class="line">// 由于 this 指向子类，所以如果通过 super 对某个属性赋值，这时 super 就是 this，赋值的属性会变成子类实例的属性</span><br><span class="line">class A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.x = 1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.x = 2;</span><br><span class="line">    super.x = 3;  // super.x 赋值为 3，这时等同于对 this.x 赋值为3</span><br><span class="line">    console.log(super.x); // undefined，当读取 super.x 的时候，读的是 A.prototype.x，所以返回 undefined</span><br><span class="line">    console.log(this.x); // 3</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = new B();</span><br><span class="line">  </span><br><span class="line">// 如果 super 作为对象，用在静态方法之中，这时 super 将指向父类，而不是父类的原型对象</span><br><span class="line">class Parent &#123;</span><br><span class="line">  static myMethod(msg) &#123;</span><br><span class="line">    console.log(&apos;static&apos;, msg);</span><br><span class="line">  &#125;</span><br><span class="line">  myMethod(msg) &#123;</span><br><span class="line">    console.log(&apos;instance&apos;, msg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Child extends Parent &#123;</span><br><span class="line">  static myMethod(msg) &#123;</span><br><span class="line">    super.myMethod(msg);</span><br><span class="line">  &#125;</span><br><span class="line">  myMethod(msg) &#123;</span><br><span class="line">    super.myMethod(msg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">Child.myMethod(1); // static 1，super 在静态方法之中指向父类</span><br><span class="line">var child = new Child();</span><br><span class="line">child.myMethod(2); // instance 2，super 在普通方法之中指向父类的原型对象</span><br><span class="line">  </span><br><span class="line">// 使用 super 的时候，必须显式指定是作为函数、还是作为对象使用，否则会报错</span><br><span class="line">class A &#123;&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    console.log(super); // 报错，无法看出是作为函数使用还是作为对象使用</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 如果能清晰地表明 super 的数据类型，就不会报错（super.valueOf() 表明 super 是一个对象，因此就不会报错）</span><br><span class="line">class A &#123;&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    console.log(super.valueOf() instanceof B); // true，由于 super 使得 this 指向 B，所以 super.valueOf() 返回的是一个 B 的实例</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = new B();</span><br><span class="line">  </span><br><span class="line">// 由于对象总是继承其他对象的，所以可以在任意一个对象中，使用 super 关键字</span><br><span class="line">var obj = &#123;</span><br><span class="line">  toString() &#123;</span><br><span class="line">    return &quot;MyObject: &quot; + super.toString();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">obj.toString(); // MyObject: [object Object]</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、类的-prototype-属性-amp-proto-属性"><a href="#三、类的-prototype-属性-amp-proto-属性" class="headerlink" title="三、类的 prototype 属性 &amp; __proto__属性"></a>三、类的 prototype 属性 &amp; <code>__proto__</code>属性</h3><p>大多数浏览器的 ES5 实现之中，每一个对象都有 <code>__proto__</code> 属性，指向对应的构造函数的 prototype 属性。Class 作为构造函数的语法糖，同时有 prototype 属性和 <code>__proto__</code> 属性，因此同时存在两条继承链。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">&#125;</span><br><span class="line">// 子类的 __proto__ 属性，表示构造函数的继承，总是指向父类</span><br><span class="line">B.__proto__ === A // true</span><br><span class="line">// 子类 prototype 属性的 __proto__ 属性，表示方法的继承，总是指向父类的 prototype 属性</span><br><span class="line">B.prototype.__proto__ === A.prototype // true</span><br><span class="line">  </span><br><span class="line">// 类的继承是按照下面的模式实现的</span><br><span class="line">class A &#123;</span><br><span class="line">&#125;</span><br><span class="line">class B &#123;</span><br><span class="line">&#125;</span><br><span class="line">Object.setPrototypeOf(B.prototype, A.prototype);  // B 的实例继承 A 的实例</span><br><span class="line">Object.setPrototypeOf(B, A);  // B 继承 A 的静态属性</span><br><span class="line">const b = new B();</span><br><span class="line">Object.setPrototypeOf = function (obj, proto) &#123; // Object.setPrototypeOf 方法的模拟实现</span><br><span class="line">  obj.__proto__ = proto;</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 因此，就得到了上面的结果</span><br><span class="line">Object.setPrototypeOf(B.prototype, A.prototype);</span><br><span class="line">B.prototype.__proto__ = A.prototype;  // 等同于</span><br><span class="line">Object.setPrototypeOf(B, A);</span><br><span class="line">B.__proto__ = A;  // 等同于</span><br><span class="line">  </span><br><span class="line">// 这两条继承链，可以这样理解：作为一个对象，子类（B）的原型（__proto__ 属性）是父类（A）；作为一个构造函数，子类（B）的原型对象</span><br><span class="line">//（prototype 属性）是父类的原型对象（prototype 属性）的实例。</span><br><span class="line">Object.create(A.prototype);</span><br><span class="line">B.prototype.__proto__ = A.prototype;  // 等同于</span><br><span class="line">  </span><br><span class="line">// extends 关键字后面可以跟多种类型的值</span><br><span class="line">class B extends A &#123; // 只要 A 是一个有 prototype 属性的函数，就能被 B 继承。由于函数都有 prototype 属性（除了 Function.prototype 函数），因此 A 可以是任意函数</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 特殊情况一：子类继承 Object 类（子类其实就是构造函数 Object 的复制，子类的实例就是 Object 的实例）</span><br><span class="line">class A extends Object &#123;</span><br><span class="line">&#125;</span><br><span class="line">A.__proto__ === Object // true</span><br><span class="line">A.prototype.__proto__ === Object.prototype // true</span><br><span class="line">  </span><br><span class="line">// 特殊情况二：不存在任何继承</span><br><span class="line">class A &#123;</span><br><span class="line">&#125;</span><br><span class="line">A.__proto__ === Function.prototype // true，A 作为一个基类（即不存在任何继承），就是一个普通函数，所以直接继承 Function.prototype</span><br><span class="line">A.prototype.__proto__ === Object.prototype // true，A 调用后返回一个空对象（即 Object 实例），所以 A.prototype.__proto__ 指向构造函数（Object）的 prototype 属性</span><br><span class="line">  </span><br><span class="line">// 特殊情况三：子类继承 null</span><br><span class="line">class A extends null &#123;</span><br><span class="line">&#125;</span><br><span class="line">A.__proto__ === Function.prototype // true，A 也是一个普通函数，所以直接继承 Function.prototype</span><br><span class="line">A.prototype.__proto__ === undefined // true，A 调用后返回的对象不继承任何方法，所以它的 prototype.__proto__ 指向 undefined</span><br><span class="line">class C extends null &#123;  // 实质上等同于</span><br><span class="line">  constructor() &#123; return Object.create(null); &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 子类实例的 __proto__ 属性的 __proto__ 属性，指向父类实例的 __proto__ 属性。也就是说，子类的原型的原型，是父类的原型</span><br><span class="line">var p1 = new Point(2, 3);</span><br><span class="line">var p2 = new ColorPoint(2, 3, &apos;red&apos;);</span><br><span class="line">p2.__proto__ === p1.__proto__ // false</span><br><span class="line">p2.__proto__.__proto__ === p1.__proto__ // true</span><br><span class="line">  </span><br><span class="line">// 因此，通过子类实例的 __proto__.__proto__ 属性，可以修改父类实例的行为</span><br><span class="line">p2.__proto__.__proto__.printName = function () &#123;</span><br><span class="line">  console.log(&apos;Ha&apos;);</span><br><span class="line">&#125;;</span><br><span class="line">p1.printName() // &quot;Ha&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、原生构造函数的继承"><a href="#四、原生构造函数的继承" class="headerlink" title="四、原生构造函数的继承"></a>四、原生构造函数的继承</h3><p>原生构造函数是指语言内置的构造函数，通常用来生成数据结构。ECMAScript 的原生构造函数大致：Boolean()、Number()、String()、Array()、Date()、Function()、RegExp()、Error()、Object()。以前这些原生构造函数是无法继承的，比如，不能自己定义一个 Array 的子类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">// 定义了一个继承 Array 的 MyArray 类</span><br><span class="line">function MyArray() &#123;</span><br><span class="line">  Array.apply(this, arguments);</span><br><span class="line">&#125;</span><br><span class="line">MyArray.prototype = Object.create(Array.prototype, &#123;</span><br><span class="line">  constructor: &#123;</span><br><span class="line">    value: MyArray,</span><br><span class="line">    writable: true,</span><br><span class="line">    configurable: true,</span><br><span class="line">    enumerable: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">// 但是这个类的行为与 Array 完全不一致</span><br><span class="line">var colors = new MyArray();</span><br><span class="line">colors[0] = &quot;red&quot;;</span><br><span class="line">colors.length  // 0</span><br><span class="line">colors.length = 0;</span><br><span class="line">colors[0]  // &quot;red&quot;</span><br><span class="line">// 子类无法获得原生构造函数的内部属性，通过 Array.apply() 或者分配给原型对象都不行。原生构造函数会忽略 apply 方法传入的 this，也就是说，</span><br><span class="line">// 原生构造函数的 this 无法绑定，导致拿不到内部属性。ES5 是先新建子类的实例对象 this，再将父类的属性添加到子类上，由于父类的内部属性无法</span><br><span class="line">// 获取，导致无法继承原生的构造函数。比如，Array 构造函数有一个内部属性 [[DefineOwnProperty]]，用来定义新属性时，更新 length 属性，这</span><br><span class="line">// 个内部属性无法在子类获取，导致子类的 length 属性行为不正常。</span><br><span class="line">  </span><br><span class="line">// 让一个普通对象继承 Error 对象，但是 Error.call() 完全忽略传入的第一个参数，而是返回一个新对象，e 本身没有任何变化。这证明了 Error.call(e) 这种写法，无法继承原生构造函数</span><br><span class="line">var e = &#123;&#125;;</span><br><span class="line">Object.getOwnPropertyNames(Error.call(e)) // [ &apos;stack&apos; ]</span><br><span class="line">Object.getOwnPropertyNames(e) // []</span><br><span class="line">  </span><br><span class="line">// ES6 允许继承原生构造函数定义子类，比如：继承 Array</span><br><span class="line">class MyArray extends Array &#123;</span><br><span class="line">  constructor(...args) &#123;</span><br><span class="line">    super(...args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var arr = new MyArray();</span><br><span class="line">arr[0] = 12;</span><br><span class="line">arr.length // 1</span><br><span class="line">arr.length = 0;</span><br><span class="line">arr[0] // undefined</span><br><span class="line">// ES6 是先新建父类的实例对象 this，然后再用子类的构造函数修饰 this，使得父类的所有行为都可以继承。</span><br><span class="line">// 这意味着，ES6 可以自定义原生数据结构（比如 Array、String 等）的子类，这是 ES5 无法做到的。</span><br><span class="line">  </span><br><span class="line">// 可以在原生数据结构的基础上，定义自己的数据结构。下面就是定义了一个带版本功能的数组。</span><br><span class="line">class VersionedArray extends Array &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.history = [[]];</span><br><span class="line">  &#125;</span><br><span class="line">  commit() &#123;</span><br><span class="line">    this.history.push(this.slice());</span><br><span class="line">  &#125;</span><br><span class="line">  revert() &#123;</span><br><span class="line">    this.splice(0, this.length, ...this.history[this.history.length - 1]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var x = new VersionedArray();</span><br><span class="line">x.push(1);</span><br><span class="line">x.push(2);</span><br><span class="line">x // [1, 2]</span><br><span class="line">x.history // [[]]</span><br><span class="line">x.commit();</span><br><span class="line">x.history // [[], [1, 2]]</span><br><span class="line">x.push(3);  x // [1, 2, 3]</span><br><span class="line">x.history // [[], [1, 2]]</span><br><span class="line">x.revert(); x // [1, 2]</span><br><span class="line">  </span><br><span class="line">// 自定义 Error 子类，可以用来定制报错时的行为</span><br><span class="line">class ExtendableError extends Error &#123;</span><br><span class="line">  constructor(message) &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.message = message;</span><br><span class="line">    this.stack = (new Error()).stack;</span><br><span class="line">    this.name = this.constructor.name;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class MyError extends ExtendableError &#123;</span><br><span class="line">  constructor(m) &#123;</span><br><span class="line">    super(m);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var myerror = new MyError(&apos;ll&apos;);</span><br><span class="line">myerror.message // &quot;ll&quot;</span><br><span class="line">myerror instanceof Error // true</span><br><span class="line">myerror.name // &quot;MyError&quot;</span><br><span class="line">myerror.stack</span><br><span class="line">// Error</span><br><span class="line">//     at MyError.ExtendableError</span><br><span class="line">//     ...</span><br><span class="line">  </span><br><span class="line">// 继承 Object 的子类，有一个行为差异（ES6 改变了 Object 构造函数的行为，一旦发现 Object 方法不是通过 new Object() 这种形式调用，ES6 规定 Object 构造函数会忽略参数）</span><br><span class="line">class NewObj extends Object&#123;</span><br><span class="line">  constructor()&#123;</span><br><span class="line">    super(...arguments);  // NewObj 继承了 Object，但是无法通过 super 方法向父类 Object 传参</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o = new NewObj(&#123;attr: true&#125;);</span><br><span class="line">o.attr === true  // false</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、Mixin-模式的实现"><a href="#五、Mixin-模式的实现" class="headerlink" title="五、Mixin 模式的实现"></a>五、Mixin 模式的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// c 对象是 a 对象和 b 对象的合成，具有两者的接口</span><br><span class="line">const a = &#123;</span><br><span class="line">  a: &apos;a&apos;</span><br><span class="line">&#125;;</span><br><span class="line">const b = &#123;</span><br><span class="line">  b: &apos;b&apos;</span><br><span class="line">&#125;;</span><br><span class="line">const c = &#123;...a, ...b&#125;; // &#123;a: &apos;a&apos;, b: &apos;b&apos;&#125;</span><br><span class="line">  </span><br><span class="line">// 将多个类的接口 &quot;混入&quot;（mix in）另一个类</span><br><span class="line">function mix(...mixins) &#123;</span><br><span class="line">  class Mix &#123;&#125;</span><br><span class="line">  for (let mixin of mixins) &#123;</span><br><span class="line">    copyProperties(Mix, mixin); // 拷贝实例属性</span><br><span class="line">    copyProperties(Mix.prototype, mixin.prototype); // 拷贝原型属性</span><br><span class="line">  &#125;</span><br><span class="line">  return Mix;</span><br><span class="line">&#125;</span><br><span class="line">function copyProperties(target, source) &#123;</span><br><span class="line">  for (let key of Reflect.ownKeys(source)) &#123;</span><br><span class="line">    if ( key !== &quot;constructor&quot;</span><br><span class="line">      &amp;&amp; key !== &quot;prototype&quot;</span><br><span class="line">      &amp;&amp; key !== &quot;name&quot;</span><br><span class="line">    ) &#123;</span><br><span class="line">      let desc = Object.getOwnPropertyDescriptor(source, key);</span><br><span class="line">      Object.defineProperty(target, key, desc);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">// 上面代码的 mix 函数，可以将多个对象合成为一个类。使用的时候，只要继承这个类即可</span><br><span class="line">class DistributedEdit extends mix(Loggable, Serializable) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Mixin 指的是多个对象合成一个新的对象，新对象具有各个组成成员的接口。它的最简单实现如上。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-03T02:28:45.717Z" itemprop="dateUpdated">2019-11-03 10:28:45</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/es6/class-inherit/" target="_blank" rel="external">http://blog.master-ss.cn/note/es6/class-inherit/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/es6/class-inherit/&title=《es6 之 class 继承》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/es6/class-inherit/&title=《es6 之 class 继承》 — 青松的博客&source=Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/es6/class-inherit/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 class 继承》 — 青松的博客&url=http://blog.master-ss.cn/note/es6/class-inherit/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/es6/class-inherit/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/es6/symbol/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">es6 之 Symbol</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/es6/class/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">es6 之 class</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/es6/class-inherit/&title=《es6 之 class 继承》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/es6/class-inherit/&title=《es6 之 class 继承》 — 青松的博客&source=Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/es6/class-inherit/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《es6 之 class 继承》 — 青松的博客&url=http://blog.master-ss.cn/note/es6/class-inherit/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/es6/class-inherit/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aS3LCMBAFQO5/aacqW4J5T1JSQWqtKGNjtxeD5vN4xOv6Xsnx62ndX/X8+dVVCxYGBsbHMq7bdf+4yaPk396f/+YFYWBgHMBIwmJ+g/z85KVEfwAYGBgYcVhM9mzJthIDAwNjVcCdzyjz4IuBgYGR3zLf6iXUPCVelotjYGB8IKNtDPzl51/sb2BgYHwI4ypXvn3MQ/aCp8LAwNiakZTSkuMzQXMVHgMDY1dGXtBvbzlWMsuT4R9CLQYGxqaMPPAl8W1mOKMt0mFgYJzGyAcgxqh5yM4HO+qdKQYGxocz8qR07ZH2FQySMDAwtmDcp50z4xdtIF6ckWNgYGzEGAtzScLZ/n4+fvEmlcXAwNiUMVasb4cwxtqfGBgYJzOSMn1bAmvLZ2OtSgwMjNMYMz+Uh848Da7BGBgYBzDa9mRbFJv5NnopGBgYWzPmxyPy4YmZV5YHaAwMjBMYbcmsLd/nrc38KgwMjHMYMxu+NikdS3QTGAYGxn6MdmAiL4S1Q2aDKSsGBsYxjHz8K4/ibUtgqgCHgYGxNSMf88qDb741bO/1pkiHgYGxKeMqV7sRHBvaqLePGBgYWzNmQupYmzMPyvlWFQMD4wRGm6a2A15td2IsVcbAwDiBsao9ubboFo1WYGBgYMQhsi2ojY2IvbwWAwMDozynTVyTtuWbYI2BgXEAoy2ZjW3v2jS4COUYGBhbM+YbA3mquXYQbXF/AwMD4z8yvgC5uWC+zMNJ3wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

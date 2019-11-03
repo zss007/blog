@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>js 之原型链 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="JavaScript 的原型有好好的研究过，现在重新捡起来整理下。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js 之原型链">
+<meta property="og:url" content="http://blog.master-ss.cn/note/js/prototype/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="JavaScript 的原型有好好的研究过，现在重新捡起来整理下。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/js/proto1.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/js/proto2.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/js/proto3.png">
+<meta property="og:updated_time" content="2019-11-03T02:29:32.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js 之原型链">
+<meta name="twitter:description" content="JavaScript 的原型有好好的研究过，现在重新捡起来整理下。">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/js/proto1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zss007" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">js 之原型链</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">js 之原型链</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-14T07:42:12.000Z" itemprop="datePublished" class="page-time">
+  2018-10-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、创建对象"><span class="post-toc-text">一、创建对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1、对面字向量-new-Object"><span class="post-toc-text">1.1、对面字向量 | new Object</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2、new-创建"><span class="post-toc-text">1.2、new 创建</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-3、Object-create"><span class="post-toc-text">1.3、Object.create()</span></a></li></ol></li></ol><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、proto"><span class="post-toc-text">二、proto</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、prototype"><span class="post-toc-text">三、prototype</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、原型链"><span class="post-toc-text">四、原型链</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、判断方法"><span class="post-toc-text">五、判断方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、Object-create"><span class="post-toc-text">六、Object.create</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、new-运算符"><span class="post-toc-text">七、new 运算符</span></a></li>
+        </nav>
+    </aside>
+
+
+<article id="post-note/js/prototype" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">js 之原型链</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-10-14 15:42:12" datetime="2018-10-14T07:42:12.000Z" itemprop="datePublished">2018-10-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>JavaScript 的原型有好好的研究过，现在重新捡起来整理下。<br><a id="more"></a></p>
+<h3 id="一、创建对象"><a href="#一、创建对象" class="headerlink" title="一、创建对象"></a>一、创建对象</h3><h5 id="1-1、对面字向量-new-Object"><a href="#1-1、对面字向量-new-Object" class="headerlink" title="1.1、对面字向量 | new Object"></a>1.1、对面字向量 | new Object</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var o1 = &#123;name:&apos;o1&apos;&#125;</span><br><span class="line">var o11 = new Object(&#123;name:&apos;o11&apos;&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="1-2、new-创建"><a href="#1-2、new-创建" class="headerlink" title="1.2、new 创建"></a>1.2、new 创建</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var M = function()&#123;this.name=&apos;o2&apos;&#125;</span><br><span class="line">var o2 = new M()</span><br></pre></td></tr></table></figure>
+<h5 id="1-3、Object-create"><a href="#1-3、Object-create" class="headerlink" title="1.3、Object.create()"></a>1.3、Object.create()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var P = &#123;name:&apos;o3&apos;&#125;</span><br><span class="line">var o3 = Object.create(P)</span><br></pre></td></tr></table></figure>
+<h3 id="二、proto"><a href="#二、proto" class="headerlink" title="二、proto"></a>二、<strong>proto</strong></h3><p>JS 的原始数据类型有六种：undefined、null、boolean、string、number、Symbol。引用类型通常叫做类，常见有：array、object 等。引用类型 object 的每个实例称之为对象，每个对象都拥有一个原型对象，而指向该原型对象的内部指针则<code>__proto__</code>，通过它可以从中继承原型对象的属性，原型是 JavaScript 中的基因链接，有了这个，才能知道这个对象的祖祖辈辈。从对象中的<code>__proto__</code>可以访问到他所继承的原型对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a = new Array();</span><br><span class="line">console.log(&apos;prototype&apos;, a.__proto__ === Array.prototype); // true</span><br></pre></td></tr></table></figure></p>
+<p>Array.prototype 本身也是一个对象，也有继承的原型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a.__proto__.__proto__ === Object.prototype  // true</span><br><span class="line">// 等同于 </span><br><span class="line">Array.prototype.__proto__ === Object.prototype  // true</span><br></pre></td></tr></table></figure></p>
+<p>这就说明，array 本身也是继承自 object，而 object 的原型则是指向原始类型 null。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a.__proto__.__proto__.__proto__ === null  // true</span><br><span class="line">// 等同于 </span><br><span class="line">Object.prototype.__proto__ === null  // true</span><br></pre></td></tr></table></figure></p>
+<p><img src="/assets/js/proto1.png"><br>除了使用<code>__proto__</code>方法访问对象的原型，还可以通过 Object.getPrototypeOf 方法来获取对象的原型，以及通过<br>Object.setPrototypeOf 方法来重写对象的原型。值得注意的是，按照语言的标准，<code>__proto__</code>属性只有浏览器才能部署，其他环境可以没有这个属性，而且前后的两根下划线表示它本地是一个内部属性，不应该对使用者暴露。因此，应该尽量少用这个属性，而是用 Object.getPrototypeOf 和 Object.setPrototypeOf，进行原型对象的读写操作。这里用<code>__proto__</code>属性来描述对象中的原型，是因为这样来的更加形象，而且容易理解。</p>
+<h3 id="三、prototype"><a href="#三、prototype" class="headerlink" title="三、prototype"></a>三、prototype</h3><p>函数作为 JavaScript 中的一等公民，它既是函数又是对象，函数的原型指向 Function.prototype。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var Foo = function() &#123;&#125;</span><br><span class="line">Foo.__proto__ === Function.prototype // true</span><br></pre></td></tr></table></figure></p>
+<p>函数实例除了拥有<code>__proto__</code>属性之外，还拥有 prototype 属性。通过该函数构造的实例对象，其原型指针<code>__proto__</code><br>会指向该函数的 prototype 属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a = new Foo();</span><br><span class="line">a.__proto__ === Foo.prototype; // true</span><br></pre></td></tr></table></figure></p>
+<p>而函数的 prototype 属性，本身是一个由 object 构造的实例对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Foo.prototype.__proto__ === Object.prototype; // true</span><br><span class="line">// prototype 属性很特殊，它还有一个隐式的 constructor，指向了构造函数本身。</span><br><span class="line">Foo.prototype.constructor === Foo; // true</span><br><span class="line">a.constructor === Foo; // true</span><br><span class="line">a.constructor === Foo.prototype.constructor; // true</span><br></pre></td></tr></table></figure></p>
+<p><img src="/assets/js/proto2.png"></p>
+<h3 id="四、原型链"><a href="#四、原型链" class="headerlink" title="四、原型链"></a>四、原型链</h3><p>原型链作为实现继承的主要方法，其基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法。假如我们让原型对象等于另一个类型的实例，此时的原型对象将包含一个指向另一个原型的指针，如此就构造了原型链的基本概念。<br>“原型链”的作用在于，当读取对象的某个属性时，JavaScript 引擎先寻找对象本身的属性，如果找不到，就到它的原型去找，如果还是找不到，就到原型的原型去找。以此类推，如果直到最顶层的 Object.prototype 还是找不到，则返回 undefined。</p>
+<h3 id="五、判断方法"><a href="#五、判断方法" class="headerlink" title="五、判断方法"></a>五、判断方法</h3><p>原始数据类型一般使用 typeof 来判断（两种情况下回返回 undefined：1、变量没有声明；2、变量为 undefined）。</p>
+<ul>
+<li>typeof null 返回 object，其他引用类型均返回 object。</li>
+<li>instanceof 判断是否由某个构造函数创建，返回 boolean 类型值（只要处在原型链上就返回 true，可使用 <code>__proto__.constructor</code>准确返回构造函数）。</li>
+<li>Object.isPrototypeOf() 只要某个对象处在原型链上，isProtypeOf 都返回 true</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var Bar = function() &#123;&#125;</span><br><span class="line">var b = new Bar();</span><br><span class="line">b instanceof Bar // true</span><br><span class="line">b instanceof Object // true</span><br><span class="line">b.__proto__.constructor // ƒ Bar() &#123;&#125;</span><br><span class="line">Bar.prototype.isPrototypeOf(b) // true</span><br><span class="line">Object.prototype.isPrototypeOf(Bar) // true</span><br></pre></td></tr></table></figure>
+<p>要注意，实例 b 的原型是 Bar.prototype 而不是 Bar。<br><img src="/assets/js/proto3.png"><br>从上图中，能看到一个有趣的地方。<code>Function.prototype.__proto__</code>指向了 Object.prototype，这说明Function.prototype 是一个 Object 实例，那么应当是先有的 Object 再有 Function。但是<code>Object.prototype.constructor.__proto__</code>又指向了 Function.prototype。这样看来，没有 Function，Object 也不能创建实例。 这就产生了一种类「先有鸡还是先有蛋」的经典问题，到底是先有的 Object 还是先有的 Function 呢？ </p>
+<h3 id="六、Object-create"><a href="#六、Object-create" class="headerlink" title="六、Object.create"></a>六、Object.create</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function Point()&#123;&#125;;</span><br><span class="line">var Circle = Object.create(Point);</span><br><span class="line">console.log(Circle.__proto__ === Point); // true</span><br><span class="line">console.log(Circle.__proto__ === Point.prototype); // false</span><br></pre></td></tr></table></figure>
+<p>使用指定的原型对象和其属性创建了一个新的对象，在例子中实例 Circle 的原型指向 Point。</p>
+<h3 id="七、new-运算符"><a href="#七、new-运算符" class="headerlink" title="七、new 运算符"></a>七、new 运算符</h3><p>使用 new 运算符创建对象过程如下：</p>
+<ul>
+<li>7.1、一个新对象被创建，他继承自 foo.prototype</li>
+<li>7.2、构造函数 foo 被执行，执行的时候相应的传参会被传入，同时上下文（this）会被指定为这个新实例，new foo 等同于 new foo()，只能用在不传递任何参数的情况</li>
+<li>7.3、如果构造函数返回了一个“对象”，那么这个对象会取代整个 new 出来的结果，如果构造函数没有返回对象，那么 new 出来的结果是步骤 7.1 创建的对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var new2 = function (func) &#123;</span><br><span class="line">  var o = Object.create(func.prototype)</span><br><span class="line">  var k = func.call(o)</span><br><span class="line">  if (typeof k === &apos;object&apos;) &#123;</span><br><span class="line">    return k</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return o</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-03T02:29:32.720Z" itemprop="dateUpdated">2019-11-03 10:29:32</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/js/prototype/" target="_blank" rel="external">http://blog.master-ss.cn/note/js/prototype/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/js/prototype/&title=《js 之原型链》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/js/prototype/&title=《js 之原型链》 — 青松的博客&source=JavaScript 的原型有好好的研究过，现在重新捡起来整理下。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/js/prototype/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《js 之原型链》 — 青松的博客&url=http://blog.master-ss.cn/note/js/prototype/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/js/prototype/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/js/extend/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">js 之面对对象</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/net/http/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">网络之 http 协议</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/js/prototype/&title=《js 之原型链》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/js/prototype/&title=《js 之原型链》 — 青松的博客&source=JavaScript 的原型有好好的研究过，现在重新捡起来整理下。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/js/prototype/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《js 之原型链》 — 青松的博客&url=http://blog.master-ss.cn/note/js/prototype/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/js/prototype/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQW7jMAwF0Nz/0i4wqxbFuP+L7mAiPa2CwHD4tGAoUq9XvK4/6/vn5Pn8+8/r9RsLAwPjbRnX7bpnJOF+f+YKVh4bBgbGOYw8lHvk2gYl2/dDzBgYGBiDn382WWNgYGCsJdz7t0WF3VIqx8DAOI2RF3Btgyx/2/2WPXYWx8DAeEPGZDDw25//0XwDAwPjP2Zcg5UXc3maXowEAwNja0ZyKF27SHEfYn4YLhIxBgbGpoy2NXafTOfg9pj65X8DAwNjU0bbvl87jk5aZo8daDEwMN6WMR83zrcjT/SPlYYYGBhvzshbZs+ODUYpGwMD4zDG2sE1SaBJam4vZ2BgYJzGSEqxyfAyabolqRYDA+NkRj5EnCTQNvRogzAwMI5htMPLNrFO3v9DhBgYGFsz1kq09qiZh7XWsMPAwNib0aa/fCQ5/764loGBgbE1ow2xPb62h+E86L8+iYGBsR0jT2T5FbH88sTkDV8+Y2BgbM1Yu9qVpMt8JDm5moaBgXEOY9IgywPNC746yWJgYBzDWAsoL+PylNo29TAwME5gFA/FTfy20Jz8LgYGxt6Mq1xta6xNsu0lDAwMjBMY8/TajjnbEhADAwMjb9m3Y8i1cnOUcDEwMA5gtG36+yTbttLWeBgYGBhJoJMWW7I1xUAUAwMDY3DszIu8fOOK4SUGBsZGjLVLFW2izFt49TEYAwNja8b8pkY7GEgSaJugMTAwNmV8ADuFGQb3WM6VAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
