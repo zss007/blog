@@ -1,7 +1,7 @@
 ---
 title: es6 之 Reflect
 categories:
-- es6
+- note
 ---
 Reflect 对象与 Proxy 对象一样，也是 ES6 为了操作对象而提供的新 API。
 <!--more-->

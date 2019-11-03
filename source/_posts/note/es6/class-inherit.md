@@ -1,7 +1,7 @@
 ---
 title: es6 之 class 继承
 categories:
-- es6
+- note
 ---
 Class 可以通过 extends 关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。
 <!--more-->

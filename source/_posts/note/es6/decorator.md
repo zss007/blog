@@ -1,7 +1,7 @@
 ---
 title: es6 之 Decorator
 categories:
-- es6
+- note
 ---
 许多面向对象的语言都有修饰器（Decorator）函数，用来修改类的行为。目前，有一个提案将这项功能，引入了 ECMAScript。
 <!--more-->

@@ -1,7 +1,7 @@
 ---
 title: js 之 DOM 事件
 categories:
-- js
+- note
 ---
 HTML DOM 允许 JavaScript 对 HTML 事件作出反应。
 <!--more-->

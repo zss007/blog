@@ -1,7 +1,7 @@
 ---
 title: 网络之 http 协议
 categories:
-- essay 
+- note 
 ---
 HTTP 是互联网上应用最为广泛的一种网络协议，现在简单的介绍下它的特点。
 <!--more-->

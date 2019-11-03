@@ -1,7 +1,7 @@
 ---
 title: js 之原型链
 categories:
-- js
+- note
 ---
 JavaScript 的原型有好好的研究过，现在重新捡起来整理下。
 <!--more-->

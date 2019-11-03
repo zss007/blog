@@ -1,7 +1,7 @@
 ---
 title: es6 之 let & const
 categories:
-- es6
+- note
 ---
 ES6 添加 let 和 const 两种声明变量的命令，现在简单介绍下。
 <!--more-->

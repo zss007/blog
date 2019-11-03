@@ -1,7 +1,7 @@
 ---
 title: es6 之字符串扩展
 categories:
-- es6
+- note
 ---
 ES6 扩展了字符串对象。
 <!--more-->

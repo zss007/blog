@@ -1,7 +1,7 @@
 ---
 title: es6 之 Set & Map
 categories:
-- es6
+- note
 ---
 ES6 引入了新的数据结构 Set、WeakSet、Map 以及 WeakMap。
 <!--more-->

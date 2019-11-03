@@ -1,7 +1,7 @@
 ---
 title: es6 之 Generator
 categories:
-- es6
+- note
 ---
 Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。Generator 函数有多种理解角度，首先可以理解成 Generator 函数是一个状态机，封装了多个内部状态。执行 Generator 函数会返回一个遍历器对象，也就是说，Generator 函数除了状态机，还是一个遍历器对象生成函数。返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态。它有两个特征。一是，function 关键字与函数名之间有一个星号；二是，函数体内部使用 yield 表达式，定义不同的内部状态（yield 在英语里的意思就是 "产出"）。
 遍历器对象的 next 方法的运行逻辑：1、遇到 yield 表达式就暂停执行后面的操作，并将紧跟在 yield 后面的那个表达式的值，作为返回的对象的 value 属性值；2、下一次调用 next 方法时，再继续往下执行，直到遇到下一个 yield 表达式；3、如果没有再遇到新的 yield 表达式，就一直运行到函数结束，直到 return 语句为止，并将 return 语句后面的表达式的值作为返回的对象的 value 属性值；4、如果该函数没有 return 语句，则返回的对象的 value 属性值为 undefined。

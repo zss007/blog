@@ -1,7 +1,7 @@
 ---
 title: es6 之对象扩展
 categories:
-- es6
+- note
 ---
 ES6 扩展了对象。
 <!--more-->

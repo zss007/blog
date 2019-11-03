@@ -1,7 +1,7 @@
 ---
 title: js 之类型转换
 categories:
-- js
+- note
 ---
 JS 基础常考内容，一定要融会贯通。
 <!--more-->

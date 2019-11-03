@@ -1,7 +1,7 @@
 ---
 title: es6 之 module 加载
 categories:
-- es6
+- note
 ---
 介绍浏览器和 Node 之中加载 ES6 模块，以及实际开发中经常遇到的一些问题（比如循环加载）。
 <!--more-->

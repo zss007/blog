@@ -1,7 +1,7 @@
 ---
 title: es6 之 promise
 categories:
-- es6
+- note
 ---
 异步编程传统做法是使用回调函数，而 promise 提供了一种更加合理、更加强大的解决方案，避免出现地狱回调。在前面的文章介绍 zepto 源码时有讲到 promise 实现方案，而现在 ES6 将其写进了语言标准，原生提供了 promise 对象。
 <!--more-->

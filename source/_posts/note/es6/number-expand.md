@@ -1,7 +1,7 @@
 ---
 title: es6 之数值扩展
 categories:
-- es6
+- note
 ---
 ES6 扩展了数值。
 <!--more-->

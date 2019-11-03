@@ -1,7 +1,7 @@
 ---
 title: 网络之 https 协议
 categories:
-- essay 
+- note 
 ---
 https 是建立在 SSL(Secure Sockets Layer 安全套接层)上的网络安全协议，最初由 NetScape 公司提出，之后由 IETF 标准化为 TLS(Transport Layer Security 安全传输层协议），其端口为 443。
 <!--more-->

@@ -1,7 +1,7 @@
 ---
 title: es6 之解构赋值
 categories:
-- es6
+- note
 ---
 ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。
 <!--more-->
