@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>redis 简介 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Redis 是使用 C 语言开发的一个高性能键值数据库。Redis 可以通过一些键值类型来存储数据，键值类型： String字符类型、Map散列类型、 List列表类型、Set集合类型、Sortedset有序集合类型">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis 简介">
+<meta property="og:url" content="http://blog.master-ss.cn/note/redis/index/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="Redis 是使用 C 语言开发的一个高性能键值数据库。Redis 可以通过一些键值类型来存储数据，键值类型： String字符类型、Map散列类型、 List列表类型、Set集合类型、Sortedset有序集合类型">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/note/redis/subscribe.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/note/redis/publish.png">
+<meta property="og:updated_time" content="2019-11-04T07:03:33.877Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis 简介">
+<meta name="twitter:description" content="Redis 是使用 C 语言开发的一个高性能键值数据库。Redis 可以通过一些键值类型来存储数据，键值类型： String字符类型、Map散列类型、 List列表类型、Set集合类型、Sortedset有序集合类型">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/note/redis/subscribe.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">redis 简介</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">redis 简介</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-04T03:45:41.738Z" itemprop="datePublished" class="page-time">
+  2019-11-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、应用场景"><span class="post-toc-text">一、应用场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、使用"><span class="post-toc-text">二、使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、安装"><span class="post-toc-text">2.1、安装</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、进入命令行"><span class="post-toc-text">2.2、进入命令行</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、类型"><span class="post-toc-text">三、类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1、字符串"><span class="post-toc-text">3.1、字符串</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2、列表"><span class="post-toc-text">3.2、列表</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3、集合"><span class="post-toc-text">3.3、集合</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-4、哈希"><span class="post-toc-text">3.4、哈希</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、订阅发布"><span class="post-toc-text">四、订阅发布</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/redis/index" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">redis 简介</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-04 11:45:41" datetime="2019-11-04T03:45:41.738Z" itemprop="datePublished">2019-11-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Redis 是使用 C 语言开发的一个高性能键值数据库。Redis 可以通过一些键值类型来存储数据，键值类型： String字符类型、Map散列类型、 List列表类型、Set集合类型、Sortedset有序集合类型<br><a id="more"></a></p>
+<h3 id="一、应用场景"><a href="#一、应用场景" class="headerlink" title="一、应用场景"></a>一、应用场景</h3><ul>
+<li>缓存，如数据查询、短连接、新闻内容、商品内容等等</li>
+<li>分布式集群架构中的 session 分离</li>
+<li>任务队列，如秒杀、抢购、12306等等</li>
+<li>数据过期处理（可以精确到毫秒）</li>
+</ul>
+<h3 id="二、使用"><a href="#二、使用" class="headerlink" title="二、使用"></a>二、使用</h3><h4 id="2-1、安装"><a href="#2-1、安装" class="headerlink" title="2.1、安装"></a>2.1、安装</h4><ul>
+<li>mac</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用 homebrew 快捷安装 --&gt;</span><br><span class="line">brew install redis</span><br><span class="line">brew services start/stop redis</span><br></pre></td></tr></table></figure>
+<ul>
+<li>windows<br>windows 中下载安装就不介绍了，下载链接如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/MicrosoftArchive/redis/releases</span><br></pre></td></tr></table></figure>
+<ul>
+<li>centos</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 查看软件包信息 --&gt;</span><br><span class="line">yum info redis</span><br><span class="line"></span><br><span class="line">&lt;!-- 安装redis安装包 --&gt;</span><br><span class="line">yum install redis</span><br><span class="line"></span><br><span class="line">&lt;!-- 启动redis --&gt;</span><br><span class="line">systemctl start redis</span><br><span class="line"></span><br><span class="line">&lt;!-- 设置redis开机启动 --&gt;</span><br><span class="line">systemctl enable redis</span><br></pre></td></tr></table></figure>
+<h4 id="2-2、进入命令行"><a href="#2-2、进入命令行" class="headerlink" title="2.2、进入命令行"></a>2.2、进入命令行</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 输入后回车即进入redis客户端 --&gt;</span><br><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
+<h3 id="三、类型"><a href="#三、类型" class="headerlink" title="三、类型"></a>三、类型</h3><h4 id="3-1、字符串"><a href="#3-1、字符串" class="headerlink" title="3.1、字符串"></a>3.1、字符串</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 查看所有的 key --&gt;</span><br><span class="line">keys *</span><br><span class="line"></span><br><span class="line">&lt;!-- 普通设置 --&gt;</span><br><span class="line">set key value</span><br><span class="line"></span><br><span class="line">&lt;!-- 设置并加过期时间，表示 30 秒后过期 --&gt;</span><br><span class="line">set key value EX 30</span><br><span class="line"></span><br><span class="line">&lt;!-- 获取数据 --&gt;</span><br><span class="line">get key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除指定数据 --&gt;</span><br><span class="line">del key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除全部数据 --&gt;</span><br><span class="line">flushall</span><br><span class="line"></span><br><span class="line">&lt;!-- 查看类型 --&gt;</span><br><span class="line">type key</span><br><span class="line"></span><br><span class="line">&lt;!-- 设置过期时间，表示指定的 key 20 秒后过期 --&gt;</span><br><span class="line">expire key 20</span><br></pre></td></tr></table></figure>
+<h4 id="3-2、列表"><a href="#3-2、列表" class="headerlink" title="3.2、列表"></a>3.2、列表</h4><p>Redis 列表是简单的字符串列表，按照插入顺序排序，你可以添加一个元素到列表的头部(左边)或者尾部(右边)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 列表右侧增加值 --&gt;</span><br><span class="line">rpush key value</span><br><span class="line"></span><br><span class="line">&lt;!-- 列表左侧增加值 --&gt;</span><br><span class="line">lpush key value</span><br><span class="line"></span><br><span class="line">&lt;!-- 右侧删除值 --&gt;</span><br><span class="line">rpop key</span><br><span class="line"></span><br><span class="line">&lt;!-- 左侧删除值 --&gt;</span><br><span class="line">lpop key</span><br><span class="line"></span><br><span class="line">&lt;!-- 获取数据，索引可以是负数，如：“-1”代表最后边的一个元素 --&gt;</span><br><span class="line">lrange key start stop</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除指定数据 --&gt;</span><br><span class="line">del key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除全部数据 --&gt;</span><br><span class="line">flushall</span><br><span class="line"></span><br><span class="line">&lt;!-- 查看类型 --&gt;</span><br><span class="line">type key</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-3、集合"><a href="#3-3、集合" class="headerlink" title="3.3、集合"></a>3.3、集合</h4><p>Redis 的 Set 是 String 类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据，它和列表的最主要区别就是没法增加重复值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 给集合增数据 --&gt;</span><br><span class="line">sadd key value</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除集合中的一个值 --&gt;</span><br><span class="line">srem key value</span><br><span class="line"></span><br><span class="line">&lt;!-- 获取数据 --&gt;</span><br><span class="line">smembers key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除指定数据 --&gt;</span><br><span class="line">del key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除全部数据 --&gt;</span><br><span class="line">flushall</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-4、哈希"><a href="#3-4、哈希" class="headerlink" title="3.4、哈希"></a>3.4、哈希</h4><p>hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 设置值 hmset --&gt;</span><br><span class="line">hmset zhangsan name &quot;张三&quot; age 20 sex &quot;男&quot;</span><br><span class="line"></span><br><span class="line">&lt;!-- 设置值 hset --&gt;</span><br><span class="line">hset zhangsan name &quot;张三&quot;</span><br><span class="line"></span><br><span class="line">&lt;!-- 获取数据 --&gt;</span><br><span class="line">hgetall key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除指定数据 --&gt;</span><br><span class="line">del key</span><br><span class="line"></span><br><span class="line">&lt;!-- 删除全部数据 --&gt;</span><br><span class="line">flushall</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、订阅发布"><a href="#四、订阅发布" class="headerlink" title="四、订阅发布"></a>四、订阅发布</h3><p>Redis 发布订阅（pub/sub）是一种消息通信模式：发送者（pub）发送消息，订阅者（sub）接收消息。 Redis 客户端可以订阅任意数量的频道。<br>下图展示了频道 channel1 ， 以及订阅这个频道的三个客户端 —— client2 、 client5 和 client1 之间的关系：<br><img src="/assets/note/redis/subscribe.png"><br>当有新消息通过 PUBLISH 命令发送给频道 channel1 时， 这个消息就会被发送给订阅它的三个客户端：<br><img src="/assets/note/redis/publish.png"></p>
+<p>代码示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 发布 --&gt;</span><br><span class="line">var redis = require(&apos;redis&apos;);</span><br><span class="line">var client = redis.createClient(6379, &apos;localhost&apos;);</span><br><span class="line">client.publish(&apos;testPublish&apos;, &apos;message from publish.js&apos;);</span><br><span class="line"></span><br><span class="line">&lt;!-- 订阅 --&gt;</span><br><span class="line">client.subscribe(&apos;testPublish&apos;);</span><br><span class="line">client.on(&apos;message&apos;, function(channel, msg) &#123;</span><br><span class="line">  console.log(&apos;client.on message, channel:&apos;, channel, &apos; message:&apos;, msg);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-04T07:03:33.877Z" itemprop="dateUpdated">2019-11-04 15:03:33</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/redis/index/" target="_blank" rel="external">http://blog.master-ss.cn/note/redis/index/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/redis/index/&title=《redis 简介》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/redis/index/&title=《redis 简介》 — 青松的博客&source=Redis 是使用 C 语言开发的一个高性能键值数据库。Redis 可以通过一些键值类型来存储数据，键值类型： String字符类型、Map散列类型、 L..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/redis/index/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《redis 简介》 — 青松的博客&url=http://blog.master-ss.cn/note/redis/index/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/redis/index/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/linux/install/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 之软件安装</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/redis/index/&title=《redis 简介》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/redis/index/&title=《redis 简介》 — 青松的博客&source=Redis 是使用 C 语言开发的一个高性能键值数据库。Redis 可以通过一些键值类型来存储数据，键值类型： String字符类型、Map散列类型、 L..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/redis/index/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《redis 简介》 — 青松的博客&url=http://blog.master-ss.cn/note/redis/index/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/redis/index/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByElEQVR42u3aO5LEIAwFQN//0t50EuMnBKyDJppyuXAzgUofrite93A9vfn75GnPa8fCxcVtcxPK+Mn4AONvlXfDxcU9yB0HmjF97fsvNlxc3E9yx4gk0WmlQbi4uJ/kVlOf6mFwcXG/w02Kn05rIw9ty2o1XFzcBjf/2L7fW/q7uLi4U9y7uFY1Pe+phYuLe4abB5SkmOkExMJ3cXFxN3PzQJO3UVpFy3gfXFzcI9xxwjF3bWJHW+TxP8bFxd3AzcceSbLSKZOS57i4uP/FrV65qI5Rk+AVFT+4uLjbuJ3mRSfdmRvV4OLinuRWQ1gebsaBrHrNCxcX9yR3VQqSl0l5u7YcznBxcdvcJIjkjYw5aH7VAxcX9wy3H8KSYqZ6meNlH1xc3IPcagel2txM2rLRnri4uB/gzg1FqmOV/Ei4uLgnuXkrM3kzb4JU0yNcXNzd3Lu4ktKoH7ai/xUXF3cbt3o9Ir/C1Ql/cw0UXFzctdw8eM0VSP3DFKIvLi7uUm4+Iu03TBfUari4uB/jVllJ2ZOMdXFxcb/MrTY1Ote5XiY/uLi4m7nVNmie6MwVSNGQFRcXdxs3b5jm0DxUzY1hcHFxt3H/AMoPkJ/+vdAyAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
