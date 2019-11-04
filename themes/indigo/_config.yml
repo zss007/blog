@@ -22,9 +22,9 @@ menu:
   product-hunt:
     text: Project
     url: /categories/project
-  github:
-    url: https://github.com/zss007
-    target: _blank
+  # github:
+  #   url: https://github.com/zss007
+  #   target: _blank
   # link:
   #   text: 简历
   #   url: https://resume.master-ss.cn
