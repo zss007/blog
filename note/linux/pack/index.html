@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Linux 之文件压缩、编辑与别名管理 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="以 Centos 为标准，这章说文件压缩、编辑与别名管理。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 之文件压缩、编辑与别名管理">
+<meta property="og:url" content="http://blog.master-ss.cn/note/linux/pack/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="以 Centos 为标准，这章说文件压缩、编辑与别名管理。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi1.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi2.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi3.png">
+<meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi4.png">
+<meta property="og:updated_time" content="2019-11-03T08:45:03.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 之文件压缩、编辑与别名管理">
+<meta name="twitter:description" content="以 Centos 为标准，这章说文件压缩、编辑与别名管理。">
+<meta name="twitter:image" content="http://blog.master-ss.cn/assets/note/linux/vi1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux 之文件压缩、编辑与别名管理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux 之文件压缩、编辑与别名管理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-03T08:21:46.178Z" itemprop="datePublished" class="page-time">
+  2019-11-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、文件系统的压缩打包"><span class="post-toc-text">一、文件系统的压缩打包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、vi-vim-快速入门"><span class="post-toc-text">二、vi/vim 快速入门</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、命名别名设置"><span class="post-toc-text">三、命名别名设置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、环境变量设置别名"><span class="post-toc-text">四、环境变量设置别名</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/linux/pack" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux 之文件压缩、编辑与别名管理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-03 16:21:46" datetime="2019-11-03T08:21:46.178Z" itemprop="datePublished">2019-11-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>以 Centos 为标准，这章说文件压缩、编辑与别名管理。<br><a id="more"></a></p>
+<h3 id="一、文件系统的压缩打包"><a href="#一、文件系统的压缩打包" class="headerlink" title="一、文件系统的压缩打包"></a>一、文件系统的压缩打包</h3><ul>
+<li>zip &amp; unzip</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--安装 zip 减压软件--&gt;</span><br><span class="line">yum install -y unzip zip</span><br><span class="line"></span><br><span class="line">&lt;!---r：递归，表示将指定的目录下的所有子目录以及文件一起处理--&gt;</span><br><span class="line">zip -r public.zip(压缩包名称) ./public(压缩目录路径)</span><br><span class="line"></span><br><span class="line">unzip ./public.zip(压缩包路径) [-d dir]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>tar</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--制作 gz 包--&gt;</span><br><span class="line">tar czvf public.tar.gz ./public</span><br><span class="line"></span><br><span class="line">&lt;!--解压 gz 包--&gt;</span><br><span class="line">tar xzvf public.tar.gz</span><br><span class="line"></span><br><span class="line">&lt;!--查看 gz 包--&gt;</span><br><span class="line">tar tf public.tar.gz</span><br><span class="line"></span><br><span class="line">&lt;!--制作 tar 包，仅打包，不压缩！--&gt;</span><br><span class="line">tar cvf wwwroot.tar wwwroot</span><br><span class="line"></span><br><span class="line">&lt;!--减压 tar 包--&gt;</span><br><span class="line">tar xvf wwwroot.tar</span><br><span class="line"></span><br><span class="line">特别注意，在参数的下达中，c/x/t 仅能存在一个！不可同时存在！因为不可能同时压缩与解压缩。</span><br><span class="line">-c：建立一个压缩档案的参数指令(create 的意思)</span><br><span class="line">-x：解开一个压缩档案的参数指令</span><br><span class="line">-t：查看 tarfile 里面的文件</span><br><span class="line"></span><br><span class="line">-z：是否同时具有 gzip 的属性？亦即是否需要用 gzip 压缩？</span><br><span class="line">-j：是否同时具有 bzip2 的属性？亦即是否需要用 bzip2 压缩？</span><br><span class="line">-v：压缩的过程中显示档案！这个常用，但不建议用在背景执行过程！</span><br><span class="line">-f：使用文件名，请留意，在 f 之后要立即接文件名喔！不要再加参数！</span><br></pre></td></tr></table></figure>
+<h3 id="二、vi-vim-快速入门"><a href="#二、vi-vim-快速入门" class="headerlink" title="二、vi/vim 快速入门"></a>二、vi/vim 快速入门</h3><p>vi 是 Unix 和类 Unix 环境下的可用于创建文件的屏幕编辑器。vi 有两种工作模式：命令模式和文本输入模式。vim 是 vi 的升级版本，它不仅兼容 vi 的所有指令，而且还有一些新的特性在里面。</p>
+<p>vi 命令模式：<br>默认编辑一个文件的时候第一次进入的就是命令模式，vi 从命令模式切换到文本输入模式可以在键盘上面按(i 或者 I 或者 a 或者 A 或者 O 或者 o)，按[ESC]键使 vi 从文本输入模式 回到命令模式。<br><img src="/assets/note/linux/vi1.png"></p>
+<p>退出 vi 命令模式：<br><img src="/assets/note/linux/vi2.png"></p>
+<p>命令模式下面文本修改键：<br><img src="/assets/note/linux/vi3.png"><br><img src="/assets/note/linux/vi4.png"></p>
+<h3 id="三、命名别名设置"><a href="#三、命名别名设置" class="headerlink" title="三、命名别名设置"></a>三、命名别名设置</h3><ul>
+<li>alias（仅在当前终端有效）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- alias 后面加 &#123;&quot;别名&quot;=&apos;命令参数...&apos;&#125;，如： --&gt;</span><br><span class="line">alias ll=&apos;ls -l&apos;</span><br><span class="line"></span><br><span class="line">&lt;!--查看目前所有的命名别名--&gt;</span><br><span class="line">alias</span><br></pre></td></tr></table></figure>
+<ul>
+<li>unalias（仅在当前终端有效）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--取消别名--&gt;</span><br><span class="line">unalias ll</span><br></pre></td></tr></table></figure>
+<h3 id="四、环境变量设置别名"><a href="#四、环境变量设置别名" class="headerlink" title="四、环境变量设置别名"></a>四、环境变量设置别名</h3><ul>
+<li><code>/etc/profile</code> 和 <code>/etc/bashrc</code> 是 系统整体的设置，最好不要修改</li>
+<li><code>~/.bash_history</code> 记录之前输入命令</li>
+<li><code>~/.bash_logout</code> 退出时执行的命令</li>
+<li><code>~/.bash_profile</code> 登入shell时执行</li>
+<li><code>~/.bashrc</code> 非登入shell，一般被显式 <code>~/.bash_profile</code> 调用</li>
+<li>source 读入环境配置文件，使其生效，而不必重启</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--source 配置文件名--&gt;</span><br><span class="line">source ~/.bashrc</span><br><span class="line"></span><br><span class="line">&lt;!-- 比如可在 `~/.bash_profile` 文件编辑添加配置文件使别名永久生效 --&gt;</span><br><span class="line"># User specific aliases and functions</span><br><span class="line">alias ll=&apos;ls -l&apos;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-03T08:45:03.481Z" itemprop="dateUpdated">2019-11-03 16:45:03</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/linux/pack/" target="_blank" rel="external">http://blog.master-ss.cn/note/linux/pack/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/pack/&title=《Linux 之文件压缩、编辑与别名管理》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/pack/&title=《Linux 之文件压缩、编辑与别名管理》 — 青松的博客&source=以 Centos 为标准，这章说文件压缩、编辑与别名管理。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/pack/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之文件压缩、编辑与别名管理》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/pack/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/pack/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/linux/process/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux 之进程管理</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/linux/auth/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 之用户管理与文件权限</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/pack/&title=《Linux 之文件压缩、编辑与别名管理》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/pack/&title=《Linux 之文件压缩、编辑与别名管理》 — 青松的博客&source=以 Centos 为标准，这章说文件压缩、编辑与别名管理。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/pack/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之文件压缩、编辑与别名管理》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/pack/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/pack/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwklEQVR42u3aS46EMAwFwL7/pZntbDo8O8SipcoKAYLKxvInn0+8rn9r/c76+tv7Dy9cXNxt7rVc63e+Pc3/lRtwcXHnudXAlKx1EGwGO1xc3FdykwTlGzp5iouL+4vcalCrbgYXF/c93CRNST7dC15HajVcXNwNbt6lPHd9pL+Li4vb4l7FlQSgZABztRYuLu4MNw8oeRt0p9USDXdxcXFHuOvP5SOQB4qW6ndwcXHHufvlUK9pUmiO4OLiHuAmI41miRKnR/l9XFzcSe6a1QtzPfRNYwUXF3eEWw1ePdbDCRMuLu4It1rA5Hd6TZaoLYuLi3uMW21n7AxiqxuIih9cXNwD3N4Ao3cgo9fNvYm7uLi4h7lJ2pGnONUNb01RcXFxD3CrRyiqh6uqAa7QMMXFxR3hJilIHpiqiUuyJVxc3HluL+14rIxJDLi4uIe5O83QarszD1uFLAkXF/cAt3o8Yif1ycex+4c5cHFx97nVoWl+nKI6vo2e4uLiDnLzoqh3tOJIrYaLi/sabp4M9dooNxvDxcV9JXdnQJIEtZskCRcXd5D71CCkt71C0wQXF3eE2/t9FVcNkQ/0d3FxcTvcP4Ey4jEfhJ38AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

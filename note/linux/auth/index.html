@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Linux 之用户管理与文件权限 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="以 Centos 为标准，这章说用户管理与文件权限。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 之用户管理与文件权限">
+<meta property="og:url" content="http://blog.master-ss.cn/note/linux/auth/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="以 Centos 为标准，这章说用户管理与文件权限。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-03T07:22:13.332Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 之用户管理与文件权限">
+<meta name="twitter:description" content="以 Centos 为标准，这章说用户管理与文件权限。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux 之用户管理与文件权限</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux 之用户管理与文件权限</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-03T07:12:05.786Z" itemprop="datePublished" class="page-time">
+  2019-11-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、用户管理"><span class="post-toc-text">一、用户管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、用户身份切换"><span class="post-toc-text">二、用户身份切换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、文件权限"><span class="post-toc-text">三、文件权限</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1、介绍"><span class="post-toc-text">3.1、介绍</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2、改变文件属性与权限"><span class="post-toc-text">3.2、改变文件属性与权限</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3、目录与文件的权限意义"><span class="post-toc-text">3.3、目录与文件的权限意义</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/linux/auth" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux 之用户管理与文件权限</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-03 15:12:05" datetime="2019-11-03T07:12:05.786Z" itemprop="datePublished">2019-11-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>以 Centos 为标准，这章说用户管理与文件权限。<br><a id="more"></a></p>
+<h3 id="一、用户管理"><a href="#一、用户管理" class="headerlink" title="一、用户管理"></a>一、用户管理</h3><ul>
+<li>useradd 添加用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd lisi</span><br></pre></td></tr></table></figure>
+<ul>
+<li>passwd 设置密码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--后面没有加账号就是改自己的密码--&gt;</span><br><span class="line">passwd lisi</span><br></pre></td></tr></table></figure>
+<ul>
+<li>userdel 删除用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!---r:递归的删除目录下面文件以及子目录下文件--&gt;</span><br><span class="line">userdel -r lisi</span><br></pre></td></tr></table></figure>
+<ul>
+<li>id 查看用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id user</span><br></pre></td></tr></table></figure>
+<ul>
+<li>groups 查看用户组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--有效与支持用户组的查看--&gt;</span><br><span class="line">groups</span><br></pre></td></tr></table></figure>
+<ul>
+<li>groupadd 新增用户组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--新建一个用户组，名为 group1--&gt;</span><br><span class="line">groupadd group1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>groupdel 删除用户组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--删除 mygroup 组，不能删除初始用户组--&gt;</span><br><span class="line">groupdel mygroup</span><br></pre></td></tr></table></figure>
+<ul>
+<li>gpasswd 用户组管理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--把用户 testuser 加入到 root 组，加入组后 testuser 获取到 user 组及 root 组所有权限--&gt;</span><br><span class="line">gpasswd -a testuser root</span><br><span class="line"></span><br><span class="line">&lt;!--移出组--&gt;</span><br><span class="line">gpasswd -d testuser root</span><br></pre></td></tr></table></figure>
+<h3 id="二、用户身份切换"><a href="#二、用户身份切换" class="headerlink" title="二、用户身份切换"></a>二、用户身份切换</h3><ul>
+<li>su 需新切换的用户密码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--切换 root 身份--&gt;</span><br><span class="line">su -</span><br><span class="line"></span><br><span class="line">&lt;!--切换 dmtsai 身份--&gt;</span><br><span class="line">su -l dmtsai</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sudo 仅需要自己的密码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--以 sshd 身份在 /tmp 下新建 mysshd 文件，不设置默认为 root--&gt;</span><br><span class="line">sudo -u sshd touch /tmp/mysshd</span><br><span class="line"></span><br><span class="line">&lt;!--查看当前用户可执行的命令--&gt;</span><br><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
+<ul>
+<li>visudo 为用户添加 sudo 权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--输入--&gt;</span><br><span class="line">visudo</span><br><span class="line"></span><br><span class="line">&lt;!--编辑--&gt;</span><br><span class="line">%zhangsan ALL=(root) /usr/sbin/useradd</span><br><span class="line">%zhangsan ALL=(root) /usr/sbin/userdel</span><br><span class="line"></span><br><span class="line">&lt;!--用户账号  登陆者来源主机名=（可切换的身份） 可执行的命令--&gt;</span><br><span class="line">&lt;!--在用户账号最左边加上 % 代表后面接的是“用户组”--&gt;</span><br><span class="line">%admin    ALL = (ALL) ALL</span><br></pre></td></tr></table></figure>
+<h3 id="三、文件权限"><a href="#三、文件权限" class="headerlink" title="三、文件权限"></a>三、文件权限</h3><h4 id="3-1、介绍"><a href="#3-1、介绍" class="headerlink" title="3.1、介绍"></a>3.1、介绍</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--显示文件与相关属性--&gt;</span><br><span class="line">ls -al</span><br><span class="line"></span><br><span class="line">-rw-r--r--  1 root root   331 Oct 28  2018 server.js</span><br></pre></td></tr></table></figure>
+<p>第一个字符代表文件类型：</p>
+<ul>
+<li><code>d</code>为目录</li>
+<li><code>-</code>为文件</li>
+<li><p><code>l</code>为连接文件</p>
+</li>
+<li><p>接下来的字符串 3 个为一组，均为<code>rwx</code>组合，<code>r</code>代表可读，<code>w</code>代表可写，<code>x</code>代表可执行</p>
+<ul>
+<li>第一组为‘文件所有者的权限’</li>
+<li>第二组为‘同用户组的权限’</li>
+<li>第三组为‘其他非本用户组的权限’</li>
+</ul>
+</li>
+<li>第二列表示有多少个文件名连接到此节点</li>
+<li>第三列表示这个文件的‘所有者账号’</li>
+<li>第四列表示这个文件的所属用户组</li>
+<li>第五列为这个文件的容量大小，默认为B</li>
+<li>第六列为这个文件的创建或最近修改时间</li>
+<li>第七列为该文件名</li>
+</ul>
+<h4 id="3-2、改变文件属性与权限"><a href="#3-2、改变文件属性与权限" class="headerlink" title="3.2、改变文件属性与权限"></a>3.2、改变文件属性与权限</h4><ul>
+<li>chgrp 改变文件所属用户组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chgrp [-R] dirname/filename</span><br><span class="line">-R：进行递归更改，即连同子目录下的所有文件、目录都更新成为这个用户组，常用于更新某一目录内所有的文件情况</span><br><span class="line"></span><br><span class="line">如修改用户组为 users</span><br><span class="line">chgrp users install.log</span><br></pre></td></tr></table></figure>
+<ul>
+<li>chown 改变文件所有者</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">chown [-R] 账号名称 文件或目录</span><br><span class="line">chown [-R] 账号名称:组名 文件或目录</span><br><span class="line"></span><br><span class="line">将 install.log 的拥有者改为 bin 这个账号</span><br><span class="line">chown bin install.log</span><br><span class="line"></span><br><span class="line">将 install.log 的拥有者和群组改回为 root</span><br><span class="line">chown root:root install.log</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>chmod 改变文件的权限<br>文件权限的改变使用的是 chmod 这个指令，但是权限的设置方法有两种， 分别可以使用数字或者<br>符号来进行权限的变更</p>
+<ul>
+<li><p>数字类型改变档案权限<br>r：4<br>w：2<br>x：1</p>
+</li>
+<li><p>符号类型改变档案权限<br>u：user<br>g：group<br>o：others<br>a：all<br>+：加入<br>-：除去<br>=：设置</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chmod [-R] xyz 文件或目录</span><br><span class="line">xyz: 就是刚刚提到的数字类型的权限属性，为 rwx 属性数值的相加</span><br><span class="line"></span><br><span class="line">如：将 .bashrc 文件的权限修改为-rw-r--r--</span><br><span class="line">chmod 644 .bashrc</span><br><span class="line"></span><br><span class="line">如：将 .bashrc 文件的权限修改为-rwxr-xr-x</span><br><span class="line">chmod u=rwx,go=rx .bashrc</span><br><span class="line"></span><br><span class="line">如：不知道原先的文件属性，只想增加.bashrc 这个文件的每个人均可写入的权限</span><br><span class="line">chmod a+w .bashrc</span><br></pre></td></tr></table></figure>
+<h4 id="3-3、目录与文件的权限意义"><a href="#3-3、目录与文件的权限意义" class="headerlink" title="3.3、目录与文件的权限意义"></a>3.3、目录与文件的权限意义</h4><ul>
+<li>权限对文件的重要性<ul>
+<li>r：读取文件的实际内容，如读取文本文件的文字内容等</li>
+<li>w：编辑、新增、修改文件内容（不含删除）</li>
+<li>x：具备被系统执行的权限</li>
+</ul>
+</li>
+<li>权限对目录的重要性<ul>
+<li>r：读取目录结构列表</li>
+<li>w：更新目录结构列表的权限，如：新建文件或目录、删除文件或目录（不论该文件的权限）、重命名文件或目录、转移目录内文件或目录位置</li>
+<li>x：代表用户能否进入该目录成为工作目录，所谓工作目录就是你目前所在的目录</li>
+</ul>
+</li>
+</ul>
+<p>要开放目录给任何人浏览时，应该至少也要给予 r 及 x 的权限，但 w 权限不可随便给</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-03T07:22:13.332Z" itemprop="dateUpdated">2019-11-03 15:22:13</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/linux/auth/" target="_blank" rel="external">http://blog.master-ss.cn/note/linux/auth/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/auth/&title=《Linux 之用户管理与文件权限》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/auth/&title=《Linux 之用户管理与文件权限》 — 青松的博客&source=以 Centos 为标准，这章说用户管理与文件权限。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/auth/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之用户管理与文件权限》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/auth/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/auth/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/linux/pack/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux 之文件压缩、编辑与别名管理</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/linux/file/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 之文件及目录</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/auth/&title=《Linux 之用户管理与文件权限》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/auth/&title=《Linux 之用户管理与文件权限》 — 青松的博客&source=以 Centos 为标准，这章说用户管理与文件权限。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/auth/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之用户管理与文件权限》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/auth/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/auth/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABy0lEQVR42u3awY6DMAxFUf7/p+m2EoXeZ+OUGd2sUIBwsrFim23DY38b7zPH67Pnj/PHu7cNuXLltrn75eAgQrle/9ogV67c9dyzpc+uzzbQf/6LTa5cuY/kEhz5sFy5cv8Hl6Q018GLpFJy5cp9DpckP7w4QjYwnqvJlSu3weVVyrnrkfquXLlyS9w9HOTd9EgUfF2uXLlLuLVWSloM5fPoLbly5Q5zeWGCN1zTNclW5cqVu5LbaYKmJYxOWUSuXLkruYTI903m+YFJrly5v+Wmh5j0Gd6CjQsicuXKHeCSwgQhksJHrT2z8ROTXLlyb+LWKJ2fM/ih6sOMXLlyl3B5IEtLHrVfOeOgJleu3DEub4j2iyNpNfc0Y5MrV+4SbnoE6WRaPEFCP27KlSt3gNsZtaDG17l5Y3LlysXcWjM1baKQYBf/LSJXrtxhbufwUUxjagcguXLlDnP3cKSNVZJWBXflypW7hFsLVTxGpgUX/l25cuVOc/sNEjJz22bkypW7kEuSolroqcVOuXLl/i1uLY3hK6NWily5ch/GJWGrE9q+bFiuXLkLuf1GCG+1piXXkb6NXLlyccOVpyLkoMND5L2Jk1y5chvcF3oRZ9aDN2yMAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

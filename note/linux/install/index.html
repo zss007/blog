@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Linux 之软件安装 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="以 Centos 为标准，这章说软件安装。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 之软件安装">
+<meta property="og:url" content="http://blog.master-ss.cn/note/linux/install/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="以 Centos 为标准，这章说软件安装。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T02:23:48.858Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 之软件安装">
+<meta name="twitter:description" content="以 Centos 为标准，这章说软件安装。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux 之软件安装</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux 之软件安装</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-03T09:03:22.361Z" itemprop="datePublished" class="page-time">
+  2019-11-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、软件管理器"><span class="post-toc-text">一、软件管理器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、源码与-Tarball"><span class="post-toc-text">二、源码与 Tarball</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/linux/install" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux 之软件安装</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-03 17:03:22" datetime="2019-11-03T09:03:22.361Z" itemprop="datePublished">2019-11-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>以 Centos 为标准，这章说软件安装。<br><a id="more"></a></p>
+<h3 id="一、软件管理器"><a href="#一、软件管理器" class="headerlink" title="一、软件管理器"></a>一、软件管理器</h3><ul>
+<li>rpm<br>全名“RedHat Package Manager”，简称 RPM，以数据库记录的方式将所需要的软件安装到 Linux 系统。最大特点是将要安装的软件先编译过，并且打包成 RPM 机制的安装包，通过软件里头默认的数据库记录要安装的时候必须具备的依赖属性软件。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh package_name</span><br><span class="line">-i：install 的意思</span><br><span class="line">-v：查看更详细的安装信息画面</span><br><span class="line">-h：以安装信息栏显示安装进度</span><br><span class="line"></span><br><span class="line">&lt;!--安装 rp-pppoe-3.5-32.1.i386.rpm--&gt;</span><br><span class="line">rpm -ivh rp-pppoe-3.5-32.1.i386.rpm</span><br><span class="line"></span><br><span class="line">&lt;!--直接由网络上面的某个档案安装，以网址来安装--&gt;</span><br><span class="line">rpm -ivh http://website.name/path/pkgname.rpm</span><br><span class="line"></span><br><span class="line">&lt;!--列出所有的，已经安装在本机 Linux 系统上面的所有软件名称--&gt;</span><br><span class="line">rpm -qa</span><br><span class="line"></span><br><span class="line">&lt;!--仅查询，后面接的软件名称是否有安装--&gt;</span><br><span class="line">rpm -q 软件名称</span><br><span class="line"></span><br><span class="line">&lt;!--httpd 表示要卸载的软件包--&gt;</span><br><span class="line">rpm -e httpd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>yum：rpm 属性依赖解决方式<br>依赖属性的软件列表，在有要安装软件需求的时候先到列表去找，同时与系统内已安装的软件相比较，没安装到的依赖软件就一口气同时安装起来，这就是 YUM 机制的由来。<br>想要使用 yum 功能，必须先找到适合的 yum server 才行，而每个 yum server 可能都会提供不同的软件功能</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--yum 搜索 rpm 包--&gt;</span><br><span class="line">yum search 名称</span><br><span class="line"></span><br><span class="line">&lt;!--yum 显示 rpm 包信息--&gt;</span><br><span class="line">yum info package1</span><br><span class="line"></span><br><span class="line">&lt;!--yum 查看 rpm 包--&gt;</span><br><span class="line">yum list</span><br><span class="line">yum list | grep httpd</span><br><span class="line">&lt;!--列出所有可更新的软件包--&gt;</span><br><span class="line">yum list updates</span><br><span class="line">&lt;!--列出所有已安装的软件包--&gt;</span><br><span class="line">yum list installed</span><br><span class="line"></span><br><span class="line">&lt;!--yum 卸载 rpm 包--&gt;</span><br><span class="line">yum [-y] remove wget</span><br><span class="line">-y：当 yum 要等用户输入时，自动提供 yes 的响应</span><br><span class="line"></span><br><span class="line">&lt;!--yum 安装 rpm 包--&gt;</span><br><span class="line">yum [-y] install unzip zip</span><br><span class="line"></span><br><span class="line">&lt;!--后面接要升级的软件，若要整个系统都升级，直接 update 即可--&gt;</span><br><span class="line">yum [-y] update [软件名]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>yum 的设置文件</li>
+</ul>
+<p><code>ll /etc/yum.repos.d/</code>返回相关文件信息，然后动态设置部分软件的 yum 的镜像站点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">total 44</span><br><span class="line">-rw-r--r--. 1 root root  614 Oct 25  2018 CentOS-Base.repo</span><br><span class="line">-rw-r--r--  1 root root 1309 Oct  8  2018 CentOS-CR.repo</span><br><span class="line">-rw-r--r--  1 root root  649 Oct  8  2018 CentOS-Debuginfo.repo</span><br><span class="line">-rw-r--r--  1 root root  230 Oct 25  2018 CentOS-Epel.repo</span><br><span class="line">-rw-r--r--  1 root root  314 Oct  8  2018 CentOS-fasttrack.repo</span><br><span class="line">-rw-r--r--  1 root root  630 Oct  8  2018 CentOS-Media.repo</span><br><span class="line">-rw-r--r--  1 root root 1331 Oct  8  2018 CentOS-Sources.repo</span><br><span class="line">-rw-r--r--  1 root root 4768 Oct  8  2018 CentOS-Vault.repo</span><br><span class="line">-rw-r--r--  1 root root  196 Oct 31  2018 mongodb.repo</span><br><span class="line">-rw-r--r--  1 root root   99 Jan  4  2019 nginx.repo</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、源码与-Tarball"><a href="#二、源码与-Tarball" class="headerlink" title="二、源码与 Tarball"></a>二、源码与 Tarball</h3><ul>
+<li><p>make<br>执行时在当前目录下搜索 Makefile 文本文件，这个文件记录了源码如何编译，make 自动判别源码是否经过变动而自动更新执行文件</p>
+</li>
+<li><p>源代码（C语言）如何编译安装</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--先安装源代码编译的软件 gcc，make，openssl--&gt;</span><br><span class="line">yum install -y gcc make gcc-c++ openssl-devel</span><br><span class="line"></span><br><span class="line">&lt;!--检查系统中是否已经安装 gcc--&gt;</span><br><span class="line">rpm -qa | grep gcc / rpm -ql gcc</span><br><span class="line"></span><br><span class="line">&lt;!--1.生成编译配置文件(Makefile)--&gt;</span><br><span class="line">&lt;!--2.开始编译(make)--&gt;</span><br><span class="line">&lt;!--3.开始安装(make install)--&gt;</span><br><span class="line">安装 httpd-2.2.9.tar.gz 源代码:</span><br><span class="line">1) 减压并 cd 到对应目录</span><br><span class="line">2) ./configure --prefix=/usr/local/apache（安装路径设置为/usr/local/apache）</span><br><span class="line">3) make / make -j4</span><br><span class="line">4) make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>卸载源代码安装的软件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 1、结束进程，pkill 与 killall 差不多 --&gt;</span><br><span class="line">pstree | grep httpd</span><br><span class="line">pkill httpd</span><br><span class="line">&lt;!-- 2、删除源代码 --&gt;</span><br><span class="line">cd /usr/local/</span><br><span class="line">直接删除源代码</span><br><span class="line">rm -rf apache/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>源代码安装 nodejs</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、 下载 nodejs 源码包</span><br><span class="line">2、 减压到 usr/local/nodejs 目录</span><br><span class="line">3、 ./configure</span><br><span class="line">4、 make / make -j4</span><br><span class="line">5、 make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>源代码安装 Apache</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.减压 httpd-2.2.9.tar.gz 到对应目录</span><br><span class="line">2、 ./configure 编译</span><br><span class="line">./configure --prefix=/usr/local/apache2/ --sysconfdir=/usr/local/apache2/etc/ --with-included-apr --enable-dav --enable-so --enable-deflate=shared --enable-expires=shared</span><br><span class="line">--enable-rewrite=shared</span><br><span class="line">3、make</span><br><span class="line">4、make install</span><br><span class="line">&lt;!--启动 Apache 测试:--&gt;</span><br><span class="line">/usr/local/apache2/bin/apachectl restart</span><br><span class="line">&lt;!--查看进程:--&gt;</span><br><span class="line">ps -le | grep httpd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>二进制安装配置 nodejs<br>二进制包里面包括了已经经过编译，可以马上运行的程序，所以二进制包的安装只需要丢到一个目录里面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v8.9.3/node-v8.9.3-linux-x64.tar.xz</span><br><span class="line"></span><br><span class="line">xz -d node-v8.9.3-linux-x64.tar.xz</span><br><span class="line">tar -xvf node-v8.9.3-linux-x64.tar</span><br><span class="line"></span><br><span class="line">mv node-v8.9.3-linux-x64 /usr/local/nodejs</span><br><span class="line"></span><br><span class="line">&lt;!--配置环境变量--&gt;</span><br><span class="line">vi /etc/profile</span><br><span class="line"></span><br><span class="line">&lt;!--最后面添加:--&gt;</span><br><span class="line">export NODE_HOME=/usr/local/nodejs/bin</span><br><span class="line">export PATH=$NODE_HOME:$PATH</span><br><span class="line"></span><br><span class="line">&lt;!--:wq 保存，然后运行--&gt;</span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line">&lt;!--用 node -v 和 npm -v 来检查下:--&gt;</span><br><span class="line">node -v</span><br><span class="line"></span><br><span class="line">&lt;!--查看环境变量是否生效--&gt;</span><br><span class="line">echo $PATH</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-04T02:23:48.858Z" itemprop="dateUpdated">2019-11-04 10:23:48</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/linux/install/" target="_blank" rel="external">http://blog.master-ss.cn/note/linux/install/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/install/&title=《Linux 之软件安装》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/install/&title=《Linux 之软件安装》 — 青松的博客&source=以 Centos 为标准，这章说软件安装。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/install/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之软件安装》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/install/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/install/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/linux/process/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 之进程管理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/install/&title=《Linux 之软件安装》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/install/&title=《Linux 之软件安装》 — 青松的博客&source=以 Centos 为标准，这章说软件安装。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/install/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之软件安装》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/install/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/install/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aMW7DMAwF0Nz/0u7SoUAQ+5N0Clh6moLWtvQ0CBTJ1ysex9v4+/fkyfxrn966YWBgYDyWcZyOfHH5LO9bkM/7cQ0YGBgbMD5NfP47+W/1bEy+hoGBgZEvbhIIniMxMDAw5ozkiDx/Kw8ZMTAwMKoh2nlomF9iz2f/4l0cAwPjgYw8Wfb/v79S38DAwHgU4yiOPKGfB4KT9fx+BwMDY2nGPJVfvQY3L6hJoImBgbEoI7kQ5pNVkXlDxsUXMDAwNmDkQVsPMCkVRGk+DAyMDRh5aj5fSrLQ/BC/eBIDA2Mbxrw8kG9BteGs0GaBgYGxHKOaVkvCwcmTvWs2BgbGDoy8AaKH7JUZ8vIABgbGPoykYaJ3TZ0cyoVtwsDAWJrRG9VFV6+jXwdgYGA8ijFJ6E8aLCblAQwMjH0Y1WtkL3DshY+jZgsMDIyFGPdOVm2nSL7WCx8xMDDWY1QDu95BWd3X5iUWAwNjUUZvQXnz670HOgYGxp6M6lFbTfHn7Rd5abPQM4KBgbEQI28Iq/LuOlIvwk0MDIxtGOeY5KO9kmfe3hHFthgYGAsxjuLIeb0taG4rBgbG0ozJYTcPBHNkudkCAwNjOcY8xZ+820vq5SUEDAyMHRhJU0UvlT9vxSh0tGFgYGC0Grl6zWHVIgQGBgZGtcDZS5ZVi5ej0BADA+OBjDykqx6s1bd6s2BgYKzNqF4d86auSXWiVxzFwMBYjvEDhX0D8YKOhR0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Linux 之进程管理 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="以 Centos 为标准，这章说进程管理。">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 之进程管理">
+<meta property="og:url" content="http://blog.master-ss.cn/note/linux/process/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="以 Centos 为标准，这章说进程管理。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T02:16:55.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 之进程管理">
+<meta name="twitter:description" content="以 Centos 为标准，这章说进程管理。">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux 之进程管理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux 之进程管理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-03T08:42:38.285Z" itemprop="datePublished" class="page-time">
+  2019-11-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、基础"><span class="post-toc-text">一、基础</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1、概念"><span class="post-toc-text">1.1、概念</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2、命令执行的判断依据"><span class="post-toc-text">1.2、命令执行的判断依据</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、工作管理"><span class="post-toc-text">二、工作管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、进程管理"><span class="post-toc-text">三、进程管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、查看系统资源"><span class="post-toc-text">四、查看系统资源</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/linux/process" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux 之进程管理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-03 16:42:38" datetime="2019-11-03T08:42:38.285Z" itemprop="datePublished">2019-11-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>以 Centos 为标准，这章说进程管理。<br><a id="more"></a></p>
+<h3 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础"></a>一、基础</h3><h4 id="1-1、概念"><a href="#1-1、概念" class="headerlink" title="1.1、概念"></a>1.1、概念</h4><ul>
+<li>程序：通常为二进制程序放置存储媒介中，以物理文件的形式存在</li>
+<li>进程：程序被触发后，执行者的权限与属性、程序的代码与所需数据等都会被加载到内存中，可以说进程就是一个正在进行中的程序</li>
+<li>系统服务：常驻内存的进程，被称为服务</li>
+</ul>
+<h4 id="1-2、命令执行的判断依据"><a href="#1-2、命令执行的判断依据" class="headerlink" title="1.2、命令执行的判断依据"></a>1.2、命令执行的判断依据</h4><ul>
+<li><code>;</code> 不考虑命令相关性的连续命令执行</li>
+<li><code>&amp;&amp;</code> 前面执行正确才继续执行</li>
+<li><code>||</code> 前面执行错误才继续执行</li>
+</ul>
+<h3 id="二、工作管理"><a href="#二、工作管理" class="headerlink" title="二、工作管理"></a>二、工作管理</h3><ul>
+<li>&amp;：直接将命令丢到后台中“执行”</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--由于没有加上数据流重定向，所以会影响界面，不会影响前台的操作--&gt;</span><br><span class="line">tar -zpcf /tmp/etc.tar.gz /etc &amp;</span><br><span class="line"></span><br><span class="line">&lt;!--利用数据流重定向，将输出数据传送至某个文件中，2&gt;&amp;1 表示将错误重定向到标准输出上--&gt;</span><br><span class="line">tar -zpcvf /tmp/etc.tar.gz /etc &gt; /tmp/log.txt 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>kill：管理后台当中的工作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--列出目前kill能够使用的信号--&gt;</span><br><span class="line">kill -l</span><br><span class="line"></span><br><span class="line">kill -signal %jobnumber</span><br><span class="line">-1：重新读取一次参数的配置文件</span><br><span class="line">-9：立刻强制删除一个工作</span><br><span class="line">-15：以正常的程序方式终止一项工作，与 -9 是不一样的</span><br></pre></td></tr></table></figure>
+<ul>
+<li>killAll：删除某个服务，基本同 pkill</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--将系统中以某个命令名称启动的进程全部删除--&gt;</span><br><span class="line">killAll -signal 命令名称</span><br></pre></td></tr></table></figure>
+<ul>
+<li>nohup 脱机管理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--终端机前台中工作--&gt;</span><br><span class="line">nohup [命令与参数]</span><br><span class="line"></span><br><span class="line">&lt;!--终端机后台中工作--&gt;</span><br><span class="line">nohup [命令与参数] &amp;</span><br></pre></td></tr></table></figure>
+<h3 id="三、进程管理"><a href="#三、进程管理" class="headerlink" title="三、进程管理"></a>三、进程管理</h3><ul>
+<li>ps 将某个时间点的进程运行情况选取下来</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--查看系统所有的进程数据，以 PID 顺序排列--&gt;</span><br><span class="line">ps aux</span><br><span class="line">-a：显示现行终端机下的所有程序，包括其他用户的程序</span><br><span class="line">-u：显示所有程序，不以终端机区分</span><br><span class="line">-x：以用户为主的格式显示程序状况，通常与 a 参数一起使用，可列出较完整信息</span><br><span class="line"></span><br><span class="line"> ps -aux | grep nginx</span><br><span class="line"> &lt;!--各字段意义分别为：进程用户账号、进程标识符PID、使用CPU百分比、物理内存百分比、虚拟内存使用量KB、占用固定内存量KB、哪个终端机运行，与终端机无关则显示？、进程目前状态、进程被触发启动时间、使用CPU运行时间、进程实际命令--&gt;</span><br><span class="line"> nginx     2778  0.0  0.4  50208  4196 ?        S    Oct15   0:10 nginx: worker process</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pstree 查看进程树</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--显示所有信息--&gt;</span><br><span class="line">pstree -ap</span><br><span class="line">-a：各进程树之间的连接以 ASCII 字符来连接</span><br><span class="line">-p：列出每个进行的PID</span><br><span class="line"></span><br><span class="line">pstree | grep httpd</span><br><span class="line">pstree -ap | grep httpd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>top 动态查看进程的变化</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--相对于 ps 选取一个时间点的进程状态，top 可以持续监测进程运行的状态--&gt;</span><br><span class="line">top [-d 数字] | [-p pid]</span><br><span class="line">-d：后面可以接秒数，就是进程界面更新的秒数，默认是5秒</span><br><span class="line">-p：指定某个PID来进行查看检测</span><br><span class="line"></span><br><span class="line">&lt;!--第一行依次对应:系统当前时间 up 系统到目前为止 i 运行的时间， 当前登陆系统的用户数量， load average 后 面的三个数字分别表示距离现在一分钟，五分钟，十五分钟的负载情况--&gt;</span><br><span class="line">&lt;!--这三个负载即分别表示系统在过去1分钟、5分钟、15分钟内运行进程队列中的平均进程数量--&gt;</span><br><span class="line">top - 14:29:34 up 372 days,  3:54,  1 user,  load average: 0.04, 0.07, 0.06</span><br><span class="line"></span><br><span class="line">&lt;!--第二行依次对应:tasks 表示任务(进程)，78 total 则表示现在有 78 个进程，其中处于运行中 的有 1 个，77 个在休眠(挂起)，stopped 状态即停止的进程数为 0，zombie 状态即僵尸 的进程数为 0 个。--&gt;</span><br><span class="line">Tasks:  78 total,   1 running,  77 sleeping,   0 stopped,   0 zombie</span><br><span class="line"></span><br><span class="line">&lt;!--第三行只看空闲就可以了:cpu 空闲率为 99.0%--&gt;</span><br><span class="line">%Cpu(s):  0.7 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line"></span><br><span class="line">&lt;!--第四行依次对应：总内存:0.969g 空闲:82348/1024/1024=0.0785g，已经使用0.5g，缓存区0.39g--&gt;</span><br><span class="line">&lt;!--缓冲区是从主内存中特地预留出的内存，用来存放特定的一些信息，例如从磁盘中取得的文件表，程序正在读取的内容等等--&gt;</span><br><span class="line">KiB Mem :  1016380 total,    82348 free,   523948 used,   410084 buff/cache</span><br><span class="line"></span><br><span class="line">&lt;!--第七行依次对应：进程 id、进程所有者、进程优先级、nice 值，负值表示高优先级，正值表示低优先级、进程使用的虚拟内存总量，单位 kb，VIRT=SWAP+RES、进程使用的、未被换出的物理内存大小，单位 kb，RES=CODE+DATA、共享内存大小，单位 kb、进程状态，D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程、上次更新到现在的 CPU 时间占用百分比、进程使用的物理内存百分比、进程使用的 CPU 时间总计，单位 1/100 秒、进程名称(命令名/命令行)--&gt;</span><br><span class="line">PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br></pre></td></tr></table></figure>
+<h3 id="四、查看系统资源"><a href="#四、查看系统资源" class="headerlink" title="四、查看系统资源"></a>四、查看系统资源</h3><ul>
+<li>free 查看内存使用情况</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--显示目前系统的内存总量--&gt;</span><br><span class="line">free [-b|-k|-m|-g]</span><br><span class="line"></span><br><span class="line">free -m</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:            992         509          86           0         396         292</span><br><span class="line">Swap:             0           0           0</span><br><span class="line">total 系统总的可用物理内存大小</span><br><span class="line">used 已被使用的物理内存大小</span><br><span class="line">free 还有多少物理内存可用</span><br><span class="line">shared 被共享使用的物理内存大小</span><br><span class="line">buff/cache 被 buffer 和 cache 使用的物理内存大小</span><br><span class="line">available 还可以被&quot;应用程序&quot;使用的物理内存大小，程序认为的</span><br><span class="line">系统很有效率地将所有内存用光，目的是为了让系统的访问性能加速</span><br></pre></td></tr></table></figure>
+<ul>
+<li>netstat 跟踪网络</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--常用在网络监控--&gt;</span><br><span class="line">netstat -tunpl | grep httpd</span><br><span class="line">-a：将目前系统上所有的连接、监听、Socket 数据都列出来</span><br><span class="line">-t：显示 TCP 传输协议的连线状况</span><br><span class="line">-u：显示 UDP 传输协议的连线状况</span><br><span class="line">-n：直接使用 IP 地址，而不通过域名服务器</span><br><span class="line">-p：显示正在使用 Socket 的程序识别码和程序名称</span><br><span class="line">-l：显示监控中的服务器的 Socket</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-04T02:16:55.720Z" itemprop="dateUpdated">2019-11-04 10:16:55</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/linux/process/" target="_blank" rel="external">http://blog.master-ss.cn/note/linux/process/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/process/&title=《Linux 之进程管理》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/process/&title=《Linux 之进程管理》 — 青松的博客&source=以 Centos 为标准，这章说进程管理。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/process/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之进程管理》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/process/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/process/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/linux/install/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux 之软件安装</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/linux/pack/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 之文件压缩、编辑与别名管理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2019</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">赣ICP备18001386号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/linux/process/&title=《Linux 之进程管理》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/linux/process/&title=《Linux 之进程管理》 — 青松的博客&source=以 Centos 为标准，这章说进程管理。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/linux/process/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 之进程管理》 — 青松的博客&url=http://blog.master-ss.cn/note/linux/process/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/linux/process/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aS27DMAxFUe9/0y7QUQexch/ptDV1NQoKJdJxAZkfHQce5/fgn2t/OX+M4xNDhgwZj2Wcy3E1h/wOeRDr75K9yZAhYx8GOWSvlql9i6+7niNDhgwZ6zmdQHB9pMqQIUNGh0GWJOko/x0ZMmTI4ElsrcZFHsSv5uIyZMh4IOMTjYG7Pv9xf0OGDBn/gHGGo3MI8tJbvCsZMmSMZqRF/1qod++bIYhwZciQMYKRthtrW+GXNjj7xXtDhgwZQxmdclvtCgU/xNervJgvQ4aMoQxe0K+VyXhztNV4kCFDxmgG2SifQxJjcgTznVz+T2TIkLEN466SfRpE3pDEypAhYxCDB17rcJDM76S7b1JrGTJkbMZIA7vOkcoT6TczZciQMZrBN51e7UrT2loJT4YMGfswigFZuwyXHsSk5SlDhox5DL48OuxwOkoSYP4QZciQMZtRS01rSWltQ/wXZMiQMZWRluZrqWza5oxbmzJkyBjN4MvXimJpQlt7cDJkyJjNSA8+3m7kwSUJN9F7Q4YMGRsw0kOz0xLoPKDgzogMGTJGMNYHH1msExqmxy6iypAhYxzjDEetqdkp26GwUoYMGaMZndSxk9CuN8S3LkOGjH0YaYsxpdaudPB0V4YMGfsw0rAvbT3GhbP04JYhQ4aMdqEtvUBWDA1lyJAhA5fk0q3UynYyZMjYjcGT2GKSia+OFQt8MmTIGM3oXIaoldXSsl3nGocMGTIezvgCWpMzCPJh1F8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
