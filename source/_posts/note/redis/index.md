@@ -38,6 +38,9 @@ yum install redis
 <!-- 启动redis -->
 systemctl start redis
 
+<!-- 重启redis -->
+systemctl restart redis
+
 <!-- 设置redis开机启动 -->
 systemctl enable redis
 ```
@@ -156,3 +159,31 @@ client.on('message', function(channel, msg) {
   console.log('client.on message, channel:', channel, ' message:', msg);
 });
 ```
+### 五、设置密码
+#### 5.1、临时设置
+```
+<!-- 进入命令行 -->
+redis-cli
+
+<!-- 查看当前是否设置密码 -->
+config get requirepass
+<!-- 返回，第二行为密码 -->
+1) "requirepass"
+2) ""
+
+<!-- 设置密码 -->
+config set requirepass xxx
+```
+#### 5.2、永久设置
+```
+<!-- max 上查看配置文件路径，为 /usr/local/etc/redis.conf -->
+brew info redis
+
+<!-- centos 上查看配置文件路径，为 /etc/redis.conf -->
+whereis redis
+
+<!-- 修改配置文件 -->
+# requirepass foobared
+requirepass xxx
+```
+保存后重启 redis 即可
