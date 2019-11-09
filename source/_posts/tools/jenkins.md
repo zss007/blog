@@ -98,7 +98,7 @@ cat /Users/zhangshaoyu/.jenkins/secrets/installAdminPassword
 
 <img src="/assets/tools/jenkins/deploy.png">
 
-### 六、部署
+### 六、服务器配置
 #### 6.1、nginx 配置
 ```
 server {
