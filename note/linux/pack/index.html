@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi2.png">
 <meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi3.png">
 <meta property="og:image" content="http://blog.master-ss.cn/assets/note/linux/vi4.png">
-<meta property="og:updated_time" content="2019-11-05T06:47:53.325Z">
+<meta property="og:updated_time" content="2019-11-10T01:49:47.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 之文件压缩、编辑与别名管理">
 <meta name="twitter:description" content="以 Centos 为标准，这章说文件压缩、编辑与别名管理。">
@@ -200,7 +200,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--制作 gz 包--&gt;</span><br><span class="line">tar czvf public.tar.gz ./public</span><br><span class="line"></span><br><span class="line">&lt;!--解压 gz 包--&gt;</span><br><span class="line">tar xzvf public.tar.gz</span><br><span class="line"></span><br><span class="line">&lt;!--查看 gz 包--&gt;</span><br><span class="line">tar tf public.tar.gz</span><br><span class="line"></span><br><span class="line">&lt;!--制作 tar 包，仅打包，不压缩！--&gt;</span><br><span class="line">tar cvf wwwroot.tar wwwroot</span><br><span class="line"></span><br><span class="line">&lt;!--减压 tar 包--&gt;</span><br><span class="line">tar xvf wwwroot.tar</span><br><span class="line"></span><br><span class="line">特别注意，在参数的下达中，c/x/t 仅能存在一个！不可同时存在！因为不可能同时压缩与解压缩。</span><br><span class="line">-c：建立一个压缩档案的参数指令(create 的意思)</span><br><span class="line">-x：解开一个压缩档案的参数指令</span><br><span class="line">-t：查看 tarfile 里面的文件</span><br><span class="line"></span><br><span class="line">-z：是否同时具有 gzip 的属性？亦即是否需要用 gzip 压缩？</span><br><span class="line">-j：是否同时具有 bzip2 的属性？亦即是否需要用 bzip2 压缩？</span><br><span class="line">-v：压缩的过程中显示档案！这个常用，但不建议用在背景执行过程！</span><br><span class="line">-f：使用文件名，请留意，在 f 之后要立即接文件名喔！不要再加参数！</span><br></pre></td></tr></table></figure>
 <h3 id="二、vi-vim-快速入门"><a href="#二、vi-vim-快速入门" class="headerlink" title="二、vi/vim 快速入门"></a>二、vi/vim 快速入门</h3><p>vi 是 Unix 和类 Unix 环境下的可用于创建文件的屏幕编辑器。vi 有两种工作模式：命令模式和文本输入模式。vim 是 vi 的升级版本，它不仅兼容 vi 的所有指令，而且还有一些新的特性在里面。</p>
-<p>vi 命令模式：<br>默认编辑一个文件的时候第一次进入的就是命令模式，vi 从命令模式切换到文本输入模式可以在键盘上面按(i 或者 I 或者 a 或者 A 或者 O 或者 o)，按[ESC]键使 vi 从文本输入模式回到命令模式，按 [/] 键并输入文本即可在命令模式下查询该文本出现位置。<br><img src="/assets/note/linux/vi1.png"></p>
+<p>vi 命令模式：<br>默认编辑一个文件的时候第一次进入的就是命令模式，vi 从命令模式切换到文本输入模式可以在键盘上面按(i 或者 I 或者 a 或者 A 或者 O 或者 o)，按[ESC]键使 vi 从文本输入模式回到命令模式。按 [/] 键并输入文本即可在命令模式下查询该文本出现位置，按 [n] 键表示聚焦下个匹配项。<br><img src="/assets/note/linux/vi1.png"></p>
 <p>退出 vi 命令模式：<br><img src="/assets/note/linux/vi2.png"></p>
 <p>命令模式下面文本修改键：<br><img src="/assets/note/linux/vi3.png"><br><img src="/assets/note/linux/vi4.png"></p>
 <h3 id="三、命名别名设置"><a href="#三、命名别名设置" class="headerlink" title="三、命名别名设置"></a>三、命名别名设置</h3><ul>
@@ -227,7 +227,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-11-05T06:47:53.325Z" itemprop="dateUpdated">2019-11-05 14:47:53</time>
+    最后更新时间：<time datetime="2019-11-10T01:49:47.028Z" itemprop="dateUpdated">2019-11-10 09:49:47</time>
 </span><br>
 
 
