@@ -21,7 +21,7 @@ var o2 = new M()
 var P = {name:'o3'}
 var o3 = Object.create(P)
 ```
-### 二、__proto__
+### 二、`__proto__`
 JS 的原始数据类型有六种：undefined、null、boolean、string、number、Symbol。引用类型通常叫做类，常见有：array、object 等。引用类型 object 的每个实例称之为对象，每个对象都拥有一个原型对象，而指向该原型对象的内部指针则`__proto__`，通过它可以从中继承原型对象的属性，原型是 JavaScript 中的基因链接，有了这个，才能知道这个对象的祖祖辈辈。从对象中的`__proto__`可以访问到他所继承的原型对象。
 ```
 var a = new Array();
@@ -40,8 +40,7 @@ a.__proto__.__proto__.__proto__ === null  // true
 Object.prototype.__proto__ === null  // true
 ```
 <img src="/assets/note/js/proto1.png">
-除了使用`__proto__`方法访问对象的原型，还可以通过 Object.getPrototypeOf 方法来获取对象的原型，以及通过
-Object.setPrototypeOf 方法来重写对象的原型。值得注意的是，按照语言的标准，`__proto__`属性只有浏览器才能部署，其他环境可以没有这个属性，而且前后的两根下划线表示它本地是一个内部属性，不应该对使用者暴露。因此，应该尽量少用这个属性，而是用 Object.getPrototypeOf 和 Object.setPrototypeOf，进行原型对象的读写操作。这里用`__proto__`属性来描述对象中的原型，是因为这样来的更加形象，而且容易理解。
+除了使用`__proto__`方法访问对象的原型，还可以通过 Object.getPrototypeOf 方法来获取对象的原型，以及通过Object.setPrototypeOf 方法来重写对象的原型。值得注意的是，按照语言的标准，`__proto__`属性只有浏览器才能部署，其他环境可以没有这个属性，而且前后的两根下划线表示它本地是一个内部属性，不应该对使用者暴露。因此，应该尽量少用这个属性，而是用Object.getPrototypeOf 和 Object.setPrototypeOf，进行原型对象的读写操作。这里用`__proto__`属性来描述对象中的原型，是因为这样来的更加形象，而且容易理解。
 ### 三、prototype
 函数作为 JavaScript 中的一等公民，它既是函数又是对象，函数的原型指向 Function.prototype。
 ```
