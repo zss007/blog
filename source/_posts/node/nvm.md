@@ -24,6 +24,7 @@ nvm-windows 最新下载地址 `https://github.com/coreybutler/nvm-windows/relea
 - nvm list：列出已经安装的 node.js 版本
 - nvm uninstall <version>：卸载指定版本的 nodejs
 - nvm use [version]：切换到使用指定的 nodejs 版本
+- nvm alias default v9.3.0：给 node 版本设置别名
 - nvm --version：显示当前运行的 nvm 版本
 
 ### 三、不同版本的 Nodejs 共享全局的 npm
