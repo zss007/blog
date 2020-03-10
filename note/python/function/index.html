@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>python 函数介绍 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="python 函数介绍">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 函数介绍">
+<meta property="og:url" content="http://blog.master-ss.cn/note/python/function/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="python 函数介绍">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-10T02:28:10.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 函数介绍">
+<meta name="twitter:description" content="python 函数介绍">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">python 函数介绍</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">python 函数介绍</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-10T02:24:24.435Z" itemprop="datePublished" class="page-time">
+  2020-03-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、内置函数"><span class="post-toc-text">二、内置函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、函数定义"><span class="post-toc-text">一、函数定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、可更改-mutable-与不可更改-immutable-对象"><span class="post-toc-text">二、可更改(mutable)与不可更改(immutable)对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、函数参数"><span class="post-toc-text">三、函数参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、匿名函数"><span class="post-toc-text">四、匿名函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、return-语句"><span class="post-toc-text">五、return 语句</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、filter-函数"><span class="post-toc-text">六、filter 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、map-函数"><span class="post-toc-text">七、map 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#八、reduce-函数"><span class="post-toc-text">八、reduce 函数</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/python/function" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">python 函数介绍</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-10 10:24:24" datetime="2020-03-10T02:24:24.435Z" itemprop="datePublished">2020-03-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>python 函数介绍</p>
+<a id="more"></a>
+<h3 id="二、内置函数"><a href="#二、内置函数" class="headerlink" title="二、内置函数"></a>二、内置函数</h3><ul>
+<li>range(start, stop[, step])，用于表示数字序列，内容不可变</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># [0, 1, 2, 3, 4]，等价于 range(0, 5)</span><br><span class="line">range(5)</span><br><span class="line"></span><br><span class="line"># [0, 5, 10, 15, 20, 25]</span><br><span class="line">range(0, 30, 5)  # 步长为 5</span><br></pre></td></tr></table></figure>
+<h3 id="一、函数定义"><a href="#一、函数定义" class="headerlink" title="一、函数定义"></a>一、函数定义</h3><ul>
+<li>函数代码块以 def 关键词开头，后接函数标识符名称和圆括号 ()</li>
+<li>任何传入参数和自变量必须放在圆括号中间，圆括号之间可以用于定义参数</li>
+<li>函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明</li>
+<li>函数内容以冒号起始，并且缩进</li>
+<li>return [表达式] 结束函数，选择性地返回一个值给调用方。不带表达式的 return 相当于返回 None</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def 函数名（参数列表）:</span><br><span class="line">    函数体</span><br></pre></td></tr></table></figure>
+<h3 id="二、可更改-mutable-与不可更改-immutable-对象"><a href="#二、可更改-mutable-与不可更改-immutable-对象" class="headerlink" title="二、可更改(mutable)与不可更改(immutable)对象"></a>二、可更改(mutable)与不可更改(immutable)对象</h3><ul>
+<li>不可变类型：变量赋值 a=5 后再赋值 a=10，这里实际是新生成一个 int 值对象 10，再让 a 指向它，而 5 被丢弃，不是改变 a 的值，相当于新生成了 a</li>
+<li>可变类型：变量赋值 la=[1,2,3,4] 后再赋值 la[2]=5 则是将 list la 的第三个元素值更改，本身 la 没有动，只是其内部的一部分值被修改了</li>
+</ul>
+<p>python 函数的参数传递：</p>
+<ul>
+<li>不可变类型：类似 c++ 的值传递，如 整数、字符串、元组。如 fun（a），传递的只是 a 的值，没有影响 a 对象本身。比如在 fun（a）内部修改 a 的值，只是修改另一个复制的对象，不会影响 a 本身</li>
+<li>可变类型：类似 c++ 的引用传递，如 列表、字典、集合。如 fun（la），则是将 la 真正的传过去，修改后 fun 外部的 la 也会受影响</li>
+</ul>
+<p>python 中一切都是对象，严格意义我们不能说值传递还是引用传递，我们应该说传不可变对象和传可变对象</p>
+<h3 id="三、函数参数"><a href="#三、函数参数" class="headerlink" title="三、函数参数"></a>三、函数参数</h3><ul>
+<li>必需参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#可写函数说明</span><br><span class="line">def printme( str ):</span><br><span class="line">   &quot;打印任何传入的字符串&quot;</span><br><span class="line">   print (str)</span><br><span class="line">   return</span><br><span class="line"></span><br><span class="line"># 调用 printme 函数，不加参数会报错</span><br><span class="line">printme()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>关键字参数<br>使用关键字参数允许函数调用时参数的顺序与声明时不一致，因为 Python 解释器能够用参数名匹配参数值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#可写函数说明</span><br><span class="line">def printinfo( name, age ):</span><br><span class="line">   &quot;打印任何传入的字符串&quot;</span><br><span class="line">   print (&quot;名字: &quot;, name)</span><br><span class="line">   print (&quot;年龄: &quot;, age)</span><br><span class="line">   return</span><br><span class="line"></span><br><span class="line">#调用printinfo函数</span><br><span class="line">printinfo( age=50, name=&quot;runoob&quot; )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>默认参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def printinfo( name, age = 35 ):</span><br><span class="line">   &quot;打印任何传入的字符串&quot;</span><br><span class="line">   print (&quot;名字: &quot;, name, &quot; 年龄: &quot;, age)</span><br><span class="line">   return</span><br><span class="line"></span><br><span class="line">#调用printinfo函数</span><br><span class="line">printinfo( age=50, name=&quot;runoob&quot; ) # 名字:  runoob  年龄:  50</span><br><span class="line">printinfo( name=&quot;runoob&quot; ) # 名字:  runoob  年龄:  35</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不定长参数<br>可能需要一个函数能处理比当初声明时更多的参数，这些参数叫做不定长参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"># 定义</span><br><span class="line">def functionname([formal_args,] *var_args_tuple ):</span><br><span class="line">   &quot;函数_文档字符串&quot;</span><br><span class="line">   function_suite</span><br><span class="line">   return [expression]</span><br><span class="line"></span><br><span class="line"># 实例1（加了星号 * 的参数会以元组(tuple)的形式导入，存放所有未命名的变量参数）</span><br><span class="line">def printinfo( arg1, *vartuple ):</span><br><span class="line">   &quot;打印任何传入的参数&quot;</span><br><span class="line">   print (arg1, vartuple)</span><br><span class="line"># 调用printinfo 函数</span><br><span class="line">printinfo( 70, 60, 50 ) # 70 (60, 50)</span><br><span class="line"></span><br><span class="line"># 实例2（* 解包传入列表）</span><br><span class="line">a = [1, 2, 3]</span><br><span class="line">def func(a, b, c):</span><br><span class="line">    print(a, b, c)</span><br><span class="line">func(*a) # 1 2 3</span><br><span class="line"></span><br><span class="line"># 实例3（加了两个星号 ** 的参数会以字典的形式导入）</span><br><span class="line">def printinfo( arg1, **vardict ):</span><br><span class="line">   &quot;打印任何传入的参数&quot;</span><br><span class="line">   print (arg1, vardict)</span><br><span class="line"># 调用printinfo 函数</span><br><span class="line">printinfo(1, a=2,b=3) # 1 &#123;&apos;a&apos;: 2, &apos;b&apos;: 3&#125;</span><br><span class="line"></span><br><span class="line"># 实例4（* 解包传入字典）</span><br><span class="line">a = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3&#125;</span><br><span class="line">def func(a, b, c):</span><br><span class="line">    print(a, b, c)</span><br><span class="line">func(*a)  # a b c</span><br><span class="line"></span><br><span class="line"># 实例5（** 解包传入字段）</span><br><span class="line">a = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3&#125;</span><br><span class="line">def func(a, b, c):</span><br><span class="line">    print(a, b, c)</span><br><span class="line">func(**a)  # 1 2 3</span><br><span class="line"></span><br><span class="line"># 实例6（声明函数时，参数中星号 * 可以单独出现，星号 * 后的参数必须用关键字传入）</span><br><span class="line">def f(a,b,*,c):</span><br><span class="line">    return a+b+c</span><br><span class="line">f(1,2,3)   # 报错</span><br><span class="line">f(1,2,c=3) # 正常</span><br><span class="line"></span><br><span class="line"># * 和 ** 在表达式中应用</span><br><span class="line">*range(5), 6, 7, 8 # (0, 1, 2, 3, 4, 6, 7, 8)</span><br><span class="line">[*range(5), 6, 7, 8] # [0, 1, 2, 3, 4, 6, 7, 8]</span><br><span class="line">&#123;*range(3), 4, 5&#125; # &#123;0, 1, 2, 4, 5&#125;</span><br><span class="line">a = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3&#125;</span><br><span class="line">b = &#123;&apos;d&apos;: 4, &apos;e&apos;: 5, &apos;f&apos;: 6&#125;</span><br><span class="line">&#123;**a, **b&#125; # &#123;&apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3, &apos;d&apos;: 4, &apos;e&apos;: 5, &apos;f&apos;: 6&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="四、匿名函数"><a href="#四、匿名函数" class="headerlink" title="四、匿名函数"></a>四、匿名函数</h3><p>python 使用 lambda 来创建匿名函数。所谓匿名，意即不再使用 def 语句这样标准的形式定义一个函数：</p>
+<ul>
+<li>lambda 只是一个表达式，函数体比 def 简单很多</li>
+<li>lambda 的主体是一个表达式，而不是一个代码块。仅仅能在 lambda 表达式中封装有限的逻辑进去</li>
+<li>lambda 函数拥有自己的命名空间，且不能访问自己参数列表之外或全局命名空间里的参数</li>
+<li>虽然 lambda 函数看起来只能写一行，却不等同于 C 或 C++的内联函数，后者的目的是调用小函数时不占用栈内存从而增加运行效率</li>
+<li>语法：lambda [arg1 [,arg2,…..argn]]:expression</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sum = lambda arg1, arg2: arg1 + arg2</span><br><span class="line"># 调用sum函数</span><br><span class="line">print (&quot;相加后的值为 : &quot;, sum( 10, 20 )) # 30</span><br><span class="line">print (&quot;相加后的值为 : &quot;, sum( 20, 20 )) # 40</span><br></pre></td></tr></table></figure>
+<h3 id="五、return-语句"><a href="#五、return-语句" class="headerlink" title="五、return 语句"></a>五、return 语句</h3><p>用于退出函数，选择性地向调用方返回一个表达式。不带参数值的 return 语句返回 None。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def sum( arg1, arg2 ):</span><br><span class="line">   total = arg1 + arg2</span><br><span class="line">   print (&quot;函数内 : &quot;, total) # 30</span><br><span class="line">   return total</span><br><span class="line">total = sum( 10, 20 )</span><br><span class="line">print (&quot;函数外 : &quot;, total) # 30</span><br></pre></td></tr></table></figure>
+<h3 id="六、filter-函数"><a href="#六、filter-函数" class="headerlink" title="六、filter 函数"></a>六、filter 函数</h3><p>返回一个 filter 对象，其中包括对其执行函数时为真的所有元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 语法</span><br><span class="line">filter(func, seq)</span><br><span class="line"></span><br><span class="line"># 实例</span><br><span class="line">l = range(0, 10)</span><br><span class="line">res = filter(lambda item: item % 2 != 0, l)</span><br><span class="line">print(list(res)) # [1, 3, 5, 7, 9]</span><br></pre></td></tr></table></figure>
+<h3 id="七、map-函数"><a href="#七、map-函数" class="headerlink" title="七、map 函数"></a>七、map 函数</h3><p>创建一个列表，其中包含对指定序列包含的项执行指定函数返回的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 语法</span><br><span class="line">map(func, seq)</span><br><span class="line"></span><br><span class="line"># 实例</span><br><span class="line">l = range(0, 10)</span><br><span class="line">res = map(lambda item: item * 2, l)</span><br><span class="line">print(list(res)) # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</span><br></pre></td></tr></table></figure>
+<h3 id="八、reduce-函数"><a href="#八、reduce-函数" class="headerlink" title="八、reduce 函数"></a>八、reduce 函数</h3><p>使用指定的函数将序列的前两个元素合二为一，再将结果与第三个元素合二为一，依次类推，直到处理完整个序列并得到一个结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 语法</span><br><span class="line">reduce(func, seq[, initial])</span><br><span class="line"></span><br><span class="line"># 实例</span><br><span class="line">from functools import reduce # python3 中 reduce 函数被取消了，放入到了 functools 模块中</span><br><span class="line">l = range(0, 10)</span><br><span class="line">res = reduce(lambda prev, item: prev + item, l)</span><br><span class="line">print(res)  # 45</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-10T02:28:10.815Z" itemprop="dateUpdated">2020-03-10 10:28:10</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/python/function/" target="_blank" rel="external">http://blog.master-ss.cn/note/python/function/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/function/&title=《python 函数介绍》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/function/&title=《python 函数介绍》 — 青松的博客&source=python 函数介绍" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/function/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 函数介绍》 — 青松的博客&url=http://blog.master-ss.cn/note/python/function/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/function/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/python/module/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">python 模块</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/python/type/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">python 数据类型</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2020</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备18001386号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/function/&title=《python 函数介绍》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/function/&title=《python 函数介绍》 — 青松的博客&source=python 函数介绍" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/function/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 函数介绍》 — 青松的博客&url=http://blog.master-ss.cn/note/python/function/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/function/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aQYrjQAwF0L7/pTMwq4HGnv9L1Q0uP6+CSWK9LBSppK+v+Pr8vb7f+ff+1XvyO9+/c/OFgYHxWMbn9mqDvgpl7bNJbBgYGO9h3CfZ++CuQrwPLknuSWwYGBgYk+DytNuCMTAwMNpHJqXkfdeZF6AYGBhvZiRhteddSaGZ/xzbenEMDIwHMtrBwG++/sH5BgYGxkMYn/KaJMF25FBEhYGBcTRj21HX7eP3/jMUFS4GBsahjLVDt12LXy37MuFiYGAcxGiXt+4DTULMxwBF4sbAwHgNI2kj88TaDkeTn+Y/vTgGBsZrGJMHz1Nw0uJeHrRhYGC8jLE2Epgc/Y8W0TAwMI5m5Ofq8zFAm9wX1zIwMDAOZUzS61pRmBedRWuNgYFxKGMtCc6bz+SdBRIDA+NljHzomBSFxVJXyY7mGxgYGEczkpTahjIfMIyWLTAwMA5i/MQwYG0MUBzqYWBgHM3Y1abmJeaEVM83MDAwDmLkb22HjhvKvnaEiYGBcRwjT6+T0m3yPxBFiIGB8RpG/eH40G1thFmsemBgYBzNmDSx7fgzXw5reRgYGGczJof+bXmXlJXJ/ctlCwwMjEMZ+bUrpe5K5W1hioGB8XTGZHliDZkcydUNNgYGxgsY+QpFO3pMBp8b2l0MDAyM8cOSbxs1zBgYGBjlIkUbStthj0pDDAyMxzImTeyk4Fv7gTAwMN7GaEu9+dCxXQvbAMDAwHgq4w+ivgo/Of7B/AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
