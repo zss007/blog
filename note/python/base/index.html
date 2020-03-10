@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>python 基础 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="python 基础知识">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 基础">
+<meta property="og:url" content="http://blog.master-ss.cn/note/python/base/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="python 基础知识">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-10T01:16:00.760Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 基础">
+<meta name="twitter:description" content="python 基础知识">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">python 基础</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">python 基础</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-10T00:42:17.341Z" itemprop="datePublished" class="page-time">
+  2020-03-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、环境安装"><span class="post-toc-text">一、环境安装</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、基础知识"><span class="post-toc-text">二、基础知识</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1、注释"><span class="post-toc-text">2.1、注释</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2、保留字"><span class="post-toc-text">2.2、保留字</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3、行与缩进"><span class="post-toc-text">2.3、行与缩进</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4、语句、输出、输入、del、换行"><span class="post-toc-text">2.4、语句、输出、输入、del、换行</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-5、基本运算符"><span class="post-toc-text">2.5、基本运算符</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-6、流程控制"><span class="post-toc-text">2.6、流程控制</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/python/base" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">python 基础</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-10 08:42:17" datetime="2020-03-10T00:42:17.341Z" itemprop="datePublished">2020-03-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>python 基础知识</p>
+<a id="more"></a>
+<h3 id="一、环境安装"><a href="#一、环境安装" class="headerlink" title="一、环境安装"></a>一、环境安装</h3><ul>
+<li>brew install python3</li>
+<li>设置别名（~/.bash_profile）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias python=&quot;/usr/local/Cellar/python/3.7.0/bin/python3.7&quot;</span><br><span class="line">alias pip=&quot;/usr/local/Cellar/python/3.7.0/bin/pip3.7&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装 vscode python 插件</li>
+<li>指定 vscode 环境变量 python.pythonPath</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 输入 interpreter，查看解释器路径 --&gt;</span><br><span class="line">commond + shift + p</span><br><span class="line">&lt;!-- 设置环境变量值 --&gt;</span><br><span class="line">/usr/local/bin/python3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装设置 virtualenv</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 安装 --&gt;</span><br><span class="line">pip3 install virtualenv</span><br><span class="line">&lt;!-- 设置 --&gt;</span><br><span class="line">cd ~</span><br><span class="line">virtualenv .pyenv</span><br><span class="line">&lt;!-- 设置环境变量 python.venvPath --&gt;</span><br><span class="line">~/.pyenv</span><br></pre></td></tr></table></figure>
+<h3 id="二、基础知识"><a href="#二、基础知识" class="headerlink" title="二、基础知识"></a>二、基础知识</h3><h4 id="2-1、注释"><a href="#2-1、注释" class="headerlink" title="2.1、注释"></a>2.1、注释</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 单行注释 --&gt;</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">&lt;!-- 多行注释 --&gt;</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">&lt;!-- 或 --&gt;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2、保留字"><a href="#2-2、保留字" class="headerlink" title="2.2、保留字"></a>2.2、保留字</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Python 的标准库提供了一个 keyword 模块，可以输出当前版本的所有关键字 --&gt;</span><br><span class="line">&gt;&gt;&gt; import keyword</span><br><span class="line">&gt;&gt;&gt; keyword.kwlist</span><br><span class="line">&lt;!-- 保留字列表 --&gt;</span><br><span class="line">[&apos;False&apos;, &apos;None&apos;, &apos;True&apos;, &apos;and&apos;, &apos;as&apos;, &apos;assert&apos;, &apos;async&apos;, &apos;await&apos;, &apos;break&apos;, &apos;class&apos;,</span><br><span class="line"> &apos;continue&apos;, &apos;def&apos;, &apos;del&apos;, &apos;elif&apos;, &apos;else&apos;, &apos;except&apos;, &apos;finally&apos;, &apos;for&apos;, &apos;from&apos;,</span><br><span class="line"> &apos;global&apos;, &apos;if&apos;, &apos;import&apos;, &apos;in&apos;, &apos;is&apos;, &apos;lambda&apos;, &apos;nonlocal&apos;, &apos;not&apos;, &apos;or&apos;, &apos;pass&apos;,</span><br><span class="line"> &apos;raise&apos;, &apos;return&apos;, &apos;try&apos;, &apos;while&apos;, &apos;with&apos;, &apos;yield&apos;]</span><br></pre></td></tr></table></figure>
+<h4 id="2-3、行与缩进"><a href="#2-3、行与缩进" class="headerlink" title="2.3、行与缩进"></a>2.3、行与缩进</h4><p>缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if True:</span><br><span class="line">    print (&quot;Answer&quot;)</span><br><span class="line">    print (&quot;True&quot;)</span><br><span class="line">else:</span><br><span class="line">    print (&quot;Answer&quot;)</span><br><span class="line">  print (&quot;False&quot;)    # 缩进不一致，会导致运行错误</span><br></pre></td></tr></table></figure>
+<h4 id="2-4、语句、输出、输入、del、换行"><a href="#2-4、语句、输出、输入、del、换行" class="headerlink" title="2.4、语句、输出、输入、del、换行"></a>2.4、语句、输出、输入、del、换行</h4><ul>
+<li>如果语句很长，我们可以使用反斜杠(\)来实现多行语句</li>
+<li>print 默认输出是换行的，如果要实现不换行需要在变量末尾加上 end=’’</li>
+<li>input 用户等待用户输入</li>
+<li>del 用于删除单个或多个对象的引用</li>
+<li>可以在同一行中使用多条语句，语句之间使用分号(;)分割</li>
+<li>制表符，增加字符缩进 \t</li>
+<li>换行符，换行输出 \n</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 多条语句同行显示 --&gt;</span><br><span class="line">import sys; x = &apos;runoob&apos;; sys.stdout.write(x + &apos;\n&apos;)</span><br><span class="line">&lt;!-- input 输入 --&gt;</span><br><span class="line">input(&quot;\n\n按下 enter 键后退出。&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-5、基本运算符"><a href="#2-5、基本运算符" class="headerlink" title="2.5、基本运算符"></a>2.5、基本运算符</h4><ul>
+<li>算术运算符<ul>
+<li>+</li>
+<li>-</li>
+<li>*</li>
+<li>/ 浮点数除法，比如 10 / 2 = 5.0</li>
+<li>// 除法取整，向下取接近除数的整数，比如 9 // 2 = 4，-9 // 2 = -5，7 // 2.0 = 3.0</li>
+<li>** N 次方，也可以用 pow() 方法</li>
+<li>% 取模</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 计算公式：r = a - n * (a // n) --&gt;</span><br><span class="line">print(-123 % 10) # 7</span><br><span class="line">print(123 % -10) # -7</span><br><span class="line">print(-123 % -10) # -3</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>比较运算符</p>
+<ul>
+<li>比较运算符返回 1 表示真，返回 0 表示假，与特殊的变量 True 和 False 等价，注意变量名的大写</li>
+<li>==</li>
+<li>!=</li>
+<li>></li>
+<li>&lt;</li>
+<li>>=</li>
+<li>&lt;=</li>
+</ul>
+</li>
+<li><p>赋值运算符</p>
+<ul>
+<li>=</li>
+<li>+=</li>
+<li>-=</li>
+<li>*=</li>
+<li>/=</li>
+<li>%=</li>
+<li>**=</li>
+<li>//=</li>
+</ul>
+</li>
+<li><p>位运算符</p>
+<ul>
+<li>&amp; 与</li>
+<li>| 或</li>
+<li>^ 异或</li>
+<li>~ 取反</li>
+<li>&lt;&lt; 左移动</li>
+<li>>&gt; 右移动</li>
+</ul>
+</li>
+<li><p>逻辑运算符</p>
+<ul>
+<li>假设变量 a 为 10, b 为 20:</li>
+<li>and (a and b) 返回 20</li>
+<li>or (a or b) 返回 10</li>
+<li>not not(a and b) 返回 False</li>
+</ul>
+</li>
+<li><p>成员运算符</p>
+<ul>
+<li>比如：’a’ in ‘abc’，1 in [1, 2, 3]</li>
+<li>in</li>
+<li>not in</li>
+</ul>
+</li>
+<li><p>身份运算符</p>
+<ul>
+<li>id() 函数用于获取对象内存地址，比如：a = 20; b = 20; print(a is b);</li>
+<li>is 判断两个标识符是不是引用自一个对象，类似 id(x) == id(y)</li>
+<li>is not 判断两个标识符是不是引用自不同对象，类似 id(a) != id(b)</li>
+</ul>
+</li>
+<li><p>运算符优先级</p>
+<ul>
+<li>以下列出了从最高到最低优先级的所有运算符：</li>
+<li>** 指数 (最高优先级)</li>
+<li>~ + - 按位翻转, 一元加号和减号 (最后两个的方法名为 +@ 和 -@)</li>
+<li>* / % // 乘，除，求余数和取整除</li>
+<li>+ - 加法减法</li>
+<li>>&gt; &lt;&lt; 右移，左移运算符</li>
+<li>&amp; 位 ‘AND’</li>
+<li>^ | 位运算符</li>
+<li>&lt;= &lt; &gt; &gt;= 比较运算符</li>
+<li>== != 等于运算符</li>
+<li>= %= /= //= -= += *= **= 赋值运算符</li>
+<li>is is not 身份运算符</li>
+<li>in not in 成员运算符</li>
+<li>not and or 逻辑运算符</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-6、流程控制"><a href="#2-6、流程控制" class="headerlink" title="2.6、流程控制"></a>2.6、流程控制</h4><ul>
+<li>条件：if elif else</li>
+<li>循环：<ul>
+<li>while … else …</li>
+<li>for … in … else …</li>
+<li>break：跳出 for 和 while 的循环体，任何对应的循环 else 块将不执行</li>
+<li>continue：跳过当前循环块中的剩余语句，然后继续进行下一轮循环</li>
+</ul>
+</li>
+<li>pass：空语句，不做任何事情，一般用做占位语句，保持程序结构的完整性</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-10T01:16:00.760Z" itemprop="dateUpdated">2020-03-10 09:16:00</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/python/base/" target="_blank" rel="external">http://blog.master-ss.cn/note/python/base/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/base/&title=《python 基础》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/base/&title=《python 基础》 — 青松的博客&source=python 基础知识" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/base/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 基础》 — 青松的博客&url=http://blog.master-ss.cn/note/python/base/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/base/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/python/type/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">python 数据类型</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/project/wx/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">微信公众号开发</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2020</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备18001386号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/base/&title=《python 基础》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/base/&title=《python 基础》 — 青松的博客&source=python 基础知识" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/base/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 基础》 — 青松的博客&url=http://blog.master-ss.cn/note/python/base/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/base/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABw0lEQVR42u3aQW6EMAwF0Ln/pem20gj4doiLqpfViInCCwvLsfP5xOM4Gb//TWZ+r/nZMXBxcZe5x+X4nnNGTEDJ+jdbxcXFHeRev+x66Xx+sv6NDRcX98XcPA9JNoCLi/s/uHn6Ut0MLi7ue7h54WPlxdViCi4u7l9x8yrlvt9b6ru4uLgt7lEc1yEpD4JHa+Di4s5we2WO3vHmqfIKLi7ubm5e4MhbKUuHlut1cHFxR7jXKUh1oZX2yVKKg4uLu4G73jjJDzkrz3FxcWe4+ZEm2UCymbyYcnP4wcXF3catHkV61zWeatXg4uLOcPPAkRRAV1KlKPzh4uIOcqvJTbW58tixChcXd4S7pdURJzG9qx64uLiT3Lzh2mx+tIodp3NwcXE3c9crKFVi/sabnjAuLu4gtxeSekGwuiVcXNxJbl7K7B1XHsjCcHFxR7hHcSS7Xw9bhXoMLi7uBu5KkfSpBCi50rF0ZwQXF7fFrQavpJmafJt8M+Uvh4uL+xA3vzaRbHVLtwcXF/f13LzMmhx7CskTLi7u67m9yxZJyDt9gouLO8jtNUiquOT5zcfCxcUd4eYF0zww5aFqZR1cXNwN3B9OCCn4TJpf/gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
