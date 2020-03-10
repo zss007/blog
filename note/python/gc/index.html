@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>python 作用域与垃圾回收 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="python 作用域与垃圾回收">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 作用域与垃圾回收">
+<meta property="og:url" content="http://blog.master-ss.cn/note/python/gc/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="python 作用域与垃圾回收">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-10T03:11:25.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 作用域与垃圾回收">
+<meta name="twitter:description" content="python 作用域与垃圾回收">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">python 作用域与垃圾回收</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">python 作用域与垃圾回收</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-10T02:58:39.055Z" itemprop="datePublished" class="page-time">
+  2020-03-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、命名空间"><span class="post-toc-text">一、命名空间</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、作用域"><span class="post-toc-text">二、作用域</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、赋值语句内存分析"><span class="post-toc-text">三、赋值语句内存分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、垃圾回收机制"><span class="post-toc-text">四、垃圾回收机制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、内存管理机制"><span class="post-toc-text">五、内存管理机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1、引用计数"><span class="post-toc-text">5.1、引用计数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2、垃圾回收"><span class="post-toc-text">5.2、垃圾回收</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-3、内存管理机制"><span class="post-toc-text">5.3、内存管理机制</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/python/gc" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">python 作用域与垃圾回收</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-10 10:58:39" datetime="2020-03-10T02:58:39.055Z" itemprop="datePublished">2020-03-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>python 作用域与垃圾回收</p>
+<a id="more"></a>
+<h3 id="一、命名空间"><a href="#一、命名空间" class="headerlink" title="一、命名空间"></a>一、命名空间</h3><ul>
+<li>命名空间提供了在项目中避免名字冲突的一种方法</li>
+<li>各个命名空间是独立的，没有任何关系的，所以一个命名空间中不能有重名，但不同的命名空间是可以重名而没有任何影响</li>
+<li>三种命名空间：<ul>
+<li>内置名称，Python 语言内置的名称，比如函数名 abs、char 和异常名称 BaseException、Exception 等等</li>
+<li>全局名称，模块中定义的名称，记录了模块的变量，包括函数、类、其它导入的模块、模块级的变量和常量</li>
+<li>局部名称，函数中定义的名称，记录了函数的变量，包括函数的参数和局部定义的变量（类中定义的也是）</li>
+</ul>
+</li>
+<li>命名空间查找顺序：局部的命名空间去 -&gt; 全局命名空间 -&gt; 内置命名空间</li>
+<li>如果找不到变量 runoob，它将放弃查找并引发一个 NameError 异常</li>
+<li>声明周期：取决于对象的作用域，如果对象执行完成，则该命名空间的生命周期就结束；故无法从外部命名空间访问内部命名空间的对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># var1 是全局名称</span><br><span class="line">var1 = 5</span><br><span class="line">def some_func():</span><br><span class="line"> </span><br><span class="line">    # var2 是局部名称</span><br><span class="line">    var2 = 6</span><br><span class="line">    def some_inner_func():</span><br><span class="line"> </span><br><span class="line">        # var3 是内嵌的局部名称</span><br><span class="line">        var3 = 7</span><br></pre></td></tr></table></figure>
+<h3 id="二、作用域"><a href="#二、作用域" class="headerlink" title="二、作用域"></a>二、作用域</h3><ul>
+<li>作用域就是一个 Python 程序可以直接访问命名空间的正文区域</li>
+<li>在一个 python 程序中，直接访问一个变量，会从内到外依次访问所有的作用域直到找到，否则会报未定义的错误</li>
+<li>四种作用域：<ul>
+<li>局部作用域（Local）：最内层，包含局部变量，比如一个函数/方法内部</li>
+<li>闭包函数外的函数（Enclosing）：包含了非局部(non-local)也非全局(non-global)的变量。比如两个嵌套函数，一个函数（或类） A 里面又包含了一个函数 B ，那么对于 B 中的名称来说 A 中的作用域就为 nonlocal</li>
+<li>全局作用域（Global）：当前脚本的最外层，比如当前模块的全局变量</li>
+<li>内建作用域（Built-in）：包含了内建的变量/关键字等，最后被搜索</li>
+</ul>
+</li>
+<li>当内部作用域想修改外部作用域的变量时，就要用到 global 和 nonlocal 关键字</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 修改外部作用域</span><br><span class="line">num = 1</span><br><span class="line">def fun1():</span><br><span class="line">    global num # 需要使用 global 关键字声明</span><br><span class="line">    print(num) # 1</span><br><span class="line">    num = 123</span><br><span class="line">    print(num) # 123</span><br><span class="line">fun1()</span><br><span class="line">print(num) # 123</span><br><span class="line"></span><br><span class="line"># 修改嵌套作用域</span><br><span class="line">def outer():</span><br><span class="line">    num = 10</span><br><span class="line">    def inner():</span><br><span class="line">        nonlocal num # nonlocal关键字声明</span><br><span class="line">        num = 100</span><br><span class="line">        print(num) # 100</span><br><span class="line">    inner()</span><br><span class="line">    print(num) # 100</span><br><span class="line">outer()</span><br><span class="line"></span><br><span class="line"># 特殊情况，局部作用域引用错误（test 函数中的 a 使用的是局部，未定义，无法修改）</span><br><span class="line">a = 10</span><br><span class="line">def test():</span><br><span class="line">    a = a + 1</span><br><span class="line">    print(a)</span><br><span class="line">test()</span><br><span class="line"># Traceback (most recent call last):</span><br><span class="line">#   File &quot;test.py&quot;, line 7, in &lt;module&gt;</span><br><span class="line">#     test()</span><br><span class="line">#   File &quot;test.py&quot;, line 5, in test</span><br><span class="line">#     a = a + 1</span><br><span class="line"># UnboundLocalError: local variable &apos;a&apos; referenced before assignment</span><br><span class="line"># 修改方法：</span><br><span class="line"># 1、a = a + 1 改为 b = a + 1</span><br><span class="line"># 2、通过函数参数传递，def test() 改为 def test(a)</span><br></pre></td></tr></table></figure>
+<h3 id="三、赋值语句内存分析"><a href="#三、赋值语句内存分析" class="headerlink" title="三、赋值语句内存分析"></a>三、赋值语句内存分析</h3><ul>
+<li>通过 id() 方法访问内存地址</li>
+<li>== 表示值相等，is 表示内存引用地址相同</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">a = 1</span><br><span class="line">b = 1</span><br><span class="line">a is b # True，如果是较小数字或较短字符串，python 让变量共用内存地址</span><br><span class="line"></span><br><span class="line">e = 999999999</span><br><span class="line">f = 999999999</span><br><span class="line">e == f # True，值相等</span><br><span class="line">e is f # False，如果是较大数字或较长字符串，内存地址不共用</span><br><span class="line"></span><br><span class="line">g = []</span><br><span class="line">h = []</span><br><span class="line">id(g) == id(h) # False，引用类型内存地址不共用</span><br><span class="line"></span><br><span class="line"># 综合实例</span><br><span class="line">def extend_list(val, l=[]):</span><br><span class="line">    print(&apos;------------------&apos;)</span><br><span class="line">    print(l, id(l))</span><br><span class="line">    l.append(val)</span><br><span class="line">    print(l, id(l))</span><br><span class="line">    return l</span><br><span class="line"></span><br><span class="line">list1 = extend_list(10)</span><br><span class="line">list2 = extend_list(123, [])</span><br><span class="line">list3 = extend_list(&apos;a&apos;)</span><br><span class="line"></span><br><span class="line">print(list1) # [10, &apos;a&apos;]</span><br><span class="line">print(list2) # [123]</span><br><span class="line">print(list3) # [10, &apos;a&apos;]</span><br><span class="line">print(list3 is list1) # True，list1 和 list3 共用同一个内存地址</span><br></pre></td></tr></table></figure>
+<h3 id="四、垃圾回收机制"><a href="#四、垃圾回收机制" class="headerlink" title="四、垃圾回收机制"></a>四、垃圾回收机制</h3><ul>
+<li>以引用计数为主，分代收集为辅</li>
+<li>如果一个对象的引用数为 0，python 虚拟机就会回收这个对象的内存</li>
+<li>引用计数的缺陷是循环引用的问题</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Cat(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        print(&apos;对象产生了: &#123;0&#125;&apos;.format(id(self)))</span><br><span class="line"></span><br><span class="line">    # 对象被回收的时候被调用</span><br><span class="line">    def __del__(self):</span><br><span class="line">        print(&apos;对象删除了: &#123;0&#125;&apos;.format(id(self)))</span><br><span class="line"></span><br><span class="line">def f0():</span><br><span class="line">    &quot;&quot;&quot; 自动回收内存 &quot;&quot;&quot;</span><br><span class="line">    while True:</span><br><span class="line">        c1 = Cat()</span><br><span class="line"></span><br><span class="line">def f1():</span><br><span class="line">    &quot;&quot;&quot; 一直在被引用，不会被回收 &quot;&quot;&quot;</span><br><span class="line">    l = []</span><br><span class="line">    while True:</span><br><span class="line">        c1 = Cat()</span><br><span class="line">        l.append(c1)</span><br><span class="line">        print(len(l))</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    f1()</span><br></pre></td></tr></table></figure>
+<h3 id="五、内存管理机制"><a href="#五、内存管理机制" class="headerlink" title="五、内存管理机制"></a>五、内存管理机制</h3><h4 id="5-1、引用计数"><a href="#5-1、引用计数" class="headerlink" title="5.1、引用计数"></a>5.1、引用计数</h4><ul>
+<li>每个对象都有存有指向该对象的引用总数</li>
+<li>查看某个对象的引用计数 sys.getrefcount()</li>
+<li>可以使用 del 关键字删除某个引用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line"></span><br><span class="line">l = []</span><br><span class="line">l2 = l</span><br><span class="line">l3 = l</span><br><span class="line">l5 = l3</span><br><span class="line">print(sys.getrefcount(l))  # 5，对象 l 被引用的数量，方法执行时有个临时的引用，会比实际看到的多 1</span><br><span class="line">del l2 # 删除某个引用</span><br><span class="line">print(sys.getrefcount(l)) # 4</span><br><span class="line"></span><br><span class="line">print(&apos;xxxxxxxxxxxxx&apos;)</span><br><span class="line">i = 1</span><br><span class="line">print(sys.getrefcount(i)) # 177，基于 python 内部的内存共享机制</span><br><span class="line">a = i</span><br><span class="line">print(sys.getrefcount(i)) # 178</span><br></pre></td></tr></table></figure>
+<h4 id="5-2、垃圾回收"><a href="#5-2、垃圾回收" class="headerlink" title="5.2、垃圾回收"></a>5.2、垃圾回收</h4><ul>
+<li>满足特定条件，自动启动垃圾回收</li>
+<li>当 python 运行时，会记录其中分配对象（object allocation）和取消分配对象（object deallocation）的次数</li>
+<li>当两者的差值高于某个阀值时，垃圾回收才会启动</li>
+<li>查看阀值 gc.get_threshold()，返回 (threshold0, threshold1, threshold2)，比如 (700, 10, 10)</li>
+<li>分代回收<ul>
+<li>python 将所有的对象分为 0，1，2 三代</li>
+<li>所有的新建对象都是 0 代对象</li>
+<li>当某一代对象经历过垃圾回收，依然存活，那么他将被归入下一代对象</li>
+</ul>
+</li>
+<li>手动回收 gc.collect([generation])，可指定具体哪一代进行回收，不传则回收所有</li>
+<li>objgraph 模块中的 count() 记录当前类产生的实例对象的个数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import gc</span><br><span class="line">import sys</span><br><span class="line">import objgraph</span><br><span class="line"></span><br><span class="line">print(gc.get_threshold()) # (700, 10, 10)</span><br><span class="line"></span><br><span class="line">class Persion(object):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class Cat(object):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">p = Persion()</span><br><span class="line">c = Cat()</span><br><span class="line">p.name = &apos;Susan&apos;</span><br><span class="line"></span><br><span class="line"># 循环引用</span><br><span class="line">p.pet = c</span><br><span class="line">c.master = p</span><br><span class="line">print(sys.getrefcount(p)) # 3</span><br><span class="line">print(sys.getrefcount(c)) # 3</span><br><span class="line"></span><br><span class="line"># 调用 del 解除循环引用状态</span><br><span class="line">del p</span><br><span class="line">del c</span><br><span class="line"></span><br><span class="line"># 手动执行垃圾回收</span><br><span class="line">gc.collect()</span><br><span class="line"></span><br><span class="line"># 就算进行手动垃圾回收，引用次数仍为 1，因为存在循环引用，除非调用 del 方法</span><br><span class="line">print(objgraph.count(&apos;Persion&apos;)) # 0</span><br><span class="line">print(objgraph.count(&apos;Cat&apos;)) # 0</span><br></pre></td></tr></table></figure>
+<h4 id="5-3、内存管理机制"><a href="#5-3、内存管理机制" class="headerlink" title="5.3、内存管理机制"></a>5.3、内存管理机制</h4><ul>
+<li>内存池机制<ul>
+<li>当创建大量消耗小内存的对象时，频繁调用 new/malloc 会导致大量的内存碎片，致使效率降低</li>
+<li>内存池就是预先在内存中申请一定数量的，大小相等的内存块留作备用</li>
+<li>当有新的内存需求时，就先从内存池中分配内存给这个需求，不够了之后再申请新的内存</li>
+<li>这样做最显著的优势就是能够减少内存碎片，提升效率</li>
+</ul>
+</li>
+<li>python3 内存管理机制 Pymalloc<ul>
+<li>针对小对象（&lt;=512bytes），pymalloc 会在内存池中申请内存空间</li>
+<li>当 &gt;512bytes，则会 PyMem_RawMalloc() 和 PyMem_RawRealloc() 来申请新的内存空间</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-10T03:11:25.062Z" itemprop="dateUpdated">2020-03-10 11:11:25</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/python/gc/" target="_blank" rel="external">http://blog.master-ss.cn/note/python/gc/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/gc/&title=《python 作用域与垃圾回收》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/gc/&title=《python 作用域与垃圾回收》 — 青松的博客&source=python 作用域与垃圾回收" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/gc/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 作用域与垃圾回收》 — 青松的博客&url=http://blog.master-ss.cn/note/python/gc/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/gc/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/python/class/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">python 面对对象</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/python/file/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">python 文件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2020</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备18001386号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/gc/&title=《python 作用域与垃圾回收》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/gc/&title=《python 作用域与垃圾回收》 — 青松的博客&source=python 作用域与垃圾回收" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/gc/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 作用域与垃圾回收》 — 青松的博客&url=http://blog.master-ss.cn/note/python/gc/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/gc/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwElEQVR42u3aSY6DMBAFUO5/aXrbUoTzy0MpiZ5XESL4wcKq6bridb+s/9fHd77e8/TfbQsXF3eZew9Xws1B+fMfn4yLi9vIHW/2tHFy/9PG4+c/XsfFxf1gbnI9fwFcXNxf4lYTHlxc3O/iJsnPSjkjP9q25Wq4uLgL3Hyzc7+P1HdxcXGnuHdx7WLdUwsXF7eHmx8o6+nN3EGGi4vbz00QycbjBuquUQ9cXNwebl6+rA5YVNsn5RAHFxe3hVulr99ZvY6Li9vDzf8wPqqqlMkACxcXt5E7V8jIQ5ldrRpcXNwe7sojqmNV+eeYfHlcXNxN3PE2c8HKymu/+Ry4uLgt3KRYOVfuzA+16r64uLg93GrAsZ785HHWm3twcXGPcfMyRN58zYcq8mYMLi5uPzcfwKqOX+SBS6EnjIuL28KdG8PKY48jURguLu4B7l1cefiycmxd1W1wcXG3cqvjESst0nywY+74w8XF3cvNWxqFFCVuvpZfBhcXt5FbTWaqwcrBXA0XF/fDuNUWbDXpwsXF/S5uHtCsjHhuC3FwcXGnuHnRcy4p2lY0wcXFbeHmBdP1YkcSDFUHQHFxcbdy/wBselLBgSjN2wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
