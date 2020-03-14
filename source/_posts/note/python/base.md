@@ -67,6 +67,9 @@ virtualenv .pyenv
  'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from',
  'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass',
  'raise', 'return', 'try', 'while', 'with', 'yield']
+
+ <!-- 获取使用 help 命令 -->
+ help('keywords')
 ```
 
 #### 2.3、行与缩进

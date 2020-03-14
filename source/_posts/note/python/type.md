@@ -202,6 +202,9 @@ print(mystr * 2)
 - startswith(substr, beg=0,end=len(string))
   检查字符串是否是以指定子字符串 substr 开头，是则返回 True，否则返回 False。如果 beg 和 end 指定值，则在指定范围内检查
 
+- .isalpha()
+  如果字符串只包含字母则返回 True 否则返回 False
+
 - isdigit()
   如果字符串只包含数字则返回 True 否则返回 False
 
