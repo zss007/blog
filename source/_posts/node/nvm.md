@@ -18,6 +18,7 @@ nvm-windows 最新下载地址 `https://github.com/coreybutler/nvm-windows/relea
 - nvm-setup.zip：这是一个安装包，下载之后点击安装，无需配置就可以使用，方便
 - Source code(zip)：zip 压缩的源码
 - Sourc code(tar.gz)：tar.gz 的源码，一般用于 *nix 系统
+- 注意事项：nvm-windows 已经不再支持 node 高版本的 npm 自动下载安装，得自己下载解压到相应文件夹中
 
 ### 二、基本命令
 - nvm install <version>：可以是 node.js 版本或最新稳定版本 latest
