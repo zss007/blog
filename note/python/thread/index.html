@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>python 线程 | 青松的博客 | 天行健，君子以自强不息；地势坤，君子以厚德载物。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="python 的线程基础介绍">
+<meta name="keywords" content="分享、总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 线程">
+<meta property="og:url" content="http://blog.master-ss.cn/note/python/thread/index.html">
+<meta property="og:site_name" content="青松的博客">
+<meta property="og:description" content="python 的线程基础介绍">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-15T13:01:05.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 线程">
+<meta name="twitter:description" content="python 的线程基础介绍">
+    
+        <link rel="alternate" type="application/atom+xml" title="青松的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.png)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">张松松</h5>
+          <a href="mailto:1733458402@qq.com" title="1733458402@qq.com" class="mail">1733458402@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/node">
+                <i class="icon icon-lg icon-bandcamp"></i>
+                Node
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/source">
+                <i class="icon icon-lg icon-anchor"></i>
+                Source
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/project">
+                <i class="icon icon-lg icon-product-hunt"></i>
+                Project
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">python 线程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">python 线程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-15T09:53:55.752Z" itemprop="datePublished" class="page-time">
+  2020-03-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、线程简介"><span class="post-toc-text">一、线程简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、线程的实现"><span class="post-toc-text">二、线程的实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、多线程的锁"><span class="post-toc-text">三、多线程的锁</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、线程池"><span class="post-toc-text">四、线程池</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-note/python/thread" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">python 线程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-15 17:53:55" datetime="2020-03-15T09:53:55.752Z" itemprop="datePublished">2020-03-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/note/">note</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>python 的线程基础介绍</p>
+<a id="more"></a>
+<h3 id="一、线程简介"><a href="#一、线程简介" class="headerlink" title="一、线程简介"></a>一、线程简介</h3><ul>
+<li>在同一个进程下执行，并共享相同的上下文</li>
+<li>一个进程中的各个线程与主线程共享同一片数据空间</li>
+<li>线程包括开始、执行顺序和结束三部分</li>
+<li>它可以被抢占（中断）和临时挂起（也称为睡眠）——线程让步</li>
+<li>一般是以并发方式执行</li>
+<li><p>线程的实现</p>
+<ul>
+<li>用 threading 模块代替 thread 模块</li>
+<li>用 threading.Tread 创建线程</li>
+<li>start() 启用线程</li>
+<li>join() 挂起线程</li>
+</ul>
+</li>
+<li><p>threading 模块的对象</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thread</td>
+<td>表示一个执行线程的对象</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>锁原语对象（和 thread 模块中的锁一样）</td>
+</tr>
+<tr>
+<td>RLock</td>
+<td>可重入锁对象，使单一线程可以（再次）获得已持有的锁（递归锁）</td>
+</tr>
+<tr>
+<td>Condition</td>
+<td>条件变量对象，使得一个线程等待另一个线程满足特定的“条件”，比如改变状态或某个数据值</td>
+</tr>
+<tr>
+<td>Event</td>
+<td>条件变量的通用版本，任意数量的线程等待某个事件的发生，在该事件发生后所有线程将被激活</td>
+</tr>
+<tr>
+<td>Semaphore</td>
+<td>为线程间共享的有限资源提供了一个“计数器”，如果没有可用资源时会被阻塞</td>
+</tr>
+<tr>
+<td>BoundedSemaphore</td>
+<td>与 Semaphore 相似，不过它不允许超过初始值</td>
+</tr>
+<tr>
+<td>Timer</td>
+<td>与 Thread 相似，不过它要在运行前等待一段时间</td>
+</tr>
+<tr>
+<td>Barrier</td>
+<td>创建一个“障碍”，必须达到指定数量的线程后才可以继续</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Thread 对象数据属性</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>表示一个执行线程的对象</td>
+</tr>
+<tr>
+<td>ident</td>
+<td>线程的标识符</td>
+</tr>
+<tr>
+<td>daemon</td>
+<td>布尔标志，表示这个线程是否是守护线程</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Thread 对象方法</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_init_</code>()</td>
+<td>实例化一个线程对象，需要有一个可调用的 target，以及其参数 args 或 kwargs</td>
+</tr>
+<tr>
+<td>start()</td>
+<td>开始执行该线程</td>
+</tr>
+<tr>
+<td>run()</td>
+<td>定义线程功能的方法（通常在子类中被应用开发者重写）</td>
+</tr>
+<tr>
+<td>join(timeout=None)</td>
+<td>直至启动的线程终止之前一直挂起；除非给出了 timeout（秒），否则一直阻塞</td>
+</tr>
+<tr>
+<td>getName()</td>
+<td>返回线程名</td>
+</tr>
+<tr>
+<td>setName(name)</td>
+<td>设置线程名</td>
+</tr>
+<tr>
+<td>isAlivel/is_alive()</td>
+<td>布尔标志，表示这个线程是否还存活</td>
+</tr>
+<tr>
+<td>isDaemon()</td>
+<td>如果是守护线程，则返回 True；否则返回 False</td>
+</tr>
+<tr>
+<td>setDaemon()</td>
+<td>把线程的守护标志设定为布尔值 daemonic（必须在线程 start()之前调用）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="二、线程的实现"><a href="#二、线程的实现" class="headerlink" title="二、线程的实现"></a>二、线程的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import threading</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def loop():</span><br><span class="line">    &quot;&quot;&quot; 新的线程执行的代码 &quot;&quot;&quot;</span><br><span class="line">    n = 0</span><br><span class="line">    while n &lt; 5:</span><br><span class="line">        print(n)</span><br><span class="line">        now_thread = threading.current_thread()</span><br><span class="line">        print(&apos;[loop]now  thread name : &#123;0&#125;&apos;.format(now_thread.name))</span><br><span class="line">        time.sleep(1)</span><br><span class="line">        n += 1</span><br><span class="line"></span><br><span class="line">class LoopThread(threading.Thread):</span><br><span class="line">    &quot;&quot;&quot; 自定义线程 &quot;&quot;&quot;</span><br><span class="line">    n = 0</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        while self.n &lt; 5:</span><br><span class="line">            print(self.n)</span><br><span class="line">            now_thread = threading.current_thread()</span><br><span class="line">            print(&apos;[loop]now  thread name : &#123;0&#125;&apos;.format(now_thread.name))</span><br><span class="line">            time.sleep(1)</span><br><span class="line">            self.n += 1</span><br><span class="line"></span><br><span class="line">def use_thread():</span><br><span class="line">    &quot;&quot;&quot; 使用线程来实现 &quot;&quot;&quot;</span><br><span class="line">    # 当前正在执行的线程名称</span><br><span class="line">    now_thread = threading.current_thread()</span><br><span class="line">    print(&apos;now  thread name : &#123;0&#125;&apos;.format(now_thread.name))</span><br><span class="line">    # 函数方法设置线程</span><br><span class="line">    # t = threading.Thread(target=loop, name=&apos;loop_thread&apos;)</span><br><span class="line">    # class 方法设置线程</span><br><span class="line">    t = LoopThread(name=&apos;loop_thread_oop&apos;)</span><br><span class="line">    # 启动线程</span><br><span class="line">    t.start()</span><br><span class="line">    # 挂起线程</span><br><span class="line">    t.join()</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    use_thread()</span><br></pre></td></tr></table></figure>
+<h3 id="三、多线程的锁"><a href="#三、多线程的锁" class="headerlink" title="三、多线程的锁"></a>三、多线程的锁</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">import threading</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"># 获得一把锁</span><br><span class="line">my_lock = threading.Lock()</span><br><span class="line">your_lock = threading.RLock()</span><br><span class="line"></span><br><span class="line"># 我的银行账户</span><br><span class="line">balance = 0</span><br><span class="line"></span><br><span class="line">def change_it(n):</span><br><span class="line">    &quot;&quot;&quot; 改变我的余额 &quot;&quot;&quot;</span><br><span class="line">    global balance</span><br><span class="line"></span><br><span class="line">    # 方式一，使用with</span><br><span class="line">    with your_lock:</span><br><span class="line">        balance = balance + n</span><br><span class="line">        time.sleep(2)</span><br><span class="line">        balance = balance - n</span><br><span class="line">        time.sleep(1)</span><br><span class="line">        print(&apos;-N---&gt; &#123;0&#125;; balance: &#123;1&#125;&apos;.format(n, balance))</span><br><span class="line"></span><br><span class="line">    # 方式二</span><br><span class="line">    # try:</span><br><span class="line">    #     print(&apos;start lock&apos;)</span><br><span class="line">    #     # 添加锁</span><br><span class="line">    #     your_lock.acquire()</span><br><span class="line">    #     print(&apos;locked one &apos;)</span><br><span class="line">    #     # 资源已经被锁住了，不能重复锁定, 产生死锁</span><br><span class="line">    #     your_lock.acquire()</span><br><span class="line">    #     print(&apos;locked two&apos;)</span><br><span class="line">    #     balance = balance + n</span><br><span class="line">    #     time.sleep(2)</span><br><span class="line">    #     balance = balance - n</span><br><span class="line">    #     time.sleep(1)</span><br><span class="line">    #     print(&apos;-N---&gt; &#123;0&#125;; balance: &#123;1&#125;&apos;.format(n, balance))</span><br><span class="line">    # finally:</span><br><span class="line">    #     # 释放掉锁</span><br><span class="line">    #     your_lock.release()</span><br><span class="line">    #     your_lock.release()</span><br><span class="line"></span><br><span class="line">class ChangeBalanceThread(threading.Thread):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    改变银行余额的线程</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, num, *args, **kwargs):</span><br><span class="line">        super().__init__(*args, **kwargs)</span><br><span class="line">        self.num = num</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        for i in range(100):</span><br><span class="line">            change_it(self.num)</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    t1 = ChangeBalanceThread(5)</span><br><span class="line">    t2 = ChangeBalanceThread(8)</span><br><span class="line">    t1.start()</span><br><span class="line">    t2.start()</span><br><span class="line">    t1.join()</span><br><span class="line">    t2.join()</span><br><span class="line">    print(&apos;the last: &#123;0&#125;&apos;.format(balance))</span><br></pre></td></tr></table></figure>
+<h3 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import threading</span><br><span class="line"># ThreadPoolExecutor 性能比 Pool 性能更强</span><br><span class="line">from concurrent.futures import ThreadPoolExecutor</span><br><span class="line">from multiprocessing.dummy import Pool</span><br><span class="line"></span><br><span class="line">def run(n):</span><br><span class="line">    &quot;&quot;&quot; 线程要做的事情 &quot;&quot;&quot;</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    print(threading.current_thread().name, n)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    &quot;&quot;&quot; 使用传统的方法来做任务 &quot;&quot;&quot;</span><br><span class="line">    t1 = time.time()</span><br><span class="line">    for n in range(100):</span><br><span class="line">        run(n)</span><br><span class="line">    print(time.time() - t1)</span><br><span class="line"></span><br><span class="line">def main_use_thread():</span><br><span class="line">    &quot;&quot;&quot; 使用线程优化任务 &quot;&quot;&quot;</span><br><span class="line">    # 资源有限，最多只能跑10个线程</span><br><span class="line">    t1 = time.time()</span><br><span class="line">    ls = []</span><br><span class="line">    for count in range(10):</span><br><span class="line">        for i in range(10):</span><br><span class="line">            t = threading.Thread(target=run, args=(i,))</span><br><span class="line">            ls.append(t)</span><br><span class="line">            t.start()</span><br><span class="line"></span><br><span class="line">        for l in ls:</span><br><span class="line">            l.join()</span><br><span class="line">    print(time.time() - t1)</span><br><span class="line"></span><br><span class="line">def main_use_pool():</span><br><span class="line">    &quot;&quot;&quot; 使用线程池来优化 &quot;&quot;&quot;</span><br><span class="line">    t1 = time.time()</span><br><span class="line">    n_list = range(100)</span><br><span class="line">    pool = Pool(10)</span><br><span class="line">    pool.map(run, n_list)</span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line">    print(time.time() - t1)</span><br><span class="line"></span><br><span class="line">def main_use_executor():</span><br><span class="line">    &quot;&quot;&quot; 使用 ThreadPoolExecutor 来优化&quot;&quot;&quot;</span><br><span class="line">    t1 = time.time()</span><br><span class="line">    n_list = range(100)</span><br><span class="line">    with ThreadPoolExecutor(max_workers=10) as executor:</span><br><span class="line">        executor.map(run, n_list)</span><br><span class="line">    print(time.time() - t1)</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    # main() # 同步阻塞</span><br><span class="line">    # main_use_thread() # 20.058868885040283</span><br><span class="line">    # main_use_pool() # 24.130047082901，数据量更大的情况下，比上一种情况更省性能</span><br><span class="line">    main_use_executor() # 20.038520097732544</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-15T13:01:05.086Z" itemprop="dateUpdated">2020-03-15 21:01:05</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/note/python/thread/" target="_blank" rel="external">http://blog.master-ss.cn/note/python/thread/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://blog.master-ss.cn">
+            <img src="/img/avatar.png" alt="张松松">
+            张松松
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/thread/&title=《python 线程》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/thread/&title=《python 线程》 — 青松的博客&source=python 的线程基础介绍" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/thread/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 线程》 — 青松的博客&url=http://blog.master-ss.cn/note/python/thread/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/thread/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/note/python/coroutine/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">python 协程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/note/python/process/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">python 进程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wUJ09egw1xIlxVQMQzLGKT4M-gzGzoHsz",
+            appKey: "2Vk9VCblILWnai3FCQ0iQogY",
+            avatar: "mm",
+            placeholder: "写点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>张松松 &copy; 2016 - 2020</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备18001386号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.master-ss.cn/note/python/thread/&title=《python 线程》 — 青松的博客&pic=http://blog.master-ss.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.master-ss.cn/note/python/thread/&title=《python 线程》 — 青松的博客&source=python 的线程基础介绍" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.master-ss.cn/note/python/thread/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python 线程》 — 青松的博客&url=http://blog.master-ss.cn/note/python/thread/&via=http://blog.master-ss.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.master-ss.cn/note/python/thread/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aS27DMAwFwNz/0u6miwCFFT7SKWB5tArqjzxasJTI16s8jrfx/pez33/vP3vb2bOvbwwMDIzbMo7luGqdKguxnvfDAmFgYDyAcTbx+p71U73YWJkXAwMDo8dIE8HKezAwMDB6jPU0lavrpBMDAwNjsomtTFzfxK5n/+JeHAMD44aMdGv6n7+/Ut/AwMC4FeMIRyV0pong5Ht+34OBgbE1Y57YpWG6uUGtfA8GBsamjHnbVn3Tm+Z4QXDHwMDYmjEPr2kSWU8f0yIEBgbG3ow0XKaH9WlS2HsnBgbG0xj1jWUv4E62sqfPYmBgbMqo3zppgJg0SQTdIhgYGJsyelvW+ZTzMN38v4GBgXFbRuWQa/2KytV0CSqzY2BgPIERKAvBN61F9O4vdYtgYGBsxKgXBuphd55oXtZagYGBsQUjTcgmU6aLVW/UwMDA2JtRP5pPN6jzkkP9gA8DA2NvRlAgbJUbJ80cwXkhBgbG1ox6QKy0XPQ+rheCMTAwnsZIS4a9UNi7GpQTMDAwHsCYB8GrAmjaWIaBgfEcRvpBkxaK9FitlNtiYGBsyjjC0WuYSEsLMRUDA2NrRu/Qf1ISSFsoLmu2wMDAuDnjGy1Z8xaKdGuNgYHxBMYkvUuXI66sFpAYGBgY84OztDksfg8GBgZGGCLrZc56y8WHQ0AMDIwHMNKUrpLAXcW+eC+OgYFxQ0bvs9LQOTmw6x3bYWBgbMH4AapJDcvDXifUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
